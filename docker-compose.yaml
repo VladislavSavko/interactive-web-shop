@@ -1,0 +1,34 @@
+version: '3.5'
+
+
+services:
+  eureka-server:
+    image: interactive-web-shop-eureka:latest
+    build: eureka-server
+    container_name: eureka-server
+    ports:
+      - "8761:8761"
+    healthcheck:
+      test: [ "CMD", "curl", "-I", "http://localhost:8761" ]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+
+
+  gateway-service:
+    image: interactive-web-shop-gateway:latest
+    build: gateway-service
+    container_name: gateway-service
+    ports:
+      - "8080:8080"
+    environment:
+      EUREKA_SERVER_URL: http://eureka-server:8761/eureka/
+    depends_on:
+      eureka-server:
+        condition: service_healthy
+    healthcheck:
+      test: [ "CMD", "curl", "-I", "http://localhost:8080" ]
+      interval: 5s
+      timeout: 5s
+      retries: 10
