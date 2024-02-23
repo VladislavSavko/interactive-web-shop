@@ -25,10 +25,42 @@ services:
     environment:
       EUREKA_SERVER_URL: http://eureka-server:8761/eureka/
     depends_on:
-      eureka-server:
-        condition: service_healthy
+      user-service:
+        condition: service_started
     healthcheck:
       test: [ "CMD", "curl", "-I", "http://localhost:8080" ]
       interval: 5s
       timeout: 5s
       retries: 10
+
+
+
+  user-service:
+    image: interactive-web-shop-users:latest
+    build: user-service
+    container_name: user-service
+    restart: always
+    ports:
+      - "8081:8081"
+    environment:
+      EUREKA_SERVER_URL: http://eureka-server:8761/eureka/
+    depends_on:
+      eureka-server:
+        condition: service_healthy
+      user-service-db:
+        condition: service_started
+    healthcheck:
+      test: [ "CMD", "curl", "-I", "http://localhost:8081" ]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  user-service-db:
+    image: mysql:latest
+    container_name: user-service-db
+    restart: always
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: interactive-web-shop-users

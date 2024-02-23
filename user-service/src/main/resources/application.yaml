@@ -1,0 +1,20 @@
+server:
+  port: 8081
+
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_SERVER_URL}
+    renewalIntervalInSecs: 10
+
+spring:
+  application:
+    name: user-service
+  datasource:
+    url: jdbc:mysql://user-service-db:3306/interactive-web-shop-users
+    username: root
+    password: password
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
