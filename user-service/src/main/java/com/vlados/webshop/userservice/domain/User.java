@@ -1,9 +1,6 @@
 package com.vlados.webshop.userservice.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,14 +21,24 @@ public class User {
     private String name;
 
     private Role role;
-//    private Address address;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "address_id", referencedColumnName = "id")
+    private Address address;
 
     public User(String email, String password, String name, Role role) {
         this.email = email;
         this.password = password;
         this.name = name;
         this.role = role;
+    }
+
+    public User(String email, String password, String name, Role role, Address address) {
+        this.email = email;
+        this.password = password;
+        this.name = name;
+        this.role = role;
+        this.address = address;
     }
 
     public enum Role {
