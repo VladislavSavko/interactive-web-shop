@@ -5,10 +5,13 @@ import com.vlados.webshop.userservice.domain.User;
 import com.vlados.webshop.userservice.dto.user.NewUserDto;
 import com.vlados.webshop.userservice.dto.user.UpdatedUserDto;
 import com.vlados.webshop.userservice.repos.UserRepository;
+import com.vlados.webshop.userservice.util.ResourceUtil;
 import com.vlados.webshop.userservice.util.mapper.UserMapper;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Component
@@ -40,6 +43,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
+    @Transactional
     public User add(final NewUserDto user) {
         User newUser = UserMapper.map(user);
         newUser.setRole(User.Role.CLIENT);
@@ -47,17 +51,21 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
+    @Transactional
     public void delete(final long id) {
         userRepository.deleteById(id);
     }
 
     @Override
+    @Transactional
     public void update(final long id, final UpdatedUserDto dto) {
-        if(userRepository.existsById(id)) {
+        if (userRepository.existsById(id)) {
             User user = userRepository.findById(id).get();
             user.setEmail(dto.email());
             user.setName(dto.name());
             user.setRole(dto.role());
+        } else {
+            throw new NoSuchElementException(ResourceUtil.getMessage("db.user.id").formatted(id));
         }
     }
 

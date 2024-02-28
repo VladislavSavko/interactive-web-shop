@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/users")
@@ -48,8 +47,10 @@ public class UserController {
         if (userService.exists(id)) {
             userService.delete(id);
 
-            return ResponseEntity.status(204)
-                    .body(ResourceUtil.getMessage("response.user.deleted").formatted(getUserEmailById(id).get()));
+            System.out.printf((ResourceUtil.getMessage("response.user.deleted")) + "%n", id);
+
+            return ResponseEntity.ok()
+                    .body(ResourceUtil.getMessage("response.user.deleted").formatted(id));
         } else {
             throw new NoSuchElementException(ResourceUtil.getMessage("db.user.id").formatted(id));
         }
@@ -64,11 +65,6 @@ public class UserController {
                 .ok()
                 .body(ResourceUtil.getMessage("response.user.updated").formatted(user.email()));
     }
-
-    private Optional<String> getUserEmailById(long id) {
-        return userService.getEmailById(id);
-    }
-
 
     @ExceptionHandler(NoSuchElementException.class)
     public ResponseEntity<ExceptionResponse> handleNoSuchEmailException(NoSuchElementException nsue) {
