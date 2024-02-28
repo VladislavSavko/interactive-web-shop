@@ -18,11 +18,3 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
-
-
-
-
-
-validation:
-  email:
-#    regexp: [a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}

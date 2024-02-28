@@ -2,6 +2,8 @@ package com.vlados.webshop.userservice.service.impl;
 
 import com.vlados.webshop.userservice.dao.UserDao;
 import com.vlados.webshop.userservice.domain.User;
+import com.vlados.webshop.userservice.dto.user.NewUserDto;
+import com.vlados.webshop.userservice.dto.user.UpdatedUserDto;
 import com.vlados.webshop.userservice.service.UserService;
 import org.springframework.stereotype.Service;
 
@@ -32,7 +34,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User add(final User user) {
+    public Optional<String> getEmailById(long id) {
+        return userDao.getEmailById(id);
+    }
+
+    @Override
+    public User add(final NewUserDto user) {
         return userDao.add(user);
     }
 
@@ -42,8 +49,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void update(final long id) {
-        userDao.update(id);
+    public void update(final long id, final UpdatedUserDto dto) {
+        userDao.update(id, dto);
     }
 
     @Override

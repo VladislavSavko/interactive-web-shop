@@ -1,24 +1,13 @@
 package com.vlados.webshop.userservice.util;
 
-import jakarta.annotation.PostConstruct;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
-import org.springframework.stereotype.Component;
+import java.util.ResourceBundle;
 
-@Component
+
 public class ResourceUtil {
-    private static Environment messages;
-
-    @Autowired
-    private Environment autowiredEnvironment;
-
-    @PostConstruct
-    private void init() {
-        messages = autowiredEnvironment;
-    }
+    private final static String MESSAGES_PROPS = "messages";
 
 
     public static String getMessage(final String key) {
-        return messages.getProperty(key);
+        return ResourceBundle.getBundle(MESSAGES_PROPS).getString(key);
     }
 }

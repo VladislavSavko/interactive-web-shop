@@ -2,7 +2,10 @@ package com.vlados.webshop.userservice.dao.impl;
 
 import com.vlados.webshop.userservice.dao.UserDao;
 import com.vlados.webshop.userservice.domain.User;
+import com.vlados.webshop.userservice.dto.user.NewUserDto;
+import com.vlados.webshop.userservice.dto.user.UpdatedUserDto;
 import com.vlados.webshop.userservice.repos.UserRepository;
+import com.vlados.webshop.userservice.util.mapper.UserMapper;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -32,8 +35,15 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public User add(final User user) {
-        return userRepository.save(user);
+    public Optional<String> getEmailById(final long id) {
+        return userRepository.findEmailById(id);
+    }
+
+    @Override
+    public User add(final NewUserDto user) {
+        User newUser = UserMapper.map(user);
+        newUser.setRole(User.Role.CLIENT);
+        return userRepository.save(newUser);
     }
 
     @Override
@@ -42,8 +52,13 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public void update(final long id) {
-
+    public void update(final long id, final UpdatedUserDto dto) {
+        if(userRepository.existsById(id)) {
+            User user = userRepository.findById(id).get();
+            user.setEmail(dto.email());
+            user.setName(dto.name());
+            user.setRole(dto.role());
+        }
     }
 
     @Override
