@@ -2,7 +2,7 @@ package com.vlados.webshop.userservice.dao.impl;
 
 import com.vlados.webshop.userservice.dao.AddressDao;
 import com.vlados.webshop.userservice.domain.Address;
-import com.vlados.webshop.userservice.dto.address.UpdatedAddressDto;
+import com.vlados.webshop.userservice.dto.address.AddressDto;
 import com.vlados.webshop.userservice.repos.AddressRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Component;
@@ -30,7 +30,7 @@ public class AddressDaoImpl implements AddressDao {
 
     @Override
     @Transactional
-    public void updateForUser(final long userId, final UpdatedAddressDto dto) {
+    public void updateForUser(final long userId, final AddressDto dto) {
 
     }
 

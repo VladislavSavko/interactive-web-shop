@@ -3,11 +3,15 @@ package com.vlados.webshop.userservice.service.impl;
 import com.vlados.webshop.userservice.dao.UserDao;
 import com.vlados.webshop.userservice.domain.User;
 import com.vlados.webshop.userservice.dto.user.NewUserDto;
+import com.vlados.webshop.userservice.dto.user.ResponseUserDto;
 import com.vlados.webshop.userservice.dto.user.UpdatedUserDto;
 import com.vlados.webshop.userservice.service.UserService;
+import com.vlados.webshop.userservice.util.ResourceUtil;
+import com.vlados.webshop.userservice.util.mapper.UserMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -19,18 +23,28 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getAll() {
-        return userDao.getAll();
+    public List<ResponseUserDto> getAll() {
+        return UserMapper.map(userDao.getAll());
     }
 
     @Override
-    public Optional<User> get(final long id) {
-        return userDao.get(id);
+    public ResponseUserDto get(final long id) throws NoSuchElementException {
+        return UserMapper.map(
+                userDao.get(id)
+                        .orElseThrow(() -> new NoSuchElementException(
+                                ResourceUtil.getMessage("db.user.id")
+                                        .formatted(id)))
+        );
     }
 
     @Override
-    public Optional<User> get(final String email) {
-        return userDao.get(email);
+    public ResponseUserDto get(final String email) {
+        return UserMapper.map(
+                userDao.get(email)
+                        .orElseThrow(() -> new NoSuchElementException(
+                                ResourceUtil.getMessage("db.user.email")
+                                        .formatted(email)))
+        );
     }
 
     @Override

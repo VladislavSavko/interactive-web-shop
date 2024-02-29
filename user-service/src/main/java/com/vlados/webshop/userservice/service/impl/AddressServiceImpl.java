@@ -2,7 +2,7 @@ package com.vlados.webshop.userservice.service.impl;
 
 import com.vlados.webshop.userservice.dao.AddressDao;
 import com.vlados.webshop.userservice.domain.Address;
-import com.vlados.webshop.userservice.dto.address.UpdatedAddressDto;
+import com.vlados.webshop.userservice.dto.address.AddressDto;
 import com.vlados.webshop.userservice.service.AddressService;
 import org.springframework.stereotype.Service;
 
@@ -28,7 +28,7 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    public void updateForUser(final long userId, final UpdatedAddressDto dto) {
+    public void updateForUser(final long userId, final AddressDto dto) {
         addressDao.updateForUser(userId, dto);
     }
 

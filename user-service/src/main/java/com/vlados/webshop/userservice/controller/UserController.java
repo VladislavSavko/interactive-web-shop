@@ -3,6 +3,7 @@ package com.vlados.webshop.userservice.controller;
 import com.vlados.webshop.userservice.domain.User;
 import com.vlados.webshop.userservice.dto.exception.ExceptionResponse;
 import com.vlados.webshop.userservice.dto.user.NewUserDto;
+import com.vlados.webshop.userservice.dto.user.ResponseUserDto;
 import com.vlados.webshop.userservice.dto.user.UpdatedUserDto;
 import com.vlados.webshop.userservice.service.UserService;
 import com.vlados.webshop.userservice.util.ResourceUtil;
@@ -25,16 +26,17 @@ public class UserController {
     }
 
     @GetMapping
-    public List<User> users(@RequestParam(name = "email", required = false) String email) {
+    public List<ResponseUserDto> users(@RequestParam(name = "email", required = false) String email) {
         return email == null
                 ?
                 userService.getAll()
                 :
-                List.of(userService.get(email)
-                        .orElseThrow(() -> new NoSuchElementException(
-                                ResourceUtil.getMessage("db.user.email")
-                                        .formatted(email))
-                        ));
+                List.of(userService.get(email));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseUserDto user(@PathVariable(name = "id") long id) {
+        return userService.get(id);
     }
 
     @PostMapping
