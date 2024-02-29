@@ -17,7 +17,7 @@ public interface UserService {
 
     Optional<String> getEmailById(final long id);
 
-    User add(final NewUserDto user);
+    ResponseUserDto add(final NewUserDto user);
 
     void delete(final long id);
 

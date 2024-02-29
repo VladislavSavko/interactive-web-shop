@@ -40,7 +40,7 @@ public class UserController {
     }
 
     @PostMapping
-    public User newUser(@RequestBody @Valid NewUserDto newUserDto) {
+    public ResponseUserDto newUser(@RequestBody @Valid NewUserDto newUserDto) {
         return userService.add(newUserDto);
     }
 
@@ -48,8 +48,6 @@ public class UserController {
     public ResponseEntity<String> deleteUser(@PathVariable(name = "id") long id) {
         if (userService.exists(id)) {
             userService.delete(id);
-
-            System.out.printf((ResourceUtil.getMessage("response.user.deleted")) + "%n", id);
 
             return ResponseEntity.ok()
                     .body(ResourceUtil.getMessage("response.user.deleted").formatted(id));

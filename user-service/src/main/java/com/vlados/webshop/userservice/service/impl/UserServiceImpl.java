@@ -1,7 +1,6 @@
 package com.vlados.webshop.userservice.service.impl;
 
 import com.vlados.webshop.userservice.dao.UserDao;
-import com.vlados.webshop.userservice.domain.User;
 import com.vlados.webshop.userservice.dto.user.NewUserDto;
 import com.vlados.webshop.userservice.dto.user.ResponseUserDto;
 import com.vlados.webshop.userservice.dto.user.UpdatedUserDto;
@@ -53,8 +52,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User add(final NewUserDto user) {
-        return userDao.add(user);
+    public ResponseUserDto add(final NewUserDto user) {
+        return UserMapper.map(userDao.add(user));
     }
 
     @Override
