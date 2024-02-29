@@ -1,6 +1,5 @@
 package com.vlados.webshop.userservice.controller;
 
-import com.vlados.webshop.userservice.domain.User;
 import com.vlados.webshop.userservice.dto.exception.ExceptionResponse;
 import com.vlados.webshop.userservice.dto.user.NewUserDto;
 import com.vlados.webshop.userservice.dto.user.ResponseUserDto;

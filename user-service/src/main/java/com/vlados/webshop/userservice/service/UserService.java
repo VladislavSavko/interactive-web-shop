@@ -1,6 +1,5 @@
 package com.vlados.webshop.userservice.service;
 
-import com.vlados.webshop.userservice.domain.User;
 import com.vlados.webshop.userservice.dto.user.NewUserDto;
 import com.vlados.webshop.userservice.dto.user.ResponseUserDto;
 import com.vlados.webshop.userservice.dto.user.UpdatedUserDto;
