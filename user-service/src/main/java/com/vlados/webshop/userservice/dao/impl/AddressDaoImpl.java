@@ -31,7 +31,12 @@ public class AddressDaoImpl implements AddressDao {
     @Override
     @Transactional
     public void updateForUser(final long userId, final AddressDto dto) {
-
+        Address address = addressRepository.findByUserId(userId).get();
+        address.setCity(dto.city());
+        address.setStreet(dto.street());
+        address.setCountryCode(dto.countryCode());
+        address.setFlatNumber(dto.flatNumber());
+        address.setHouseNumber(dto.houseNumber());
     }
 
     @Override

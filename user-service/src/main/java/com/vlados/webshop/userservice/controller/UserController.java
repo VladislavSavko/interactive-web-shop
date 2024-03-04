@@ -45,14 +45,11 @@ public class UserController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteUser(@PathVariable(name = "id") long id) {
-        if (userService.exists(id)) {
-            userService.delete(id);
 
-            return ResponseEntity.ok()
-                    .body(ResourceUtil.getMessage("response.user.deleted").formatted(id));
-        } else {
-            throw new NoSuchElementException(ResourceUtil.getMessage("db.user.id").formatted(id));
-        }
+        userService.delete(id);
+
+        return ResponseEntity.ok()
+                .body(ResourceUtil.getMessage("response.user.deleted").formatted(id));
     }
 
     @PutMapping("/{id}")

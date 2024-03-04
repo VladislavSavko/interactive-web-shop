@@ -1,11 +1,12 @@
 package com.vlados.webshop.userservice.dao.impl;
 
 import com.vlados.webshop.userservice.dao.UserDao;
+import com.vlados.webshop.userservice.domain.Address;
 import com.vlados.webshop.userservice.domain.User;
+import com.vlados.webshop.userservice.dto.address.AddressDto;
 import com.vlados.webshop.userservice.dto.user.NewUserDto;
 import com.vlados.webshop.userservice.dto.user.UpdatedUserDto;
 import com.vlados.webshop.userservice.repos.UserRepository;
-import com.vlados.webshop.userservice.util.ResourceUtil;
 import com.vlados.webshop.userservice.util.mapper.UserMapper;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Component;
@@ -58,15 +59,34 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     @Transactional
-    public void update(final long id, final UpdatedUserDto dto) {
-        if (userRepository.existsById(id)) {
-            User user = userRepository.findById(id).get();
-            user.setEmail(dto.email());
-            user.setName(dto.name());
-            user.setRole(dto.role());
+    public void update(final long id, final UpdatedUserDto dto) throws NoSuchElementException {
+        User user = userRepository.findById(id).get();
+        user.setEmail(dto.email());
+        user.setName(dto.name());
+        user.setRole(dto.role());
+    }
+
+    @Override
+    public void update(long id, AddressDto addressDto) {
+        User currentUser = userRepository.findById(id).get();
+        Address address = currentUser.getAddress();
+        if (address != null) {
+            address.setCity(addressDto.city());
+            address.setStreet(addressDto.street());
+            address.setCountryCode(addressDto.countryCode());
+            address.setFlatNumber(addressDto.flatNumber());
+            address.setHouseNumber(addressDto.houseNumber());
         } else {
-            throw new NoSuchElementException(ResourceUtil.getMessage("db.user.id").formatted(id));
+            address = new Address(
+                    addressDto.countryCode(),
+                    addressDto.city(),
+                    addressDto.street(),
+                    addressDto.houseNumber(),
+                    addressDto.flatNumber());
         }
+        address.setUser(currentUser);
+        currentUser.setAddress(address);
+        userRepository.save(currentUser);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.vlados.webshop.userservice.dto.user;
 
 import com.vlados.webshop.userservice.domain.User;
+import com.vlados.webshop.userservice.dto.address.AddressDto;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -12,5 +13,6 @@ public record UpdatedUserDto(
         String email,
         @NotBlank(message = "Name cannot be blank!")
         String name,
-        User.Role role) {
+        User.Role role,
+        AddressDto address) {
 }

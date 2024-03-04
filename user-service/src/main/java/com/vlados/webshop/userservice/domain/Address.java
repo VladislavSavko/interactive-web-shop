@@ -15,7 +15,7 @@ public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    private Locale.IsoCountryCode countryCode;
+    private String countryCode;
     private String city;
     private String street;
     private int houseNumber;
@@ -24,7 +24,7 @@ public class Address {
     @OneToOne(mappedBy = "address")
     private User user;
 
-    public Address(Locale.IsoCountryCode countryCode, String city, String street, int houseNumber, int flatNumber) {
+    public Address(String countryCode, String city, String street, int houseNumber, int flatNumber) {
         this.countryCode = countryCode;
         this.city = city;
         this.street = street;
@@ -32,7 +32,7 @@ public class Address {
         this.flatNumber = flatNumber;
     }
 
-    public Address(Locale.IsoCountryCode countryCode, String city, String street, int houseNumber, int flatNumber, User user) {
+    public Address(String countryCode, String city, String street, int houseNumber, int flatNumber, User user) {
         this.countryCode = countryCode;
         this.city = city;
         this.street = street;
