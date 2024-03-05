@@ -1,6 +1,7 @@
 package com.vlados.webshop.userservice.dto.user;
 
 import com.vlados.webshop.userservice.dto.address.AddressDto;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -16,6 +17,7 @@ public record NewUserDto(
         String password,
         @NotBlank(message = "Name cannot be blank!")
         String name,
+        @Valid
         AddressDto address) {
     //TODO: Change the annotation params from constants to what? Or remove them at all
 }

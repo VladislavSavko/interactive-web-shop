@@ -1,12 +1,18 @@
 package com.vlados.webshop.userservice.dto.address;
 
+import com.vlados.webshop.userservice.util.validation.anno.IsoCountryCode;
+import jakarta.validation.constraints.Min;
+
 import java.util.Objects;
 
 public record AddressDto(
+        @IsoCountryCode
         String countryCode,
         String city,
         String street,
+        @Min(0)
         int houseNumber,
+        @Min(0)
         int flatNumber) {
     @Override
     public boolean equals(Object o) {
@@ -17,6 +23,8 @@ public record AddressDto(
                 && countryCode.equals(that.countryCode) && city.equals(that.city)
                 && street.equals(that.street);
     }
+
+    //TODO: Begin shop-service? Test one more time user-service API + auth?
 
     @Override
     public int hashCode() {
