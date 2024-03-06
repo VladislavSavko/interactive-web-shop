@@ -10,4 +10,6 @@ public class GatewayServiceApplication {
         SpringApplication.run(GatewayServiceApplication.class, args);
     }
 
+    //TODO: Extract User entity and ResourceUtil(?) to separate module
+
 }
