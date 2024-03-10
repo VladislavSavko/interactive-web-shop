@@ -18,3 +18,11 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
+
+
+security:
+  password_encoder:
+    strength: 10
+  jwt:
+    secret: MTA1NDQ2NDYyMjkxODQ3NjI0NjM4NjUxNTYxZGZnMTU2MTQ4ZGY5NDE4MTk0OTg=
+    default_secret: 8Zz5tw0Ionm3XPZZfN0NOml3z9FMfmpgXwovR9fp6ryDIoGRM8EPHAB6iHsc0fb
