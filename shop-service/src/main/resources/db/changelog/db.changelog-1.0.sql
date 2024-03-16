@@ -4,8 +4,8 @@
 CREATE TABLE IF NOT EXISTS items_inventory(
                                               id bigint NOT NULL PRIMARY KEY,
                                               quantity bigint NOT NULL,
-                                              createdAt date NOT NULL,
-                                              updatedAt date
+                                              created_at datetime NOT NULL,
+                                              updated_at datetime NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS items_categories(
