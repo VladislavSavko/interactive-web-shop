@@ -10,6 +10,7 @@ public class Image {
     private long id;
     @Lob
     @Basic(fetch = FetchType.LAZY)
+    @Column(name = "binary_data")
     private byte[] binary;
 
     @ManyToOne
