@@ -1,6 +1,7 @@
 package com.vlados.webshop.shopservice.controller;
 
 import com.vlados.webshop.shopservice.domain.dto.ItemRequestDto;
+import com.vlados.webshop.shopservice.domain.dto.ItemResponseDto;
 import com.vlados.webshop.shopservice.domain.item.Category;
 import com.vlados.webshop.shopservice.domain.item.InventoryInfo;
 import com.vlados.webshop.shopservice.domain.item.Item;
@@ -25,7 +26,7 @@ public class ShopController {
     }
 
     @GetMapping("/items")
-    public List<Item> getItems() {
+    public List<ItemResponseDto> getItems() {
         return itemService.getAll();
     }
 

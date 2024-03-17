@@ -3,10 +3,12 @@ package com.vlados.webshop.shopservice.service.impl;
 import com.vlados.webshop.shopservice.dao.CategoryDao;
 import com.vlados.webshop.shopservice.dao.ItemDao;
 import com.vlados.webshop.shopservice.domain.dto.ItemRequestDto;
+import com.vlados.webshop.shopservice.domain.dto.ItemResponseDto;
 import com.vlados.webshop.shopservice.domain.item.Category;
 import com.vlados.webshop.shopservice.domain.item.InventoryInfo;
 import com.vlados.webshop.shopservice.domain.item.Item;
 import com.vlados.webshop.shopservice.service.ItemService;
+import com.vlados.webshop.shopservice.util.DtoMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,8 +24,10 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public List<Item> getAll() {
-        return itemDao.getAll();
+    public List<ItemResponseDto> getAll() {
+        return itemDao.getAll().stream()
+                .map(DtoMapper::toDto)
+                .toList();
     }
 
     @Override
@@ -46,5 +50,4 @@ public class ItemServiceImpl implements ItemService {
                         new Category(dto.categoryName(), dto.description(), null)
                 );
     }
-    //TODO: Test this behaviour
 }
