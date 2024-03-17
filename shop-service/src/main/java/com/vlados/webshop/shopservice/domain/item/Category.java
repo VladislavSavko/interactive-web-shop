@@ -21,4 +21,10 @@ public class Category {
 
     @OneToMany(mappedBy = "relatedCategory")
     private List<Item> items;
+
+    public Category(String name, String description, List<Item> items) {
+        this.name = name;
+        this.description = description;
+        this.items = items;
+    }
 }

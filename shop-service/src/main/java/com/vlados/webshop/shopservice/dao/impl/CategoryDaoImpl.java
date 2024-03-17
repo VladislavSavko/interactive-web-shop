@@ -6,6 +6,7 @@ import com.vlados.webshop.shopservice.repos.CategoryRepository;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class CategoryDaoImpl implements CategoryDao {
@@ -23,5 +24,10 @@ public class CategoryDaoImpl implements CategoryDao {
     @Override
     public Category add(Category category) {
         return categoryRepository.save(category);
+    }
+
+    @Override
+    public Optional<Category> get(String categoryName) {
+        return categoryRepository.findByName(categoryName);
     }
 }

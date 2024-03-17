@@ -18,12 +18,11 @@ CREATE TABLE IF NOT EXISTS items_categories(
 CREATE TABLE IF NOT EXISTS items(
                                     id bigint NOT NULL PRIMARY KEY,
                                     name varchar(255) NOT NULL,
-    relatedCategory bigint NOT NULL,
+    category bigint NOT NULL,
     inventory_id bigint NOT NULL,
     color varchar(255) NOT NULL,
     description varchar(255),
-    inStockQuantity int NOT NULL,
-    FOREIGN KEY (relatedCategory) REFERENCES items_categories(id),
+    FOREIGN KEY (category) REFERENCES items_categories(id),
     FOREIGN KEY (inventory_id) REFERENCES items_inventory(id)
     );
 

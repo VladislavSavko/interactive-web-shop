@@ -1,5 +1,6 @@
 package com.vlados.webshop.shopservice.controller;
 
+import com.vlados.webshop.shopservice.domain.dto.ItemRequestDto;
 import com.vlados.webshop.shopservice.domain.item.Category;
 import com.vlados.webshop.shopservice.domain.item.InventoryInfo;
 import com.vlados.webshop.shopservice.domain.item.Item;
@@ -39,8 +40,8 @@ public class ShopController {
     }
 
     @PostMapping("/items")
-    public Item addItem(@RequestBody Item item) {
-        return itemService.add(item);
+    public Item addItem(@RequestBody ItemRequestDto itemDto) {
+        return itemService.add(itemDto);
     }
 
     @PostMapping("/categories")

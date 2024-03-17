@@ -8,7 +8,6 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
-import java.util.Calendar;
 
 @Entity
 @Table(name = "items_inventory")
@@ -23,13 +22,20 @@ public class InventoryInfo {
 
     @CreationTimestamp
     @Column(name = "created_at")
-    private Calendar createdAt;
+    private LocalDateTime createdAt;
 
     @UpdateTimestamp
     @Column(name = "updated_at")
 
-    private Calendar modifiedAt;
+    private LocalDateTime modifiedAt;
 
     @OneToOne(mappedBy = "inventoryInfo")
     private Item relatedItem;
+
+    public InventoryInfo(long quantity, LocalDateTime createdAt, LocalDateTime modifiedAt, Item relatedItem) {
+        this.quantity = quantity;
+        this.createdAt = createdAt;
+        this.modifiedAt = modifiedAt;
+        this.relatedItem = relatedItem;
+    }
 }
