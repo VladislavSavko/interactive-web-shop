@@ -11,4 +11,8 @@ public interface CategoryDao {
     Category add(final Category category);
 
     Optional<Category> get(final String categoryName);
+
+    Optional<Category> get(final long id);
+
+    void delete(final long id);
 }

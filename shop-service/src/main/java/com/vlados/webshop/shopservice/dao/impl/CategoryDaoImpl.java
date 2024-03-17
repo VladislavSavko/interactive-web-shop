@@ -30,4 +30,14 @@ public class CategoryDaoImpl implements CategoryDao {
     public Optional<Category> get(String categoryName) {
         return categoryRepository.findByName(categoryName);
     }
+
+    @Override
+    public Optional<Category> get(long id) {
+        return categoryRepository.findById(id);
+    }
+
+    @Override
+    public void delete(long id) {
+        categoryRepository.deleteById(id);
+    }
 }

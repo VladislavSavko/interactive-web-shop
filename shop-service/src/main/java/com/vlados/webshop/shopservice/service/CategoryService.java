@@ -8,4 +8,6 @@ public interface CategoryService {
     List<Category> getAll();
 
     Category add(final Category category);
+
+    void softDelete(final long id);
 }
