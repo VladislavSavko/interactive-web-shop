@@ -40,7 +40,7 @@ public class CategoryServiceImpl implements CategoryService {
         categoryDao.get(id)
                 .ifPresentOrElse(category -> category.setName(""),
                         () -> {
-                            throw new NoSuchElementException(ResourceUtil.getMessage("response.category.deleted").formatted(id));
+                            throw new NoSuchElementException(ResourceUtil.getMessage("db.category.not_found").formatted(id));
                         });
     }
 
@@ -53,7 +53,7 @@ public class CategoryServiceImpl implements CategoryService {
                             category.setDescription(dto.description());
                         },
                         () -> {
-                            throw new NoSuchElementException(ResourceUtil.getMessage("response.category.updated").formatted(id));
+                            throw new NoSuchElementException(ResourceUtil.getMessage("db.category.not_found").formatted(id));
                         });
     }
 }

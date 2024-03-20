@@ -1,6 +1,5 @@
 package com.vlados.webshop.shopservice.dao;
 
-import com.vlados.webshop.shopservice.domain.item.Category;
 import com.vlados.webshop.shopservice.domain.item.InventoryInfo;
 
 import java.util.List;

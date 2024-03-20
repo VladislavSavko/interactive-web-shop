@@ -37,13 +37,13 @@ public class InventoryServiceImpl implements InventoryService {
     @Override
     @Transactional
     public void softDelete(long id) {
-        updateInfo(id, 0, ResourceUtil.getMessage("response.inventory.deleted").formatted(id));
+        updateInfo(id, 0, ResourceUtil.getMessage("db.inventory.not_found").formatted(id));
     }
 
     @Override
     @Transactional
     public void update(long id, InventoryUpdateDto dto) {
-        updateInfo(id, dto.quantity(), ResourceUtil.getMessage("response.inventory.updated").formatted(id));
+        updateInfo(id, dto.quantity(), ResourceUtil.getMessage("db.inventory.not_found").formatted(id));
     }
 
     private void updateInfo(final long id, final long quantity, final String message) {
