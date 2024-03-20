@@ -10,4 +10,8 @@ public class ShopServiceApplication {
         SpringApplication.run(ShopServiceApplication.class, args);
     }
 
+    //TODO:
+    // 1. Validation on dtos + exceptions
+    // 2. Refactoring
+
 }

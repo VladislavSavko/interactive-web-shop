@@ -26,5 +26,9 @@ spring:
           uri: lb://user-service
           predicates:
             - Path=/api/v1/users/**
+        - id: shop-service
+          uri: lb://shop-service
+          predicates:
+            - Path=/api/v1/shop/**
   main:
     allow-bean-definition-overriding: true

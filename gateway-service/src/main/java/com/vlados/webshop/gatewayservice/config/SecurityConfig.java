@@ -42,7 +42,13 @@ public class SecurityConfig {
         return httpSecurity
                 .authorizeExchange(
                         authorizationManagerRequestMatcherRegistry -> authorizationManagerRequestMatcherRegistry
-                                .pathMatchers(HttpMethod.POST, "/api/v1/users/**")
+                                .pathMatchers(HttpMethod.GET, "/api/v1/users/**","/api/v1/shop/**")
+                                .permitAll()
+                                .pathMatchers(HttpMethod.POST, "/api/v1/users/**","/api/v1/shop/**")
+                                .permitAll()
+                                .pathMatchers(HttpMethod.DELETE, "/api/v1/users/**","/api/v1/shop/**")
+                                .permitAll()
+                                .pathMatchers(HttpMethod.PUT, "/api/v1/users/**","/api/v1/shop/**")
                                 .permitAll()
                                 .anyExchange()
                                 .authenticated()
@@ -52,6 +58,5 @@ public class SecurityConfig {
                 .authenticationManager(authenticationManager)
                 .securityContextRepository(contextRepository)
                 .build();
-        //TODO: Make sure security will work with all needed authentication managers
     }
 }
