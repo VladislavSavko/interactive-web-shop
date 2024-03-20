@@ -1,6 +1,9 @@
 package com.vlados.webshop.shopservice.controller;
 
+import com.vlados.webshop.shopservice.domain.dto.category.CategoryResponseDto;
 import com.vlados.webshop.shopservice.domain.dto.category.CategoryUpdateDto;
+import com.vlados.webshop.shopservice.domain.dto.inventory.InventoryResponseDto;
+import com.vlados.webshop.shopservice.domain.dto.inventory.InventoryUpdateDto;
 import com.vlados.webshop.shopservice.domain.dto.item.ItemRequestDto;
 import com.vlados.webshop.shopservice.domain.dto.item.ItemResponseDto;
 import com.vlados.webshop.shopservice.domain.item.Category;
@@ -38,12 +41,12 @@ public class ShopController {
     }
 
     @GetMapping("/categories")
-    public List<Category> getCategories() {
+    public List<CategoryResponseDto> getCategories() {
         return categoryService.getAll();
     }
 
     @GetMapping("/inventory")
-    public List<InventoryInfo> getInventoryInfo() {
+    public List<InventoryResponseDto> getInventoryInfo() {
         return inventoryService.getAll();
     }
 
@@ -73,6 +76,17 @@ public class ShopController {
         //TODO: Make a superadmin's hardDelete() method
     }
 
+    @DeleteMapping("/inventory/{id}")
+    public ResponseEntity<String> deleteInventory(@PathVariable(name = "id") long id) {
+        inventoryService.softDelete(id);
+
+        return ResponseEntity.status(204)
+                .body(
+                        ResourceUtil.getMessage("response.inventory.deleted").formatted(id)
+                );
+        //TODO: Make a superadmin's hardDelete() method
+    }
+
 
     @PutMapping("/categories/{id}")
     public ResponseEntity<String> updateCategory(
@@ -86,11 +100,21 @@ public class ShopController {
                 );
     }
 
+    @PutMapping("/inventory/{id}")
+    public ResponseEntity<String> updateInventory(
+            @RequestBody InventoryUpdateDto inventoryUpdateDto,
+            @PathVariable(name = "id") long id) {
+        inventoryService.update(id, inventoryUpdateDto);
+
+        return ResponseEntity.ok()
+                .body(
+                        ResourceUtil.getMessage("response.inventory.updated").formatted(id)
+                );
+    }
+
     @ExceptionHandler(NoSuchElementException.class)
     public ResponseEntity<ExceptionResponse> handleNoSuchEmailException(NoSuchElementException nsue) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(new ExceptionResponse(nsue.getMessage(), LocalDateTime.now()));
     }
-
-    //TODO: Check updating
 }

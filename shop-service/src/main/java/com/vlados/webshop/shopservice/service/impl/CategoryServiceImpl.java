@@ -1,9 +1,11 @@
 package com.vlados.webshop.shopservice.service.impl;
 
 import com.vlados.webshop.shopservice.dao.CategoryDao;
+import com.vlados.webshop.shopservice.domain.dto.category.CategoryResponseDto;
 import com.vlados.webshop.shopservice.domain.dto.category.CategoryUpdateDto;
 import com.vlados.webshop.shopservice.domain.item.Category;
 import com.vlados.webshop.shopservice.service.CategoryService;
+import com.vlados.webshop.shopservice.util.DtoMapper;
 import com.vlados.webshop.shopservice.util.ResourceUtil;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
@@ -20,8 +22,10 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public List<Category> getAll() {
-        return categoryDao.getAll();
+    public List<CategoryResponseDto> getAll() {
+        return categoryDao.getAll().stream()
+                .map(DtoMapper::toDto)
+                .toList();
     }
 
     @Override
@@ -36,7 +40,7 @@ public class CategoryServiceImpl implements CategoryService {
         categoryDao.get(id)
                 .ifPresentOrElse(category -> category.setName(""),
                         () -> {
-                            throw new NoSuchElementException(ResourceUtil.getMessage("db.category.not_found").formatted(id));
+                            throw new NoSuchElementException(ResourceUtil.getMessage("response.category.deleted").formatted(id));
                         });
     }
 
@@ -49,7 +53,7 @@ public class CategoryServiceImpl implements CategoryService {
                             category.setDescription(dto.description());
                         },
                         () -> {
-                            throw new NoSuchElementException(ResourceUtil.getMessage("db.category.not_found").formatted(id));
+                            throw new NoSuchElementException(ResourceUtil.getMessage("response.category.updated").formatted(id));
                         });
     }
 }

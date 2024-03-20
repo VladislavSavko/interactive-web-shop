@@ -6,6 +6,7 @@ import com.vlados.webshop.shopservice.repos.InventoryRepository;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class InventoryDaoImpl implements InventoryDao {
@@ -18,6 +19,11 @@ public class InventoryDaoImpl implements InventoryDao {
     @Override
     public List<InventoryInfo> getAll() {
         return inventoryRepository.findAll();
+    }
+
+    @Override
+    public Optional<InventoryInfo> get(long id) {
+        return inventoryRepository.findById(id);
     }
 
     @Override
