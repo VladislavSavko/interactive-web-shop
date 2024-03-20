@@ -1,6 +1,7 @@
 package com.vlados.webshop.shopservice.service.impl;
 
 import com.vlados.webshop.shopservice.dao.CategoryDao;
+import com.vlados.webshop.shopservice.domain.dto.category.CategoryUpdateDto;
 import com.vlados.webshop.shopservice.domain.item.Category;
 import com.vlados.webshop.shopservice.service.CategoryService;
 import com.vlados.webshop.shopservice.util.ResourceUtil;
@@ -34,6 +35,19 @@ public class CategoryServiceImpl implements CategoryService {
     public void softDelete(long id) {
         categoryDao.get(id)
                 .ifPresentOrElse(category -> category.setName(""),
+                        () -> {
+                            throw new NoSuchElementException(ResourceUtil.getMessage("db.category.not_found").formatted(id));
+                        });
+    }
+
+    @Override
+    @Transactional
+    public void update(long id, CategoryUpdateDto dto) {
+        categoryDao.get(id)
+                .ifPresentOrElse(category -> {
+                            category.setName(dto.name());
+                            category.setDescription(dto.description());
+                        },
                         () -> {
                             throw new NoSuchElementException(ResourceUtil.getMessage("db.category.not_found").formatted(id));
                         });

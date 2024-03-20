@@ -1,6 +1,6 @@
 package com.vlados.webshop.shopservice.util;
 
-import com.vlados.webshop.shopservice.domain.dto.ItemResponseDto;
+import com.vlados.webshop.shopservice.domain.dto.item.ItemResponseDto;
 import com.vlados.webshop.shopservice.domain.item.Item;
 
 public class DtoMapper {

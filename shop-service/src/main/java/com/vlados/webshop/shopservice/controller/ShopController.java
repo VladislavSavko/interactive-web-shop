@@ -1,7 +1,8 @@
 package com.vlados.webshop.shopservice.controller;
 
-import com.vlados.webshop.shopservice.domain.dto.ItemRequestDto;
-import com.vlados.webshop.shopservice.domain.dto.ItemResponseDto;
+import com.vlados.webshop.shopservice.domain.dto.category.CategoryUpdateDto;
+import com.vlados.webshop.shopservice.domain.dto.item.ItemRequestDto;
+import com.vlados.webshop.shopservice.domain.dto.item.ItemResponseDto;
 import com.vlados.webshop.shopservice.domain.item.Category;
 import com.vlados.webshop.shopservice.domain.item.InventoryInfo;
 import com.vlados.webshop.shopservice.domain.item.Item;
@@ -62,7 +63,7 @@ public class ShopController {
     }
 
     @DeleteMapping("/categories/{id}")
-    public ResponseEntity<String> deleteInventory(@PathVariable(name = "id") long id) {
+    public ResponseEntity<String> deleteCategory(@PathVariable(name = "id") long id) {
         categoryService.softDelete(id);
 
         return ResponseEntity.status(204)
@@ -72,9 +73,24 @@ public class ShopController {
         //TODO: Make a superadmin's hardDelete() method
     }
 
+
+    @PutMapping("/categories/{id}")
+    public ResponseEntity<String> updateCategory(
+            @RequestBody CategoryUpdateDto categoryUpdateDto,
+            @PathVariable(name = "id") long id) {
+        categoryService.update(id, categoryUpdateDto);
+
+        return ResponseEntity.ok()
+                .body(
+                        ResourceUtil.getMessage("response.category.updated").formatted(id)
+                );
+    }
+
     @ExceptionHandler(NoSuchElementException.class)
     public ResponseEntity<ExceptionResponse> handleNoSuchEmailException(NoSuchElementException nsue) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(new ExceptionResponse(nsue.getMessage(), LocalDateTime.now()));
     }
+
+    //TODO: Check updating
 }

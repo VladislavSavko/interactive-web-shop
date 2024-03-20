@@ -2,8 +2,8 @@ package com.vlados.webshop.shopservice.service.impl;
 
 import com.vlados.webshop.shopservice.dao.CategoryDao;
 import com.vlados.webshop.shopservice.dao.ItemDao;
-import com.vlados.webshop.shopservice.domain.dto.ItemRequestDto;
-import com.vlados.webshop.shopservice.domain.dto.ItemResponseDto;
+import com.vlados.webshop.shopservice.domain.dto.item.ItemRequestDto;
+import com.vlados.webshop.shopservice.domain.dto.item.ItemResponseDto;
 import com.vlados.webshop.shopservice.domain.item.Category;
 import com.vlados.webshop.shopservice.domain.item.InventoryInfo;
 import com.vlados.webshop.shopservice.domain.item.Item;
