@@ -6,9 +6,9 @@ import com.vlados.webshop.shopservice.domain.dto.inventory.InventoryResponseDto;
 import com.vlados.webshop.shopservice.domain.dto.inventory.InventoryUpdateDto;
 import com.vlados.webshop.shopservice.domain.dto.item.ItemRequestDto;
 import com.vlados.webshop.shopservice.domain.dto.item.ItemResponseDto;
+import com.vlados.webshop.shopservice.domain.dto.item.ItemUpdateDto;
 import com.vlados.webshop.shopservice.domain.item.Category;
 import com.vlados.webshop.shopservice.domain.item.InventoryInfo;
-import com.vlados.webshop.shopservice.domain.item.Item;
 import com.vlados.webshop.shopservice.exception.ExceptionResponse;
 import com.vlados.webshop.shopservice.service.CategoryService;
 import com.vlados.webshop.shopservice.service.InventoryService;
@@ -51,7 +51,7 @@ public class ShopController {
     }
 
     @PostMapping("/items")
-    public Item addItem(@RequestBody ItemRequestDto itemDto) {
+    public ItemResponseDto addItem(@RequestBody ItemRequestDto itemDto) {
         return itemService.add(itemDto);
     }
 
@@ -63,6 +63,16 @@ public class ShopController {
     @PostMapping("/inventory")
     public InventoryInfo addInventory(@RequestBody InventoryInfo inventoryInfo) {
         return inventoryService.add(inventoryInfo);
+    }
+
+    @DeleteMapping("/items/{id}")
+    public ResponseEntity<String> deleteItem(@PathVariable(name = "id") long id) {
+        itemService.delete(id);
+
+        return ResponseEntity.status(204)
+                .body(
+                        ResourceUtil.getMessage("response.item.deleted").formatted(id)
+                );
     }
 
     @DeleteMapping("/categories/{id}")
@@ -85,6 +95,18 @@ public class ShopController {
                         ResourceUtil.getMessage("response.inventory.deleted").formatted(id)
                 );
         //TODO: Make a superadmin's hardDelete() method
+    }
+
+    @PutMapping("/items/{id}")
+    public ResponseEntity<String> updateItem(
+            @RequestBody ItemUpdateDto itemUpdateDto,
+            @PathVariable(name = "id") long id) {
+        itemService.update(id, itemUpdateDto);
+
+        return ResponseEntity.ok()
+                .body(
+                        ResourceUtil.getMessage("response.item.updated").formatted(id)
+                );
     }
 
 

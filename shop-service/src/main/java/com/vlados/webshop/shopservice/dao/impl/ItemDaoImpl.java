@@ -6,6 +6,7 @@ import com.vlados.webshop.shopservice.repos.ItemRepository;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class ItemDaoImpl implements ItemDao {
@@ -21,7 +22,17 @@ public class ItemDaoImpl implements ItemDao {
     }
 
     @Override
+    public Optional<Item> get(long id) {
+        return itemRepository.findById(id);
+    }
+
+    @Override
     public Item add(Item item) {
         return itemRepository.save(item);
+    }
+
+    @Override
+    public void delete(long id) {
+        itemRepository.deleteById(id);
     }
 }
