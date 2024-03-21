@@ -1,6 +1,7 @@
 package com.vlados.webshop.shopservice.service.impl;
 
 import com.vlados.webshop.shopservice.dao.InventoryDao;
+import com.vlados.webshop.shopservice.domain.dto.inventory.InventoryRequestDto;
 import com.vlados.webshop.shopservice.domain.dto.inventory.InventoryResponseDto;
 import com.vlados.webshop.shopservice.domain.dto.inventory.InventoryUpdateDto;
 import com.vlados.webshop.shopservice.domain.item.InventoryInfo;
@@ -24,14 +25,14 @@ public class InventoryServiceImpl implements InventoryService {
     @Override
     public List<InventoryResponseDto> getAll() {
         return inventoryDao.getAll().stream()
-                .map(DtoMapper::toDto)
+                .map(DtoMapper.ForInventory::toDto)
                 .toList();
     }
 
     @Override
     @Transactional
-    public InventoryInfo add(final InventoryInfo inventoryInfo) {
-        return inventoryDao.add(inventoryInfo);
+    public InventoryInfo add(final InventoryRequestDto dto) {
+        return inventoryDao.add(DtoMapper.ForInventory.fromDto(dto));
     }
 
     @Override

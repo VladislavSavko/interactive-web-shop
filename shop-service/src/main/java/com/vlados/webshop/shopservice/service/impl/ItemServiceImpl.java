@@ -30,7 +30,7 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public List<ItemResponseDto> getAll() {
         return itemDao.getAll().stream()
-                .map(DtoMapper::toDto)
+                .map(DtoMapper.ForItem::toDto)
                 .toList();
     }
 
@@ -46,7 +46,7 @@ public class ItemServiceImpl implements ItemService {
                 .relatedCategory(findCategoryByName(itemDto))
                 .build();
 
-        return DtoMapper.toDto(itemDao.add(newItem));
+        return DtoMapper.ForItem.toDto(itemDao.add(newItem));
     }
 
     @Override
@@ -80,7 +80,7 @@ public class ItemServiceImpl implements ItemService {
     private Category findCategoryByName(final ItemRequestDto dto) {
         return categoryDao.get(dto.categoryName())
                 .orElse(
-                        new Category(dto.categoryName(), dto.description(), null)
+                        categoryDao.add(new Category(dto.categoryName(), "", null))
                 );
     }
 }

@@ -18,6 +18,7 @@ public class InventoryInfo {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+
     private long quantity;
 
     @CreationTimestamp
@@ -26,7 +27,6 @@ public class InventoryInfo {
 
     @UpdateTimestamp
     @Column(name = "updated_at")
-
     private LocalDateTime modifiedAt;
 
     @OneToOne(mappedBy = "inventoryInfo")

@@ -13,5 +13,4 @@ public class ShopServiceApplication {
     //TODO:
     // 1. Validation on dtos + exceptions
     // 2. Refactoring
-
 }

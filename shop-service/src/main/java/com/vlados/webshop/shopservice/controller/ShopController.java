@@ -2,6 +2,7 @@ package com.vlados.webshop.shopservice.controller;
 
 import com.vlados.webshop.shopservice.domain.dto.category.CategoryResponseDto;
 import com.vlados.webshop.shopservice.domain.dto.category.CategoryUpdateDto;
+import com.vlados.webshop.shopservice.domain.dto.inventory.InventoryRequestDto;
 import com.vlados.webshop.shopservice.domain.dto.inventory.InventoryResponseDto;
 import com.vlados.webshop.shopservice.domain.dto.inventory.InventoryUpdateDto;
 import com.vlados.webshop.shopservice.domain.dto.item.ItemRequestDto;
@@ -14,6 +15,7 @@ import com.vlados.webshop.shopservice.service.CategoryService;
 import com.vlados.webshop.shopservice.service.InventoryService;
 import com.vlados.webshop.shopservice.service.ItemService;
 import com.vlados.webshop.shopservice.util.ResourceUtil;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -51,18 +53,18 @@ public class ShopController {
     }
 
     @PostMapping("/items")
-    public ItemResponseDto addItem(@RequestBody ItemRequestDto itemDto) {
+    public ItemResponseDto addItem(@RequestBody @Valid ItemRequestDto itemDto) {
         return itemService.add(itemDto);
     }
 
     @PostMapping("/categories")
-    public Category addCategory(@RequestBody Category category) {
+    public Category addCategory(@RequestBody @Valid Category category) {
         return categoryService.add(category);
     }
 
     @PostMapping("/inventory")
-    public InventoryInfo addInventory(@RequestBody InventoryInfo inventoryInfo) {
-        return inventoryService.add(inventoryInfo);
+    public InventoryInfo addInventory(@RequestBody @Valid InventoryRequestDto inventoryRequestDto) {
+        return inventoryService.add(inventoryRequestDto);
     }
 
     @DeleteMapping("/items/{id}")

@@ -24,7 +24,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public List<CategoryResponseDto> getAll() {
         return categoryDao.getAll().stream()
-                .map(DtoMapper::toDto)
+                .map(DtoMapper.ForCategory::toDto)
                 .toList();
     }
 
