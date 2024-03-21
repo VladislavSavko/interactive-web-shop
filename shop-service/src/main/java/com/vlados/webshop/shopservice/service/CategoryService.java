@@ -11,7 +11,7 @@ public interface CategoryService {
 
     Category add(final Category category);
 
-    void softDelete(final long id);
+    void delete(final long id);
 
     void update(final long id, final CategoryUpdateDto dto);
 }

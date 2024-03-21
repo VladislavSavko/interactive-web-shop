@@ -13,4 +13,6 @@ public interface CategoryDao {
     Optional<Category> get(final String categoryName);
 
     Optional<Category> get(final long id);
+
+    void delete(final long id);
 }

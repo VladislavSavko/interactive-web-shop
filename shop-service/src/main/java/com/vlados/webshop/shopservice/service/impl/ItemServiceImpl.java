@@ -80,7 +80,7 @@ public class ItemServiceImpl implements ItemService {
     private Category findCategoryByName(final ItemRequestDto dto) {
         return categoryDao.get(dto.categoryName())
                 .orElse(
-                        categoryDao.add(new Category(dto.categoryName(), "", null))
+                        new Category(dto.categoryName(), "", null)
                 );
     }
 }

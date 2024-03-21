@@ -79,7 +79,7 @@ public class ShopController {
 
     @DeleteMapping("/categories/{id}")
     public ResponseEntity<String> deleteCategory(@PathVariable(name = "id") long id) {
-        categoryService.softDelete(id);
+        categoryService.delete(id);
 
         return ResponseEntity.status(204)
                 .body(

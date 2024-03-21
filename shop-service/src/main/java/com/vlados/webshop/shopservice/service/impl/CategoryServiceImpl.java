@@ -36,12 +36,8 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     @Transactional
-    public void softDelete(long id) {
-        categoryDao.get(id)
-                .ifPresentOrElse(category -> category.setName(""),
-                        () -> {
-                            throw new NoSuchElementException(ResourceUtil.getMessage("db.category.not_found_by_id").formatted(id));
-                        });
+    public void delete(long id) {
+        categoryDao.delete(id);
     }
 
     @Override
