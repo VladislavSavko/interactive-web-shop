@@ -130,6 +130,16 @@ public class ShopController {
         //TODO: Make a superadmin's hardDelete() method
     }
 
+    @DeleteMapping("/images/{id}")
+    public ResponseEntity<String> deleteImage(@PathVariable(name = "id") long id) {
+        imageService.deleteImage(id);
+
+        return ResponseEntity.status(204)
+                .body(
+                        ResourceUtil.getMessage("response.image.deleted").formatted(id)
+                );
+    }
+
     @PutMapping("/items/{id}")
     public ResponseEntity<String> updateItem(
             @RequestBody ItemUpdateDto itemUpdateDto,

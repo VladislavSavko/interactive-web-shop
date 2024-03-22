@@ -34,5 +34,6 @@ public class ImageDaoImpl implements ImageDao {
 
     @Override
     public void deleteImage(long id) {
+        imageRepository.deleteById(id);
     }
 }
