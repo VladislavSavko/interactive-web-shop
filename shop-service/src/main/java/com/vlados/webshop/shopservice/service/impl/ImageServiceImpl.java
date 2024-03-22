@@ -1,15 +1,19 @@
 package com.vlados.webshop.shopservice.service.impl;
 
 import com.vlados.webshop.shopservice.dao.ImageDao;
+import com.vlados.webshop.shopservice.domain.dto.image.ImageResponseDto;
 import com.vlados.webshop.shopservice.domain.item.Image;
 import com.vlados.webshop.shopservice.domain.item.Item;
 import com.vlados.webshop.shopservice.service.ImageService;
+import com.vlados.webshop.shopservice.util.DtoMapper;
+import com.vlados.webshop.shopservice.util.ResourceUtil;
 import com.vlados.webshop.shopservice.util.comp.ImageCompressor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.Optional;
+import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 public class ImageServiceImpl implements ImageService {
@@ -20,13 +24,26 @@ public class ImageServiceImpl implements ImageService {
     }
 
     @Override
+    public List<ImageResponseDto> getAll() {
+        List<Image> compressedImages = imageDao.getAll();
+        compressedImages.forEach(image -> image.setBinary(ImageCompressor.decompress(image.getBinary())));
+
+        return compressedImages.stream()
+                .map(DtoMapper.ForImage::toDto)
+                .toList();
+    }
+
+    @Override
     public Image uploadImage(MultipartFile multipartFile, Item item) throws IOException {
         return imageDao.uploadImage(ImageCompressor.compress(multipartFile.getBytes()), item);
     }
 
     @Override
-    public Optional<Image> get(long itemId) {
-        return imageDao.get(itemId);
+    public Image get(long itemId) {
+        return imageDao.get(itemId)
+                .orElseThrow(
+                        () -> new NoSuchElementException(ResourceUtil.getMessage("db.image.not_found").formatted(itemId))
+                );
     }
 
     @Override

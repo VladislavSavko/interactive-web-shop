@@ -6,6 +6,7 @@ import com.vlados.webshop.shopservice.domain.item.Item;
 import com.vlados.webshop.shopservice.repos.ImageRepository;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -14,6 +15,11 @@ public class ImageDaoImpl implements ImageDao {
 
     public ImageDaoImpl(ImageRepository imageRepository) {
         this.imageRepository = imageRepository;
+    }
+
+    @Override
+    public List<Image> getAll() {
+        return imageRepository.findAll();
     }
 
     @Override

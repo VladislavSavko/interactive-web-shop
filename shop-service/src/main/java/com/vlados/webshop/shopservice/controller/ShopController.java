@@ -2,6 +2,7 @@ package com.vlados.webshop.shopservice.controller;
 
 import com.vlados.webshop.shopservice.domain.dto.category.CategoryResponseDto;
 import com.vlados.webshop.shopservice.domain.dto.category.CategoryUpdateDto;
+import com.vlados.webshop.shopservice.domain.dto.image.ImageResponseDto;
 import com.vlados.webshop.shopservice.domain.dto.inventory.InventoryRequestDto;
 import com.vlados.webshop.shopservice.domain.dto.inventory.InventoryResponseDto;
 import com.vlados.webshop.shopservice.domain.dto.inventory.InventoryUpdateDto;
@@ -17,8 +18,10 @@ import com.vlados.webshop.shopservice.service.ImageService;
 import com.vlados.webshop.shopservice.service.InventoryService;
 import com.vlados.webshop.shopservice.service.ItemService;
 import com.vlados.webshop.shopservice.util.ResourceUtil;
+import com.vlados.webshop.shopservice.util.comp.ImageCompressor;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -56,6 +59,23 @@ public class ShopController {
     @GetMapping("/inventory")
     public List<InventoryResponseDto> getInventoryInfo() {
         return inventoryService.getAll();
+    }
+
+    @GetMapping("/images/{id}")
+    public ResponseEntity<?> getImageById(@PathVariable(name = "id") final long itemId) {
+        return ResponseEntity.ok()
+                .contentType(MediaType.IMAGE_PNG)
+                .body(
+                        ImageCompressor.decompress(imageService.get(itemId)
+                                .getBinary())
+                );
+    }
+
+    @GetMapping("/images")
+    public List<byte[]> getImages() {
+        return imageService.getAll().stream()
+                .map(ImageResponseDto::data)
+                .toList();
     }
 
     @PostMapping("/items")

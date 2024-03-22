@@ -1,10 +1,12 @@
 package com.vlados.webshop.shopservice.util;
 
 import com.vlados.webshop.shopservice.domain.dto.category.CategoryResponseDto;
+import com.vlados.webshop.shopservice.domain.dto.image.ImageResponseDto;
 import com.vlados.webshop.shopservice.domain.dto.inventory.InventoryRequestDto;
 import com.vlados.webshop.shopservice.domain.dto.inventory.InventoryResponseDto;
 import com.vlados.webshop.shopservice.domain.dto.item.ItemResponseDto;
 import com.vlados.webshop.shopservice.domain.item.Category;
+import com.vlados.webshop.shopservice.domain.item.Image;
 import com.vlados.webshop.shopservice.domain.item.InventoryInfo;
 import com.vlados.webshop.shopservice.domain.item.Item;
 
@@ -46,6 +48,12 @@ public class DtoMapper {
 
         public static InventoryInfo fromDto(InventoryRequestDto requestDto) {
             return new InventoryInfo(requestDto.quantity(), null, null, null);
+        }
+    }
+
+    public static class ForImage {
+        public static ImageResponseDto toDto(Image image) {
+            return new ImageResponseDto(image.getBinary());
         }
     }
 }

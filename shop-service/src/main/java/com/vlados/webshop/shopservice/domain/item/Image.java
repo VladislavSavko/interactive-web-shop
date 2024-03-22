@@ -2,12 +2,14 @@ package com.vlados.webshop.shopservice.domain.item;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "images")
 @AllArgsConstructor
 @NoArgsConstructor
+@Data
 public class Image {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
