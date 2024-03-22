@@ -44,8 +44,8 @@ public class UserMapper {
         Address address = user.getAddress();
         return address == null
                 ?
-                new ResponseUserDto(user.getEmail(), user.getName(), null)
+                new ResponseUserDto(user.getEmail(), user.getName(), null , user.getRole())
                 :
-                new ResponseUserDto(user.getEmail(), user.getName(), AddressMapper.map(address));
+                new ResponseUserDto(user.getEmail(), user.getName(), AddressMapper.map(address), user.getRole());
     }
 }

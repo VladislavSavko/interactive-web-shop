@@ -1,3 +1,4 @@
 include("eureka-service")
 include("gateway-service")
 include("user-service")
+include("shop-service")

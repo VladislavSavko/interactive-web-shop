@@ -2,14 +2,21 @@ package com.vlados.webshop.userservice.service.impl;
 
 import com.vlados.webshop.userservice.dao.AddressDao;
 import com.vlados.webshop.userservice.dao.UserDao;
+import com.vlados.webshop.userservice.domain.User;
 import com.vlados.webshop.userservice.dto.address.AddressDto;
+import com.vlados.webshop.userservice.dto.auth.UserAuthDtoRequest;
+import com.vlados.webshop.userservice.dto.auth.UserAuthDtoResponse;
 import com.vlados.webshop.userservice.dto.user.NewUserDto;
 import com.vlados.webshop.userservice.dto.user.ResponseUserDto;
 import com.vlados.webshop.userservice.dto.user.UpdatedUserDto;
+import com.vlados.webshop.userservice.exception.NoSuchEntityException;
+import com.vlados.webshop.userservice.exception.WrongCredentialsException;
 import com.vlados.webshop.userservice.service.UserService;
 import com.vlados.webshop.userservice.util.ResourceUtil;
+import com.vlados.webshop.userservice.util.jwt.JwtGenerator;
 import com.vlados.webshop.userservice.util.mapper.AddressMapper;
 import com.vlados.webshop.userservice.util.mapper.UserMapper;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,10 +27,14 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
     private final UserDao userDao;
     private final AddressDao addressDao;
+    private final PasswordEncoder passwordEncoder;
+    private final JwtGenerator jwtGenerator;
 
-    public UserServiceImpl(UserDao userDao, AddressDao addressDao) {
+    public UserServiceImpl(UserDao userDao, AddressDao addressDao, PasswordEncoder passwordEncoder, JwtGenerator jwtGenerator) {
         this.userDao = userDao;
         this.addressDao = addressDao;
+        this.passwordEncoder = passwordEncoder;
+        this.jwtGenerator = jwtGenerator;
     }
 
     @Override
@@ -86,6 +97,38 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean exists(final long id) {
         return userDao.exists(id);
+    }
+
+    @Override
+    public Optional<UserAuthDtoResponse> jwtTokenOf(UserAuthDtoRequest request) {
+        Optional<User> existingUser = userDao.get(request.email());
+        if (existingUser.isPresent()
+                &&
+                passwordEncoder.matches(
+                        request.password(),
+                        existingUser.get()
+                                .getPassword()
+                )
+        ) {
+            User user = existingUser.get();
+
+            return Optional.of(
+                    new UserAuthDtoResponse(
+                            user.getId(),
+                            jwtGenerator.generate(user),
+                            user.getEmail(),
+                            user.getRole()
+                    )
+            );
+        } else if (existingUser.isEmpty()) {
+            throw new NoSuchEntityException(
+                    ResourceUtil.getMessage("db.user.email")
+                            .formatted(request.email())
+            );
+        }
+        throw new WrongCredentialsException(
+                ResourceUtil.getMessage("response.wrong.credentials")
+        );
     }
 
     private boolean addressChanged(long id, AddressDto dto) {

@@ -20,7 +20,7 @@ public class JwtAuthenticationManager implements ReactiveAuthenticationManager {
     @Override
     public Mono<Authentication> authenticate(Authentication authentication) {
         String token = (String) authentication.getCredentials();
-        log.info("Got token from user: {}", token);
+        log.info("{} - Got token from user: {}", this.getClass().getCanonicalName(), token);
 
         if (jwtParser.validate(token)) {
             String email = jwtParser.extractEmail(token);

@@ -1,43 +1,40 @@
 package com.vlados.webshop.gatewayservice.config;
 
+import com.vlados.webshop.gatewayservice.jwt.JwtAuthenticationManager;
+import com.vlados.webshop.gatewayservice.jwt.repos.JwtSecurityContextRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
-import org.springframework.security.core.userdetails.MapReactiveUserDetailsService;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.server.SecurityWebFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.reactive.CorsConfigurationSource;
+import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
+
+import java.util.List;
 
 @Configuration
+@RequiredArgsConstructor
 @EnableWebSecurity
 @EnableWebFluxSecurity
 public class SecurityConfig {
+    private final JwtAuthenticationManager authenticationManager;
+    private final JwtSecurityContextRepository contextRepository;
 
     @Bean
-    public MapReactiveUserDetailsService userDetailsManager(PasswordEncoder passwordEncoder) {
-        UserDetails user = User.builder()
-                .username("user")
-                .password(passwordEncoder.encode("user"))
-                .authorities("USER")
-                .build();
+    CorsConfigurationSource corsConfiguration() {
+        CorsConfiguration corsConfig = new CorsConfiguration();
 
-        UserDetails admin = User.builder()
-                .username("admin")
-                .password(passwordEncoder.encode("admin"))
-                .authorities("USER", "ADMIN")
-                .build();
+        corsConfig.setAllowedOrigins(List.of("*"));
+        corsConfig.setAllowedMethods(List.of("*"));
+        corsConfig.setAllowedHeaders(List.of("*"));
 
-        return new MapReactiveUserDetailsService(user, admin);
-    }
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", corsConfig);
+        return source;
     }
 
     @Bean
@@ -45,12 +42,21 @@ public class SecurityConfig {
         return httpSecurity
                 .authorizeExchange(
                         authorizationManagerRequestMatcherRegistry -> authorizationManagerRequestMatcherRegistry
-                                .pathMatchers(HttpMethod.GET, "/api/v1/users")
+                                .pathMatchers(HttpMethod.GET, "/api/v1/users/**","/api/v1/shop/**")
+                                .permitAll()
+                                .pathMatchers(HttpMethod.POST, "/api/v1/users/**","/api/v1/shop/**")
+                                .permitAll()
+                                .pathMatchers(HttpMethod.DELETE, "/api/v1/users/**","/api/v1/shop/**")
+                                .permitAll()
+                                .pathMatchers(HttpMethod.PUT, "/api/v1/users/**","/api/v1/shop/**")
                                 .permitAll()
                                 .anyExchange()
                                 .authenticated()
                 )
+                .csrf(ServerHttpSecurity.CsrfSpec::disable)//TODO: enable csrf??
+                .cors(corsSpec -> corsSpec.configurationSource(corsConfiguration()))
+                .authenticationManager(authenticationManager)
+                .securityContextRepository(contextRepository)
                 .build();
-        //TODO: Make sure security will work with all needed authentication managers
     }
 }

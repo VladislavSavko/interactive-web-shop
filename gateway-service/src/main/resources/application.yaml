@@ -7,6 +7,8 @@ security:
     default_secret: 8Zz5tw0Ionm3XPZZfN0NOml3z9FMfmpgXwovR9fp6ryDIoGRM8EPHAB6iHsc0fb
   authentication:
     url: /api/v1/users/auth
+  password_encoder:
+    strength:10
 
 eureka:
   client:
@@ -23,7 +25,10 @@ spring:
         - id: user-service
           uri: lb://user-service
           predicates:
-            - Path=/api/v1/users
+            - Path=/api/v1/users/**
+        - id: shop-service
+          uri: lb://shop-service
+          predicates:
+            - Path=/api/v1/shop/**
   main:
     allow-bean-definition-overriding: true
-    web-application-type: reactive

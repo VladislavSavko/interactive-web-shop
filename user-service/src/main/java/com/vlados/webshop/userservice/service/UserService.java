@@ -1,5 +1,7 @@
 package com.vlados.webshop.userservice.service;
 
+import com.vlados.webshop.userservice.dto.auth.UserAuthDtoRequest;
+import com.vlados.webshop.userservice.dto.auth.UserAuthDtoResponse;
 import com.vlados.webshop.userservice.dto.user.NewUserDto;
 import com.vlados.webshop.userservice.dto.user.ResponseUserDto;
 import com.vlados.webshop.userservice.dto.user.UpdatedUserDto;
@@ -23,4 +25,6 @@ public interface UserService {
     void update(final long id, final UpdatedUserDto dto);
 
     boolean exists(final long id);
+
+    Optional<UserAuthDtoResponse> jwtTokenOf(final UserAuthDtoRequest request);
 }

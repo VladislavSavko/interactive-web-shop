@@ -9,6 +9,7 @@ import com.vlados.webshop.userservice.dto.user.UpdatedUserDto;
 import com.vlados.webshop.userservice.repos.UserRepository;
 import com.vlados.webshop.userservice.util.mapper.UserMapper;
 import jakarta.transaction.Transactional;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -18,9 +19,11 @@ import java.util.Optional;
 @Component
 public class UserDaoImpl implements UserDao {
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserDaoImpl(UserRepository userRepository) {
+    public UserDaoImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -48,6 +51,7 @@ public class UserDaoImpl implements UserDao {
     public User add(final NewUserDto user) {
         User newUser = UserMapper.map(user);
         newUser.setRole(User.Role.CLIENT);
+        newUser.setPassword(passwordEncoder.encode(user.password()));
         return userRepository.save(newUser);
     }
 

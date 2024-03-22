@@ -1,5 +1,7 @@
 package com.vlados.webshop.userservice.controller;
 
+import com.vlados.webshop.userservice.dto.auth.UserAuthDtoRequest;
+import com.vlados.webshop.userservice.dto.auth.UserAuthDtoResponse;
 import com.vlados.webshop.userservice.dto.exception.ExceptionResponse;
 import com.vlados.webshop.userservice.dto.user.NewUserDto;
 import com.vlados.webshop.userservice.dto.user.ResponseUserDto;
@@ -25,12 +27,13 @@ public class UserController {
     }
 
     @GetMapping
-    public List<ResponseUserDto> users(@RequestParam(name = "email", required = false) String email) {
-        return email == null
-                ?
-                userService.getAll()
-                :
-                List.of(userService.get(email));
+    public List<ResponseUserDto> users() {
+        return userService.getAll();
+    }
+
+    @GetMapping("/auth/{email}")
+    public ResponseUserDto user(@PathVariable(name = "email") String email) {
+        return userService.get(email);
     }
 
     @GetMapping("/{id}")
@@ -41,6 +44,11 @@ public class UserController {
     @PostMapping
     public ResponseUserDto newUser(@RequestBody @Valid NewUserDto newUserDto) {
         return userService.add(newUserDto);
+    }
+
+    @PostMapping("/auth")
+    public ResponseEntity<UserAuthDtoResponse> authenticateUser(@RequestBody UserAuthDtoRequest dto) {
+        return ResponseEntity.of(userService.jwtTokenOf(dto));
     }
 
     @DeleteMapping("/{id}")
