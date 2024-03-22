@@ -9,9 +9,11 @@ import com.vlados.webshop.shopservice.domain.dto.item.ItemRequestDto;
 import com.vlados.webshop.shopservice.domain.dto.item.ItemResponseDto;
 import com.vlados.webshop.shopservice.domain.dto.item.ItemUpdateDto;
 import com.vlados.webshop.shopservice.domain.item.Category;
+import com.vlados.webshop.shopservice.domain.item.Image;
 import com.vlados.webshop.shopservice.domain.item.InventoryInfo;
 import com.vlados.webshop.shopservice.exception.ExceptionResponse;
 import com.vlados.webshop.shopservice.service.CategoryService;
+import com.vlados.webshop.shopservice.service.ImageService;
 import com.vlados.webshop.shopservice.service.InventoryService;
 import com.vlados.webshop.shopservice.service.ItemService;
 import com.vlados.webshop.shopservice.util.ResourceUtil;
@@ -19,7 +21,9 @@ import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -30,11 +34,13 @@ public class ShopController {
     private final ItemService itemService;
     private final CategoryService categoryService;
     private final InventoryService inventoryService;
+    private final ImageService imageService;
 
-    public ShopController(ItemService itemService, CategoryService categoryService, InventoryService inventoryService) {
+    public ShopController(ItemService itemService, CategoryService categoryService, InventoryService inventoryService, ImageService imageService) {
         this.itemService = itemService;
         this.categoryService = categoryService;
         this.inventoryService = inventoryService;
+        this.imageService = imageService;
     }
 
     @GetMapping("/items")
@@ -65,6 +71,11 @@ public class ShopController {
     @PostMapping("/inventory")
     public InventoryInfo addInventory(@RequestBody @Valid InventoryRequestDto inventoryRequestDto) {
         return inventoryService.add(inventoryRequestDto);
+    }
+
+    @PostMapping("/images")
+    public Image addImage(@RequestParam(name = "image") MultipartFile image, @RequestParam(name = "itemId") long itemId) throws IOException {
+        return imageService.uploadImage(image, itemService.get(itemId));
     }
 
     @DeleteMapping("/items/{id}")

@@ -35,6 +35,14 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
+    public Item get(long id) {
+        return itemDao.get(id).orElseThrow(() -> new NoSuchElementException(
+                        ResourceUtil.getMessage("db.item.not_found").formatted(id)
+                )
+        );
+    }
+
+    @Override
     @Transactional
     public ItemResponseDto add(ItemRequestDto itemDto) {
         Item newItem = null;
