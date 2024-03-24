@@ -1,4 +1,9 @@
 package com.vlados.webshop.shopservice.domain.dto.category;
 
-public record CategoryUpdateDto(String name, String description) {
+import jakarta.validation.constraints.NotBlank;
+
+public record CategoryUpdateDto(
+        @NotBlank
+        String name,
+        String description) {
 }

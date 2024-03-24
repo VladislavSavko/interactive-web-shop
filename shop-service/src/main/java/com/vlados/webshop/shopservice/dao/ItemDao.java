@@ -13,4 +13,6 @@ public interface ItemDao {
     Item add(final Item item);
 
     void delete(final long id);
+
+    boolean exists(final long id);
 }

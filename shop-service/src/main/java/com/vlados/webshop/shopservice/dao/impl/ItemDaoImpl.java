@@ -35,4 +35,9 @@ public class ItemDaoImpl implements ItemDao {
     public void delete(long id) {
         itemRepository.deleteById(id);
     }
+
+    @Override
+    public boolean exists(long id) {
+        return itemRepository.existsById(id);
+    }
 }

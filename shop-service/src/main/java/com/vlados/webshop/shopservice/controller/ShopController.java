@@ -142,7 +142,7 @@ public class ShopController {
 
     @PutMapping("/items/{id}")
     public ResponseEntity<String> updateItem(
-            @RequestBody ItemUpdateDto itemUpdateDto,
+            @RequestBody @Valid ItemUpdateDto itemUpdateDto,
             @PathVariable(name = "id") long id) {
         itemService.update(id, itemUpdateDto);
 
@@ -155,7 +155,7 @@ public class ShopController {
 
     @PutMapping("/categories/{id}")
     public ResponseEntity<String> updateCategory(
-            @RequestBody CategoryUpdateDto categoryUpdateDto,
+            @RequestBody @Valid CategoryUpdateDto categoryUpdateDto,
             @PathVariable(name = "id") long id) {
         categoryService.update(id, categoryUpdateDto);
 
@@ -167,7 +167,7 @@ public class ShopController {
 
     @PutMapping("/inventory/{id}")
     public ResponseEntity<String> updateInventory(
-            @RequestBody InventoryUpdateDto inventoryUpdateDto,
+            @RequestBody @Valid InventoryUpdateDto inventoryUpdateDto,
             @PathVariable(name = "id") long id) {
         inventoryService.update(id, inventoryUpdateDto);
 

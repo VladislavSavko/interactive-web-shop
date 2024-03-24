@@ -11,7 +11,7 @@ public record ItemRequestDto(
         @NotBlank
         String categoryName,
         @Min(1)
-        int quantity,
+        long quantity,
         @HexColor
         String color,
         String description) {

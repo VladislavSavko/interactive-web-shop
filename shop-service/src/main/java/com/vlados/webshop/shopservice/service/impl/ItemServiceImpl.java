@@ -60,7 +60,11 @@ public class ItemServiceImpl implements ItemService {
     @Override
     @Transactional
     public void delete(long id) {
-        itemDao.delete(id);
+        if(itemDao.exists(id)) {
+            itemDao.delete(id);
+        } else {
+            throw new NoSuchElementException(ResourceUtil.getMessage("db.item.not_found").formatted(id));
+        }
     }
 
     @Override
@@ -87,8 +91,10 @@ public class ItemServiceImpl implements ItemService {
 
     private Category findCategoryByName(final ItemRequestDto dto) {
         return categoryDao.get(dto.categoryName())
-                .orElse(
-                        new Category(dto.categoryName(), "", null)
+                .orElseThrow(
+                        () -> new NoSuchElementException(
+                                ResourceUtil.getMessage("db.category.not_found_by_name").formatted(dto.categoryName())
+                        )
                 );
     }
 }

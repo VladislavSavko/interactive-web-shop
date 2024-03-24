@@ -1,4 +1,8 @@
 package com.vlados.webshop.shopservice.domain.dto.inventory;
 
-public record InventoryUpdateDto(long quantity) {
+import jakarta.validation.constraints.Min;
+
+public record InventoryUpdateDto(
+        @Min(1)
+        long quantity) {
 }
