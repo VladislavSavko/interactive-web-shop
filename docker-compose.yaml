@@ -82,6 +82,25 @@ services:
 
 
 
+  photo-service:
+    image: interactive-web-shop-image-processing:latest
+    build: photo-service
+    container_name: photo-service
+    ports:
+      - "8083:8083"
+    environment:
+      EUREKA_SERVER_URL: http://eureka-server:8761/eureka/
+    depends_on:
+      eureka-server:
+        condition: service_healthy
+    healthcheck:
+      test: [ "CMD", "curl", "-I", "http://localhost:8083" ]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+
+
   user-service-db:
     image: mysql:latest
     container_name: user-service-db
