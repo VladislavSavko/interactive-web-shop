@@ -15,4 +15,6 @@ public interface CategoryDao {
     Optional<Category> get(final long id);
 
     void delete(final long id);
+
+    boolean exists(final long id);
 }

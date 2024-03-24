@@ -37,7 +37,11 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     @Transactional
     public void delete(long id) {
-        categoryDao.delete(id);
+        if (categoryDao.exists(id)) {
+            categoryDao.delete(id);
+        } else {
+            throw new NoSuchElementException(ResourceUtil.getMessage("db.category.not_found_by_id").formatted(id));
+        }
     }
 
     @Override

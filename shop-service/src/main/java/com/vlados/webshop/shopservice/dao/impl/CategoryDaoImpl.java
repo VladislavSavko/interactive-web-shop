@@ -40,4 +40,9 @@ public class CategoryDaoImpl implements CategoryDao {
     public void delete(long id) {
         categoryRepository.deleteById(id);
     }
+
+    @Override
+    public boolean exists(long id) {
+        return categoryRepository.existsById(id);
+    }
 }
