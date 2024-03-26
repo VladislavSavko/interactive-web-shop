@@ -36,6 +36,7 @@ public class ImageProcessor {
         // Нахождение ключевых точек
         MatOfKeyPoint keypoints = new MatOfKeyPoint();
         fast.detect(gray, keypoints);
+        keypoints.toList().forEach(keyPoint -> System.out.println("x" + keyPoint.pt.x + " " + "y" + keyPoint.pt.y));
 
         // Отрисовка ключевых точек на изображении
         Mat dst = new Mat();
@@ -50,98 +51,75 @@ public class ImageProcessor {
 
     public static byte[] contour(byte[] originalImage) {
         Mat src = Imgcodecs.imdecode(new MatOfByte(originalImage), Imgcodecs.IMREAD_UNCHANGED);
-        Mat gray = new Mat();
-        Imgproc.cvtColor(src, gray, Imgproc.COLOR_BGR2GRAY);
+        Rect bottomHalf = new Rect(0, src.rows() / 2, src.cols(), src.rows() / 2);
+        Mat srcBottomHalf = src.submat(bottomHalf);
+        Mat grayImage = new Mat();
+        Imgproc.cvtColor(srcBottomHalf, grayImage, Imgproc.COLOR_BGR2GRAY);
 
-        // Применение фильтрации для улучшения контраста
-        Imgproc.GaussianBlur(gray, gray, new Size(5, 5), 0);
+        // Примените пороговое преобразование
+        Mat thresholdedImage = new Mat();
+        Imgproc.threshold(grayImage, thresholdedImage, 100, 255, Imgproc.THRESH_BINARY);
 
-        // Применение алгоритма Кэнни для выделения границ
-        Mat edges = new Mat();
-        Imgproc.Canny(gray, edges, 100, 200);
-
-        // Поиск контуров
+        // Найдите контуры
         List<MatOfPoint> contours = new ArrayList<>();
         Mat hierarchy = new Mat();
-        Imgproc.findContours(edges, contours, hierarchy, Imgproc.RETR_EXTERNAL, Imgproc.CHAIN_APPROX_SIMPLE);
+        Imgproc.findContours(thresholdedImage, contours, hierarchy, Imgproc.RETR_EXTERNAL, Imgproc.CHAIN_APPROX_SIMPLE);
 
-        // Отрисовка контуров на исходном изображении
-        Imgproc.drawContours(src, contours, -1, new Scalar(0, 255, 0), 2);
+        // Нарисуйте контуры красным цветом на новом изображении
+        Mat contourImage = Mat.zeros(srcBottomHalf.size(), srcBottomHalf.type());
+        Imgproc.drawContours(contourImage, contours, -1, new Scalar(0, 0, 255), 2);
 
-        MatOfByte bytes = new MatOfByte();
-        Imgcodecs.imencode(".png", src, bytes);
-        Imgcodecs.imwrite("output.jpg", src);
+        saveImage(contourImage);
 
-        return bytes.toArray();
+        return getBytes(contourImage);
     }
 
     public static byte[] contourOverlay(byte[] back, byte[] front) {
         Mat image1 = Imgcodecs.imdecode(new MatOfByte(back), Imgcodecs.IMREAD_UNCHANGED);
-        Mat image2 = Imgcodecs.imdecode(new MatOfByte(front), Imgcodecs.IMREAD_UNCHANGED);
-//        Mat gray = new Mat();
-//        Imgproc.cvtColor(image1, gray, Imgproc.COLOR_BGR2GRAY);
+//        Mat image2 = Imgcodecs.imdecode(new MatOfByte(front), Imgcodecs.IMREAD_UNCHANGED);
 //
-//        // Применение фильтрации для улучшения контраста
-//        Imgproc.GaussianBlur(gray, gray, new Size(5, 5), 0);
+//        if (image1.cols() != image2.cols() || image1.rows() / 2 != image2.rows()) {
+//            Imgproc.resize(image2, image2, new Size(image1.cols(), image1.rows() / 2.0));
+//        }
 //
-//        // Применение алгоритма Кэнни для выделения границ
-//        Mat edges = new Mat();
-//        Imgproc.Canny(gray, edges, 100, 200);
+//        // Создайте новое изображение
+//        Mat combinedImage = new Mat(image1.rows(), image1.cols(), image1.type());
 //
-//        Imgcodecs.imwrite("1.jpg", gray);
+//        // Создайте ROI для верхней половины первого изображения
+//        Rect roiTop = new Rect(0, 0, image1.cols(), image1.rows() / 2);
+//        Mat topRegion = combinedImage.submat(roiTop);
 //
-//        // Поиск контуров
-//        List<MatOfPoint> contours = new ArrayList<>();
-//        Mat hierarchy = new Mat();
-//        Imgproc.findContours(edges, contours, hierarchy, Imgproc.RETR_EXTERNAL, Imgproc.CHAIN_APPROX_SIMPLE);
+//        // Создайте ROI для нижней половины нового изображения
+//        Rect roiBottom = new Rect(0, image1.rows() / 2, image1.cols(), image1.rows() / 2);
+//        Mat bottomRegion = combinedImage.submat(roiBottom);
 //
-//        // Наложение второго изображения на контур первого
-//        Imgproc.drawContours(image1, contours, -1, new Scalar(0, 255, 0), 2);
-//        Imgcodecs.imwrite("2.jpg", image1);
-//        Mat mask = new Mat();
-//        Imgproc.fillPoly(mask, contours, new Scalar(255));
-//        image2.copyTo(image1, mask);
+//        // Скопируйте верхнюю половину первого изображения в верхний ROI
+//        image1.submat(roiTop).copyTo(topRegion);
 //
-//        Imgcodecs.imwrite("3.jpg", mask);
-//        Imgcodecs.imwrite("4.jpg", image2);
+//        // Скопируйте второе изображение в нижний ROI
+//        image2.copyTo(bottomRegion);
 //
-//        MatOfByte bytes = new MatOfByte();
-//        Imgcodecs.imencode(".png", image1, bytes);
-//
-//
-//        return bytes.toArray();
+//        return getBytes(combinedImage);
 
-        Imgproc.resize(image2, image2, new Size(image1.cols(), image1.rows()));
 
-        // Создание маски для нижней половины изображения
-        Mat maskBottomHalf = new Mat(image1.rows(), image1.cols(), CvType.CV_8UC1, Scalar.all(0));
-        Rect bottomHalfRect = new Rect(0, image1.rows() / 2, image1.cols(), image1.rows() / 2);
-        Mat roi = new Mat(maskBottomHalf, bottomHalfRect);
-        roi.setTo(Scalar.all(255));
 
-        // Наложение второго изображения на нижнюю половину контуров первого
-        Mat contoursOverlay = new Mat();
-        Core.bitwise_and(image1, image1, contoursOverlay); // Помещаем контуры на первое изображение
+        int rectangleStartY = (int)(image1.rows() * 0.5); // Начало прямоугольника от середины изображения
+        int rectangleHeight = (int)(image1.rows() * 0.5); // Высота прямоугольника до нижней части изображения
+        Rect rectangle = new Rect(new Point(0, rectangleStartY), new Point(image1.cols(), image1.rows()));
 
-        Mat blendedImage = new Mat();
-        Mat maskBottomHalfGray = new Mat();
-        Mat maskBottomHalfBGR = new Mat();
-        Imgproc.cvtColor(maskBottomHalf, maskBottomHalfGray, Imgproc.COLOR_BGR2GRAY);
-        Imgproc.threshold(maskBottomHalfGray, maskBottomHalfGray, 100, 255, Imgproc.THRESH_BINARY);
-        Imgproc.cvtColor(maskBottomHalfGray, maskBottomHalfBGR, Imgproc.COLOR_GRAY2BGR);
-        Core.addWeighted(contoursOverlay, 0.5, maskBottomHalfBGR, 0.5, 0, blendedImage); // Наложение маски на верхнюю половину контуров
-        Core.addWeighted(blendedImage, 1.0, image2, 1.0, 0, blendedImage); // Наложение второго изображения на нижнюю половину
+        // Нарисуйте прямоугольник на изображении
+        Imgproc.rectangle(image1, rectangle.tl(), rectangle.br(), new Scalar(0, 255, 0), 2);
+        return getBytes(image1);
+    }
 
+    private static byte[] getBytes(Mat image) {
         MatOfByte bytes = new MatOfByte();
-        Imgcodecs.imencode(".png", blendedImage, bytes);
-
+        Imgcodecs.imencode(".jpeg", image, bytes);
 
         return bytes.toArray();
     }
 
-    private static void fitImageToSrc(Mat src, Mat image) {
-        // Уравнивание размеров изображений
-        Size newSize = new Size(src.cols(), src.rows());
-        Imgproc.resize(image, image, newSize);
+    private static void saveImage(Mat image) {
+        Imgcodecs.imwrite("output.jpeg", image);
     }
 }
