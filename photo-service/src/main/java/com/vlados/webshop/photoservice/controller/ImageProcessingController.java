@@ -53,14 +53,15 @@ public class ImageProcessingController {
                 );
     }
 
-    @GetMapping("/legsDetection")
-    public ResponseEntity<?> legsDetection(
-            @RequestParam(name = "src") MultipartFile src
+    @GetMapping("/colorChange")
+    public ResponseEntity<?> colorChange(
+            @RequestParam(name = "src") MultipartFile src,
+            @RequestParam(name = "overlay") MultipartFile overlay
     ) throws IOException {
         return ResponseEntity.ok()
                 .contentType(MediaType.IMAGE_PNG)
                 .body(
-                        ImageProcessor.legsDetection(src.getBytes())
+                        ImageProcessor.contourOverlay(src.getBytes(), overlay.getBytes())
                 );
     }
 }

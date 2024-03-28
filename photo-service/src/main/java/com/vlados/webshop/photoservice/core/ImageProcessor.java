@@ -106,37 +106,49 @@ public class ImageProcessor {
 //        return getBytes(combinedImage);
 
         Mat hsv = new Mat();
+        Mat maskWhite = new Mat();
+        Mat maskBlack = new Mat();
+        Mat dst3, dst3Wh = new Mat();
         Imgproc.cvtColor(image1, hsv, Imgproc.COLOR_BGR2HSV);
 
         // Define the lower and upper bounds for blue color in HSV
-        Scalar lowerBlue = new Scalar(80, 50, 50);
-        Scalar upperBlue = new Scalar(150, 255, 255);
+        Scalar lowerBlue = new Scalar(50, 50, 50);
+        Scalar upperBlue = new Scalar(180, 255, 255);
 
-        // Create a white mask for the blue color range
-        Mat maskWhite = new Mat();
         Core.inRange(hsv, lowerBlue, upperBlue, maskWhite);
-
-        // Invert the mask to create a black mask for everything except blue
-        Mat maskBlack = new Mat();
         Core.bitwise_not(maskWhite, maskBlack);
-        // Resize the design image to match the mask size (reversed order)
-        Size maskSize = new Size(maskBlack.cols(), maskBlack.rows());
-        Imgproc.resize(image2, image2, maskSize);
 
-        // Create a 3-channel version of the mask (assuming mask_black is grayscale)
-        Mat mask_black_3CH = new Mat();
-        Imgproc.cvtColor(maskBlack, mask_black_3CH, Imgproc.COLOR_GRAY2BGR);
+        Mat maskBlackResized = new Mat();
+        Imgproc.resize(maskBlack, maskBlackResized, image1.size());
 
-        // Combine design and mask using bitwise OR
-        Mat design_mask_mixed = new Mat();
-        Imgproc.resize(design_mask_mixed, design_mask_mixed, image2.size());
-        Core.bitwise_or(mask_black_3CH, image2, design_mask_mixed);
+// Преобразование одноканальной маски в трехканальное изображение
+        Mat maskBlack3CH = new Mat(image1.size(), CvType.CV_8UC3);
+        Imgproc.cvtColor(maskBlackResized, maskBlack3CH, Imgproc.COLOR_GRAY2BGR);
 
-        // Apply the combined mask to the original image using bitwise AND
-        Mat finalMaskBlack3CH = new Mat();
-        Core.bitwise_and(design_mask_mixed, image1, finalMaskBlack3CH);
+// Теперь можно выполнить побитовое И
+        dst3 = new Mat();
 
-        return getBytes(finalMaskBlack3CH);
+//        Mat _4Ch = to4ChImage(maskBlack3CH);
+        Core.bitwise_and(maskBlack3CH, image1, dst3);
+        Core.bitwise_or(to3ChImage(maskWhite), dst3, dst3Wh);
+
+        Imgproc.resize(image2, image2, new Size(maskBlack.cols(), maskBlack.rows()));
+
+        Mat designMaskMixed = new Mat();
+        Mat finalMaskBlack3Ch = new Mat();
+
+        Mat imageWithFourChannels1 = new Mat(maskBlack.size(), CvType.CV_8UC4);
+
+        // Добавление цветных каналов к одноканальному изображению
+        Imgproc.cvtColor(maskBlack, imageWithFourChannels1, Imgproc.COLOR_GRAY2BGRA);
+
+        // Установка альфа-канала в максимальное значение (255 - полностью непрозрачный)
+        Core.add(imageWithFourChannels1, new Scalar(0, 0, 0, 255), imageWithFourChannels1);
+        Core.bitwise_or(imageWithFourChannels1, image2, designMaskMixed);
+
+        Core.bitwise_and(to3ChImage(designMaskMixed), dst3Wh, finalMaskBlack3Ch);
+
+        return getBytes(finalMaskBlack3Ch);
     }
 
     public static byte[] legsDetection(byte[] image) {
@@ -172,5 +184,36 @@ public class ImageProcessor {
 
     private static void saveImage(Mat image) {
         Imgcodecs.imwrite("output.jpeg", image);
+    }
+
+    private static Mat to4ChImage(Mat changeable) {
+        Mat _4Ch = new Mat(changeable.size(), CvType.CV_8UC4);
+
+        if (changeable.channels() == 1) {
+            Imgproc.cvtColor(changeable, _4Ch, Imgproc.COLOR_GRAY2BGRA);
+        } else if (changeable.channels() == 3) {
+            Imgproc.cvtColor(changeable, _4Ch, Imgproc.COLOR_BGR2BGRA);
+        }
+        // Установка альфа-канала в максимальное значение (255 - полностью непрозрачный)
+        Core.add(_4Ch, new Scalar(0, 0, 0, 255), _4Ch);
+
+        return _4Ch;
+    }
+
+    private static Mat to3ChImage(Mat changeable) {
+        Mat _3Ch = new Mat();
+        if (changeable.channels() != 4) {
+            // Добавление цветных каналов к одноканальному изображению
+            Imgproc.cvtColor(changeable, _3Ch, Imgproc.COLOR_GRAY2BGR);
+        } else {
+            Imgproc.cvtColor(changeable, _3Ch, Imgproc.COLOR_BGRA2BGR);
+        }
+
+        return _3Ch;
+    }
+
+    private static void dev_compare(Mat mat1, Mat mat2) {
+        System.out.println(mat1.size() + "     " + mat2.size());
+        System.out.println(mat1.channels() + "     " + mat2.channels());
     }
 }
