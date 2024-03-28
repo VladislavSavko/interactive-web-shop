@@ -11,6 +11,8 @@ import org.opencv.objdetect.CascadeClassifier;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.vlados.webshop.photoservice.core.OpenCvWrapper.bitwiseAnd;
+import static com.vlados.webshop.photoservice.core.OpenCvWrapper.bitwiseOr;
 import static org.opencv.features2d.Features2d.drawKeypoints;
 import static org.opencv.highgui.HighGui.imshow;
 
@@ -81,29 +83,6 @@ public class ImageProcessor {
     public static byte[] contourOverlay(byte[] back, byte[] front) {
         Mat image1 = Imgcodecs.imdecode(new MatOfByte(back), Imgcodecs.IMREAD_UNCHANGED);
         Mat image2 = Imgcodecs.imdecode(new MatOfByte(front), Imgcodecs.IMREAD_UNCHANGED);
-//
-//        if (image1.cols() != image2.cols() || image1.rows() / 2 != image2.rows()) {
-//            Imgproc.resize(image2, image2, new Size(image1.cols(), image1.rows() / 2.0));
-//        }
-//
-//        // Создайте новое изображение
-//        Mat combinedImage = new Mat(image1.rows(), image1.cols(), image1.type());
-//
-//        // Создайте ROI для верхней половины первого изображения
-//        Rect roiTop = new Rect(0, 0, image1.cols(), image1.rows() / 2);
-//        Mat topRegion = combinedImage.submat(roiTop);
-//
-//        // Создайте ROI для нижней половины нового изображения
-//        Rect roiBottom = new Rect(0, image1.rows() / 2, image1.cols(), image1.rows() / 2);
-//        Mat bottomRegion = combinedImage.submat(roiBottom);
-//
-//        // Скопируйте верхнюю половину первого изображения в верхний ROI
-//        image1.submat(roiTop).copyTo(topRegion);
-//
-//        // Скопируйте второе изображение в нижний ROI
-//        image2.copyTo(bottomRegion);
-//
-//        return getBytes(combinedImage);
 
         Mat hsv = new Mat();
         Mat maskWhite = new Mat();
@@ -128,9 +107,8 @@ public class ImageProcessor {
 // Теперь можно выполнить побитовое И
         dst3 = new Mat();
 
-//        Mat _4Ch = to4ChImage(maskBlack3CH);
-        Core.bitwise_and(maskBlack3CH, image1, dst3);
-        Core.bitwise_or(to3ChImage(maskWhite), dst3, dst3Wh);
+        bitwiseAnd(maskBlack3CH, image1, dst3);
+        bitwiseOr(maskWhite, dst3, dst3Wh);
 
         Imgproc.resize(image2, image2, new Size(maskBlack.cols(), maskBlack.rows()));
 
@@ -144,9 +122,9 @@ public class ImageProcessor {
 
         // Установка альфа-канала в максимальное значение (255 - полностью непрозрачный)
         Core.add(imageWithFourChannels1, new Scalar(0, 0, 0, 255), imageWithFourChannels1);
-        Core.bitwise_or(imageWithFourChannels1, image2, designMaskMixed);
+        bitwiseOr(imageWithFourChannels1, image2, designMaskMixed);
 
-        Core.bitwise_and(to3ChImage(designMaskMixed), dst3Wh, finalMaskBlack3Ch);
+        bitwiseAnd(designMaskMixed, dst3Wh, finalMaskBlack3Ch);
 
         return getBytes(finalMaskBlack3Ch);
     }
@@ -184,32 +162,6 @@ public class ImageProcessor {
 
     private static void saveImage(Mat image) {
         Imgcodecs.imwrite("output.jpeg", image);
-    }
-
-    private static Mat to4ChImage(Mat changeable) {
-        Mat _4Ch = new Mat(changeable.size(), CvType.CV_8UC4);
-
-        if (changeable.channels() == 1) {
-            Imgproc.cvtColor(changeable, _4Ch, Imgproc.COLOR_GRAY2BGRA);
-        } else if (changeable.channels() == 3) {
-            Imgproc.cvtColor(changeable, _4Ch, Imgproc.COLOR_BGR2BGRA);
-        }
-        // Установка альфа-канала в максимальное значение (255 - полностью непрозрачный)
-        Core.add(_4Ch, new Scalar(0, 0, 0, 255), _4Ch);
-
-        return _4Ch;
-    }
-
-    private static Mat to3ChImage(Mat changeable) {
-        Mat _3Ch = new Mat();
-        if (changeable.channels() != 4) {
-            // Добавление цветных каналов к одноканальному изображению
-            Imgproc.cvtColor(changeable, _3Ch, Imgproc.COLOR_GRAY2BGR);
-        } else {
-            Imgproc.cvtColor(changeable, _3Ch, Imgproc.COLOR_BGRA2BGR);
-        }
-
-        return _3Ch;
     }
 
     private static void dev_compare(Mat mat1, Mat mat2) {
