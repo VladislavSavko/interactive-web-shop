@@ -20,6 +20,9 @@
         padding: 10px 10px;
         margin: 15px -10px;
     }
+    > input:focus {
+        color: black;
+    }
 
     > button {
         cursor: pointer;
@@ -34,4 +37,13 @@
         border-radius: 5px;
         background-color: rgba(244, 91, 105, 1);
     }
+}
+
+.error {
+    padding-left: 21px;
+    color: red;
+    position: absolute;
+    top: 70%;
+    left: 35%;
+    max-width: 495px;
 }

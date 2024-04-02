@@ -1,6 +1,8 @@
 import '../css/custom.css'
 import ApiClient from "../client/ApiClient";
 import MainHeader from "../components/MainHeader";
+
+
 const LoginPage = () => {
     return <div>
         <MainHeader />
@@ -8,11 +10,27 @@ const LoginPage = () => {
             <span>Welcome to our web-shop!</span>
             <br/>
             <span>Please, enter your credentials:</span>
-            <input name="email" type="text" placeholder="Email"/>
-            <input name="password" type="password" placeholder="Password"/>
+            <input id="email" name="email" type="text" placeholder="Email" onFocus={blackText}/>
+            <input id="password" name="password" type="password" placeholder="Password"  onFocus={blackText}/>
             <button>Login</button>
         </form>
+        <div id="error_div" className="error"></div>
     </div>
+
+    function blackText(){
+        document.getElementById('email').style.color = 'black';
+        document.getElementById('password').style.color = 'black';
+    }
+}
+
+const showError = (message) => {
+    const errorDiv = document.getElementById('error_div');
+    errorDiv.innerText = message;
+
+    document.getElementById('email').style.color = 'red';
+    document.getElementById('password').style.color = 'red';
+
+    //TODO: Add error codes on back to highlight only email field when email error?
 }
 
 const sendData = (event) => {
@@ -30,9 +48,9 @@ const sendData = (event) => {
             // console.log(window.sessionStorage.getItem('token'));
             window.location.href = '/';
         } else if (response.status === 400) {
-            // response.json().then(responseJson => {
-            //     showError(responseJson['message']);
-            // });
+            response.json().then(responseJson => {
+                showError(responseJson['message']);
+            });
             console.log(400);
         } else {
             console.log('fuck');
