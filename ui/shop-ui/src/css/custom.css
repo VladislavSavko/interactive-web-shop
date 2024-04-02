@@ -1,0 +1,37 @@
+.login {
+    overflow: hidden;
+    background-color: rgb(249, 236, 230);
+    padding: 25px 30px 30px 30px;
+    border-radius: 10px;
+    position: absolute;
+    top: 30%;
+    left: 35%;
+    width: 500px;
+    height: 280px;
+    box-shadow: 5px 10px 10px rgba(229, 235, 236, 0.94);
+
+    > input {
+        display: block;
+        border-radius: 5px;
+        font-size: 16px;
+        background: white;
+        width: 100%;
+        border: 0;
+        padding: 10px 10px;
+        margin: 15px -10px;
+    }
+
+    > button {
+        cursor: pointer;
+        color: #fff;
+        font-size: 16px;
+        text-transform: uppercase;
+        width: 80px;
+        border: 0;
+        padding: 10px 0;
+        margin-top: 10px;
+        margin-left: -5px;
+        border-radius: 5px;
+        background-color: rgba(244, 91, 105, 1);
+    }
+}
