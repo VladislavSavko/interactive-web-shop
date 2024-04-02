@@ -1,7 +1,9 @@
 import '../css/custom.css'
 import ApiClient from "../client/ApiClient";
+import MainHeader from "../components/MainHeader";
 const LoginPage = () => {
     return <div>
+        <MainHeader />
         <form className="login" onSubmit={sendData}>
             <span>Welcome to our web-shop!</span>
             <br/>
