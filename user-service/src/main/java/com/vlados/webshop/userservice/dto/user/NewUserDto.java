@@ -19,5 +19,4 @@ public record NewUserDto(
         String name,
         @Valid
         AddressDto address) {
-    //TODO: Change the annotation params from constants to what? Or remove them at all
 }
