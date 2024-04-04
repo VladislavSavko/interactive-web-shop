@@ -11,8 +11,8 @@ spring:
   application:
     name: shop-service
   datasource:
-#    url: jdbc:mysql://shop-service-db:3306/interactive-web-shop-data
-    url: jdbc:mysql://localhost:3307/interactive-web-shop-data
+    url: jdbc:mysql://shop-service-db:3306/interactive-web-shop-data
+#    url: jdbc:mysql://localhost:3307/interactive-web-shop-data
     username: root
     password: password
     driver-class-name: com.mysql.cj.jdbc.Driver

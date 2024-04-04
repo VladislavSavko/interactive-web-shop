@@ -8,7 +8,7 @@ const HomePage = () => {
     return <div>
         <div className="hero_area">
             {/*title of the page and navbar section*/}
-            <MainHeader />
+            <MainHeader active="home"/>
         </div>
         {/*end of title of the page and navbar section*/}
 
