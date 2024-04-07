@@ -19,14 +19,11 @@ public class CustomEntityExceptionHandler extends ResponseEntityExceptionHandler
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
         ex.getBody().setProperty("errors",
                 ex.getAllErrors().stream()
-                        .collect(Collectors.toMap(this::getKey, this::resolveMessage))
+                        .map(this::resolveMessage)
+                        .toList()
         );
 
         return super.handleExceptionInternal(ex, null, headers, status, request);
-    }
-
-    private String getKey(ObjectError objectError) {
-        return (objectError instanceof FieldError fe) ? fe.getCode() : objectError.getObjectName();
     }
 
     private String resolveMessage(ObjectError objectError) {

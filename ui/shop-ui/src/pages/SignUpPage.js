@@ -33,7 +33,7 @@ const SignUpPage = () => {
                 <input id="flat_number" name="flat_number" type="text" placeholder="Flat number" onFocus={blackText}/>
             </div>
         </div>
-        <div id="error_div" className="error"></div>
+        <div id="error_div" style={{top: '85%'}} className="error"></div>
     </div>
 
 }
@@ -63,7 +63,7 @@ const sendData = () => {
                 window.location.href = '/';
             } else if (response.status === 400) {
                 response.json().then(responseJson => {
-                    showError(responseJson['message']);
+                    showError(responseJson.errors);
                 });
             } else {
                 console.log('fuck');
@@ -71,14 +71,17 @@ const sendData = () => {
         })
 }
 
-const showError = (message) => {
+const showError = (errors) => {
     const errorDiv = document.getElementById('error_div');
-    errorDiv.innerText = message;
+    let response = "";
+    console.log(errors)
+
+    errors.forEach(error => response += error + '\n');
+
+    errorDiv.innerText = response;
 
     document.getElementById('email').style.color = 'red';
     document.getElementById('password').style.color = 'red';
-
-    Дописать этот метод, т.к. респонс другой
 }
 
 
