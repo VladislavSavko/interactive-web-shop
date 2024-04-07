@@ -29,6 +29,7 @@ public class JwtGenerator {
         Map<String, Object> extraClaims = new HashMap<>();
         extraClaims.put("userId", user.getId());
         extraClaims.put("role", user.getRole());
+        extraClaims.put("name", user.getName());
 
         return Jwts.builder()
                 .setClaims(extraClaims)

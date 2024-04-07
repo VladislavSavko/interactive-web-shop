@@ -93,3 +93,11 @@
     left: 35%;
     max-width: 495px;
 }
+
+.user-info {
+    margin-left: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 200px;
+}

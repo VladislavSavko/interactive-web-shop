@@ -1,6 +1,9 @@
 import '../css/bootstrap.css'
 import '../css/responsive.css'
 import '../css/style.css'
+import "../images/user.jpg";
+
+
 import MainHeader from "../components/MainHeader";
 
 

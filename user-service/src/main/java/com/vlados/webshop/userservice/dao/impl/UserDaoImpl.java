@@ -97,4 +97,9 @@ public class UserDaoImpl implements UserDao {
     public boolean exists(final long id) {
         return userRepository.existsById(id);
     }
+
+    @Override
+    public boolean existsByEmail(final String email) {
+        return userRepository.existsByEmail(email);
+    }
 }

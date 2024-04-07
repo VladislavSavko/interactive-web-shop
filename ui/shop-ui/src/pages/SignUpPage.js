@@ -4,10 +4,11 @@ import ApiClient from "../client/ApiClient";
 
 
 const SignUpPage = () => {
-    function blackText(){
+    function blackText() {
         document.getElementById('email').style.color = 'black';
         document.getElementById('password').style.color = 'black';
     }
+
     return <div>
         <MainHeader active="signup"/>
         <div className="login-container">
@@ -29,7 +30,8 @@ const SignUpPage = () => {
                 {/*//TODO: Make a dropdown list here*/}
                 <input id="city" name="city" type="text" placeholder="City" onFocus={blackText}/>
                 <input id="street" name="street" type="text" placeholder="Street" onFocus={blackText}/>
-                <input id="house_number" name="house_number" type="text" placeholder="House number" onFocus={blackText}/>
+                <input id="house_number" name="house_number" type="text" placeholder="House number"
+                       onFocus={blackText}/>
                 <input id="flat_number" name="flat_number" type="text" placeholder="Flat number" onFocus={blackText}/>
             </div>
         </div>
@@ -53,17 +55,27 @@ const sendData = () => {
     ApiClient.register(email, password, name, countryCode, city, street, houseNumber, flatNumber)
         .then(response => {
             if (response.ok) {
-                // response.json().then(responseJson => {
-                //     window.sessionStorage.setItem('token', responseJson['token']);
-                //     window.sessionStorage.setItem('username', responseJson['username']);
-                //     window.sessionStorage.setItem('currentUserId', responseJson['userId']);
-                //     window.sessionStorage.setItem('isAdmin', responseJson['admin']);
-                // });
-                // console.log(window.sessionStorage.getItem('token'));
+                response.json().then(responseJson => {
+                    window.sessionStorage.setItem('username', responseJson['name']);
+                    ApiClient.authenticate(email, password).then(response => {
+                        if(response.ok) {
+                            response.json().then(responseJson => {
+                                console.log(responseJson)
+                                window.sessionStorage.setItem('token', responseJson.tokenString);
+                            });
+                        }
+                    })
+                    //     window.sessionStorage.setItem('currentUserId', responseJson['userId']);
+                    //     window.sessionStorage.setItem('isAdmin', responseJson['admin']);
+                });
                 window.location.href = '/';
             } else if (response.status === 400) {
                 response.json().then(responseJson => {
-                    showError(responseJson.errors);
+                    if("errors" in responseJson) {
+                        showErrors(responseJson.errors);
+                    } else {
+                        showError(responseJson.message);
+                    }
                 });
             } else {
                 console.log('fuck');
@@ -71,10 +83,9 @@ const sendData = () => {
         })
 }
 
-const showError = (errors) => {
+const showErrors = (errors) => {
     const errorDiv = document.getElementById('error_div');
     let response = "";
-    console.log(errors)
 
     errors.forEach(error => response += error + '\n');
 
@@ -83,6 +94,16 @@ const showError = (errors) => {
     document.getElementById('email').style.color = 'red';
     document.getElementById('password').style.color = 'red';
 }
+
+const showError = (error) => {
+    const errorDiv = document.getElementById('error_div');
+
+    errorDiv.innerText = error;
+
+    document.getElementById('email').style.color = 'red';
+    document.getElementById('password').style.color = 'red';
+}
+
 
 
 export default SignUpPage

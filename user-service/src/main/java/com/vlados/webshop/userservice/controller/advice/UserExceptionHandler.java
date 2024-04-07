@@ -1,6 +1,7 @@
 package com.vlados.webshop.userservice.controller.advice;
 
 import com.vlados.webshop.userservice.dto.exception.ExceptionResponse;
+import com.vlados.webshop.userservice.exception.DuplicateEmailException;
 import com.vlados.webshop.userservice.exception.NoSuchEntityException;
 import com.vlados.webshop.userservice.exception.WrongCredentialsException;
 import org.springframework.http.HttpStatus;
@@ -22,5 +23,11 @@ public class UserExceptionHandler {
     public ResponseEntity<ExceptionResponse> handleWrongCredentialsException(WrongCredentialsException wce) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(new ExceptionResponse(wce.getMessage(), LocalDateTime.now()));
+    }
+
+    @ExceptionHandler(DuplicateEmailException.class)
+    public ResponseEntity<ExceptionResponse> handleDuplicateEmailException(DuplicateEmailException dee) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(new ExceptionResponse(dee.getMessage(), LocalDateTime.now()));
     }
 }

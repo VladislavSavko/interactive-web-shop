@@ -26,4 +26,5 @@ public interface UserDao {
     void update(final long id, final AddressDto addressDto);
 
     boolean exists(final long id);
+    boolean existsByEmail(final String email);
 }

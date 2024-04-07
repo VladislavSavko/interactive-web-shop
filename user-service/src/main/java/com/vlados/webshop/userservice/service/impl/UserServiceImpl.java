@@ -9,6 +9,7 @@ import com.vlados.webshop.userservice.dto.auth.UserAuthDtoResponse;
 import com.vlados.webshop.userservice.dto.user.NewUserDto;
 import com.vlados.webshop.userservice.dto.user.ResponseUserDto;
 import com.vlados.webshop.userservice.dto.user.UpdatedUserDto;
+import com.vlados.webshop.userservice.exception.DuplicateEmailException;
 import com.vlados.webshop.userservice.exception.NoSuchEntityException;
 import com.vlados.webshop.userservice.exception.WrongCredentialsException;
 import com.vlados.webshop.userservice.service.UserService;
@@ -69,6 +70,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ResponseUserDto add(final NewUserDto user) {
+        checkDuplicateEmail(user.email());
         return UserMapper.map(userDao.add(user));
     }
 
@@ -116,6 +118,7 @@ public class UserServiceImpl implements UserService {
                     new UserAuthDtoResponse(
                             user.getId(),
                             jwtGenerator.generate(user),
+                            user.getName(),
                             user.getEmail(),
                             user.getRole()
                     )
@@ -129,6 +132,13 @@ public class UserServiceImpl implements UserService {
         throw new WrongCredentialsException(
                 ResourceUtil.getMessage("response.wrong.credentials")
         );
+    }
+
+    private void checkDuplicateEmail(final String email) {
+        if (userDao.existsByEmail(email)) {
+            throw new DuplicateEmailException(ResourceUtil.getMessage("db.user.email_duplicate")
+                    .formatted(email));
+        }
     }
 
     private boolean addressChanged(long id, AddressDto dto) {

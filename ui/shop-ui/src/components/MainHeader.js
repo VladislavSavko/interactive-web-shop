@@ -1,4 +1,5 @@
 import React from "react";
+import "../css/custom.css"
 
 class MainHeader extends React.Component {
     constructor(props) {
@@ -30,7 +31,23 @@ class MainHeader extends React.Component {
         this.activeNavItem();
     }
 
+
+
     render() {
+        function displayUserInfo() {
+            if(window.sessionStorage.getItem('token') != null && window.sessionStorage.getItem('token').length > 0
+                && window.sessionStorage.getItem('username') != null && window.sessionStorage.getItem('username').length > 0) {
+                return <div>
+                    <img style={{maxWidth: '40px', maxHeight: '40px', marginLeft: '30px'}}
+                         src="https://static.vecteezy.com/system/resources/thumbnails/020/911/740/small/user-profile-icon-profile-avatar-user-icon-male-icon-face-icon-profile-icon-free-png.png"
+                         alt=""/>
+                    <span className="user-info">
+                    {window.sessionStorage.getItem('username')}
+                    </span>
+                </div>;
+            }
+        }
+
         return <header className="header_section">
             <nav className="navbar navbar-expand-lg custom_nav-container ">
                 <a className="navbar-brand" href="">
@@ -85,8 +102,10 @@ class MainHeader extends React.Component {
                             </span>
                         </a>
                     </div>
+                    {displayUserInfo()}
                 </div>
             </nav>
+
         </header>
     }
 }
