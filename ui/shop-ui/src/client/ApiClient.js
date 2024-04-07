@@ -3,6 +3,13 @@ class ApiClient {
     static USERS_API = '/api/v1/users'
     static AUTH_URL = '/auth';
 
+
+    static getUserInfo(id): Promise<Response> {
+        return fetch(this.SERVER_URL + this.USERS_API + '/' + id, {
+            method: "GET"
+        });
+    }
+
     static authenticate(email, password): Promise<Response> {
         return fetch(this.SERVER_URL + this.USERS_API + this.AUTH_URL, {
             method: "POST",

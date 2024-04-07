@@ -95,9 +95,42 @@
 }
 
 .user-info {
+    color: black;
     margin-left: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.user-info div {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     width: 200px;
+}
+
+
+.profile-body {
+    background-color: #f0e6e9;
+}
+
+.profile-actions {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    grid-gap: 40px;
+    /*width: 50%;*/
+    max-height: 1000px;
+    overflow-y: visible;
+}
+
+
+
+.profile-upper-div {
+}
+
+.profile-upper-div h2 {
+    text-align: center;
+}
+.profile-upper-div p {
+    font-size: 20px;
 }

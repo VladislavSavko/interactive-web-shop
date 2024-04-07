@@ -23,6 +23,10 @@ class MainHeader extends React.Component {
                 document.getElementById('signup_a').style.color = "#f89cab";
                 return;
             }
+            case 'profile': {
+                document.getElementById('profile_div').style.color = "#f89cab";
+                return;
+            }
         }
         navItem.style.backgroundColor = "#f4f5f6";
     }
@@ -37,20 +41,20 @@ class MainHeader extends React.Component {
         function displayUserInfo() {
             if(window.sessionStorage.getItem('token') != null && window.sessionStorage.getItem('token').length > 0
                 && window.sessionStorage.getItem('username') != null && window.sessionStorage.getItem('username').length > 0) {
-                return <div>
+                return <a href="/profile" className="user-info">
                     <img style={{maxWidth: '40px', maxHeight: '40px', marginLeft: '30px'}}
                          src="https://static.vecteezy.com/system/resources/thumbnails/020/911/740/small/user-profile-icon-profile-avatar-user-icon-male-icon-face-icon-profile-icon-free-png.png"
                          alt=""/>
-                    <span className="user-info">
-                    {window.sessionStorage.getItem('username')}
-                    </span>
-                </div>;
+                    <div id="profile_div">
+                        {window.sessionStorage.getItem('username')}
+                    </div>
+                </a>;
             }
         }
 
         return <header className="header_section">
             <nav className="navbar navbar-expand-lg custom_nav-container ">
-                <a className="navbar-brand" href="">
+                <a className="navbar-brand" href="/">
               <span>
                 INTERACTIVE WEB-SHOP
               </span>

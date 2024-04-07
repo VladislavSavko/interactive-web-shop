@@ -60,8 +60,8 @@ const sendData = () => {
                     ApiClient.authenticate(email, password).then(response => {
                         if(response.ok) {
                             response.json().then(responseJson => {
-                                console.log(responseJson)
                                 window.sessionStorage.setItem('token', responseJson.tokenString);
+                                window.sessionStorage.setItem('userId', responseJson.id);
                             });
                         }
                     })

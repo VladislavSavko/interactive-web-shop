@@ -40,14 +40,13 @@ const sendData = (event) => {
     ApiClient.authenticate(event.target.email.value, event.target.password.value)
         .then(response => {
         if (response.ok) {
-            // response.json().then(responseJson => {
-            //     window.sessionStorage.setItem('token', responseJson['token']);
-            //     window.sessionStorage.setItem('username', responseJson['username']);
-            //     window.sessionStorage.setItem('currentUserId', responseJson['userId']);
-            //     window.sessionStorage.setItem('isAdmin', responseJson['admin']);
-            // });
-            // console.log(window.sessionStorage.getItem('token'));
-            window.location.href = '/';
+            response.json().then(responseJson => {
+                window.sessionStorage.setItem('username', responseJson.name);
+                window.sessionStorage.setItem('token', responseJson.tokenString);
+                window.sessionStorage.setItem('userId', responseJson.id);
+
+                window.location.href = '/';
+            });
         } else if (response.status === 400) {
             response.json().then(responseJson => {
                 showError(responseJson['message']);
