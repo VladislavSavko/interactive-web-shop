@@ -1,7 +1,8 @@
 import React from "react";
 import '../css/custom.css'
 import ApiClient from "../client/ApiClient";
-import ProfileInfoModal from "./ProfileInfoModal";
+import ProfileGeneralInfoModal from "./ProfileGeneralInfoModal";
+import ProfileAddressInfoModal from "./ProfileAddressInfoModal";
 
 class UserProfile extends React.Component {
     constructor(props) {
@@ -48,7 +49,7 @@ class UserProfile extends React.Component {
                         <h3>{this.state.name}</h3>
                         <h3>{this.state.email}</h3>
                         {/*<button>Change</button>*/}
-                        <ProfileInfoModal text="Change" name={this.state.name} email={this.state.email} address={this.state.address} />
+                        <ProfileGeneralInfoModal text="Change" name={this.state.name} email={this.state.email} address={this.state.address} />
                     </div>
                     <div style={{backgroundColor: 'rgba(244, 91, 105, 1)'}}>
                         <h2>Address info</h2>
@@ -57,7 +58,7 @@ class UserProfile extends React.Component {
                         <h3>{this.state.address.houseNumber}</h3>
                         <h3>{this.state.address.flatNumber}</h3>
                         <h3>{this.state.address.countryCode}</h3>
-                        <button>Change</button>
+                        <ProfileAddressInfoModal text="Change" name={this.state.name} email={this.state.email} address={this.state.address} />
                     </div>
                     <div style={{backgroundColor: 'rgba(244, 91, 105, 1)'}}>
                         <h2>Payment info</h2>

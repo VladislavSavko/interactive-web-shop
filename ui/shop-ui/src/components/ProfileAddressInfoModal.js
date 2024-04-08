@@ -3,7 +3,7 @@ import '../css/modal.css'
 import ApiClient from "../client/ApiClient";
 
 
-export default function ProfileInfoModal(props) {
+export default function ProfileAddressInfoModal(props) {
     const [modal, setModal] = useState(false);
 
     const switchModalState = () => {
@@ -11,16 +11,20 @@ export default function ProfileInfoModal(props) {
     }
 
     const updateUserInfo = () => {
-        const email = document.getElementById('email').value;
-        const name = document.getElementById('name').value;
+        const countryCode = document.getElementById('country_code').value;
+        const city = document.getElementById('city').value;
+        const street = document.getElementById('street').value;
+        const houseNumber = document.getElementById('house_number').value;
+        const flatNumber = document.getElementById('flat_number').value;
+
         ApiClient.sendUserInfo(
-            email,
-            name,
-            props.address.countryCode,
-            props.address.city,
-            props.address.street,
-            props.address.houseNumber,
-            props.address.flatNumber,
+            props.email,
+            props.name,
+            countryCode,
+            city,
+            street,
+            houseNumber,
+            flatNumber,
             window.sessionStorage.getItem('userRole'),
             window.sessionStorage.getItem('userId')
         )
@@ -50,9 +54,12 @@ export default function ProfileInfoModal(props) {
                 <div onClick={switchModalState} className="overlay">
                 </div>
                 <div className="modal-content">
-                    <h2>General info</h2>
-                    <input id="email" name="email" type="text" defaultValue={props.email} placeholder="Email"/>
-                    <input id="name" name="name" type="text" defaultValue={props.name} placeholder="Your name"/>
+                    <h2>Address info</h2>
+                    <input id="country_code" name="counry_code" type="text" defaultValue={props.address.countryCode} placeholder="Counry code" />
+                    <input id="city" name="city" type="text" defaultValue={props.address.city} placeholder="City" />
+                    <input id="street" name="street" type="text" defaultValue={props.address.street} placeholder="Street" />
+                    <input id="house_number" name="house_number" type="text" defaultValue={props.address.houseNumber} placeholder="House number" />
+                    <input id="flat_number" name="flat_number" type="text" defaultValue={props.address.flatNumber} placeholder="Flat number" />
                     <button onClick={switchModalState} className="close-modal">Close</button>
                     <button onClick={updateUserInfo}>Submit</button>
                 </div>
