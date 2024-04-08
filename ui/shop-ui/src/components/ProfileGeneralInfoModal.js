@@ -10,6 +10,11 @@ export default function ProfileGeneralInfoModal(props) {
         setModal(!modal);
     }
 
+    function blackText() {
+        document.getElementById('email').style.color = 'black';
+        document.getElementById('name').style.color = 'black';
+    }
+
     const updateUserInfo = () => {
         const email = document.getElementById('email').value;
         const name = document.getElementById('name').value;
@@ -28,18 +33,27 @@ export default function ProfileGeneralInfoModal(props) {
                 if (response.ok) {
                     window.location.reload();
                 } else if (response.status === 400) {
-                    // response.json().then(responseJson => {
-                    //     if("errors" in responseJson) {
-                    //         showErrors(responseJson.errors);
-                    //     } else {
-                    //         showError(responseJson.message);
-                    //     }
-                    // });
+                    response.json().then(responseJson => {
+                        showErrors(responseJson.errors);
+                    });
                 } else {
                     console.log('fuck');
                 }
             });
         window.sessionStorage.setItem('username', name);
+    }
+
+    const showErrors = (errors) => {
+        const errorDiv = document.getElementById('error_div');
+        let response = "";
+
+        errors.forEach(error => response += error + '\n');
+
+        errorDiv.innerText = response;
+
+        document.getElementById('email').style.color = 'red';
+        document.getElementById('name').style.color = 'red';
+        document.getElementById('name').style.color = 'red';
     }
 
     return (
@@ -52,8 +66,9 @@ export default function ProfileGeneralInfoModal(props) {
                 </div>
                 <div className="modal-content">
                     <h2>General info</h2>
-                    <input id="email" name="email" type="text" defaultValue={props.email} placeholder="Email"/>
-                    <input id="name" name="name" type="text" defaultValue={props.name} placeholder="Your name"/>
+                    <input id="email" name="email" type="text" defaultValue={props.email} placeholder="Email" onFocus={blackText}/>
+                    <input id="name" name="name" type="text" defaultValue={props.name} placeholder="Your name" onFocus={blackText}/>
+                    <div id="error_div" style={{color: 'red'}}></div>
                     <button onClick={switchModalState} className="close-modal">Close</button>
                     <button onClick={updateUserInfo}>Submit</button>
                 </div>
