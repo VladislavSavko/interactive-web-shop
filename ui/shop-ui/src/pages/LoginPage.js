@@ -44,6 +44,7 @@ const sendData = (event) => {
                 window.sessionStorage.setItem('username', responseJson.name);
                 window.sessionStorage.setItem('token', responseJson.tokenString);
                 window.sessionStorage.setItem('userId', responseJson.id);
+                window.sessionStorage.setItem('userRole', responseJson.role);
 
                 window.location.href = '/';
             });

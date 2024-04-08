@@ -117,10 +117,19 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
-    grid-gap: 40px;
-    /*width: 50%;*/
+    grid-gap: 60px;
     max-height: 1000px;
     overflow-y: visible;
+}
+
+.profile-actions div {
+    border-radius: 25px;
+    padding: 10px 10px 10px 15px;
+}
+
+.profile-actions button {
+    background-color: #db4f66;
+    color: white;
 }
 
 

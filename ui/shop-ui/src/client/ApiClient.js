@@ -10,6 +10,27 @@ class ApiClient {
         });
     }
 
+    static sendUserInfo(email, name, countryCode, city, street, houseNumber, flatNumber, role, id): Promise<Response> {
+        return fetch(this.SERVER_URL + this.USERS_API + '/' + id, {
+            method: "PUT",
+            body: JSON.stringify({
+                name: name,
+                email: email,
+                role: role,
+                address: {
+                    countryCode: countryCode,
+                    city: city,
+                    street: street,
+                    houseNumber: houseNumber,
+                    flatNumber: flatNumber
+                }
+            }),
+            headers: {
+                "Content-type": "application/json; charset=UTF-8"
+            }
+        });
+    }
+
     static authenticate(email, password): Promise<Response> {
         return fetch(this.SERVER_URL + this.USERS_API + this.AUTH_URL, {
             method: "POST",

@@ -62,6 +62,7 @@ const sendData = () => {
                             response.json().then(responseJson => {
                                 window.sessionStorage.setItem('token', responseJson.tokenString);
                                 window.sessionStorage.setItem('userId', responseJson.id);
+                                window.sessionStorage.setItem('userRole', responseJson.role);
                             });
                         }
                     })
@@ -80,7 +81,7 @@ const sendData = () => {
             } else {
                 console.log('fuck');
             }
-        })
+        });
 }
 
 const showErrors = (errors) => {
