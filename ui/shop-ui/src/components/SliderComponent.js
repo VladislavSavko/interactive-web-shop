@@ -4,6 +4,7 @@ class SliderComponent extends React.Component {
     constructor(props) {
         super(props);
         localStorage.setItem('index', 1);
+        //TODO: Make this fucking slider change by timer
     }
 
     showSlides = () => {
@@ -16,18 +17,36 @@ class SliderComponent extends React.Component {
     incSlides = () => {
         let index = localStorage.getItem('index') === '4' ? 1 : parseInt(localStorage.getItem('index')) + 1;
         localStorage.setItem('index', index);
+        // this.clearTimeout();
         this.showSlides();
     }
     decSlides = () => {
         let index = localStorage.getItem('index') === '1' ? 4 : parseInt(localStorage.getItem('index')) - 1;
         localStorage.setItem('index', index);
+        // this.clearTimeout();
         this.showSlides();
+    }
+
+    clearTimeout = () => {
+        clearInterval(localStorage.getItem('timerId'));
+        this.setTimeout();
     }
 
     componentDidMount() {
         this.showSlides()
+        // this.setTimeout();
     }
 
+
+    setTimeout() {
+        const timerId = setInterval(()=> {
+            console.log('timeeeeeeeeeeer')
+            let index = localStorage.getItem('index') === '4' ? 1 : parseInt(localStorage.getItem('index')) + 1;
+            localStorage.setItem('index', index);
+            this.showSlides();
+        }, 7000);
+        localStorage.setItem('timerId', timerId);
+    }
 
     render() {
         return <section className="slider_section">
