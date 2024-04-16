@@ -32,6 +32,15 @@ class UserProfile extends React.Component {
 
 
     render() {
+        function logout() {
+            window.sessionStorage.setItem('username', "");
+            window.sessionStorage.setItem('userRole', "");
+            window.sessionStorage.setItem('userId', "");
+            window.sessionStorage.setItem('token', "");
+
+            window.location.href="/";
+        }
+
         return <div className="profile-body">
             <div className="profile-upper-div">
                 <p style={{textAlign: 'center'}}>Profile</p>
@@ -48,7 +57,6 @@ class UserProfile extends React.Component {
                         <h2>General info</h2>
                         <h3>{this.state.name}</h3>
                         <h3>{this.state.email}</h3>
-                        {/*<button>Change</button>*/}
                         <ProfileGeneralInfoModal text="Change" name={this.state.name} email={this.state.email} address={this.state.address} />
                     </div>
                     <div style={{backgroundColor: 'rgba(244, 91, 105, 1)'}}>
@@ -96,8 +104,8 @@ class UserProfile extends React.Component {
                 <h2 className="text-base text-indigo-600 font-semibold tracking-wide uppercase">Cart & Order
                     History</h2>
             </div>
-            <div className="mt-10 p-5 bg-white rounded-lg shadow">
-            </div>
+            <div className="mt-10 p-5 bg-white rounded-lg shadow"></div>
+            <button onClick={logout}>Log out</button>
         </div>
     }
 }

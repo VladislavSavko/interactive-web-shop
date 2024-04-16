@@ -315,7 +315,7 @@ a:focus {
   background-repeat: no-repeat;
   opacity: 1;
   background-position: center;
-  color: #000000;
+  color: rgba(6, 6, 6, 0.98);
   font-size: 14px;
 }
 

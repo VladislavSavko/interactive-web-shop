@@ -24,8 +24,6 @@ public record AddressDto(
                 && street.equals(that.street);
     }
 
-    //TODO: Begin shop-service? Test one more time user-service API + auth?
-
     @Override
     public int hashCode() {
         return Objects.hash(countryCode, city, street, houseNumber, flatNumber);

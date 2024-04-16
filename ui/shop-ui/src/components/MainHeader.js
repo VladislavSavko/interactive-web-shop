@@ -68,16 +68,15 @@ class MainHeader extends React.Component {
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav  ">
                         <li id="home_li" className="nav-item">
-                            <a className="nav-link" href="/">Home <span
-                                className="sr-only">(current)</span></a>
+                            <a className="nav-link" href="/">Home</a>
                         </li>
                         <li id="shop_li" className="nav-item">
-                            <a className="nav-link" href="shop.html">
+                            <a className="nav-link" href="/shop">
                                 Shop
                             </a>
                         </li>
                         <li id="fr_li" className="nav-item">
-                            <a className="nav-link" href="shop.html">
+                            <a className="nav-link" href="/fitroom">
                                 Fitting Room
                             </a>
                         </li>
