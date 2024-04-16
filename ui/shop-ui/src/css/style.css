@@ -233,10 +233,9 @@ a:focus {
 /*end header section*/
 .slider_section .slider_container {
   color: #fefefe;
-  background-color: #000000;
   background-color: #f89cab;
   padding: 25px;
-  border-radius: 0 0 15px 15px;
+  border-radius: 15px;
 }
 
 .slider_section .row {

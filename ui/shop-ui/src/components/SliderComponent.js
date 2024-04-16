@@ -1,5 +1,4 @@
 import React from "react";
-import {hover} from "@testing-library/user-event/dist/hover";
 
 class SliderComponent extends React.Component {
     constructor(props) {
@@ -12,7 +11,7 @@ class SliderComponent extends React.Component {
         for (let i = 0; i < slides.length; i++) {
             slides[i].className = 'carousel-item';
         }
-        slides[localStorage.getItem('index') - 1].className = 'carousel-item active';
+        slides[localStorage.getItem('index') - 1].className = 'carousel-item active fade';
     }
     incSlides = () => {
         let index = localStorage.getItem('index') === '4' ? 1 : parseInt(localStorage.getItem('index')) + 1;
@@ -156,11 +155,11 @@ class SliderComponent extends React.Component {
                         </div>
                     </div>
                     <div className="carousel_btn-box">
-                        <a className="carousel-control-prev" onClick={this.decSlides} role="button">
+                        <a className="_carousel-control-prev" onClick={this.decSlides} role="button">
                             <span className="sr-only">&#10094;</span>
                         </a>
                         <img src="../images/line.png" alt=""/>
-                        <a className='carousel-control-next' onClick={this.incSlides} role="button">
+                        <a className='_carousel-control-prev' onClick={this.incSlides} role="button">
                             <span className="sr-only">&#10095;</span>
                         </a>
                     </div>
