@@ -1,5 +1,5 @@
 import MainHeader from "../components/MainHeader";
-import ItemCard from "../components/ItemCard";
+import ItemsComponent from "../components/ItemsComponent";
 
 const ShopPage = () => {
     return <>
@@ -12,12 +12,7 @@ const ShopPage = () => {
                     </h2>
                 </div>
                 <div className="row">
-                   <ItemCard name="Ring" price="200"/>
-                   <ItemCard name="Ring" price="200" new=""/>
-                   <ItemCard name="Ring" price="200" new=""/>
-                   <ItemCard name="Ring" price="200"/>
-                   <ItemCard name="Ring" price="200"/>
-                   <ItemCard name="Ring" price="200" new=""/>
+                    <ItemsComponent />
                 </div>
                 <div className="btn-box">
                     <a href="">

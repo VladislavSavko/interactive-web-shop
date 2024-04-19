@@ -1,7 +1,9 @@
 class ApiClient {
     static SERVER_URL = 'http://localhost:8080';
-    static USERS_API = '/api/v1/users'
+    static USERS_API = '/api/v1/users';
+    static SHOP_API = '/api/v1/shop'
     static AUTH_URL = '/auth';
+    static ITEMS_URL = '/items';
 
 
     static getUserInfo(id): Promise<Response> {
@@ -29,6 +31,10 @@ class ApiClient {
                 "Content-type": "application/json; charset=UTF-8"
             }
         });
+    }
+
+    static getAllItems(): Promise<Response> {
+        return fetch(this.SERVER_URL + this.SHOP_API + this.ITEMS_URL);
     }
 
     static authenticate(email, password): Promise<Response> {
