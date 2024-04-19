@@ -21,7 +21,9 @@ public class DtoMapper {
                     original.getRelatedCategory().getName(),
                     original.getInventoryInfo().getQuantity(),
                     original.getColor(),
-                    original.getDescription()
+                    original.getDescription(),
+                    original.getPrice(),
+                    original.is_new()
             );
         }
     }

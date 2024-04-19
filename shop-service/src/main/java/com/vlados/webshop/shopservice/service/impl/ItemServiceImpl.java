@@ -52,6 +52,8 @@ public class ItemServiceImpl implements ItemService {
                 .description(itemDto.description())
                 .inventoryInfo(new InventoryInfo(itemDto.quantity(), null, null, newItem))
                 .relatedCategory(findCategoryByName(itemDto))
+                ._new(itemDto.isNew())
+                .price(itemDto.price())
                 .build();
 
         return DtoMapper.ForItem.toDto(itemDao.add(newItem));

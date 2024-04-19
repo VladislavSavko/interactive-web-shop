@@ -22,6 +22,7 @@ CREATE TABLE IF NOT EXISTS items(
     inventory_id bigint NOT NULL,
     color varchar(255) NOT NULL,
     description varchar(255),
+    price bigint NOT NULL,
     FOREIGN KEY (category) REFERENCES items_categories(id),
     FOREIGN KEY (inventory_id) REFERENCES items_inventory(id)
     );

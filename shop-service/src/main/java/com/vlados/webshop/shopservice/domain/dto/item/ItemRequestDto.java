@@ -3,7 +3,10 @@ package com.vlados.webshop.shopservice.domain.dto.item;
 import com.vlados.webshop.shopservice.util.validation.anno.HexColor;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+
+import java.math.BigDecimal;
 
 public record ItemRequestDto(
         @Size(min = 1, max = 100)
@@ -14,5 +17,9 @@ public record ItemRequestDto(
         long quantity,
         @HexColor
         String color,
-        String description) {
+        String description,
+        @Min(1)
+        @NotNull
+        Double price,
+        boolean isNew) {
 }

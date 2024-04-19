@@ -3,6 +3,7 @@ package com.vlados.webshop.shopservice.domain.item;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
@@ -31,7 +32,9 @@ public class Item {
 
     private String description;
 
+    private Double price;
+    private boolean _new;
+
     @OneToMany(mappedBy = "relatedItem")
     private List<Image> images;
-    //TODO: Price?????????????????????????????????
 }
