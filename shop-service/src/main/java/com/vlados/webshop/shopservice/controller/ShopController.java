@@ -17,7 +17,6 @@ import com.vlados.webshop.shopservice.service.ImageService;
 import com.vlados.webshop.shopservice.service.InventoryService;
 import com.vlados.webshop.shopservice.service.ItemService;
 import com.vlados.webshop.shopservice.util.ResourceUtil;
-import com.vlados.webshop.shopservice.util.comp.ImageCompressor;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;

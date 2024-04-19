@@ -1,7 +1,6 @@
 package com.vlados.webshop.shopservice.service;
 
 import com.vlados.webshop.shopservice.domain.dto.image.ImageResponseDto;
-import com.vlados.webshop.shopservice.domain.item.Image;
 import com.vlados.webshop.shopservice.domain.item.Item;
 import org.springframework.web.multipart.MultipartFile;
 
