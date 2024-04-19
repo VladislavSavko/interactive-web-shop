@@ -11,9 +11,9 @@ import java.util.List;
 public interface ImageService {
     List<ImageResponseDto> getAll();
 
-    Image uploadImage(final MultipartFile multipartFile, final Item item) throws IOException;
+    ImageResponseDto uploadImage(final MultipartFile multipartFile, final Item item) throws IOException;
 
-    Image get(final long itemId);
+    ImageResponseDto get(final long id);
 
     void deleteImage(final long id);
 }

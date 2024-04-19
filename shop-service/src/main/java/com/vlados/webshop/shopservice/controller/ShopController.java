@@ -10,7 +10,6 @@ import com.vlados.webshop.shopservice.domain.dto.item.ItemRequestDto;
 import com.vlados.webshop.shopservice.domain.dto.item.ItemResponseDto;
 import com.vlados.webshop.shopservice.domain.dto.item.ItemUpdateDto;
 import com.vlados.webshop.shopservice.domain.item.Category;
-import com.vlados.webshop.shopservice.domain.item.Image;
 import com.vlados.webshop.shopservice.domain.item.InventoryInfo;
 import com.vlados.webshop.shopservice.exception.ExceptionResponse;
 import com.vlados.webshop.shopservice.service.CategoryService;
@@ -62,13 +61,17 @@ public class ShopController {
     }
 
     @GetMapping("/images/{id}")
-    public ResponseEntity<?> getImageById(@PathVariable(name = "id") final long itemId) {
+    public ResponseEntity<?> getImageById(@PathVariable(name = "id") final long id) {
         return ResponseEntity.ok()
                 .contentType(MediaType.IMAGE_PNG)
                 .body(
-                        ImageCompressor.decompress(imageService.get(itemId)
-                                .getBinary())
+                        imageService.get(id).data()
                 );
+    }
+
+    @GetMapping("/images/{id}/data")
+    public ImageResponseDto getImageBinaryById(@PathVariable(name = "id") final long id) {
+        return imageService.get(id);
     }
 
     @GetMapping("/images")
@@ -94,7 +97,7 @@ public class ShopController {
     }
 
     @PostMapping("/images")
-    public Image addImage(@RequestParam(name = "image") MultipartFile image, @RequestParam(name = "itemId") long itemId) throws IOException {
+    public ImageResponseDto addImage(@RequestParam(name = "image") MultipartFile image, @RequestParam(name = "itemId") long itemId) throws IOException {
         return imageService.uploadImage(image, itemService.get(itemId));
     }
 

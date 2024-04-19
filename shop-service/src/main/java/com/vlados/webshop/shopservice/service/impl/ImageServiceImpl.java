@@ -34,16 +34,19 @@ public class ImageServiceImpl implements ImageService {
     }
 
     @Override
-    public Image uploadImage(MultipartFile multipartFile, Item item) throws IOException {
-        return imageDao.uploadImage(ImageCompressor.compress(multipartFile.getBytes()), item);
+    public ImageResponseDto uploadImage(MultipartFile multipartFile, Item item) throws IOException {
+        return DtoMapper.ForImage.toDto(imageDao.uploadImage(ImageCompressor.compress(multipartFile.getBytes()), item));
     }
 
     @Override
-    public Image get(long itemId) {
-        return imageDao.get(itemId)
+    public ImageResponseDto get(long id) {
+        Image image = imageDao.get(id)
                 .orElseThrow(
-                        () -> new NoSuchElementException(ResourceUtil.getMessage("db.image.not_found").formatted(itemId))
+                        () -> new NoSuchElementException(ResourceUtil.getMessage("db.image.not_found").formatted(id))
                 );
+        image.setBinary(ImageCompressor.decompress(image.getBinary()));
+
+        return DtoMapper.ForImage.toDto(image);
     }
 
     @Override

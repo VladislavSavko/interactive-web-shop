@@ -23,7 +23,10 @@ public class DtoMapper {
                     original.getColor(),
                     original.getDescription(),
                     original.getPrice(),
-                    original.is_new()
+                    original.is_new(),
+                    original.getImages().stream()
+                            .map(DtoMapper.ForImage::toDto)
+                            .toList()
             );
         }
     }

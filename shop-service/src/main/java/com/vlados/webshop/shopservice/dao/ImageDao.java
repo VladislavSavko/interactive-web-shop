@@ -12,7 +12,7 @@ public interface ImageDao {
 
     Image uploadImage(final byte[] data, final Item item) throws IOException;
 
-    Optional<Image> get(final long itemId);
+    Optional<Image> get(final long id);
 
     void deleteImage(final long id);
 }

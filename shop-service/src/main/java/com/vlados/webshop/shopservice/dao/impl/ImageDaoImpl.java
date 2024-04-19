@@ -28,8 +28,8 @@ public class ImageDaoImpl implements ImageDao {
     }
 
     @Override
-    public Optional<Image> get(long itemId) {
-        return imageRepository.findByRelatedItemId(itemId);
+    public Optional<Image> get(long id) {
+        return imageRepository.findById(id);
     }
 
     @Override
