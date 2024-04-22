@@ -10,6 +10,8 @@ import com.vlados.webshop.shopservice.domain.item.Image;
 import com.vlados.webshop.shopservice.domain.item.InventoryInfo;
 import com.vlados.webshop.shopservice.domain.item.Item;
 
+import java.util.List;
+
 public class DtoMapper {
     public static class ForItem {
         public static ItemResponseDto toDto(Item original) {
@@ -24,10 +26,17 @@ public class DtoMapper {
                     original.getDescription(),
                     original.getPrice(),
                     original.is_new(),
-                    original.getImages().stream()
-                            .map(DtoMapper.ForImage::toDto)
-                            .toList()
+                    toDtoList(original.getImages())
             );
+        }
+        private static List<ImageResponseDto> toDtoList(List<Image> images) {
+            return images == null
+                    ?
+                    null
+                    :
+                    images.stream()
+                            .map(DtoMapper.ForImage::toDto)
+                            .toList();
         }
     }
 
@@ -61,4 +70,6 @@ public class DtoMapper {
             return new ImageResponseDto(image.getBinary());
         }
     }
+
+
 }

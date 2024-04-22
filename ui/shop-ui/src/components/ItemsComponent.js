@@ -38,9 +38,8 @@ class ItemsComponent extends React.Component {
 
     render() {
         let items = this.state.items.map(item => {
-            return <ItemCard name={item.name} price="200"/>
-
-        })
+            return <ItemCard name={item.name} price="200" new={item.isNew} mainImage={item.images[0]}/>
+        });
         return <>
             {items}
         </>

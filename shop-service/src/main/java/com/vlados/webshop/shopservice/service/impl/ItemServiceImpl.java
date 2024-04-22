@@ -11,6 +11,7 @@ import com.vlados.webshop.shopservice.domain.item.Item;
 import com.vlados.webshop.shopservice.service.ItemService;
 import com.vlados.webshop.shopservice.util.DtoMapper;
 import com.vlados.webshop.shopservice.util.ResourceUtil;
+import com.vlados.webshop.shopservice.util.comp.ImageCompressor;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +31,8 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public List<ItemResponseDto> getAll() {
         return itemDao.getAll().stream()
+                .peek(item -> item.getImages()
+                        .forEach(image -> image.setBinary(ImageCompressor.decompress(image.getBinary()))))
                 .map(DtoMapper.ForItem::toDto)
                 .toList();
     }
@@ -62,7 +65,7 @@ public class ItemServiceImpl implements ItemService {
     @Override
     @Transactional
     public void delete(long id) {
-        if(itemDao.exists(id)) {
+        if (itemDao.exists(id)) {
             itemDao.delete(id);
         } else {
             throw new NoSuchElementException(ResourceUtil.getMessage("db.item.not_found").formatted(id));

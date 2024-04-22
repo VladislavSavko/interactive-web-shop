@@ -7,7 +7,7 @@ class ItemCard extends React.Component {
 
 
     isNew() {
-        if (this.props.new != null) {
+        if (this.props.new === true) {
             return <div className="new">
                 <span>New</span>
             </div>
@@ -15,12 +15,13 @@ class ItemCard extends React.Component {
     }
 
     render() {
+        const imgSrc = "data:image/png;base64," + this.props.mainImage.data;
         return <>
             <div className="col-sm-6 col-md-4 col-lg-3">
                 <div className="box">
                     <a href="">
                         <div className="img-box">
-                            <img src="images/p1.png" alt=""/>
+                            <img src={imgSrc} alt=""/>
                         </div>
                         <div className="detail-box">
                             <h6>
