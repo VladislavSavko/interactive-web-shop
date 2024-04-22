@@ -1,5 +1,6 @@
 import MainHeader from "../components/MainHeader";
 import ItemsComponent from "../components/ItemsComponent";
+import FiltersModal from "../components/FiltersModal";
 
 const ShopPage = () => {
     return <>
@@ -15,9 +16,7 @@ const ShopPage = () => {
                     <ItemsComponent />
                 </div>
                 <div className="btn-box">
-                    <a href="">
-                        View By Categories
-                    </a>
+                    <FiltersModal text="View with filters" />
                 </div>
             </div>
         </section>

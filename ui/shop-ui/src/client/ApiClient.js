@@ -4,6 +4,7 @@ class ApiClient {
     static SHOP_API = '/api/v1/shop'
     static AUTH_URL = '/auth';
     static ITEMS_URL = '/items';
+    static CATEGORIES_URL = '/categories';
 
 
     static getUserInfo(id): Promise<Response> {
@@ -35,6 +36,9 @@ class ApiClient {
 
     static getAllItems(): Promise<Response> {
         return fetch(this.SERVER_URL + this.SHOP_API + this.ITEMS_URL);
+    }
+    static getAllCategories(): Promise<Response> {
+        return fetch(this.SERVER_URL + this.SHOP_API + this.CATEGORIES_URL);
     }
 
     static authenticate(email, password): Promise<Response> {
