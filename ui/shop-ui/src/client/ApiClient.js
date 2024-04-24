@@ -37,8 +37,12 @@ class ApiClient {
     static getAllItems(): Promise<Response> {
         return fetch(this.SERVER_URL + this.SHOP_API + this.ITEMS_URL);
     }
-    static getAllCategories(): Promise<Response> {
-        return fetch(this.SERVER_URL + this.SHOP_API + this.CATEGORIES_URL);
+    static getAllCategories(names): Promise<Response> {
+        if(names === undefined) {
+            return fetch(this.SERVER_URL + this.SHOP_API + this.CATEGORIES_URL);
+        } else {
+            return fetch(this.SERVER_URL + this.SHOP_API + this.CATEGORIES_URL + '?names=' + names);
+        }
     }
 
     static authenticate(email, password): Promise<Response> {

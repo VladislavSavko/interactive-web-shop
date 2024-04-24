@@ -7,6 +7,7 @@ import com.vlados.webshop.shopservice.domain.item.Category;
 import com.vlados.webshop.shopservice.service.CategoryService;
 import com.vlados.webshop.shopservice.util.DtoMapper;
 import com.vlados.webshop.shopservice.util.ResourceUtil;
+import com.vlados.webshop.shopservice.util.comp.ImageCompressor;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +25,28 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public List<CategoryResponseDto> getAll() {
         return categoryDao.getAll().stream()
-                .map(DtoMapper.ForCategory::toDto)
+                .map(category -> {
+                    category.getItems()
+                            .forEach(item -> item.getImages()
+                                    .forEach(image -> image.setBinary(
+                                            ImageCompressor.decompress(image.getBinary())
+                                    )));
+                    return DtoMapper.ForCategory.toDto(category);
+                })
+                .toList();
+    }
+
+    @Override
+    public List<CategoryResponseDto> getAll(List<String> names) {
+        return categoryDao.getAll(names).stream()
+                .map(category -> {
+                    category.getItems()
+                            .forEach(item -> item.getImages()
+                                    .forEach(image -> image.setBinary(
+                                            ImageCompressor.decompress(image.getBinary())
+                                    )));
+                    return DtoMapper.ForCategory.toDto(category);
+                })
                 .toList();
     }
 

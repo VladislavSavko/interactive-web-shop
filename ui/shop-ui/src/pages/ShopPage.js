@@ -4,7 +4,7 @@ import FiltersModal from "../components/FiltersModal";
 
 const ShopPage = () => {
     return <>
-        <MainHeader active="shop" />
+        <MainHeader active="shop"/>
         <section className="shop_section layout_padding">
             <div className="container">
                 <div className="heading_container heading_center">
@@ -13,7 +13,7 @@ const ShopPage = () => {
                     </h2>
                 </div>
                 <div className="row">
-                    <ItemsComponent />
+                    <ItemsComponent/>
                 </div>
                 <div className="btn-box">
                     <FiltersModal text="View with filters" />

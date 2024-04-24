@@ -8,6 +8,7 @@ import java.util.List;
 
 public interface CategoryService {
     List<CategoryResponseDto> getAll();
+    List<CategoryResponseDto> getAll(List<String> names);
 
     Category add(final Category category);
 

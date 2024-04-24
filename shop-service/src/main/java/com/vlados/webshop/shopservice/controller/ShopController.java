@@ -50,8 +50,8 @@ public class ShopController {
     }
 
     @GetMapping("/categories")
-    public List<CategoryResponseDto> getCategories() {
-        return categoryService.getAll();
+    public List<CategoryResponseDto> getCategories(@RequestParam(name = "names", required = false) List<String> names) {
+        return names == null ? categoryService.getAll() : categoryService.getAll(names);
     }
 
     @GetMapping("/inventory")

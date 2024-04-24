@@ -1,55 +1,51 @@
-import {useState} from "react";
+import React from "react";
 import '../css/modal.css'
-import ApiClient from "../client/ApiClient";
-import Select from "react-select/base";
+import MultiSelect from "./MultiSelect";
 
 
-export default function FiltersModal(props) {
-    const [modal, setModal] = useState(false);
-    const [options, setOptions] = useState([]);
-    const [selectedOptions, setSelectedOptions] = useState([]);
-
-    const switchModalState = () => {
-        setModal(!modal);
-    }
-    const getCategoriesData = () => {
-        ApiClient.getAllCategories().then(response => {
-            if(response.ok) {
-                response.json().then(responseJson => {
-                    setOptions(responseJson)
-                });
-            }
-        })
+class FiltersModal extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            modal: false,
+            selectedOptions: []
+        }
     }
 
-    const getCategoriesNames = () => {
-        getCategoriesData();
-        return options.map(o => o.name);
+    sendCategories = () => {
+        const arr = this.state.selectedOptions.map(option => (option.value));
+        window.location.href = '/shop?categories=' + arr;
     }
 
-    const handleChange = (selected) => {
-        setSelectedOptions(selected);
+    switchModalState = () => {
+        this.setState({
+            modal: !this.state.modal
+        });
+    }
+    getSelectedOptions = (selected) => {
+        this.setState({
+            selectedOptions: selected
+        });
     }
 
-    return (
-        <>
-            <button onClick={switchModalState} className="btn-modal">
-                {props.text}
-            </button>
-            {modal && (<div className="_modal">
-                <div onClick={switchModalState} className="overlay">
-                </div>
-                <div className="modal-content">
-                    <h2>Apply filters:</h2>
-                    <h3>Categories:</h3>
-                    <Select
-                        isMulti={true} options={getCategoriesNames()} value={selectedOptions}
-                        onChange={handleChange} placeholder="Choose categories" inputValue={null}
-                        onInputChange={null}  onMenuClose={null}  onMenuOpen={null}/>
-                    <button onClick={switchModalState} className="close-modal">Close</button>
-                    <button onClick={switchModalState}>Submit</button>
-                </div>
-            </div>)}
-        </>
-    );
+    render() {
+      return <>
+          <button onClick={this.switchModalState} className="btn-modal">
+              {this.props.text}
+          </button>
+          {this.state.modal && (<div className="_modal">
+              <div onClick={this.switchModalState} className="overlay">
+              </div>
+              <div className="modal-content">
+                  <h2>Apply filters:</h2>
+                  <h3>Categories:</h3>
+                  <MultiSelect onChange={this.getSelectedOptions}/>
+                  <button onClick={this.switchModalState} className="close-modal">Close</button>
+                  <button onClick={this.sendCategories}>Submit</button>
+              </div>
+          </div>)}
+      </>
+    }
 }
+
+export default FiltersModal
