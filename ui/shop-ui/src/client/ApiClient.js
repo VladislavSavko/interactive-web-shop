@@ -35,7 +35,7 @@ class ApiClient {
     }
 
     static getAllItems(filters): Promise<Response> {
-        if(filters === undefined || filters.length < 22) {
+        if(filters === undefined) {
             return fetch(this.SERVER_URL + this.SHOP_API + this.ITEMS_URL);
         } else {
             return fetch(this.SERVER_URL + this.SHOP_API + this.ITEMS_URL + '?' + filters);

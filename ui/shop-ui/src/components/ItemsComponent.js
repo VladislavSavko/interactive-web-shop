@@ -12,9 +12,12 @@ class ItemsComponent extends React.Component {
 
     componentDidMount() {
         const searchURL = window.location.search;
-        let filters = '';
-        if (searchURL.length > 12) {
-            filters = window.location.search.match(/\?(.*)/)[1];
+        let filtersArr = searchURL.match(/\?(.*)/);
+        let filters;
+        if (filtersArr === null || filtersArr.length === 0) {
+            filters = '';
+        } else {
+            filters = filtersArr[1];
         }
         this.refreshItems(filters);
         setInterval(this.refreshItems.bind(this), 60000);

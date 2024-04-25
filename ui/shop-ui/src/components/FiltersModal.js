@@ -13,7 +13,11 @@ class FiltersModal extends React.Component {
     }
 
     applyFilters = (array, flag) => {
-        window.location.href = '/shop?categories=' + array + this.needToApplyNews(flag);
+        if(array === undefined || array.length === 0) {
+            window.location.href = '/shop?' + this.needToApplyNews(flag);
+            return;
+        }
+        window.location.href = '/shop?categories=' + array + '&' + this.needToApplyNews(flag);
     }
 
     sendCategories = () => {
@@ -29,9 +33,9 @@ class FiltersModal extends React.Component {
     }
     needToApplyNews = (flag) => {
         if(flag === undefined || flag === false) {
-            return '&isNew=false';
+            return 'isNew=false';
         } else {
-            return '&isNew=true';
+            return 'isNew=true';
         }
     }
     getSelectedOptions = (selected) => {
