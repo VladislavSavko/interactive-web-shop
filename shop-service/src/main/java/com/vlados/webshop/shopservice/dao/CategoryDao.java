@@ -8,8 +8,6 @@ import java.util.Optional;
 public interface CategoryDao {
     List<Category> getAll();
 
-    List<Category> getAll(List<String> names);
-
     Category add(final Category category);
 
     Optional<Category> get(final String categoryName);

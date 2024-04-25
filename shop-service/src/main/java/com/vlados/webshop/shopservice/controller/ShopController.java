@@ -45,13 +45,26 @@ public class ShopController {
     }
 
     @GetMapping("/items")
-    public List<ItemResponseDto> getItems() {
-        return itemService.getAll();
+    public List<ItemResponseDto> getItems(@RequestParam(name = "categories", required = false) List<String> categories,
+                                          @RequestParam(name = "isNew", required = false) Boolean isNew) {
+        if (categories == null) {
+            if (isNew == null || !isNew) {
+                return itemService.getAll();
+            } else {
+                return itemService.getAllNew();
+            }
+        } else {
+            if (isNew == null || !isNew) {
+                return itemService.getAll(categories);
+            } else {
+                return itemService.getAllNew(categories);
+            }
+        }
     }
 
     @GetMapping("/categories")
-    public List<CategoryResponseDto> getCategories(@RequestParam(name = "names", required = false) List<String> names) {
-        return names == null ? categoryService.getAll() : categoryService.getAll(names);
+    public List<CategoryResponseDto> getCategories() {
+        return categoryService.getAll();
     }
 
     @GetMapping("/inventory")

@@ -38,6 +38,33 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
+    public List<ItemResponseDto> getAll(List<String> categories) {
+        return itemDao.getAll(categories).stream()
+                .peek(item -> item.getImages()
+                        .forEach(image -> image.setBinary(ImageCompressor.decompress(image.getBinary()))))
+                .map(DtoMapper.ForItem::toDto)
+                .toList();
+    }
+
+    @Override
+    public List<ItemResponseDto> getAllNew() {
+        return itemDao.getAllNew().stream()
+                .peek(item -> item.getImages()
+                        .forEach(image -> image.setBinary(ImageCompressor.decompress(image.getBinary()))))
+                .map(DtoMapper.ForItem::toDto)
+                .toList();
+    }
+
+    @Override
+    public List<ItemResponseDto> getAllNew(List<String> categories) {
+        return itemDao.getAllNew(categories).stream()
+                .peek(item -> item.getImages()
+                        .forEach(image -> image.setBinary(ImageCompressor.decompress(image.getBinary()))))
+                .map(DtoMapper.ForItem::toDto)
+                .toList();
+    }
+
+    @Override
     public Item get(long id) {
         return itemDao.get(id).orElseThrow(() -> new NoSuchElementException(
                         ResourceUtil.getMessage("db.item.not_found").formatted(id)
@@ -55,7 +82,7 @@ public class ItemServiceImpl implements ItemService {
                 .description(itemDto.description())
                 .inventoryInfo(new InventoryInfo(itemDto.quantity(), null, null, newItem))
                 .relatedCategory(findCategoryByName(itemDto))
-                ._new(itemDto.isNew())
+                .isNew(itemDto.isNew())
                 .price(itemDto.price())
                 .build();
 

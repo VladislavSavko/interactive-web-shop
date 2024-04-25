@@ -12,58 +12,31 @@ class ItemsComponent extends React.Component {
 
     componentDidMount() {
         const searchURL = window.location.search;
-        let categories = '';
+        let filters = '';
         if (searchURL.length > 12) {
-            categories = window.location.search.match(/(?<==).*$/)[0];
+            filters = window.location.search.match(/\?(.*)/)[1];
         }
-        console.log(categories);
-        this.refreshItems(categories);
+        this.refreshItems(filters);
         setInterval(this.refreshItems.bind(this), 60000);
     }
 
-    refreshItems(categories) {
-        if (categories.length > 0) {
-            ApiClient.getAllCategories(categories).then(resp => {
-                if (resp.ok) {
-                    resp.json().then(json => {
-                        this.setState({
-                            items: this.getUniqueItems(json)
-                        })
-                    })
-                }
+    refreshItems(filters) {
+        this.getItemsData(filters).then(response => {
+            this.setState({
+                items: response
             })
-        } else {
-            this.getItemsData().then(resp => {
-                this.setState({
-                    items: resp
-                });
-            });
-        }
+        })
     }
 
 
-    getItemsData(): Promise {
-        return ApiClient.getAllItems().then(
+    getItemsData(filters): Promise {
+        return ApiClient.getAllItems(filters).then(
             response => {
                 if (response.ok) {
                     return response.json();
                 }
             }
         )
-    }
-
-    getUniqueItems(data) {
-        const uniqueItems = new Map();
-
-        data.forEach(category => {
-            category.relatedItems.forEach(item => {
-                if (!uniqueItems.has(item.name)) {
-                    uniqueItems.set(item.name, item);
-                }
-            });
-        });
-
-        return Array.from(uniqueItems.values());
     }
 
 

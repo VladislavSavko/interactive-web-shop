@@ -25,7 +25,7 @@ public class DtoMapper {
                     original.getColor(),
                     original.getDescription(),
                     original.getPrice(),
-                    original.is_new(),
+                    original.isNew(),
                     toDtoList(original.getImages())
             );
         }

@@ -22,6 +22,21 @@ public class ItemDaoImpl implements ItemDao {
     }
 
     @Override
+    public List<Item> getAll(List<String> categories) {
+        return (categories.isEmpty()) ? itemRepository.findAll() : itemRepository.findByRelatedCategoryNameIn(categories);
+    }
+
+    @Override
+    public List<Item> getAllNew() {
+        return itemRepository.findByNew(true);
+    }
+
+    @Override
+    public List<Item> getAllNew(List<String> categories) {
+        return itemRepository.findByNewAndRelatedCategoryNameIn(true, categories);
+    }
+
+    @Override
     public Optional<Item> get(long id) {
         return itemRepository.findById(id);
     }

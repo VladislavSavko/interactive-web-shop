@@ -37,20 +37,6 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public List<CategoryResponseDto> getAll(List<String> names) {
-        return categoryDao.getAll(names).stream()
-                .map(category -> {
-                    category.getItems()
-                            .forEach(item -> item.getImages()
-                                    .forEach(image -> image.setBinary(
-                                            ImageCompressor.decompress(image.getBinary())
-                                    )));
-                    return DtoMapper.ForCategory.toDto(category);
-                })
-                .toList();
-    }
-
-    @Override
     @Transactional
     public Category add(final Category category) {
         return categoryDao.add(category);

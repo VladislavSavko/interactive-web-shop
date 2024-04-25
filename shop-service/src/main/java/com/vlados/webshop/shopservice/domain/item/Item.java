@@ -35,7 +35,7 @@ public class Item {
     private String description;
 
     private Double price;
-    private boolean _new;
+    private boolean isNew;
 
     @OneToMany(mappedBy = "relatedItem")
     private List<Image> images;

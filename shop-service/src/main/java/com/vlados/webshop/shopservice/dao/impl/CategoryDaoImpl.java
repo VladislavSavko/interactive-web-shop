@@ -22,11 +22,6 @@ public class CategoryDaoImpl implements CategoryDao {
     }
 
     @Override
-    public List<Category> getAll(List<String> names) {
-        return categoryRepository.findByNameIn(names);
-    }
-
-    @Override
     public Category add(Category category) {
         return categoryRepository.save(category);
     }
