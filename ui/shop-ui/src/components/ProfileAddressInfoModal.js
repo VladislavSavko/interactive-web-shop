@@ -1,10 +1,12 @@
 import {useState} from "react";
 import '../css/modal.css'
 import ApiClient from "../client/ApiClient";
+import {CountryDropdown} from "react-country-region-selector";
 
 
 export default function ProfileAddressInfoModal(props) {
     const [modal, setModal] = useState(false);
+    const [country, setCountry] = useState('');
 
     const switchModalState = () => {
         setModal(!modal);
@@ -40,8 +42,8 @@ export default function ProfileAddressInfoModal(props) {
                 if (response.ok) {
                     window.location.reload();
                 } else if (response.status === 400) {
-                    response.json().then(responseJson => {
-                        showErrors(responseJson.errors);
+                    response.json().then(() => {
+                        showErrors(["House number and flat number must be of integer type"]);
                     });
                 } else {
                     console.log('fuck');
@@ -57,9 +59,6 @@ export default function ProfileAddressInfoModal(props) {
 
         errorDiv.innerText = response;
 
-        document.getElementById('country_code').style.color = 'red';
-        document.getElementById('city').style.color = 'red';
-        document.getElementById('street').style.color = 'red';
         document.getElementById('house_number').style.color = 'red';
         document.getElementById('flat_number').style.color = 'red';
     }
@@ -74,14 +73,33 @@ export default function ProfileAddressInfoModal(props) {
                 </div>
                 <div className="modal-content">
                     <h2>Address info</h2>
-                    <input id="country_code" name="counry_code" type="text" defaultValue={props.address.countryCode}
-                           placeholder="Counry code" onFocus={blackText}/>
+                    <span>Country:</span>
+                    <CountryDropdown
+                        id="country_code"
+                        labelType="long"
+                        valueType="short"
+                        onChange={(selected) => setCountry(selected)}
+                        value={country === '' ? props.address.countryCode : country}
+                        style={{
+                            display: 'block',
+                            borderRadius: '5px',
+                            fontSize: '16px',
+                            background: 'white',
+                            width: '100%',
+                            border: '0',
+                            padding: '10px 10px',
+                            margin: '15px -10px'
+                        }}/>
+                    <span>City:</span>
                     <input id="city" name="city" type="text" defaultValue={props.address.city} placeholder="City"
                            onFocus={blackText}/>
+                    <span>Street:</span>
                     <input id="street" name="street" type="text" defaultValue={props.address.street}
                            placeholder="Street" onFocus={blackText}/>
+                    <span>House number:</span>
                     <input id="house_number" name="house_number" type="text" defaultValue={props.address.houseNumber}
                            placeholder="House number" onFocus={blackText}/>
+                    <span>Flat number:</span>
                     <input id="flat_number" name="flat_number" type="text" defaultValue={props.address.flatNumber}
                            placeholder="Flat number" onFocus={blackText}/>
                     <div id="error_div" style={{color: 'red'}}></div>
