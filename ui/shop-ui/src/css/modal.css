@@ -4,9 +4,19 @@ body.active-modal {
 
 .btn-modal {
     padding: 10px 20px;
-    display: block;
+    border: 1px solid;
+    border-radius: 5px;
+    transition: all .3s;
+    background-color: #db4566;
+    color: white;
+    display: inline-block;
     margin: 100px auto 0;
     font-size: 18px;
+}
+
+.btn-modal:hover {
+    background-color: #ffffff;
+    color: #db4566;
 }
 
 ._modal, .overlay {
@@ -17,6 +27,13 @@ body.active-modal {
     right: 0;
     bottom: 0;
     position: fixed;
+}
+
+._modal {
+    animation: slideUp 0.4s ease-out forwards;
+}
+._modal.slide-down {
+    animation: slideDown 0.4s ease-out forwards;
 }
 
 .overlay {
@@ -40,4 +57,26 @@ body.active-modal {
     top: 10px;
     right: 10px;
     padding: 5px 7px;
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideDown {
+    from {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateY(100%);
+        opacity: 0;
+    }
 }

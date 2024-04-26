@@ -8,6 +8,7 @@ class FiltersModal extends React.Component {
         super(props);
         this.state = {
             modal: false,
+            closing: false,
             selectedOptions: []
         }
     }
@@ -28,9 +29,20 @@ class FiltersModal extends React.Component {
     }
 
     switchModalState = () => {
-        this.setState({
-            modal: !this.state.modal
-        });
+        if (this.state.modal) {
+            this.setState({
+                closing: true
+            });
+            setTimeout(() => {
+                this.setState({
+                    modal: false, closing: false
+                });
+            }, 400);
+        } else {
+            this.setState({
+                modal: true
+            });
+        }
     }
 
     applyPrices = (priceArray) => {
@@ -62,7 +74,7 @@ class FiltersModal extends React.Component {
           <button onClick={this.switchModalState} className="btn-modal">
               {this.props.text}
           </button>
-          {this.state.modal && (<div className="_modal">
+          {this.state.modal && (<div className={`_modal ${this.state.closing ? 'slide-down' : ''}`}>
               <div onClick={this.switchModalState} className="overlay">
               </div>
               <div className="modal-content">
