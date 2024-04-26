@@ -36,6 +36,11 @@
         margin-left: -5px;
         border-radius: 5px;
         background-color: rgba(244, 91, 105, 1);
+        transition: all .3s;
+    }
+    > button:hover {
+        background-color: #ffffff;
+        color: #db4566;
     }
 }
 
@@ -82,6 +87,12 @@
         margin-left: -5px;
         border-radius: 5px;
         background-color: rgba(244, 91, 105, 1);
+        transition: all .3s;
+    }
+
+    > button:hover {
+        background-color: #ffffff;
+        color: #db4566;
     }
 }
 

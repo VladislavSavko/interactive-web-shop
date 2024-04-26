@@ -283,7 +283,7 @@ a:focus {
 }
 
 .slider_section .detail-box a:hover {
-  background-color: transparent;
+  background-color: #ffffff;
   color: #db4566;
 }
 

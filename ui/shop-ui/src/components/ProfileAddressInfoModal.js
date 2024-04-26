@@ -103,7 +103,6 @@ export default function ProfileAddressInfoModal(props) {
                     <input id="flat_number" name="flat_number" type="text" defaultValue={props.address.flatNumber}
                            placeholder="Flat number" onFocus={blackText}/>
                     <div id="error_div" style={{color: 'red'}}></div>
-                    {/*TODO: Посмотреть прикол с валидацией чисел, если передавать строку*/}
                     <button onClick={switchModalState} className="close-modal">Close</button>
                     <button onClick={updateUserInfo}>Submit</button>
                 </div>

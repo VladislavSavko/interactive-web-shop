@@ -25,7 +25,7 @@ const SignUpPage = () => {
                 <input id="password" name="password" type="password" placeholder="Password" onFocus={blackText}/>
                 <input id="name" name="name" type="text" placeholder="Your name" onFocus={blackText}/>
                 <button onClick={sendData}>Sign Up</button>
-                <button style={{marginLeft: '275px', backgroundColor: '#fa848f'}}
+                <button style={{marginLeft: '275px'}}
                         onClick={() => window.location.href = "/login"}>Login
                 </button>
             </div>

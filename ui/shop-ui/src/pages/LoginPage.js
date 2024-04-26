@@ -13,7 +13,7 @@ const LoginPage = () => {
             <input id="email" name="email" type="text" placeholder="Email" onFocus={blackText}/>
             <input id="password" name="password" type="password" placeholder="Password"  onFocus={blackText}/>
             <button>Login</button>
-            <button type={"button"} style={{marginLeft: '275px', backgroundColor: '#fa848f'}} onClick={() => window.location.href="/signUp"}>Sign up</button>
+            <button style={{marginLeft: '275px'}} onClick={() => window.location.href="/signUp"}>Sign up</button>
         </form>
         <div id="error_div" className="error"></div>
     </div>

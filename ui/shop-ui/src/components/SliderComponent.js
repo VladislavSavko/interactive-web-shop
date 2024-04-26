@@ -69,7 +69,7 @@ class SliderComponent extends React.Component {
                                                 into the world of fashion with us and update your wardrobe with
                                                 pleasure!
                                             </p>
-                                            <a href="/items">
+                                            <a href="/shop">
                                                 Catalog
                                             </a>
                                         </div>
