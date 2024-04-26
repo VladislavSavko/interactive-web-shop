@@ -13,10 +13,27 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
     @Query("SELECT item FROM Item item WHERE item.isNew=:isNew")
     List<Item> findByNew(@Param("isNew") boolean isNew);
 
+    List<Item> findByPriceBetween(double minPrice, double maxPrice);
+
+    @Query("SELECT item FROM Item item WHERE item.isNew=:isNew AND item.price BETWEEN :min AND :max")
+    List<Item> findByNewAndPriceBetween(
+            @Param("isNew") boolean isNew,
+            @Param("min") double minPrice,
+            @Param("max") double maxPrice);
+
+    List<Item> findByPriceBetweenAndRelatedCategoryNameIn(double minPrice, double maxPrice, List<String> categoryNames);
+
     List<Item> findByRelatedCategoryNameIn(List<String> categories);
 
     @Query("SELECT item FROM Item item WHERE item.isNew=:isNew AND item.relatedCategory.name IN :categories")
     List<Item> findByNewAndRelatedCategoryNameIn(
             @Param("isNew") boolean isNew,
             @Param("categories") List<String> categories);
+
+    @Query("SELECT item FROM Item item WHERE item.isNew=:isNew AND item.relatedCategory.name IN :categories AND item.price BETWEEN :min AND :max")
+    List<Item> findByNewAndRelatedCategoryNameInAndPriceBetween(
+            @Param("isNew") boolean isNew,
+            @Param("categories") List<String> categories,
+            @Param("min") double minPrice,
+            @Param("max") double maxPrice);
 }

@@ -46,18 +46,36 @@ public class ShopController {
 
     @GetMapping("/items")
     public List<ItemResponseDto> getItems(@RequestParam(name = "categories", required = false) List<String> categories,
-                                          @RequestParam(name = "isNew", required = false) Boolean isNew) {
+                                          @RequestParam(name = "isNew", required = false) Boolean isNew,
+                                          @RequestParam(name = "minPrice", required = false) Double minPrice,
+                                          @RequestParam(name = "maxPrice", required = false) Double maxPrice) {
         if (categories == null) {
             if (isNew == null || !isNew) {
-                return itemService.getAll();
+                if (minPrice == null || maxPrice == null) {
+                    return itemService.getAll();
+                } else {
+                    return itemService.getAll(minPrice, maxPrice);
+                }
             } else {
-                return itemService.getAllNew();
+                if (minPrice == null || maxPrice == null) {
+                    return itemService.getAllNew();
+                } else {
+                    return itemService.getAllNew(minPrice, maxPrice);
+                }
             }
         } else {
             if (isNew == null || !isNew) {
-                return itemService.getAll(categories);
+                if (minPrice == null || maxPrice == null) {
+                    return itemService.getAll(categories);
+                } else {
+                    return itemService.getAll(categories, minPrice, maxPrice);
+                }
             } else {
-                return itemService.getAllNew(categories);
+                if (minPrice == null || maxPrice == null) {
+                    return itemService.getAllNew(categories);
+                } else {
+                    return itemService.getAllNew(categories, minPrice, maxPrice);
+                }
             }
         }
     }

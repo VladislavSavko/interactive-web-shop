@@ -10,9 +10,17 @@ public interface ItemDao {
 
     List<Item> getAll(List<String> categories);
 
+    List<Item> getAll(double minPrice, double maxPrice);
+
+    List<Item> getAll(List<String> categories, double minPrice, double maxPrice);
+
     List<Item> getAllNew();
 
     List<Item> getAllNew(List<String> categories);
+
+    List<Item> getAllNew(double minPrice, double maxPrice);
+
+    List<Item> getAllNew(List<String> categories, double minPrice, double maxPrice);
 
     Optional<Item> get(final long id);
 

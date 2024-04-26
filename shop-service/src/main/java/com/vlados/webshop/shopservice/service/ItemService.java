@@ -11,8 +11,18 @@ public interface ItemService {
     List<ItemResponseDto> getAll();
 
     List<ItemResponseDto> getAll(List<String> categories);
+
+    List<ItemResponseDto> getAll(double minPrice, double maxPrice);
+
+    List<ItemResponseDto> getAll(List<String> categories, double minPrice, double maxPrice);
+
     List<ItemResponseDto> getAllNew();
+
     List<ItemResponseDto> getAllNew(List<String> categories);
+
+    List<ItemResponseDto> getAllNew(double minPrice, double maxPrice);
+
+    List<ItemResponseDto> getAllNew(List<String> categories, double minPrice, double maxPrice);
 
     Item get(final long id);
 

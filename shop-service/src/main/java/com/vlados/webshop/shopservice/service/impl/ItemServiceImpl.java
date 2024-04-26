@@ -47,6 +47,24 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
+    public List<ItemResponseDto> getAll(double minPrice, double maxPrice) {
+        return itemDao.getAll(minPrice, maxPrice).stream()
+                .peek(item -> item.getImages()
+                        .forEach(image -> image.setBinary(ImageCompressor.decompress(image.getBinary()))))
+                .map(DtoMapper.ForItem::toDto)
+                .toList();
+    }
+
+    @Override
+    public List<ItemResponseDto> getAll(List<String> categories, double minPrice, double maxPrice) {
+        return itemDao.getAll(categories, minPrice, maxPrice).stream()
+                .peek(item -> item.getImages()
+                        .forEach(image -> image.setBinary(ImageCompressor.decompress(image.getBinary()))))
+                .map(DtoMapper.ForItem::toDto)
+                .toList();
+    }
+
+    @Override
     public List<ItemResponseDto> getAllNew() {
         return itemDao.getAllNew().stream()
                 .peek(item -> item.getImages()
@@ -58,6 +76,24 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public List<ItemResponseDto> getAllNew(List<String> categories) {
         return itemDao.getAllNew(categories).stream()
+                .peek(item -> item.getImages()
+                        .forEach(image -> image.setBinary(ImageCompressor.decompress(image.getBinary()))))
+                .map(DtoMapper.ForItem::toDto)
+                .toList();
+    }
+
+    @Override
+    public List<ItemResponseDto> getAllNew(double minPrice, double maxPrice) {
+        return itemDao.getAllNew(minPrice, maxPrice).stream()
+                .peek(item -> item.getImages()
+                        .forEach(image -> image.setBinary(ImageCompressor.decompress(image.getBinary()))))
+                .map(DtoMapper.ForItem::toDto)
+                .toList();
+    }
+
+    @Override
+    public List<ItemResponseDto> getAllNew(List<String> categories, double minPrice, double maxPrice) {
+        return itemDao.getAllNew(categories, minPrice, maxPrice).stream()
                 .peek(item -> item.getImages()
                         .forEach(image -> image.setBinary(ImageCompressor.decompress(image.getBinary()))))
                 .map(DtoMapper.ForItem::toDto)

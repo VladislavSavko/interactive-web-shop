@@ -27,6 +27,16 @@ public class ItemDaoImpl implements ItemDao {
     }
 
     @Override
+    public List<Item> getAll(double minPrice, double maxPrice) {
+        return itemRepository.findByPriceBetween(minPrice, maxPrice);
+    }
+
+    @Override
+    public List<Item> getAll(List<String> categories, double minPrice, double maxPrice) {
+        return itemRepository.findByPriceBetweenAndRelatedCategoryNameIn(minPrice, maxPrice, categories);
+    }
+
+    @Override
     public List<Item> getAllNew() {
         return itemRepository.findByNew(true);
     }
@@ -34,6 +44,16 @@ public class ItemDaoImpl implements ItemDao {
     @Override
     public List<Item> getAllNew(List<String> categories) {
         return itemRepository.findByNewAndRelatedCategoryNameIn(true, categories);
+    }
+
+    @Override
+    public List<Item> getAllNew(double minPrice, double maxPrice) {
+        return itemRepository.findByNewAndPriceBetween(true, minPrice, maxPrice);
+    }
+
+    @Override
+    public List<Item> getAllNew(List<String> categories, double minPrice, double maxPrice) {
+        return itemRepository.findByNewAndRelatedCategoryNameInAndPriceBetween(true, categories, minPrice, maxPrice);
     }
 
     @Override
