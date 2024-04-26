@@ -47,15 +47,36 @@ body.active-modal {
     line-height: 1.4;
     background: #f1f1f1;
     padding: 14px 28px;
-    border-radius: 3px;
+    border-radius: 15px;
     max-width: 600px;
     min-width: 300px;
+}
+.modal-content input[type='range']::-webkit-slider-runnable-track {
+    -webkit-appearance: none;
+    background: #f4d4c6;
+    border-radius: 10px;
 }
 
 .close-modal {
     position: absolute;
+    border: 1px solid;
+    border-radius: 5px;
+    transition: all .3s;
+    background-color: #e6e0e1;
     top: 10px;
     right: 10px;
+    padding: 5px 7px;
+}
+
+.close-modal:hover, .submit-modal:hover  {
+    background-color: #ffffff;
+}
+
+.submit-modal {
+    border: 1px solid;
+    border-radius: 5px;
+    transition: all .3s;
+    background-color: #e6e0e1;
     padding: 5px 7px;
 }
 

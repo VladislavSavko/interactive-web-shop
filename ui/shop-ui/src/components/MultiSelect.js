@@ -37,7 +37,30 @@ class MultiSelect extends React.Component {
     }
 
     render() {
-        return  <Select isMulti options={this.state.options} onChange={this.handleChange} placeholder="Choose categories:"/>
+        const stylesForSelect = {
+            control: (provided) => ({
+                ...provided,
+                backgroundColor: '#fae4db',
+                borderColor: '#ffffff',
+                boxShadow: '',
+                '&:hover': {
+                    borderColor: 'black'
+                }
+            }),
+            menu: (provided) => ({
+                ...provided,
+                backgroundColor: '#fae4db',
+            }),
+            option: (provided) => ({
+                ...provided,
+                backgroundColor: '#fae4db',
+                // Цвет текста для выбранного и обычного элемента списка
+                '&:hover': {
+                    backgroundColor: 'rgba(220,203,203,0.98)'
+                }
+            }),
+        };
+        return  <Select isMulti options={this.state.options} onChange={this.handleChange} placeholder="Choose categories:" styles={stylesForSelect}/>
     }
 }
 
