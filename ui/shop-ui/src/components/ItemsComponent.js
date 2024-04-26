@@ -47,9 +47,15 @@ class ItemsComponent extends React.Component {
         let items = this.state.items.map(item => {
             return <ItemCard name={item.name} price={item.price} new={item.isNew} mainImage={item.images[0]}/>
         });
-        return <>
-            {items}
-        </>
+        if(items.length > 0) {
+            return <>
+                {items}
+            </>
+        } else {
+            return <>
+                Sorry, we haven't found any items!
+            </>
+        }
     }
 }
 

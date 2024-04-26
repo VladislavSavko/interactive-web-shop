@@ -15,7 +15,12 @@ class ItemCard extends React.Component {
     }
 
     render() {
-        const imgSrc = "data:image/png;base64," + this.props.mainImage.data;
+        let imgSrc;
+        if (this.props.mainImage) {
+            imgSrc = "data:image/png;base64," + this.props.mainImage.data;
+        } else {
+            imgSrc = '';
+        }
         return <>
             <div className="col-sm-6 col-md-4 col-lg-3">
                 <div className="box">

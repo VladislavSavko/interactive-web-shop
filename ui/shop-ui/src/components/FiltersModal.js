@@ -74,8 +74,8 @@ class FiltersModal extends React.Component {
                   <span id="minPriceValue">0</span>
                   <input id="minPrice" type="range" min="0" max="10000" defaultValue="0" step="1" onInput={this.updateMinValueSpan}/>
                   <h5>Max:</h5>
-                  <span id="maxPriceValue">500</span>
-                  <input id="maxPrice" type="range" min="0" max="10000" step="1" defaultValue="500" onInput={this.updateMaxValueSpan}/>
+                  <span id="maxPriceValue">10000</span>
+                  <input id="maxPrice" type="range" min="0" max="10000" step="1" defaultValue="10000" onInput={this.updateMaxValueSpan}/>
                   <span>Only new</span>
                   <input type="checkbox" id="news" name="news" value="true"/>
                   <button onClick={this.switchModalState} className="close-modal">Close</button>
