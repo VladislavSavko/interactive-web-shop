@@ -56,7 +56,7 @@ class MultiSelect extends React.Component {
                 backgroundColor: '#fae4db',
                 // Цвет текста для выбранного и обычного элемента списка
                 '&:hover': {
-                    backgroundColor: 'rgba(220,203,203,0.98)'
+                    backgroundColor: 'rgba(205,198,198,0.98)'
                 }
             }),
         };

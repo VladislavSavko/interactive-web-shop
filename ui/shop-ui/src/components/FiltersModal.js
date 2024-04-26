@@ -62,11 +62,18 @@ class FiltersModal extends React.Component {
         });
     }
 
-    updateMinValueSpan = () => {
-        document.getElementById('minPriceValue').textContent = document.getElementById('minPrice').value;
+    updateMinValue = () => {
+        document.getElementById('minPriceValue').value = document.getElementById('minPrice').value;
+        // this.updateTrackStyle(document.getElementById('minPrice').value, 'minPrice')
     }
-    updateMaxValueSpan = () => {
-        document.getElementById('maxPriceValue').textContent = document.getElementById('maxPrice').value;
+    updateMinValueSlider = () => {
+        document.getElementById('minPrice').value = document.getElementById('minPriceValue').value;
+    }
+    updateMaxValue = () => {
+        document.getElementById('maxPriceValue').value = document.getElementById('maxPrice').value;
+    }
+    updateMaxValueSlider = () => {
+        document.getElementById('maxPrice').value = document.getElementById('maxPriceValue').value;
     }
 
     render() {
@@ -84,13 +91,13 @@ class FiltersModal extends React.Component {
                     <br/>
                     <h3 style={{borderTop: '3px solid #ccc', paddingTop: '10px'}}>Price:</h3>
                     <h5>Min:</h5>
-                    <span id="minPriceValue">0</span>
+                    <input type="number" id="minPriceValue" defaultValue="0" className="modal-price-input" max="10000" min="0" onInput={this.updateMinValueSlider} />
                     <input id="minPrice" type="range" min="0" max="10000" defaultValue="0" step="1"
-                           onInput={this.updateMinValueSpan}/>
+                           onInput={this.updateMinValue} />
                     <h5>Max:</h5>
-                    <span id="maxPriceValue">10000</span>
+                    <input type="number" id="maxPriceValue" defaultValue="10000" className="modal-price-input" max="10000" min="0" onInput={this.updateMaxValueSlider} />
                     <input id="maxPrice" type="range" min="0" max="10000" step="1" defaultValue="10000"
-                           onInput={this.updateMaxValueSpan}/>
+                           onInput={this.updateMaxValue} />
                     <br/>
                     <div style={{width: '100%', display: 'flex', alignItems: 'center'}}>
                         <h4 style={{borderTop: '3px solid #ccc', paddingTop: '5px'}}>Only new</h4>

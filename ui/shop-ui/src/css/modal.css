@@ -80,6 +80,12 @@ body.active-modal {
     padding: 5px 7px;
 }
 
+.modal-price-input {
+    border: none;
+    background-color: transparent;
+    width: 70px
+}
+
 @keyframes slideUp {
     from {
         transform: translateY(100%);
