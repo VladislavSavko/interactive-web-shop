@@ -1,9 +1,14 @@
 import MainHeader from "../components/MainHeader";
 import '../css/custom.css'
 import ApiClient from "../client/ApiClient";
+import {CountryDropdown} from "react-country-region-selector";
+import {useState} from "react";
 
 
 const SignUpPage = () => {
+    const [country, setCountry] = useState('');
+
+
     function blackText() {
         document.getElementById('email').style.color = 'black';
         document.getElementById('password').style.color = 'black';
@@ -26,8 +31,22 @@ const SignUpPage = () => {
             </div>
             <div className="login-container-item" style={{height: '360px'}}>
                 <span>Enter your address information:</span>
-                <input id="country_code" name="counry_code" type="text" placeholder="Counry code" onFocus={blackText}/>
-                {/*//TODO: Make a dropdown list here*/}
+                <CountryDropdown
+                    id="country_code"
+                    labelType="long"
+                    valueType="short"
+                    onChange={(selected) => setCountry(selected)}
+                    value={country}
+                    style={{
+                        display: 'block',
+                        borderRadius: '5px',
+                        fontSize: '16px',
+                        background: 'white',
+                        width: '100%',
+                        border: '0',
+                        padding: '10px 10px',
+                        margin: '15px -10px'
+                }}/>
                 <input id="city" name="city" type="text" placeholder="City" onFocus={blackText}/>
                 <input id="street" name="street" type="text" placeholder="Street" onFocus={blackText}/>
                 <input id="house_number" name="house_number" type="text" placeholder="House number"
@@ -58,21 +77,20 @@ const sendData = () => {
                 response.json().then(responseJson => {
                     window.sessionStorage.setItem('username', responseJson['name']);
                     ApiClient.authenticate(email, password).then(response => {
-                        if(response.ok) {
+                        if (response.ok) {
                             response.json().then(responseJson => {
                                 window.sessionStorage.setItem('token', responseJson.tokenString);
                                 window.sessionStorage.setItem('userId', responseJson.id);
                                 window.sessionStorage.setItem('userRole', responseJson.role);
                             });
                         }
-                    })
-                    //     window.sessionStorage.setItem('currentUserId', responseJson['userId']);
+                    });
+                    window.location.href = '/';
                     //     window.sessionStorage.setItem('isAdmin', responseJson['admin']);
                 });
-                window.location.href = '/';
             } else if (response.status === 400) {
                 response.json().then(responseJson => {
-                    if("errors" in responseJson) {
+                    if ("errors" in responseJson) {
                         showErrors(responseJson.errors);
                     } else {
                         showError(responseJson.message);
@@ -104,7 +122,6 @@ const showError = (error) => {
     document.getElementById('email').style.color = 'red';
     document.getElementById('password').style.color = 'red';
 }
-
 
 
 export default SignUpPage
