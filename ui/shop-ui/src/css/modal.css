@@ -14,12 +14,30 @@ body.active-modal {
     font-size: 18px;
 }
 
+.btn-modal-1 {
+    padding: 10px 20px;
+    border: 1px solid;
+    border-radius: 5px;
+    transition: all .3s;
+    background-color: #ae9615;
+    color: white;
+    display: inline-block;
+    margin: 100px auto 0;
+    font-size: 18px;
+}
+
 .btn-modal:hover {
     background-color: #ffffff;
     color: #db4566;
 }
 
+.btn-modal-1:hover {
+    background-color: #ffffff;
+    color: #ae9615;
+}
+
 ._modal, .overlay {
+    z-index: 1;
     width: 100vw;
     height: 100vh;
     top: 0;
@@ -50,6 +68,7 @@ body.active-modal {
     border-radius: 15px;
     max-width: 600px;
     min-width: 300px;
+    z-index: 2;
 }
 .modal-content input[type='range']::-webkit-slider-runnable-track {
     -webkit-appearance: none;

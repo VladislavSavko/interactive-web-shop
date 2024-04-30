@@ -65,7 +65,7 @@ export default function ProfileAddressInfoModal(props) {
 
     return (
         <>
-            <button onClick={switchModalState} className="btn-modal">
+            <button onClick={switchModalState} className="btn-modal-1">
                 {props.text}
             </button>
             {modal && (<div className="_modal">

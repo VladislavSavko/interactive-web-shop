@@ -105,8 +105,7 @@ class UserProfile extends React.Component {
                 </div>
             </div>
             <div className="mt-10 lg:text-center">
-                <h2 className="text-base text-indigo-600 font-semibold tracking-wide uppercase">Cart & Order
-                    History</h2>
+                <h2 className="text-base text-indigo-600 font-semibold tracking-wide uppercase">Cart & Order History</h2>
             </div>
             <div className="mt-10 p-5 bg-white rounded-lg shadow"></div>
             <button onClick={logout}>Log out</button>
