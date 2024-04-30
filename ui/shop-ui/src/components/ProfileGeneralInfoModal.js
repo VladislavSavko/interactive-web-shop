@@ -1,13 +1,22 @@
-import {useState} from "react";
+import React, {useState} from "react";
 import '../css/modal.css'
 import ApiClient from "../client/ApiClient";
 
 
 export default function ProfileGeneralInfoModal(props) {
     const [modal, setModal] = useState(false);
+    const [closing, setClosing] = useState(false);
 
     const switchModalState = () => {
-        setModal(!modal);
+        if (modal) {
+            setClosing(true);
+            setTimeout(() => {
+                setModal(false);
+                setClosing(false);
+            }, 400);
+        } else {
+            setModal(true);
+        }
     }
 
     function blackText() {
@@ -61,16 +70,19 @@ export default function ProfileGeneralInfoModal(props) {
             <button onClick={switchModalState} className="btn-modal">
                 {props.text}
             </button>
-            {modal && (<div className="_modal">
-                <div onClick={switchModalState} className="overlay">
-                </div>
-                <div className="modal-content">
-                    <h2>General info</h2>
-                    <input id="email" name="email" type="text" defaultValue={props.email} placeholder="Email" onFocus={blackText}/>
-                    <input id="name" name="name" type="text" defaultValue={props.name} placeholder="Your name" onFocus={blackText}/>
+            {modal && (<div className={`_modal ${closing ? 'slide-down' : ''}`}>
+                <div onClick={switchModalState} className="overlay"></div>
+                <div className="modal-content" style={{color: 'black'}}>
+                    <h2 style={{borderBottom: '3px solid #ccc', paddingBottom: '10px'}}>General info</h2>
+                    <h3>Email:</h3>
+                    <input id="email" name="email" type="text" defaultValue={props.email} placeholder="Email"
+                           onFocus={blackText} style={{marginBottom: '20px', borderRadius: '10px'}}/>
+                    <h3 style={{borderTop: '3px solid #ccc', paddingTop: '10px'}}>Name:</h3>
+                    <input id="name" name="name" type="text" defaultValue={props.name} placeholder="Your name"
+                           onFocus={blackText} style={{marginBottom: '20px', borderRadius: '10px'}}/>
                     <div id="error_div" style={{color: 'red'}}></div>
                     <button onClick={switchModalState} className="close-modal">Close</button>
-                    <button onClick={updateUserInfo}>Submit</button>
+                    <button onClick={updateUserInfo} className="submit-modal">Submit</button>
                 </div>
             </div>)}
         </>

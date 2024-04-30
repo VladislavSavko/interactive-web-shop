@@ -7,9 +7,18 @@ import {CountryDropdown} from "react-country-region-selector";
 export default function ProfileAddressInfoModal(props) {
     const [modal, setModal] = useState(false);
     const [country, setCountry] = useState('');
+    const [closing, setClosing] = useState(false);
 
     const switchModalState = () => {
-        setModal(!modal);
+        if (modal) {
+            setClosing(true);
+            setTimeout(() => {
+                setModal(false);
+                setClosing(false);
+            }, 400);
+        } else {
+            setModal(true);
+        }
     }
 
     function blackText() {
@@ -68,12 +77,12 @@ export default function ProfileAddressInfoModal(props) {
             <button onClick={switchModalState} className="btn-modal-1">
                 {props.text}
             </button>
-            {modal && (<div className="_modal">
+            {modal && (<div className={`_modal ${closing ? 'slide-down' : ''}`} style={{top: '10%'}}>
                 <div onClick={switchModalState} className="overlay">
                 </div>
-                <div className="modal-content">
-                    <h2>Address info</h2>
-                    <span>Country:</span>
+                <div className="modal-content" style={{color: 'black'}}>
+                    <h2 style={{borderBottom: '3px solid #ccc', paddingBottom: '10px'}}>Address info</h2>
+                    <h3>Country:</h3>
                     <CountryDropdown
                         id="country_code"
                         labelType="long"
@@ -88,23 +97,23 @@ export default function ProfileAddressInfoModal(props) {
                             width: '100%',
                             border: '0',
                             padding: '10px 10px',
-                            margin: '15px -10px'
+                            marginBottom: '15px'
                         }}/>
-                    <span>City:</span>
+                    <h3 style={{borderTop: '3px solid #ccc', paddingTop: '10px'}}>City:</h3>
                     <input id="city" name="city" type="text" defaultValue={props.address.city} placeholder="City"
-                           onFocus={blackText}/>
-                    <span>Street:</span>
+                           onFocus={blackText} style={{marginBottom: '20px', borderRadius: '10px'}}/>
+                    <h3 style={{borderTop: '3px solid #ccc', paddingTop: '10px'}}>Street:</h3>
                     <input id="street" name="street" type="text" defaultValue={props.address.street}
-                           placeholder="Street" onFocus={blackText}/>
-                    <span>House number:</span>
+                           placeholder="Street" onFocus={blackText} style={{marginBottom: '20px', borderRadius: '10px'}}/>
+                    <h3 style={{borderTop: '3px solid #ccc', paddingTop: '10px'}}>House number:</h3>
                     <input id="house_number" name="house_number" type="text" defaultValue={props.address.houseNumber}
-                           placeholder="House number" onFocus={blackText}/>
-                    <span>Flat number:</span>
+                           placeholder="House number" onFocus={blackText} style={{marginBottom: '20px', borderRadius: '10px'}}/>
+                    <h3 style={{borderTop: '3px solid #ccc', paddingTop: '10px'}}>Flat number:</h3>
                     <input id="flat_number" name="flat_number" type="text" defaultValue={props.address.flatNumber}
-                           placeholder="Flat number" onFocus={blackText}/>
+                           placeholder="Flat number" onFocus={blackText} style={{marginBottom: '20px', borderRadius: '10px'}}/>
                     <div id="error_div" style={{color: 'red'}}></div>
                     <button onClick={switchModalState} className="close-modal">Close</button>
-                    <button onClick={updateUserInfo}>Submit</button>
+                    <button onClick={updateUserInfo} className="submit-modal">Submit</button>
                 </div>
             </div>)}
         </>

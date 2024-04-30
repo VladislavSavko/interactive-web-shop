@@ -82,8 +82,7 @@ class FiltersModal extends React.Component {
                 {this.props.text}
             </button>
             {this.state.modal && (<div className={`_modal ${this.state.closing ? 'slide-down' : ''}`}>
-                <div onClick={this.switchModalState} className="overlay">
-                </div>
+                <div onClick={this.switchModalState} className="overlay"></div>
                 <div className="modal-content">
                     <h2 style={{borderBottom: '3px solid #ccc', paddingBottom: '10px'}}>Apply filters:</h2>
                     <h3>Categories:</h3>
