@@ -44,12 +44,11 @@ class ItemsComponent extends React.Component {
 
 
     render() {
-        let items = this.state.items.map(item => {
-            return <ItemCard name={item.name} price={item.price} new={item.isNew} mainImage={item.images[0]}/>
-        });
-        if(items.length > 0) {
+        if (this.state.items !== undefined) {
             return <>
-                {items}
+                {this.state.items.map(item => {
+                    return <ItemCard name={item.name} price={item.price} new={item.isNew} mainImage={item.images[0]}/>
+                })}
             </>
         } else {
             return <>
