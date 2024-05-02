@@ -6,15 +6,20 @@ import MainHeader from "../components/MainHeader";
 const LoginPage = () => {
     return <div>
         <MainHeader active="login"/>
-        <form className="login" onSubmit={sendData}>
-            <span>Welcome to our web-shop!</span>
-            <br/>
-            <span>Please, enter your credentials:</span>
-            <input id="email" name="email" type="text" placeholder="Email" onFocus={blackText}/>
-            <input id="password" name="password" type="password" placeholder="Password"  onFocus={blackText}/>
-            <button>Login</button>
-            <button style={{marginLeft: '275px'}} onClick={() => window.location.href="/signUp"}>Sign up</button>
-        </form>
+        <div className="login-page-content">
+            <div className="form-v10-content" style={{width: '500px'}}>
+                <form className="login" onSubmit={sendData}>
+                    <span>Welcome to our web-shop!</span>
+                    <br/>
+                    <span>Please, enter your credentials:</span>
+                    <input id="email" name="email" type="text" placeholder="Email" onFocus={blackText}/>
+                    <input id="password" name="password" type="password" placeholder="Password" onFocus={blackText}/>
+                    <button>Login</button>
+                    <button style={{marginLeft: '275px'}} onClick={() => window.location.href = "/signUp"}>Sign up
+                    </button>
+                </form>
+            </div>
+        </div>
         <div id="error_div" className="error"></div>
     </div>
 

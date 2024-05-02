@@ -1,13 +1,9 @@
 .login {
     overflow: hidden;
-    background-color: rgb(249, 236, 230);
+    background-color: #f89cab;
     padding: 25px 30px 30px 30px;
     border-radius: 10px;
-    position: absolute;
-    top: 30%;
-    left: 35%;
-    width: 500px;
-    height: 280px;
+    height: 300px;
     box-shadow: 5px 10px 10px rgba(229, 235, 236, 0.94);
 
     > input {
@@ -35,12 +31,11 @@
         margin-top: 10px;
         margin-left: -5px;
         border-radius: 5px;
-        background-color: rgba(244, 91, 105, 1);
+        background-color: #b5616e;
         transition: all .3s;
     }
     > button:hover {
-        background-color: #ffffff;
-        color: #db4566;
+        background-color: #f15c74;
     }
 }
 
