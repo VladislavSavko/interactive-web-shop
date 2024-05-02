@@ -18,7 +18,7 @@ const LoginPage = () => {
         <div id="error_div" className="error"></div>
     </div>
 
-    function blackText(){
+    function blackText() {
         document.getElementById('email').style.color = 'black';
         document.getElementById('password').style.color = 'black';
     }
@@ -39,23 +39,23 @@ const sendData = (event) => {
 
     ApiClient.authenticate(event.target.email.value, event.target.password.value)
         .then(response => {
-        if (response.ok) {
-            response.json().then(responseJson => {
-                window.sessionStorage.setItem('username', responseJson.name);
-                window.sessionStorage.setItem('token', responseJson.tokenString);
-                window.sessionStorage.setItem('userId', responseJson.id);
-                window.sessionStorage.setItem('userRole', responseJson.role);
+            if (response.ok) {
+                response.json().then(responseJson => {
+                    window.sessionStorage.setItem('username', responseJson.name);
+                    window.sessionStorage.setItem('token', responseJson.tokenString);
+                    window.sessionStorage.setItem('userId', responseJson.id);
+                    window.sessionStorage.setItem('userRole', responseJson.role);
 
-                window.location.href = '/';
-            });
-        } else if (response.status === 400) {
-            response.json().then(responseJson => {
-                showError(responseJson['message']);
-            });
-        } else {
-            console.log('fuck');
-        }
-    })
+                    window.location.href = '/';
+                });
+            } else if (response.status === 400) {
+                response.json().then(responseJson => {
+                    showError(responseJson['message']);
+                });
+            } else {
+                console.log('fuck');
+            }
+        })
 }
 
 

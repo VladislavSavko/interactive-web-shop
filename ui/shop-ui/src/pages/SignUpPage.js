@@ -16,45 +16,65 @@ const SignUpPage = () => {
 
     return <div>
         <MainHeader active="signup"/>
-        <div className="login-container">
-            <div className="login-container-item" style={{height: '350px'}}>
-                <span>Welcome to our web-shop!</span>
-                <br/>
-                <span>Please, fill out the form:</span>
-                <input id="email" name="email" type="text" placeholder="Email" onFocus={blackText}/>
-                <input id="password" name="password" type="password" placeholder="Password" onFocus={blackText}/>
-                <input id="name" name="name" type="text" placeholder="Your name" onFocus={blackText}/>
-                <button onClick={sendData}>Sign Up</button>
-                <button style={{marginLeft: '275px'}}
-                        onClick={() => window.location.href = "/login"}>Login
-                </button>
-            </div>
-            <div className="login-container-item" style={{height: '360px'}}>
-                <span>Enter your address information:</span>
-                <CountryDropdown
-                    id="country_code"
-                    labelType="long"
-                    valueType="short"
-                    onChange={(selected) => setCountry(selected)}
-                    value={country}
-                    style={{
-                        display: 'block',
-                        borderRadius: '5px',
-                        fontSize: '16px',
-                        background: 'white',
-                        width: '100%',
-                        border: '0',
-                        padding: '10px 10px',
-                        margin: '15px -10px'
-                }}/>
-                <input id="city" name="city" type="text" placeholder="City" onFocus={blackText}/>
-                <input id="street" name="street" type="text" placeholder="Street" onFocus={blackText}/>
-                <input id="house_number" name="house_number" type="text" placeholder="House number"
-                       onFocus={blackText}/>
-                <input id="flat_number" name="flat_number" type="text" placeholder="Flat number" onFocus={blackText}/>
+        <div className="login-page-content">
+            <div className="form-v10-content">
+                <div className="form-detail">
+                    <div className="form-left">
+                        <h2>General information</h2>
+                        <div className="form-row">
+                            <input id="email" name="email" type="text" placeholder="Email" onFocus={blackText}/>
+                        </div>
+                        <div className="form-row">
+                            <input id="password" name="password" type="password" placeholder="Password"
+                                   onFocus={blackText}/>
+                        </div>
+                        <div className="form-row">
+                            <input id="name" name="name" type="text" placeholder="Your name" onFocus={blackText}/>
+                        </div>
+                        <div id="error_div" style={{top: '60%', left: '2.3%'}} className="error"></div>
+                    </div>
+                    <div className="form-right">
+                        <h2>Address Details</h2>
+                        <div className="form-row">
+                            <CountryDropdown
+                                id="country_code"
+                                labelType="long"
+                                valueType="short"
+                                onChange={(selected) => setCountry(selected)}
+                                value={country}
+                                style={{
+                                    display: 'block',
+                                    borderRadius: '5px',
+                                    fontSize: '16px',
+                                    background: 'white',
+                                    width: '100%',
+                                    border: '0',
+                                    padding: '10px 10px',
+                                    margin: '15px -10px'
+                            }}/>
+                        </div>
+                        <div className="form-row">
+                            <input id="city" name="city" type="text" placeholder="City" onFocus={blackText}/>
+                        </div>
+                        <div className="form-row">
+                            <input id="street" name="street" type="text" placeholder="Street" onFocus={blackText}/>
+                        </div>
+                        <div className="form-row">
+                            <input id="house_number" name="house_number" type="text" placeholder="House number" onFocus={blackText}/>
+                        </div>
+                        <div className="form-row">
+                            <input id="flat_number" name="flat_number" type="text" placeholder="Flat number"
+                                   onFocus={blackText}/>
+                        </div>
+                        <div className="form-row-last">
+                            <button onClick={sendData}>Sign Up</button>
+                            <button style={{marginLeft: '275px'}}
+                                    onClick={() => window.location.href = "/login"}>Login</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        <div id="error_div" style={{top: '85%'}} className="error"></div>
     </div>
 
 }
@@ -82,10 +102,10 @@ const sendData = () => {
                                 window.sessionStorage.setItem('token', responseJson.tokenString);
                                 window.sessionStorage.setItem('userId', responseJson.id);
                                 window.sessionStorage.setItem('userRole', responseJson.role);
+                                window.location.href = '/';
                             });
                         }
                     });
-                    window.location.href = '/';
                     //     window.sessionStorage.setItem('isAdmin', responseJson['admin']);
                 });
             } else if (response.status === 400) {
@@ -112,6 +132,7 @@ const showErrors = (errors) => {
 
     document.getElementById('email').style.color = 'red';
     document.getElementById('password').style.color = 'red';
+    //TODO: Сделать коды ошибок для подсветки нужных полей?
 }
 
 const showError = (error) => {

@@ -40,6 +40,7 @@ export default function ProfileGeneralInfoModal(props) {
         )
             .then(response => {
                 if (response.ok) {
+                    switchModalState();
                     window.location.reload();
                 } else if (response.status === 400) {
                     response.json().then(responseJson => {
