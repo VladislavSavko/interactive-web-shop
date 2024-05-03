@@ -25,7 +25,7 @@ class ItemInfo extends React.Component {
         const itemId = url.substring(url.lastIndexOf('item/') + 5);
 
         this.getItemInfo(itemId).then(response => {
-            if(response.ok) {
+            if (response.ok) {
                 response.json().then(responseJson => {
                     this.setState({
                         binary: responseJson.images,
@@ -43,13 +43,23 @@ class ItemInfo extends React.Component {
         });
     }
 
+    select = (event) => {
+        const sizes = document.querySelectorAll('.size');
+        sizes.forEach(element => {
+            element.classList.remove('focus');
+        });
+        event.target.classList.add('focus');
+    }
+
     render() {
         const images = this.state.binary.map(i => i.data);
         return <>
             <div className="item-body">
                 <div className="item-container">
                     <div>
-                        <img src={`data:image/png;base64,${images[0]}`} alt="Cannot load the image right now..." className="item-image"/>
+                        <img src={`data:image/png;base64,${images[0]}`} alt="Cannot load the image right now..."
+                             className="item-image"/>
+                        {/*//TODO: Когда сделаю слайдер, сделать здесь прокрутку фоток*/}
                     </div>
                     <div className="slideshow-buttons">
                         <div className="one"></div>
@@ -59,10 +69,10 @@ class ItemInfo extends React.Component {
                     </div>
                     <p className="pick">choose size</p>
                     <div className="sizes">
-                        <div className="size">S</div>
-                        <div className="size">M</div>
-                        <div className="size">L</div>
-                        <div className="size">XL</div>
+                        <div className="size" onClick={this.select}>S</div>
+                        <div className="size" onClick={this.select}>M</div>
+                        <div className="size" onClick={this.select}>L</div>
+                        <div className="size" onClick={this.select}>XL</div>
                     </div>
                     <div className="product">
                         <p>{this.state.category}</p>
@@ -71,7 +81,8 @@ class ItemInfo extends React.Component {
                         <p className="desc">{this.state.description}</p>
                         <div>
                             <button className="buttons add">Add to Cart</button>
-                            {/*<button className="like"><span>♥</span></button>*/}
+                            <br/>
+                            <button className="buttons try">Try in fitting room</button>
                         </div>
                     </div>
                 </div>

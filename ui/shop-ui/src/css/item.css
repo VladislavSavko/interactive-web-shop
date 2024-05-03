@@ -16,7 +16,7 @@
     position: relative;
     overflow: hidden;
     width: 900px;
-    height: 650px;
+    height: 697px;
     background: #F5F5F5;
     box-shadow: 5px 5px 15px #BA7E7E;
     border-radius: 10px;
@@ -133,6 +133,11 @@
     width: 67%;
 }
 
+.try {
+    width: 67%;
+    margin-top: 9px;
+}
+
 .like {
     width: 22%;
 }
@@ -152,7 +157,7 @@
 }
 
 .pick {
-    margin-top: 11px;
+    margin-top: 41px;
     margin-bottom: 0;
     margin-left: 20px;
 }
