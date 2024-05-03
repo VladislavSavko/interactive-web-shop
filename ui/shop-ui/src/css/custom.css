@@ -6,6 +6,10 @@
     height: 300px;
     box-shadow: 5px 10px 10px rgba(229, 235, 236, 0.94);
 
+    span {
+        font-weight: 400;
+    }
+
     > input {
         display: block;
         border-radius: 5px;

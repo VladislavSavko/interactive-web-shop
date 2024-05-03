@@ -47,7 +47,7 @@ class ItemsComponent extends React.Component {
         if (this.state.items !== undefined) {
             return <>
                 {this.state.items.map(item => {
-                    return <ItemCard name={item.name} price={item.price} new={item.isNew} mainImage={item.images[0]}/>
+                    return <ItemCard iid={item.id} name={item.name} price={item.price} new={item.isNew} mainImage={item.images[0]}/>
                 })}
             </>
         } else {

@@ -80,6 +80,11 @@ public class ShopController {
         }
     }
 
+    @GetMapping("/items/{id}")
+    public ItemResponseDto getItem(@PathVariable(name = "id") long id) {
+        return itemService.getAsResponse(id);
+    }
+
     @GetMapping("/categories")
     public List<CategoryResponseDto> getCategories() {
         return categoryService.getAll();

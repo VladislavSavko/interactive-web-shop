@@ -19,6 +19,7 @@ public class DtoMapper {
                 return null;
             }
             return new ItemResponseDto(
+                    original.getId(),
                     original.getName(),
                     original.getRelatedCategory().getName(),
                     original.getInventoryInfo().getQuantity(),

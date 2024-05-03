@@ -13,6 +13,10 @@ class ApiClient {
         });
     }
 
+    static getItemInfo(id): Promise<Response> {
+        return fetch(this.SERVER_URL + this.SHOP_API + this.ITEMS_URL + '/' + id);
+    }
+
     static sendUserInfo(email, name, countryCode, city, street, houseNumber, flatNumber, role, id): Promise<Response> {
         return fetch(this.SERVER_URL + this.USERS_API + '/' + id, {
             method: "PUT",

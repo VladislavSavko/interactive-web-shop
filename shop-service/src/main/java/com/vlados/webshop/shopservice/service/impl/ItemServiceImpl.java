@@ -101,6 +101,16 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
+    public ItemResponseDto getAsResponse(long id) {
+        Item item = itemDao.get(id).orElseThrow(() -> new NoSuchElementException(
+                        ResourceUtil.getMessage("db.item.not_found").formatted(id)
+                )
+        );
+        item.getImages().forEach(image -> image.setBinary(ImageCompressor.decompress(image.getBinary())));
+        return DtoMapper.ForItem.toDto(item);
+    }
+
+    @Override
     public Item get(long id) {
         return itemDao.get(id).orElseThrow(() -> new NoSuchElementException(
                         ResourceUtil.getMessage("db.item.not_found").formatted(id)

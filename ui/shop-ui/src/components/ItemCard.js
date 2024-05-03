@@ -14,6 +14,10 @@ class ItemCard extends React.Component {
         }
     }
 
+    itemHref(id) {
+        return '/item/' + id;
+    }
+
     render() {
         let imgSrc;
         if (this.props.mainImage) {
@@ -24,7 +28,7 @@ class ItemCard extends React.Component {
         return <>
             <div className="col-sm-6 col-md-4 col-lg-3">
                 <div className="box">
-                    <a href="">
+                    <a href={this.itemHref(this.props.iid)}>
                         <div className="img-box">
                             <img src={imgSrc} alt=""/>
                         </div>
