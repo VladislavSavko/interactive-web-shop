@@ -6,6 +6,7 @@ import ApiClient from "../../client/ApiClient";
 export default function CartAddingModal(props) {
     const [modal, setModal] = useState(false);
     const [closing, setClosing] = useState(false);
+    const [q, setQ] = useState(1);
 
     const switchModalState = () => {
         if (modal) {
@@ -17,17 +18,10 @@ export default function CartAddingModal(props) {
         } else {
             setModal(true);
         }
+        setQ(1);
     }
 
-    function blackText() {
-        document.getElementById('country_code').style.color = 'black';
-        document.getElementById('city').style.color = 'black';
-        document.getElementById('street').style.color = 'black';
-        document.getElementById('house_number').style.color = 'black';
-        document.getElementById('flat_number').style.color = 'black';
-    }
-
-    const updateUserInfo = () => {
+    const addItemToCart = () => {
         const countryCode = document.getElementById('country_code').value;
         const city = document.getElementById('city').value;
         const street = document.getElementById('street').value;
@@ -68,6 +62,7 @@ export default function CartAddingModal(props) {
         } else if (value > input.max) {
             input.value = input.max;
         }
+        setQ(input.value);
     }
 
     const showErrors = (errors) => {
@@ -83,7 +78,6 @@ export default function CartAddingModal(props) {
     }
 
     return (
-
         <>
             <button onClick={switchModalState} className={props.disabled ? 'btn-modal-2-disabled' : 'btn-modal-2'} disabled={props.disabled}>
                 {props.text}
@@ -117,11 +111,12 @@ export default function CartAddingModal(props) {
                         <h2 style={{textTransform: 'none', color: 'black'}}>
                             {props.name}
                         </h2>
-                        <h3 style={{color: '#c3a1a0'}}>{props.selectedSize}</h3>
+                        <h3 style={{color: '#c3a1a0', paddingLeft: '50px', marginBottom: '9px'}}>{props.selectedSize}</h3>
+                        <h4 style={{marginLeft: '80px'}}><span style={{color: '#9c9c9f'}}>{q}</span> X ${props.price}</h4>
                     </div>
                     <div id="error_div" style={{color: 'red'}}></div>
                     <button onClick={switchModalState} className="close-modal">Close</button>
-                    <button onClick={updateUserInfo} className="submit-modal">Submit</button>
+                    <button onClick={addItemToCart} className="submit-modal">Submit</button>
                 </div>
             </div>)}
         </>
