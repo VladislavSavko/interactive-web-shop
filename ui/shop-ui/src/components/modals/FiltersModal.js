@@ -1,6 +1,6 @@
 import React from "react";
 import '../../css/modal.css'
-import MultiSelect from "./inner/MultiSelect";
+import MultiSelectCategories from "./inner/MultiSelectCategories";
 
 
 class FiltersModal extends React.Component {
@@ -86,7 +86,7 @@ class FiltersModal extends React.Component {
                 <div className="modal-content">
                     <h2 style={{borderBottom: '3px solid #ccc', paddingBottom: '10px'}}>Apply filters:</h2>
                     <h3>Categories:</h3>
-                    <MultiSelect onChange={this.getSelectedOptions}/>
+                    <MultiSelectCategories onChange={this.getSelectedOptions}/>
                     <br/>
                     <h3 style={{borderTop: '3px solid #ccc', paddingTop: '10px'}}>Price:</h3>
                     <h5>Min:</h5>

@@ -3,7 +3,7 @@ import React from "react";
 import ApiClient from "../../../client/ApiClient";
 
 
-class MultiSelect extends React.Component {
+class MultiSelectCategories extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -64,4 +64,4 @@ class MultiSelect extends React.Component {
     }
 }
 
-export default MultiSelect;
+export default MultiSelectCategories;

@@ -6,6 +6,7 @@ import SignUpPage from "../pages/SignUpPage";
 import ProfilePage from "../pages/ProfilePage";
 import ShopPage from "../pages/ShopPage";
 import ItemPage from "../pages/ItemPage";
+import FitRoomPage from "../pages/FitRoomPage";
 
 const Home = () => {
     return <BrowserRouter>
@@ -16,7 +17,7 @@ const Home = () => {
             <Route element={<ProfilePage />} path='/profile'/>
             <Route element={<ShopPage />} path='/shop'/>
             <Route element={<ItemPage/>} path='/item/*'/>
-            {/*<Route element={<OneUser/>} path='/myPage'/>*/}
+            <Route element={<FitRoomPage />} path='/fitroom'/>
             {/*<Route element={<UpdateFormPost/>} path='/updatePost'/>*/}
             {/*<Route element={<UserEditPage/>} path='/myPage/edit'/>*/}
             {/*<Route element={<ChangePasswordPage/>} path='/myPage/password'/>*/}

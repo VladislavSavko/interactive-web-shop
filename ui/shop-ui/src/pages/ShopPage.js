@@ -9,7 +9,7 @@ const ShopPage = () => {
             <div className="container">
                 <div className="heading_container heading_center">
                     <h2>
-                        Top Products
+                        Top Items
                     </h2>
                 </div>
                 <div className="row">
