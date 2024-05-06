@@ -1,6 +1,7 @@
 import React from "react";
 import '../css/item.css'
 import ApiClient from "../client/ApiClient";
+import CartAddingModal from "./modals/CartAddingModal";
 
 class ItemInfo extends React.Component {
     constructor(props) {
@@ -12,7 +13,9 @@ class ItemInfo extends React.Component {
             quantity: 0,
             description: '',
             price: 0,
-            isNew: false
+            isNew: false,
+            id: '',
+            selected: ''
         }
     }
 
@@ -34,7 +37,8 @@ class ItemInfo extends React.Component {
                         quantity: responseJson.quantity,
                         description: responseJson.description,
                         price: responseJson.price,
-                        isNew: responseJson.isNew
+                        isNew: responseJson.isNew,
+                        id: itemId
                     });
                 });
             } else {
@@ -49,14 +53,26 @@ class ItemInfo extends React.Component {
             element.classList.remove('focus');
         });
         event.target.classList.add('focus');
+        this.setState({
+            selected: event.target.textContent
+        })
+    }
+
+    goToFittingRoom = () => {
+        window.location.href = "/fitroom/" + this.state.id;
     }
 
     render() {
         const images = this.state.binary.map(i => i.data);
+        const isNew = this.state.isNew ? <img
+            src="https://th.bing.com/th/id/R.a75f2bc0fd676a9b44beb67580e46719?rik=rgqLLsea1oUvuQ&riu=http%3a%2f%2fgetdrawings.com%2ffree-icon%2fnew-icon-transparent-74.png&ehk=T0Tvxuk5h3p4TwT8F21ozdLHa1fqFj4YObc4hZI4GhM%3d&risl=&pid=ImgRaw&r=0"
+            style={{position: 'absolute', top: '3%', right: '34.5%', width: '65px'}} alt=""/> : <></>;
+        console.log(this.state.selected)
         return <>
             <div className="item-body">
                 <div className="item-container">
                     <div>
+                        {isNew}
                         <img src={`data:image/png;base64,${images[0]}`} alt="Cannot load the image right now..."
                              className="item-image"/>
                         {/*//TODO: Когда сделаю слайдер, сделать здесь прокрутку фоток*/}
@@ -80,10 +96,12 @@ class ItemInfo extends React.Component {
                         <h2>${this.state.price}</h2>
                         <p className="desc">{this.state.description}</p>
                         <div>
-                            <button className="buttons add">Add to Cart</button>
+                            <CartAddingModal text="Add to cart" maxQuantity={this.state.quantity} mainImage={images[0]} price={this.state.price} name={this.state.name}
+                            selectedSize={this.state.selected} disabled={this.state.selected === '' || this.state.selected === undefined}/>
                             <br/>
-                            <button className="buttons try">Try in fitting room</button>
+                            <button className="buttons try" onClick={this.goToFittingRoom}>Try in fitting room</button>
                         </div>
+
                     </div>
                 </div>
             </div>

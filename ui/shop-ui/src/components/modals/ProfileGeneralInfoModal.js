@@ -1,6 +1,6 @@
 import React, {useState} from "react";
-import '../css/modal.css'
-import ApiClient from "../client/ApiClient";
+import '../../css/modal.css'
+import ApiClient from "../../client/ApiClient";
 
 
 export default function ProfileGeneralInfoModal(props) {

@@ -1,8 +1,8 @@
 import React from "react";
 import '../css/custom.css'
 import ApiClient from "../client/ApiClient";
-import ProfileGeneralInfoModal from "./ProfileGeneralInfoModal";
-import ProfileAddressInfoModal from "./ProfileAddressInfoModal";
+import ProfileGeneralInfoModal from "./modals/ProfileGeneralInfoModal";
+import ProfileAddressInfoModal from "./modals/ProfileAddressInfoModal";
 
 class UserProfile extends React.Component {
     constructor(props) {

@@ -1,6 +1,6 @@
 import React from "react";
-import '../css/modal.css'
-import MultiSelect from "./MultiSelect";
+import '../../css/modal.css'
+import MultiSelect from "./inner/MultiSelect";
 
 
 class FiltersModal extends React.Component {

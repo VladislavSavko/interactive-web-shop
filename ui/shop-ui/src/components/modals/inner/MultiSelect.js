@@ -1,6 +1,6 @@
 import Select from 'react-select';
 import React from "react";
-import ApiClient from "../client/ApiClient";
+import ApiClient from "../../../client/ApiClient";
 
 
 class MultiSelect extends React.Component {

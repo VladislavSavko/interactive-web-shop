@@ -1,6 +1,6 @@
 import MainHeader from "../components/MainHeader";
 import ItemsComponent from "../components/ItemsComponent";
-import FiltersModal from "../components/FiltersModal";
+import FiltersModal from "../components/modals/FiltersModal";
 
 const ShopPage = () => {
     return <>

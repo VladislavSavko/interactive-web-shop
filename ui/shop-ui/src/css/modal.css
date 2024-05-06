@@ -26,6 +26,43 @@ body.active-modal {
     font-size: 18px;
 }
 
+.btn-modal-2 {
+    background: #E0C9CB;
+    padding: 10px;
+    display: inline-block;
+    outline: 0;
+    border: 0;
+    margin: -1px;
+    border-radius: 2px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: white;
+    cursor: pointer;
+    width: 67%;
+    transition: all .3s;
+
+    &:hover {
+        background: #BA7E7E;
+        transition: all .4s ease-in-out;
+    }
+}
+
+.btn-modal-2-disabled {
+    background: #E0C9CB;
+    padding: 10px;
+    display: inline-block;
+    outline: 0;
+    border: 0;
+    margin: -1px;
+    border-radius: 2px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: white;
+    cursor: pointer;
+    width: 67%;
+    transition: all .3s;
+}
+
 .btn-modal:hover {
     background-color: #ffffff;
     color: #db4566;
@@ -50,13 +87,34 @@ body.active-modal {
 ._modal {
     animation: slideUp 0.4s ease-out forwards;
 }
+
 ._modal.slide-down {
     animation: slideDown 0.4s ease-out forwards;
 }
 
-.overlay {
-    background: rgba(49,49,49,0.8);
+._modal-item {
+    z-index: 1;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    position: fixed;
 }
+
+._modal-item {
+    animation: slideDown1 0.3s ease-out forwards;
+}
+
+._modal-item.slide-up {
+    animation: slideUp1 0.4s ease-out forwards;
+}
+
+.overlay {
+    background: rgba(49, 49, 49, 0.8);
+}
+
 .modal-content {
     position: absolute;
     top: 40%;
@@ -70,6 +128,7 @@ body.active-modal {
     min-width: 300px;
     z-index: 2;
 }
+
 .modal-content input[type='range']::-webkit-slider-runnable-track {
     -webkit-appearance: none;
     background: #f4d4c6;
@@ -87,7 +146,7 @@ body.active-modal {
     padding: 5px 7px;
 }
 
-.close-modal:hover, .submit-modal:hover  {
+.close-modal:hover, .submit-modal:hover {
     background-color: #ffffff;
 }
 
@@ -103,6 +162,30 @@ body.active-modal {
     border: none;
     background-color: transparent;
     width: 70px
+}
+
+.modal-item-input {
+    border: none;
+    width: 65px;
+    background-color: transparent;
+    margin-left: 30px;
+    margin-top: -9px;
+    font-size: 28px;
+}
+
+.modal-item-stock-span {
+    margin-left: 80px;
+    margin-top: -9px;
+    font-size: 21px;
+    color: #9c9c9f;
+}
+
+.image-modal {
+    width: 140px;
+    max-height: 140px;
+    margin-bottom: 20px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 @keyframes slideUp {
@@ -123,6 +206,28 @@ body.active-modal {
     }
     to {
         transform: translateY(100%);
+        opacity: 0;
+    }
+}
+
+@keyframes slideDown1 {
+    from {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp1 {
+    from {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateY(-100%);
         opacity: 0;
     }
 }
