@@ -1,6 +1,7 @@
 import React from "react";
 import SelectItems from "./modals/inner/SelectItems";
 import ApiClient from "../client/ApiClient";
+import '../css/image.css'
 
 class LeftFitRoomComponent extends React.Component {
     constructor(props) {
@@ -31,6 +32,9 @@ class LeftFitRoomComponent extends React.Component {
                         item: responseJson,
                         itemSelected: true
                     });
+                    if (this.props.onChange) {
+                        this.props.onChange(true);
+                    }
                 });
             }
         });
@@ -40,12 +44,11 @@ class LeftFitRoomComponent extends React.Component {
     render() {
         return <>
             <SelectItems onChange={this.getSelectedItem} visible={this.state.searchVisible}/>
-            <button onClick={this.reloadForItem}>Try</button>
-            {this.state.item && <div id="selected_item">
-                <h2 id="selected_item_name">{this.state.item.name}</h2>
+            <button onClick={this.reloadForItem} className="try-button">Try</button>
+            {this.state.item && <div id="selected_item" className="selected-item-image">
                 <img src={`data:image/png;base64,${this.state.item.images[0].data}`}
                      alt="Cannot load the image right now..."
-                     className="item-image"/>
+                     className="loaded-image"/>
             </div>}
         </>
     }
