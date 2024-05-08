@@ -30,5 +30,9 @@ spring:
           uri: lb://shop-service
           predicates:
             - Path=/api/v1/shop/**
+        - id: photo-service
+          uri: http://host.docker.internal:8083/photos
+          predicates:
+            - Path=/api/v1/photos/**
   main:
     allow-bean-definition-overriding: true

@@ -46,7 +46,7 @@ class LeftFitRoomComponent extends React.Component {
             <SelectItems onChange={this.getSelectedItem} visible={this.state.searchVisible}/>
             <button onClick={this.reloadForItem} className="try-button">Try</button>
             {this.state.item && <div id="selected_item" className="selected-item-image">
-                <img src={`data:image/png;base64,${this.state.item.images[0].data}`}
+                <img id="image1" src={`data:image/png;base64,${this.state.item.images[0].data}`}
                      alt="Cannot load the image right now..."
                      className="loaded-image"/>
             </div>}

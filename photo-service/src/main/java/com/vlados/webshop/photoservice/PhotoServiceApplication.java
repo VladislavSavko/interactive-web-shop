@@ -1,6 +1,7 @@
 package com.vlados.webshop.photoservice;
 
 import nu.pattern.OpenCV;
+import org.opencv.core.Core;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

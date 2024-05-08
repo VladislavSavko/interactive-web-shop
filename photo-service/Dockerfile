@@ -6,9 +6,10 @@ COPY build.gradle settings.gradle $APP_HOME
 COPY src $APP_HOME/src/
 RUN gradle build
 
-FROM openjdk:17-oracle
+FROM ubuntu:20.04
 ENV APP_HOME=/app/
 ENV ARTIFACT_NAME=photo-service-0.0.1-SNAPSHOT.jar
 ARG JAR_FILE=$APP_HOME/build/libs/$ARTIFACT_NAME
+RUN apt-get update && apt-get install -y openjdk-17-jdk && rm -rf /var/lib/apt/lists/*
 COPY --from=builder $JAR_FILE /opt/photo-service/app.jar
 ENTRYPOINT ["java", "-jar", "/opt/photo-service/app.jar"]

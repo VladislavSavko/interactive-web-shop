@@ -65,7 +65,7 @@ class RightFitRoomComponent extends React.Component {
                             </div>}
                             {this.state.file && <div className="flex-direction-column selected-item-image">
                                 <h2>{this.state.fileName}</h2>
-                                <img src={this.state.file} className="loaded-image" alt="Cannot load the image right now..." />
+                                <img id="image2" src={this.state.file} className="loaded-image" alt="Cannot load the image right now..." />
                             </div>}
                         </div>
                     </section>

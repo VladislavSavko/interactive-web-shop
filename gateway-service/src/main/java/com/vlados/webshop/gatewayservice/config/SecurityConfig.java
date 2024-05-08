@@ -44,7 +44,7 @@ public class SecurityConfig {
                         authorizationManagerRequestMatcherRegistry -> authorizationManagerRequestMatcherRegistry
                                 .pathMatchers(HttpMethod.GET, "/api/v1/users/**","/api/v1/shop/**")
                                 .permitAll()
-                                .pathMatchers(HttpMethod.POST, "/api/v1/users/**","/api/v1/shop/**")
+                                .pathMatchers(HttpMethod.POST, "/api/v1/users/**","/api/v1/shop/**", "/api/v1/photos/**")
                                 .permitAll()
                                 .pathMatchers(HttpMethod.DELETE, "/api/v1/users/**","/api/v1/shop/**")
                                 .permitAll()

@@ -2,9 +2,11 @@ class ApiClient {
     static SERVER_URL = 'http://localhost:8080';
     static USERS_API = '/api/v1/users';
     static SHOP_API = '/api/v1/shop'
+    static IMAGES_API = '/api/v1/photos'
     static AUTH_URL = '/auth';
     static ITEMS_URL = '/items';
     static CATEGORIES_URL = '/categories';
+    static OVERLAY_URL = '/contourOverlay';
 
 
     static getUserInfo(id): Promise<Response> {
@@ -81,6 +83,13 @@ class ApiClient {
             headers: {
                 "Content-type": "application/json; charset=UTF-8"
             }
+        });
+    }
+
+    static combine(formData): Promise<Response> {
+        return fetch('http://localhost:8083/api/v1/photos/contourOverlay', {
+            method: "POST",
+            body: formData
         });
     }
 }
