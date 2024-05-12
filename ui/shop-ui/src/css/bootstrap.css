@@ -10033,4 +10033,9 @@ a.text-dark:hover, a.text-dark:focus {
     border-color: #dee2e6;
   }
 }
+
+.slider_section {
+margin-left: 45px;
+margin-right: 45px;
+}
 /*# sourceMappingURL=bootstrap.css.map */
