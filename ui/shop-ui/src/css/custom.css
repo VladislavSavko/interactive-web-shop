@@ -189,6 +189,21 @@
     color: #f89cab !important;
 }
 
+.testimonial_buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    a {
+        background-color: #db4f66;
+        width: 50px;
+        height: 30px;
+        font-size: 20px;
+        color: white !important;
+        border-radius: 5px;
+    }
+}
+
 .card {
     background-color: #fff;
     border-radius: 10px;
@@ -381,4 +396,15 @@
     > button:hover {
         background-color: #f8a4b1;
     }
+}
+
+.fa {
+    display: inline-block;
+    font-size: 40px !important;
+    text-rendering: auto;
+    margin-top: -10px;
+}
+
+.fa-quote-left {
+    content: "\f10d";
 }

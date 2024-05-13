@@ -6237,6 +6237,19 @@ a.close.disabled {
   transition: -webkit-transform 0.6s ease-in-out;
   height: 470px;
 }
+.carousel-item1 {
+  position: relative;
+  display: none;
+  float: left;
+  width: 100%;
+  margin-right: -100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  transition: -webkit-transform 0.6s ease-in-out;
+}
+.active {
+  display: block;
+}
 
 .fade {
   animation-name: fade;

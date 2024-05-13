@@ -47,6 +47,26 @@ body.active-modal {
     }
 }
 
+.btn-modal-3 {
+    background: #109dbd;
+    padding: 10px;
+    display: inline-block;
+    outline: 0;
+    border: 0;
+    margin: -1px;
+    border-radius: 5px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: white;
+    cursor: pointer;
+    transition: all .3s;
+
+    &:hover {
+        background: #126477;
+        transition: all .3s ease-in-out;
+    }
+}
+
 .btn-modal-2-disabled {
     background: #E0C9CB;
     padding: 10px;

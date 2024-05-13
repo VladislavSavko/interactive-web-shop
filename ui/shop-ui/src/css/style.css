@@ -652,7 +652,6 @@ a:focus {
   background-color: #db4f66;
   color: #ffffff;
   border: 1px solid #db4f66;
-  border-radius: 0;
   -webkit-transition: all .3s;
   transition: all .3s;
   display: block;
@@ -738,9 +737,10 @@ a:focus {
 /* info section */
 .info_section {
   position: relative;
-  background-color: #2d2d2d;
+  background-color: #f9ece6;
   color: #ffffff;
   margin: 0 45px 45px;
+  border-radius: 15px;
 }
 
 .info_section .social_container {
@@ -778,9 +778,6 @@ a:focus {
 .info_section .info_form form button {
   padding: 8px 35px;
   outline: none;
-  border: none;
-  color: #ffffff;
-  background: #f89cab;
   margin-top: 15px;
   text-transform: uppercase;
 }
@@ -796,12 +793,12 @@ a:focus {
 .info_section h6 {
   font-weight: bold;
   text-transform: uppercase;
-  font-size: 18px;
+  font-size: 26px;
   margin-bottom: 25px;
 }
 
 .info_section p {
-  color: #cbc9c9;
+  color: black;
 }
 
 .info_section .info_link-box a {
@@ -825,7 +822,7 @@ a:focus {
 }
 
 .info_section .info_link-box a span {
-  color: #cbc9c9;
+  color: black;
 }
 
 .info_section .info_link-box a:hover span {
@@ -843,7 +840,7 @@ a:focus {
   padding: 20px 0;
   margin: 0 auto;
   text-align: center;
-  border-top: 1.5px solid #eeeeee;
+  border-top: 1.5px solid black;
   width: 80%;
 }
 
