@@ -33,3 +33,16 @@ CREATE TABLE IF NOT EXISTS images(
                                      item_id bigint NOT NULL,
                                      FOREIGN KEY (item_id) REFERENCES items(id)
 );
+
+CREATE TABLE IF NOT EXISTS carts(
+                                    id bigint NOT NULL PRIMARY KEY,
+                                    user_id bigint NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS cart_items(
+                                    id serial NOT NULL PRIMARY KEY,
+                                    item_id bigint NOT NULL,
+                                    cart_id bigint NOT NULL,
+                                    quantity int NOT NULL
+
+);

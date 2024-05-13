@@ -78,10 +78,10 @@ export default function ProfileAddressInfoModal(props) {
             <button onClick={switchModalState} className="btn-modal-1">
                 {props.text}
             </button>
-            {modal && (<div className={`_modal ${closing ? 'slide-down' : ''}`} style={{top: '10%'}}>
+            {modal && (<div className={`_modal ${closing ? 'slide-down' : ''}`}>
                 <div onClick={switchModalState} className="overlay">
                 </div>
-                <div className="modal-content" style={{color: 'black'}}>
+                <div className="modal-content" style={{color: 'black', top: '50%'}}>
                     <h2 style={{borderBottom: '3px solid #ccc', paddingBottom: '10px'}}>Address info</h2>
                     <h3>Country:</h3>
                     <CountryDropdown

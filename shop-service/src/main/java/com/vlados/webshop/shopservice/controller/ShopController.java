@@ -1,5 +1,7 @@
 package com.vlados.webshop.shopservice.controller;
 
+import com.vlados.webshop.shopservice.domain.dto.cart.CartItemToAddDto;
+import com.vlados.webshop.shopservice.domain.dto.cart.CartResponseDto;
 import com.vlados.webshop.shopservice.domain.dto.category.CategoryResponseDto;
 import com.vlados.webshop.shopservice.domain.dto.category.CategoryUpdateDto;
 import com.vlados.webshop.shopservice.domain.dto.image.ImageResponseDto;
@@ -12,10 +14,7 @@ import com.vlados.webshop.shopservice.domain.dto.item.ItemUpdateDto;
 import com.vlados.webshop.shopservice.domain.item.Category;
 import com.vlados.webshop.shopservice.domain.item.InventoryInfo;
 import com.vlados.webshop.shopservice.exception.ExceptionResponse;
-import com.vlados.webshop.shopservice.service.CategoryService;
-import com.vlados.webshop.shopservice.service.ImageService;
-import com.vlados.webshop.shopservice.service.InventoryService;
-import com.vlados.webshop.shopservice.service.ItemService;
+import com.vlados.webshop.shopservice.service.*;
 import com.vlados.webshop.shopservice.util.ResourceUtil;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -36,12 +35,14 @@ public class ShopController {
     private final CategoryService categoryService;
     private final InventoryService inventoryService;
     private final ImageService imageService;
+    private final CartService cartService;
 
-    public ShopController(ItemService itemService, CategoryService categoryService, InventoryService inventoryService, ImageService imageService) {
+    public ShopController(ItemService itemService, CategoryService categoryService, InventoryService inventoryService, ImageService imageService, CartService cartService) {
         this.itemService = itemService;
         this.categoryService = categoryService;
         this.inventoryService = inventoryService;
         this.imageService = imageService;
+        this.cartService = cartService;
     }
 
     @GetMapping("/items")
@@ -116,6 +117,11 @@ public class ShopController {
                 .toList();
     }
 
+    @GetMapping("/cart/{id}")
+    public CartResponseDto getUserCart(@PathVariable(name = "id") long userId) {
+        return cartService.getCart(userId);
+    }
+
     @PostMapping("/items")
     public ItemResponseDto addItem(@RequestBody @Valid ItemRequestDto itemDto) {
         return itemService.add(itemDto);
@@ -134,6 +140,11 @@ public class ShopController {
     @PostMapping("/images")
     public ImageResponseDto addImage(@RequestParam(name = "image") MultipartFile image, @RequestParam(name = "itemId") long itemId) throws IOException {
         return imageService.uploadImage(image, itemService.get(itemId));
+    }
+
+    @PostMapping("/cart/{id}")
+    public CartResponseDto addItemToCart(@RequestBody CartItemToAddDto dto, @PathVariable(name = "id") long userId) {
+        return cartService.addItemToCart(userId, dto.itemId(), dto.quantity());
     }
 
     @DeleteMapping("/items/{id}")
