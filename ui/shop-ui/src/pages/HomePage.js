@@ -6,20 +6,35 @@ import '../css/custom.css'
 
 import MainHeader from "../components/MainHeader";
 import SliderComponent from "../components/SliderComponent";
+import LatestItemsComponent from "../components/LatestItemsComponent";
+import React from "react";
 
 
 const HomePage = () => {
     return <div>
         <div className="hero_area">
-            {/*title of the page and navbar section*/}
             <MainHeader active="home"/>
         </div>
-        {/*end of title of the page and navbar section*/}
-        <SliderComponent />
-        {/*<script src="../js/jquery-3.4.1.min.js"></script>*/}
-        {/*<script src="../js/bootstrap.js"></script>*/}
-        {/*<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>*/}
-        {/*<script src="../js/custom.js"></script>*/}
+        <SliderComponent/>
+        <section className="shop_section layout_padding">
+            <div className="container">
+                <div className="heading_container heading_center">
+                    <h2>
+                        Latest items
+                    </h2>
+                </div>
+                <div className="row">
+                    <LatestItemsComponent/>
+                </div>
+            </div>
+            <div className="btn-box">
+                <button onClick={() => window.location.href = "/shop"} className="btn-modal" style={{marginTop: '-5px'}}>
+                    View all items
+                </button>
+            </div>
+
+        </section>
+
 
     </div>
 }

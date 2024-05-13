@@ -1,5 +1,8 @@
 import React from "react";
 import sliderGirl from '../images/slider-img.png'
+import giftsAndBonuses from '../images/gifts.png'
+import many from '../images/many.png'
+import dressingRoom from '../images/dr.png'
 
 class SliderComponent extends React.Component {
     constructor(props) {
@@ -108,7 +111,7 @@ class SliderComponent extends React.Component {
                                     </div>
                                     <div className="col-md-5 ">
                                         <div className="img-box">
-                                            <img src="../images/slider-img.png" alt=""/>
+                                            <img src={giftsAndBonuses} alt=""/>
                                         </div>
                                     </div>
                                 </div>
@@ -137,7 +140,7 @@ class SliderComponent extends React.Component {
                                     </div>
                                     <div className="col-md-5 ">
                                         <div className="img-box">
-                                            <img src="../images/slider-img.png" alt=""/>
+                                            <img src={many} alt="" style={{width: '380px', height: '400px'}}/>
                                         </div>
                                     </div>
                                 </div>
@@ -167,7 +170,7 @@ class SliderComponent extends React.Component {
                                     </div>
                                     <div className="col-md-5 ">
                                         <div className="img-box">
-                                            <img src="../images/slider-img.png" alt=""/>
+                                            <img src={dressingRoom} alt="" style={{width: '380px', height: '400px'}}/>
                                         </div>
                                     </div>
                                 </div>
