@@ -33,6 +33,12 @@ public class CartDaoImpl implements CartDao {
         return cartItemRepository.save(cartItem);
     }
 
+    @Override
+    @Transactional
+    public void deleteCartItem(CartItem cartItem) {
+        cartItemRepository.delete(cartItem);
+    }
+
     private Cart createCart(long userId) {
         Cart cart = new Cart();
         cart.setUserId(userId);

@@ -13,6 +13,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 public class CartServiceImpl implements CartService {
@@ -38,10 +39,38 @@ public class CartServiceImpl implements CartService {
                         ResourceUtil.getMessage("db.item.not_found").formatted(itemId))
                 );
         Cart userCart = cartDao.getCart(userId);
-        CartItem newCartItem = new CartItem(itemToAdd, quantity, userCart);
-        newCartItem = cartDao.addCartItem(newCartItem);
-        userCart.getItems().add(newCartItem);
+        if(!cartContainsItem(userCart, itemToAdd)) {
+            CartItem newCartItem = new CartItem(itemToAdd, quantity, userCart);
+            newCartItem = cartDao.addCartItem(newCartItem);
+            userCart.getItems().add(newCartItem);
+        } else {
+            CartItem dublicate = userCart.getItems()
+                    .stream()
+                    .filter(cartItem -> itemToAdd.getId() == cartItem.getItem().getId())
+                    .findAny()
+                    .get();
+            dublicate.setQuantity(dublicate.getQuantity() + 1);
+        }
 
         return DtoMapper.ForCart.toDto(userCart);
+    }
+
+    @Override
+    public void deleteCartItemFromCart(long userId, long itemId) {
+        Cart userCart = cartDao.getCart(userId);
+        Optional<CartItem> match = userCart.getItems().stream()
+                .filter(cartItem -> itemId == cartItem.getItem().getId())
+                .findAny();
+        if(match.isPresent()) {
+            CartItem cartItem = match.get();
+            userCart.getItems().remove(cartItem);
+            cartDao.deleteCartItem(cartItem);
+        }
+    }
+
+    private boolean cartContainsItem(Cart userCart, Item itemToAdd) {
+        return userCart.getItems()
+                .stream()
+                .anyMatch(cartItem -> cartItem.getItem().getId() == itemToAdd.getId());
     }
 }

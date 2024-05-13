@@ -16,7 +16,7 @@ public class CartItem {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.DETACH)
     @JoinColumn(name = "item_id", referencedColumnName = "id", nullable = false)
     private Item item;
     private int quantity;

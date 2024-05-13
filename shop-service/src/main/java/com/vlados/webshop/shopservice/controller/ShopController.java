@@ -189,6 +189,19 @@ public class ShopController {
                 );
     }
 
+    @DeleteMapping("/cart/{id}/{itemId}")
+    public ResponseEntity<String> deleteCartItem(
+            @PathVariable(name = "id") long userId,
+            @PathVariable(name = "itemId") long itemId
+    ) {
+        cartService.deleteCartItemFromCart(userId, itemId);
+
+        return ResponseEntity.status(204)
+                .body(
+                        ResourceUtil.getMessage("response.cart_item_deleted").formatted(itemId)
+                );
+    }
+
     @PutMapping("/items/{id}")
     public ResponseEntity<String> updateItem(
             @RequestBody @Valid ItemUpdateDto itemUpdateDto,

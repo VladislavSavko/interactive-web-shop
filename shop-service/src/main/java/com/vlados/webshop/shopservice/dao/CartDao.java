@@ -7,4 +7,6 @@ public interface CartDao {
     Cart getCart(long userId);
 
     CartItem addCartItem(CartItem cartItem);
+
+    void deleteCartItem(CartItem cartItem);
 }
