@@ -2,6 +2,7 @@ package com.vlados.webshop.shopservice.controller;
 
 import com.vlados.webshop.shopservice.domain.dto.cart.CartItemToAddDto;
 import com.vlados.webshop.shopservice.domain.dto.cart.CartResponseDto;
+import com.vlados.webshop.shopservice.domain.dto.cart.UpdateCartItemDto;
 import com.vlados.webshop.shopservice.domain.dto.category.CategoryResponseDto;
 import com.vlados.webshop.shopservice.domain.dto.category.CategoryUpdateDto;
 import com.vlados.webshop.shopservice.domain.dto.image.ImageResponseDto;
@@ -237,6 +238,12 @@ public class ShopController {
                 .body(
                         ResourceUtil.getMessage("response.inventory.updated").formatted(id)
                 );
+    }
+
+    @PutMapping("/cart/{id}")
+    public CartResponseDto updateCartItemsQuantities(@PathVariable(name = "id") long userId,
+                                                     @RequestBody List<UpdateCartItemDto> dtos) {
+        return cartService.updateCartItemsQuantities(userId, dtos);
     }
 
     @ExceptionHandler(NoSuchElementException.class)

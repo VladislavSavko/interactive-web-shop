@@ -5,6 +5,7 @@ import com.vlados.webshop.shopservice.dao.ItemDao;
 import com.vlados.webshop.shopservice.domain.cart.Cart;
 import com.vlados.webshop.shopservice.domain.cart.CartItem;
 import com.vlados.webshop.shopservice.domain.dto.cart.CartResponseDto;
+import com.vlados.webshop.shopservice.domain.dto.cart.UpdateCartItemDto;
 import com.vlados.webshop.shopservice.domain.item.Item;
 import com.vlados.webshop.shopservice.service.CartService;
 import com.vlados.webshop.shopservice.util.DtoMapper;
@@ -12,6 +13,7 @@ import com.vlados.webshop.shopservice.util.ResourceUtil;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -66,6 +68,23 @@ public class CartServiceImpl implements CartService {
             userCart.getItems().remove(cartItem);
             cartDao.deleteCartItem(cartItem);
         }
+    }
+
+    @Override
+    @Transactional
+    public CartResponseDto updateCartItemsQuantities(long userId, List<UpdateCartItemDto> dtos) {
+        Cart userCart = cartDao.getCart(userId);
+        List<CartItem> cartItems = userCart.getItems();
+
+        for(UpdateCartItemDto dto : dtos) {
+            cartItems.stream()
+                    .filter(cartItem -> dto.itemId() == cartItem.getItem().getId())
+                    .findAny()
+                    .ifPresent(cartItem -> cartItem.setQuantity(dto.newQuantity()));
+            //TODO: Make stock quantity check
+        }
+
+        return DtoMapper.ForCart.toDto(userCart);
     }
 
     private boolean cartContainsItem(Cart userCart, Item itemToAdd) {
