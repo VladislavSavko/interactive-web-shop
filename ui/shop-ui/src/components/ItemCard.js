@@ -27,7 +27,7 @@ class ItemCard extends React.Component {
         }
         return <>
             <div className="col-sm-6 col-md-4 col-lg-3">
-                <div className="box">
+                <div className="box1">
                     <a href={this.itemHref(this.props.iid)}>
                         <div className="img-box">
                             <img src={imgSrc} alt=""/>

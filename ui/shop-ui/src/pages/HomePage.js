@@ -138,7 +138,7 @@ const HomePage = () => {
                         Insert Google Maps API here
                     </div>
                     <div className="col-md-6 col-lg-5 px-0">
-                        <form action="#" method="POST">
+                        <form action="#" method="POST" className="contact-form">
                             <div>
                                 <input type="text" placeholder="Name"/>
                             </div>

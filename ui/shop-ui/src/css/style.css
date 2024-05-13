@@ -330,7 +330,23 @@ a:focus {
   margin-top: 25px;
 }
 
+.shop_section .box1 {
+  background-color: #eeeeee;
+  position: relative;
+  padding: 10px;
+  margin-top: 25px;
+}
+
+
+.shop_section .box1:hover {
+  border: 0.5px solid black;
+}
+
 .shop_section .box a {
+  color: #000000;
+}
+
+.shop_section .box1 a {
   color: #000000;
 }
 
@@ -348,7 +364,28 @@ a:focus {
   height: 245px;
 }
 
+.shop_section .box1 .img-box {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  padding: 15px 30px;
+  height: 245px;
+}
+
+
+
 .shop_section .box .img-box img {
+  max-width: 100%;
+  max-height: 170px;
+}
+
+.shop_section .box1 .img-box img {
   max-width: 100%;
   max-height: 170px;
 }
@@ -362,7 +399,20 @@ a:focus {
           justify-content: space-between;
 }
 
+.shop_section .box1 .detail-box {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+
 .shop_section .box .detail-box h6 span {
+  color: #db4f66;
+}
+
+.shop_section .box1 .detail-box h6 span {
   color: #db4f66;
 }
 
@@ -382,6 +432,26 @@ a:focus {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  border-radius: 100%;
+  font-size: 15px;
+}
+
+.shop_section .box1 .new {
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background-color: #ffffff;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
   border-radius: 100%;
   font-size: 15px;
 }
@@ -505,6 +575,14 @@ a:focus {
   margin-bottom: 15px;
 }
 
+.why_section .box .img-box img {
+  transition: transform 0.3s ease;
+}
+
+.why_section .box:hover .img-box img {
+  transform: scale(1.1);
+}
+
 .why_section .box .img-box svg {
   width: 55px;
   height: auto;
@@ -618,12 +696,20 @@ a:focus {
 .contact_section input {
   width: 100%;
   border: 1px solid #919191;
+  border-radius: 5px;
   height: 50px;
   margin-bottom: 25px;
   padding-left: 25px;
   background-color: transparent;
   outline: none;
   color: #101010;
+}
+
+.contact_section input[type='text']:focus {
+  border: 2px solid black;
+}
+.contact_section input[type='email']:focus {
+  border: 2px solid black;
 }
 
 .contact_section input::-webkit-input-placeholder {
@@ -763,6 +849,14 @@ a:focus {
           justify-content: center;
 }
 
+.info_section .social_container .social_box img {
+  transition: transform 0.3s ease;
+}
+
+.info_section .social_container .social_box img:hover {
+  transform: scale(1.3);
+}
+
 .info_section .social_container .social_box a {
   margin: 0 10px;
   color: #ffffff;
@@ -773,6 +867,12 @@ a:focus {
   outline: none;
   width: 100%;
   padding: 7px 10px;
+  border-radius: 5px;
+  border-color: transparent;
+}
+
+.info_section .info_form form input[type='email']:focus {
+  border: 2px solid black;
 }
 
 .info_section .info_form form button {

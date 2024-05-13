@@ -28,20 +28,26 @@ class FooterComponent extends React.Component {
                     <div className="row">
                         <div className="col-md-6 col-lg-3">
                             <h6>ABOUT US</h6>
-                            <p>Some text</p>
+                            <p>We offer you an innovative online try-on service that allows you to see how
+                                clothes will fit on you before you order. Our goal is to give you the
+                                convenience and confidence of choosing the perfect outfit from the comfort
+                                of your home.</p>
                         </div>
                         <div className="col-md-6 col-lg-3">
                             <div className="info_form">
                                 <h5 style={{fontSize: '26px'}}>NEWSLETTER</h5>
                                 <form action="" method="POST">
-                                    <input type="email" placeholder="Enter your email" style={{borderRadius: '5px', borderColor: 'transparent'}}/>
+                                    <input type="email" placeholder="Enter your email" />
                                     <button className="btn-modal">Subscribe</button>
                                 </form>
                             </div>
                         </div>
                         <div className="col-md-6 col-lg-3">
                             <h6>NEED HELP</h6>
-                            <p>Please, contact us</p>
+                            <p>We are always there! Our specialists are ready to help you at any time. If you have
+                                any questions or problems using our site, please do not hesitate to contact us for
+                                support. Please remember that your shopping satisfaction and user experience on our site
+                                are our top priority!</p>
                         </div>
                         <div className="col-md-6 col-lg-3">
                             <h6>CONTACT US</h6>
