@@ -7,6 +7,7 @@ class ApiClient {
     static ITEMS_URL = '/items';
     static CATEGORIES_URL = '/categories';
     static OVERLAY_URL = '/contourOverlay';
+    static CART_URL = '/cart';
 
 
     static getUserInfo(id): Promise<Response> {
@@ -50,6 +51,10 @@ class ApiClient {
 
     static getAllCategories(): Promise<Response> {
         return fetch(this.SERVER_URL + this.SHOP_API + this.CATEGORIES_URL);
+    }
+
+    static getUserCart(userId): Promise<Response> {
+        return fetch(this.SERVER_URL + this.SHOP_API + this.CART_URL + '/' + userId);
     }
 
     static authenticate(email, password): Promise<Response> {

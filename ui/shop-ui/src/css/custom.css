@@ -127,6 +127,25 @@
     border-bottom-right-radius: 15px;
 }
 
+.profile-body-1 {
+    background-color: #f1f1f1;
+    margin-left: 45px;
+    margin-right: 45px;
+    margin-top: 40px;
+    border-radius: 15px;
+}
+
+.profile-body-1-header {
+    background-color: #f9ece6;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
 .profile-actions {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -156,6 +175,11 @@
 }
 .profile-upper-div p {
     font-size: 20px;
+}
+
+.card-item-buttons {
+    margin-top: 20px;
+    width: 100%;
 }
 
 

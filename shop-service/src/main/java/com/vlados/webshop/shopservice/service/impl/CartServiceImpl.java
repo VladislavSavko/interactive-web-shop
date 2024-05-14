@@ -35,26 +35,26 @@ public class CartServiceImpl implements CartService {
 
     @Override
     @Transactional
-    public CartResponseDto addItemToCart(long userId, long itemId, int quantity) {
+    public Cart addItemToCart(long userId, long itemId, int quantity) {
         Item itemToAdd = itemDao.get(itemId)
                 .orElseThrow(() -> new NoSuchElementException(
                         ResourceUtil.getMessage("db.item.not_found").formatted(itemId))
                 );
         Cart userCart = cartDao.getCart(userId);
-        if(!cartContainsItem(userCart, itemToAdd)) {
+        if (!cartContainsItem(userCart, itemToAdd)) {
             CartItem newCartItem = new CartItem(itemToAdd, quantity, userCart);
             newCartItem = cartDao.addCartItem(newCartItem);
             userCart.getItems().add(newCartItem);
         } else {
-            CartItem dublicate = userCart.getItems()
+            CartItem duplicate = userCart.getItems()
                     .stream()
                     .filter(cartItem -> itemToAdd.getId() == cartItem.getItem().getId())
                     .findAny()
                     .get();
-            dublicate.setQuantity(dublicate.getQuantity() + 1);
+            duplicate.setQuantity(duplicate.getQuantity() + 1);
         }
 
-        return DtoMapper.ForCart.toDto(userCart);
+        return userCart;
     }
 
     @Override
@@ -63,7 +63,7 @@ public class CartServiceImpl implements CartService {
         Optional<CartItem> match = userCart.getItems().stream()
                 .filter(cartItem -> itemId == cartItem.getItem().getId())
                 .findAny();
-        if(match.isPresent()) {
+        if (match.isPresent()) {
             CartItem cartItem = match.get();
             userCart.getItems().remove(cartItem);
             cartDao.deleteCartItem(cartItem);
@@ -76,7 +76,7 @@ public class CartServiceImpl implements CartService {
         Cart userCart = cartDao.getCart(userId);
         List<CartItem> cartItems = userCart.getItems();
 
-        for(UpdateCartItemDto dto : dtos) {
+        for (UpdateCartItemDto dto : dtos) {
             cartItems.stream()
                     .filter(cartItem -> dto.itemId() == cartItem.getItem().getId())
                     .findAny()

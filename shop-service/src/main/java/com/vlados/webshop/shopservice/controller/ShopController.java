@@ -16,6 +16,7 @@ import com.vlados.webshop.shopservice.domain.item.Category;
 import com.vlados.webshop.shopservice.domain.item.InventoryInfo;
 import com.vlados.webshop.shopservice.exception.ExceptionResponse;
 import com.vlados.webshop.shopservice.service.*;
+import com.vlados.webshop.shopservice.util.DtoMapper;
 import com.vlados.webshop.shopservice.util.ResourceUtil;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -145,7 +146,7 @@ public class ShopController {
 
     @PostMapping("/cart/{id}")
     public CartResponseDto addItemToCart(@RequestBody CartItemToAddDto dto, @PathVariable(name = "id") long userId) {
-        return cartService.addItemToCart(userId, dto.itemId(), dto.quantity());
+        return DtoMapper.ForCart.toDto(cartService.addItemToCart(userId, dto.itemId(), dto.quantity()));
     }
 
     @DeleteMapping("/items/{id}")

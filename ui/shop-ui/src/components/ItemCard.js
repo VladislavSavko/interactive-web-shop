@@ -18,6 +18,21 @@ class ItemCard extends React.Component {
         return '/item/' + id;
     }
 
+    itemId(id) {
+        return "quantity_" + id;
+    }
+
+    checkValue = () => {
+        let input = document.getElementById('quantity_' + this.props.iid);
+
+        let value = parseInt(input.value, 10);
+        if (value < input.min) {
+            input.value = input.min;
+        } else if (value > input.max) {
+            input.value = input.max;
+        }
+    }
+
     render() {
         let imgSrc;
         if (this.props.mainImage) {
@@ -43,6 +58,13 @@ class ItemCard extends React.Component {
                         {this.isNew()}
                     </a>
                 </div>
+                <button className="card-item-buttons btn-modal-4">Delete from cart</button>
+                <input type="number" id={this.itemId(this.props.iid)} defaultValue={this.props.selectedQuantity}
+                       max={this.props.maxQuantity} min="1" onInput={this.checkValue}
+                        style={{marginLeft: '100px', marginTop: '10px', width: '50px',
+                        borderRadius: '5px'}}/>
+                <div style={{marginLeft: '88px'}}>In stock: <span
+                    >{this.props.maxQuantity}</span></div>
             </div>
         </>
     }

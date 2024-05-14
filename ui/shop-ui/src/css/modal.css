@@ -67,6 +67,15 @@ body.active-modal {
     }
 }
 
+.btn-modal-4 {
+    border: 1px solid;
+    border-radius: 5px;
+    transition: all .3s;
+    background-color: #db4566;
+    color: white;
+    display: inline-block;
+}
+
 .btn-modal-2-disabled {
     background: #E0C9CB;
     padding: 10px;
@@ -91,6 +100,11 @@ body.active-modal {
 .btn-modal-1:hover {
     background-color: #ffffff;
     color: #ae9615;
+}
+
+.btn-modal-4:hover {
+    background-color: #ffffff;
+    color: #db4566;
 }
 
 ._modal, .overlay {

@@ -13,7 +13,9 @@ import com.vlados.webshop.shopservice.domain.item.Category;
 import com.vlados.webshop.shopservice.domain.item.Image;
 import com.vlados.webshop.shopservice.domain.item.InventoryInfo;
 import com.vlados.webshop.shopservice.domain.item.Item;
+import com.vlados.webshop.shopservice.util.comp.ImageCompressor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DtoMapper {
@@ -83,18 +85,22 @@ public class DtoMapper {
         }
 
         private static List<CartItemResponseDto> toDto(List<CartItem> cartItems) {
-            return cartItems == null
-                    ?
-                    null
-                    :
-                    cartItems.stream()
-                            .map(cartItem -> new CartItemResponseDto(
-                                            ForItem.toDto(cartItem.getItem()),
-                                            cartItem.getQuantity()
-                                    )
-                            ).toList();
+            if (cartItems != null) {
+                cartItems.forEach(cartItem -> {
+                            cartItem.getItem()
+                                    .getImages()
+                                    .forEach(image -> image.setBinary(ImageCompressor.decompress(image.getBinary())));
+                        }
+                );
+                return cartItems.stream()
+                        .map(cartItem -> new CartItemResponseDto(
+                                        ForItem.toDto(cartItem.getItem()),
+                                        cartItem.getQuantity()
+                                )
+                        ).toList();
+            } else {
+                return null;
+            }
         }
     }
-
-
 }
