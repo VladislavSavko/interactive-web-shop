@@ -15,7 +15,6 @@ import com.vlados.webshop.shopservice.domain.item.InventoryInfo;
 import com.vlados.webshop.shopservice.domain.item.Item;
 import com.vlados.webshop.shopservice.util.comp.ImageCompressor;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class DtoMapper {

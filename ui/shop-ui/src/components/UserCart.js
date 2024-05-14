@@ -11,6 +11,10 @@ class UserCart extends React.Component {
     }
 
     componentDidMount() {
+        this.refreshItemsInCart();
+    }
+
+    refreshItemsInCart = () => {
         this.getUserCart(window.sessionStorage.getItem('userId')).then(r => {
             if (r.ok) {
                 r.json().then(json => {
@@ -39,7 +43,9 @@ class UserCart extends React.Component {
                             new={item.item.isNew}
                             mainImage={item.item.images[0]}
                             maxQuantity={item.item.quantity}
-                            selectedQuantity={item.quantity}/>
+                            selectedQuantity={item.quantity}
+                            buttonsActive={true}
+                            onChange={() => this.refreshItemsInCart()}/>
                     })}
                 </div>
             </div>}

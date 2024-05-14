@@ -97,6 +97,12 @@ class ApiClient {
             body: formData
         });
     }
+
+    static deleteFromCart(itemId, userId): Promise<Response> {
+        return fetch(this.SERVER_URL + this.SHOP_API + this.CART_URL + '/' + userId + '/' + itemId, {
+            method: "DELETE"
+        });
+    }
 }
 
 

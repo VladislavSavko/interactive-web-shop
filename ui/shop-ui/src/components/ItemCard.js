@@ -1,4 +1,5 @@
 import React from "react";
+import ApiClient from "../client/ApiClient";
 
 class ItemCard extends React.Component {
     constructor(props) {
@@ -11,6 +12,36 @@ class ItemCard extends React.Component {
             return <div className="new">
                 <span>New</span>
             </div>
+        }
+    }
+
+    deleteFromCart = (itemId) => {
+        ApiClient.deleteFromCart(itemId, window.sessionStorage.getItem('userId')).then(r => {
+            if(!r.ok) {
+                r.json().then(rJson => {
+                    console.log(rJson);
+                })
+            } else {
+                if(this.props.onChange) {
+                    this.props.onChange();
+                }
+            }
+        })
+    }
+
+    withButtons() {
+        if (this.props.buttonsActive === true) {
+            return <>
+                <button className="card-item-buttons btn-modal-4" onClick={() => this.deleteFromCart(this.props.iid)}>Delete from cart</button>
+                <button className="card-item-buttons btn-modal-5">Try in fitting room</button>
+                <input type="number" id={this.itemId(this.props.iid)} defaultValue={this.props.selectedQuantity}
+                       max={this.props.maxQuantity} min="1" onInput={this.checkValue}
+                       style={{
+                           marginLeft: '100px', marginTop: '10px', width: '50px',
+                           borderRadius: '5px'
+                       }}/>
+                <div style={{marginLeft: '88px'}}>In stock: <span>{this.props.maxQuantity}</span></div>
+            </>
         }
     }
 
@@ -58,13 +89,7 @@ class ItemCard extends React.Component {
                         {this.isNew()}
                     </a>
                 </div>
-                <button className="card-item-buttons btn-modal-4">Delete from cart</button>
-                <input type="number" id={this.itemId(this.props.iid)} defaultValue={this.props.selectedQuantity}
-                       max={this.props.maxQuantity} min="1" onInput={this.checkValue}
-                        style={{marginLeft: '100px', marginTop: '10px', width: '50px',
-                        borderRadius: '5px'}}/>
-                <div style={{marginLeft: '88px'}}>In stock: <span
-                    >{this.props.maxQuantity}</span></div>
+                {this.withButtons()}
             </div>
         </>
     }
