@@ -85,11 +85,9 @@ public class DtoMapper {
 
         private static List<CartItemResponseDto> toDto(List<CartItem> cartItems) {
             if (cartItems != null) {
-                cartItems.forEach(cartItem -> {
-                            cartItem.getItem()
-                                    .getImages()
-                                    .forEach(image -> image.setBinary(ImageCompressor.decompress(image.getBinary())));
-                        }
+                cartItems.forEach(cartItem -> cartItem.getItem()
+                        .getImages()
+                        .forEach(image -> image.setBinary(ImageCompressor.decompress(image.getBinary())))
                 );
                 return cartItems.stream()
                         .map(cartItem -> new CartItemResponseDto(

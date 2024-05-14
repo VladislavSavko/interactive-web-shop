@@ -1,16 +1,10 @@
 package com.vlados.webshop.shopservice.domain.cart;
 
-import com.vlados.webshop.shopservice.domain.item.Category;
-import com.vlados.webshop.shopservice.domain.item.Image;
-import com.vlados.webshop.shopservice.domain.item.InventoryInfo;
 import com.vlados.webshop.shopservice.domain.item.Item;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "cart_items")

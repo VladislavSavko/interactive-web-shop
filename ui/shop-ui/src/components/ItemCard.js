@@ -33,7 +33,7 @@ class ItemCard extends React.Component {
         if (this.props.buttonsActive === true) {
             return <>
                 <button className="card-item-buttons btn-modal-4" onClick={() => this.deleteFromCart(this.props.iid)}>Delete from cart</button>
-                <button className="card-item-buttons btn-modal-5">Try in fitting room</button>
+                <button className="card-item-buttons btn-modal-5" onClick={() => window.location.href = '/fitroom/' + this.props.iid}>Try in fitting room</button>
                 <input type="number" id={this.itemId(this.props.iid)} defaultValue={this.props.selectedQuantity}
                        max={this.props.maxQuantity} min="1" onInput={this.checkValue}
                        style={{
