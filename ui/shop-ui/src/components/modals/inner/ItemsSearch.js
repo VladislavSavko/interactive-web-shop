@@ -1,4 +1,3 @@
-import Select from 'react-select';
 import React from "react";
 import ApiClient from "../../../client/ApiClient";
 
@@ -8,7 +7,8 @@ class ItemsSearch extends React.Component {
         super(props);
         this.state = {
             options: [],
-            selectedOptions: []
+            selectedOptions: [],
+            inputValue: ''
         };
     }
 
@@ -31,48 +31,14 @@ class ItemsSearch extends React.Component {
         });
     }
 
-    handleChange = (selectedOptions) => {
-        window.location.href = '/item/' + selectedOptions.value;
-    }
-
-    handleInputChange = (value) => {
+    handleInputChange = (event) => {
         if (this.props.onChange) {
-            this.props.onChange(value)
+            this.props.onChange(event.target.value)
         }
     }
 
     render() {
-        const stylesForSelect = {
-            control: (provided) => ({
-                ...provided,
-                backgroundColor: '#fae4db',
-                borderColor: 'transparent',
-                boxShadow: '',
-                fontSize: '25px',
-                minHeight: '60px',
-                '&:hover': {
-                    borderColor: 'black'
-                }
-            }),
-            menu: (provided) => ({
-                ...provided,
-                backgroundColor: '#fae4db',
-            }),
-            option: (provided, state) => ({
-                ...provided,
-                backgroundColor: '#fae4db',
-                color: state.isSelected ? 'red' : 'black',
-                '&:hover': {
-                    backgroundColor: 'rgba(205,198,198,0.98)'
-                }
-            })
-        }
-        return <Select
-            options={this.state.options}
-            onChange={this.handleChange}
-            placeholder="Choose items:"
-            styles={stylesForSelect}
-            onInputChange={this.handleInputChange}/>
+        return <input type="text" placeholder="Enter item name:" onInput={this.handleInputChange} className="item-search-input"/>
     }
 }
 

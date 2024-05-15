@@ -192,6 +192,19 @@
     margin-bottom: 50px;
 }
 
+.item-search-input {
+    width: 100%;
+    border-color: transparent;
+    background-color: #fae4db;
+    border-radius: 4px;
+    height: 60px;
+    font-size: 25px;
+
+    &:hover {
+        border: 2px solid black;
+    }
+}
+
 
 .nav_slider_btn {
     align-items: center;

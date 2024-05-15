@@ -32,7 +32,8 @@ const ShopPage = () => {
         <section className="shop_section"
                  style={{
                      borderRadius: '15px', backgroundColor: '#f1d0d4',
-                     marginLeft: '45px', marginRight: '45px'
+                     marginLeft: '45px', marginRight: '45px',
+                     marginBottom: '50px', paddingBottom: '90px'
                  }}>
             <ItemsSearchComponent />
         </section>

@@ -1,5 +1,4 @@
 import React from "react";
-import ItemsComponent from "./ItemsComponent";
 import ItemsSearch from "./modals/inner/ItemsSearch";
 import ApiClient from "../client/ApiClient";
 import ItemCard from "./ItemCard";
@@ -34,7 +33,7 @@ class ItemsSearchComponent extends React.Component {
 
             {this.state.searchResult && <div className="container">
                 <div className="heading_container heading_center">
-                    <h2>
+                    <h2 style={{marginTop: '50px'}}>
                         CATALOG
                     </h2>
                 </div>
