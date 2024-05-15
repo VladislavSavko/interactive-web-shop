@@ -92,7 +92,8 @@ public class DtoMapper {
                 return cartItems.stream()
                         .map(cartItem -> new CartItemResponseDto(
                                         ForItem.toDto(cartItem.getItem()),
-                                        cartItem.getQuantity()
+                                        cartItem.getQuantity(),
+                                        cartItem.getSize().getValue()
                                 )
                         ).toList();
             } else {

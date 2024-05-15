@@ -1,5 +1,6 @@
 package com.vlados.webshop.shopservice.controller;
 
+import com.vlados.webshop.shopservice.domain.cart.ItemSize;
 import com.vlados.webshop.shopservice.domain.dto.cart.CartItemToAddDto;
 import com.vlados.webshop.shopservice.domain.dto.cart.CartResponseDto;
 import com.vlados.webshop.shopservice.domain.dto.cart.UpdateCartItemDto;
@@ -146,7 +147,7 @@ public class ShopController {
 
     @PostMapping("/cart/{id}")
     public CartResponseDto addItemToCart(@RequestBody CartItemToAddDto dto, @PathVariable(name = "id") long userId) {
-        return DtoMapper.ForCart.toDto(cartService.addItemToCart(userId, dto.itemId(), dto.quantity()));
+        return DtoMapper.ForCart.toDto(cartService.addItemToCart(userId, dto.itemId(), dto.quantity(), ItemSize.valueOf(dto.itemSize())));
     }
 
     @DeleteMapping("/items/{id}")

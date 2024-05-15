@@ -4,6 +4,7 @@ import com.vlados.webshop.shopservice.dao.CartDao;
 import com.vlados.webshop.shopservice.dao.ItemDao;
 import com.vlados.webshop.shopservice.domain.cart.Cart;
 import com.vlados.webshop.shopservice.domain.cart.CartItem;
+import com.vlados.webshop.shopservice.domain.cart.ItemSize;
 import com.vlados.webshop.shopservice.domain.dto.cart.CartResponseDto;
 import com.vlados.webshop.shopservice.domain.dto.cart.UpdateCartItemDto;
 import com.vlados.webshop.shopservice.domain.item.Item;
@@ -35,14 +36,14 @@ public class CartServiceImpl implements CartService {
 
     @Override
     @Transactional
-    public Cart addItemToCart(long userId, long itemId, int quantity) {
+    public Cart addItemToCart(long userId, long itemId, int quantity, ItemSize size) {
         Item itemToAdd = itemDao.get(itemId)
                 .orElseThrow(() -> new NoSuchElementException(
                         ResourceUtil.getMessage("db.item.not_found").formatted(itemId))
                 );
         Cart userCart = cartDao.getCart(userId);
         if (!cartContainsItem(userCart, itemToAdd)) {
-            CartItem newCartItem = new CartItem(itemToAdd, quantity, userCart);
+            CartItem newCartItem = new CartItem(itemToAdd, quantity, size, userCart);
             newCartItem = cartDao.addCartItem(newCartItem);
             userCart.getItems().add(newCartItem);
         } else {

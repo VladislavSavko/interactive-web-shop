@@ -20,14 +20,16 @@ public class CartItem {
     @JoinColumn(name = "item_id", referencedColumnName = "id", nullable = false)
     private Item item;
     private int quantity;
+    private ItemSize size;
 
     @ManyToOne
     @JoinColumn(name = "cart_id", nullable = false)
     private Cart relatedCart;
 
-    public CartItem(Item item, int quantity, Cart relatedCart) {
+    public CartItem(Item item, int quantity, ItemSize size, Cart relatedCart) {
         this.item = item;
         this.quantity = quantity;
+        this.size = size;
         this.relatedCart = relatedCart;
     }
 }

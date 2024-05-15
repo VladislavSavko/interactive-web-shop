@@ -43,6 +43,7 @@ CREATE TABLE IF NOT EXISTS cart_items(
                                     id serial NOT NULL PRIMARY KEY,
                                     item_id bigint NOT NULL,
                                     cart_id bigint NOT NULL,
-                                    quantity int NOT NULL
+                                    quantity int NOT NULL,
+                                    size tinyint NOT NULL
 
 );
