@@ -134,10 +134,13 @@ class UserProfile extends React.Component {
                          src={shoppingCart}
                          alt=""/>
                 </div>
-                <div className="mt-10 p-5 bg-white rounded-lg shadow">
+                <div className="mt-10 p-5 bg-white shadow"
+                     style={{borderBottomLeftRadius: '15px', borderBottomRightRadius: '15px'}}>
                     <UserCart/>
                 </div>
-                <button onClick={logout}>Log out</button>
+            </div>
+            <div style={{display: 'flex', justifyContent: 'center'}}>
+                <button onClick={logout} className="btn-modal">Log out</button>
             </div>
         </>
     }

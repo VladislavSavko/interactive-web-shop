@@ -483,6 +483,23 @@ a:focus {
   color: #f16179;
 }
 
+.button-confirm-and-order {
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+
+    button {
+      background-color: #e6e0e1;
+      transition: all .3s;
+      font-size: 22px;
+      border-radius: 5px;
+
+      &:hover {
+        background-color: #ffffff;
+      }
+    }
+}
+
 .saving_section {
   padding-left: 45px;
   padding-right: 45px;
