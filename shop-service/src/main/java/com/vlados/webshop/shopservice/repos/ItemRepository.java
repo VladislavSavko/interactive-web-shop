@@ -15,6 +15,8 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
 
     List<Item> findByPriceBetween(double minPrice, double maxPrice);
 
+    List<Item> findByNameContainingIgnoreCase(String value);
+
     @Query("SELECT item FROM Item item WHERE item.isNew=:isNew AND item.price BETWEEN :min AND :max")
     List<Item> findByNewAndPriceBetween(
             @Param("isNew") boolean isNew,

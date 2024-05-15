@@ -89,6 +89,12 @@ public class ShopController {
         return itemService.getAsResponse(id);
     }
 
+    @GetMapping("/items/search")
+    public List<ItemResponseDto> getItemsForName(@RequestParam(name = "name") String name) {
+        return itemService.getForName(name);
+        //TODO: Make priority by letters position and case (add sorting ?)
+    }
+
     @GetMapping("/categories")
     public List<CategoryResponseDto> getCategories() {
         return categoryService.getAll();

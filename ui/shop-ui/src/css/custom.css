@@ -182,9 +182,15 @@
     width: 100%;
 }
 
+.shop-after-items {
+    display: flex;
+    justify-content: center;
+}
 
-
-
+.shop-after-items .btn-modal {
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
 
 
 .nav_slider_btn {

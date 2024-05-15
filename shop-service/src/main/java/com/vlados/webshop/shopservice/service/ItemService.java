@@ -24,6 +24,8 @@ public interface ItemService {
 
     List<ItemResponseDto> getAllNew(List<String> categories, double minPrice, double maxPrice);
 
+    List<ItemResponseDto> getForName(String name);
+
     ItemResponseDto getAsResponse(final long id);
 
     Item get(final long id);

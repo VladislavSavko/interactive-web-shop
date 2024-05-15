@@ -4,6 +4,7 @@ class ApiClient {
     static SHOP_API = '/api/v1/shop'
     static IMAGES_API = '/api/v1/photos'
     static AUTH_URL = '/auth';
+    static SEARCH_URL = '/search'
     static ITEMS_URL = '/items';
     static CATEGORIES_URL = '/categories';
     static OVERLAY_URL = '/contourOverlay';
@@ -47,6 +48,10 @@ class ApiClient {
         } else {
             return fetch(this.SERVER_URL + this.SHOP_API + this.ITEMS_URL + '?' + filters);
         }
+    }
+
+    static searchForItems(name): Promise<Response> {
+        return fetch(this.SERVER_URL + this.SHOP_API + this.ITEMS_URL + this.SEARCH_URL + '?name=' + name);
     }
 
     static getAllCategories(): Promise<Response> {

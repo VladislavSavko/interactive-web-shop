@@ -62,6 +62,11 @@ public class ItemDaoImpl implements ItemDao {
     }
 
     @Override
+    public List<Item> get(String name) {
+        return itemRepository.findByNameContainingIgnoreCase(name);
+    }
+
+    @Override
     public Item add(Item item) {
         return itemRepository.save(item);
     }

@@ -24,6 +24,8 @@ public interface ItemDao {
 
     Optional<Item> get(final long id);
 
+    List<Item> get(final String name);
+
     Item add(final Item item);
 
     void delete(final long id);
