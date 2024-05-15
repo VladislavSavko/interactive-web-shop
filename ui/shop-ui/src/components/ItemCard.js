@@ -45,6 +45,12 @@ class ItemCard extends React.Component {
         }
     }
 
+    withSize() {
+        if(this.props.buttonsActive === true) {
+            return <span style={{fontSize: '20px'}}>{this.props.size}</span>
+        }
+    }
+
     itemHref(id) {
         return '/item/' + id;
     }
@@ -75,8 +81,9 @@ class ItemCard extends React.Component {
             <div className="col-sm-6 col-md-4 col-lg-3">
                 <div className="box1">
                     <a href={this.itemHref(this.props.iid)}>
+                        {this.withSize()}
                         <div className="img-box">
-                            <img src={imgSrc} alt=""/>
+                            <img src={imgSrc} alt="" style={{width: '200px'}}/>
                         </div>
                         <div className="detail-box">
                             <h6>

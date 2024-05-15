@@ -81,7 +81,12 @@ public class CartServiceImpl implements CartService {
             cartItems.stream()
                     .filter(cartItem -> dto.itemId() == cartItem.getItem().getId())
                     .findAny()
-                    .ifPresent(cartItem -> cartItem.setQuantity(dto.newQuantity()));
+                    .ifPresent(cartItem -> {
+                        cartItem.setQuantity(dto.newQuantity());
+                        if (dto.newSize() != null) {
+                            cartItem.setSize(ItemSize.valueOf(dto.newSize()));
+                        }
+                    });
             //TODO: Make stock quantity check
         }
 

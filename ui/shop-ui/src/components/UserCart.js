@@ -44,6 +44,7 @@ class UserCart extends React.Component {
                             mainImage={item.item.images[0]}
                             maxQuantity={item.item.quantity}
                             selectedQuantity={item.quantity}
+                            size={item.size}
                             buttonsActive={true}
                             onChange={() => this.refreshItemsInCart()}/>
                     })}
