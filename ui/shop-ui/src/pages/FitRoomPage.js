@@ -2,14 +2,16 @@ import MainHeader from "../components/MainHeader";
 import '../css/image.css'
 import LeftFitRoomComponent from "../components/LeftFitRoomComponent";
 import RightFitRoomComponent from "../components/RightFitRoomComponent";
-import {useState} from "react";
+import React, {useRef, useState} from "react";
 import ApiClient from "../client/ApiClient";
+import ResultImageComponent from "../components/ResultImageComponent";
+import FooterComponent from "../components/FooterComponent";
 
 const FitRoomPage = () => {
     const [leftActive, setLeftActive] = useState(false);
     const [rightActive, setRightActive] = useState(false);
+    const [rightLoaded, setRightLoaded] = useState(false);
     const [imageResponse, setImageResponse] = useState(null);
-
 
     const combineItems = () => {
         function base64ToBlob(base64, mimeType) {
@@ -52,11 +54,21 @@ const FitRoomPage = () => {
                     }
                 )
             }
-        })
+        });
+
+        document.getElementById('image_result').scrollIntoView({behavior: 'smooth', block: 'center'});
     }
 
     return <>
-        <MainHeader active="fr"/>
+        <div className="hero_area">
+            <MainHeader active="fr"/>
+        </div>
+        <div className="heading_container heading_center"
+             style={{marginLeft: '45px', marginRight: '45px', paddingTop: '50px', backgroundColor: '#f5cfd2'}}>
+            <h2>
+                Fitting Room
+            </h2>
+        </div>
         <div className="fr-page-content">
             <div className="fr-form-content">
                 <div className="form-detail">
@@ -64,13 +76,18 @@ const FitRoomPage = () => {
                         <LeftFitRoomComponent onChange={(value) => setLeftActive(value)}/>
                     </div>
                     <div className="form-right">
-                        <RightFitRoomComponent onChange={(value) => setRightActive(value)}/>
+                        <RightFitRoomComponent onChange={(value) => setRightActive(value)}
+                                               loaded={(value) => setRightLoaded(value)}/>
                     </div>
                 </div>
             </div>
         </div>
         {leftActive && rightActive && <button className="combine-button" onClick={combineItems}>Combine</button>}
-        {imageResponse && <img src={imageResponse} alt="Some error while displaying image..."/>}
+        {imageResponse && <ResultImageComponent data={imageResponse}/>}
+        {!imageResponse && rightLoaded  && <ResultImageComponent data={document.getElementById('image2').src}/>}
+        <div style={{marginTop: '40px'}}>
+            <FooterComponent />
+        </div>
     </>
 }
 

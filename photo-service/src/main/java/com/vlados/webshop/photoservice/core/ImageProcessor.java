@@ -9,7 +9,6 @@ import org.opencv.imgproc.Imgproc;
 import org.opencv.objdetect.CascadeClassifier;
 
 import java.util.ArrayList;
-import java.util.Base64;
 import java.util.List;
 
 import static com.vlados.webshop.photoservice.core.OpenCvWrapper.bitwiseAnd;

@@ -13,22 +13,17 @@ class RightFitRoomComponent extends React.Component {
         }
     }
 
-
-    handleChange = (file) => {
-        this.setState({
-            file: file
-        })
-    };
+    componentDidUpdate(prevProps: Readonly<P>, prevState: Readonly<S>, snapshot: SS) {
+        if(prevState.file !== this.state.file) {
+            if (this.props.loaded) {
+                this.props.loaded(true);
+            }
+        }
+    }
 
 
     render() {
         return <>
-            {/*<FileUploader*/}
-            {/*    handleChange={this.handleChange}*/}
-            {/*    name="file"*/}
-            {/*    types={this.state.types}*/}
-            {/*    // children={this.dragAndDropAreaStyle()}*/}
-            {/*/>*/}
             <Dropzone
                 onDrop={(file) => {
                     if (file.length > 0) {
