@@ -332,6 +332,7 @@
     -ms-align-items: center;
     -moz-align-items: center;
     -webkit-align-items: center;
+    background-color: rgb(241, 208, 212);
 }
 
 .form-v10-content {

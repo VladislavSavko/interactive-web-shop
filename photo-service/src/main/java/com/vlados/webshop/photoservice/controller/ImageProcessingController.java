@@ -1,6 +1,7 @@
 package com.vlados.webshop.photoservice.controller;
 
 import com.vlados.webshop.photoservice.core.ImageProcessor;
+import com.vlados.webshop.photoservice.dto.ImageBytesDto;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -48,6 +49,16 @@ public class ImageProcessingController {
                 .body(
                         ImageProcessor.contourOverlay(src.getBytes(), overlay.getBytes())
                 );
+    }
+
+    @PostMapping("/contourOverlayBytes")
+    public ImageBytesDto contourOverlayBytes(
+            @RequestParam(name = "src") MultipartFile src,
+            @RequestParam(name = "overlay") MultipartFile overlay
+    ) throws IOException {
+        return new ImageBytesDto(
+                ImageProcessor.contourOverlayBytes(src.getBytes(), overlay.getBytes())
+        );
     }
 
     @GetMapping("/colorChange")

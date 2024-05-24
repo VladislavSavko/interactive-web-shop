@@ -26,8 +26,9 @@ const FitRoomPage = () => {
                 byteArrays.push(byteArray);
             }
 
-            return new Blob(byteArrays, { type: mimeType });
+            return new Blob(byteArrays, {type: mimeType});
         }
+
         const src1Raw = document.getElementById('image1').src;
         const src1 = src1Raw.match(/,(.*)/)[1];
 
@@ -37,19 +38,19 @@ const FitRoomPage = () => {
         const image1Blob = base64ToBlob(src1, 'image/png');
         const image2Blob = base64ToBlob(src2, 'image/png');
 
-        const image1File = new File([image1Blob], "image.png", { type: 'image/png' });
-        const image2File = new File([image2Blob], "image.png", { type: 'image/png' });
+        const image1File = new File([image1Blob], "image.png", {type: 'image/png'});
+        const image2File = new File([image2Blob], "image.png", {type: 'image/png'});
 
         const formData = new FormData();
         formData.append('src', image2File);
         formData.append('overlay', image1File);
 
         ApiClient.combine(formData).then(response => {
-            if(response.ok) {
-                response.blob().then(imageBlob => {
-                    const imageObjectURL = URL.createObjectURL(imageBlob);
-                    setImageResponse(imageObjectURL);
-                })
+            if (response.ok) {
+                response.json().then(responseJson => {
+                        setImageResponse("data:image/png;base64," + responseJson.data);
+                    }
+                )
             }
         })
     }
@@ -69,7 +70,7 @@ const FitRoomPage = () => {
             </div>
         </div>
         {leftActive && rightActive && <button className="combine-button" onClick={combineItems}>Combine</button>}
-        {imageResponse && <img src={imageResponse} alt="" />}
+        {imageResponse && <img src={imageResponse} alt="Some error while displaying image..."/>}
     </>
 }
 

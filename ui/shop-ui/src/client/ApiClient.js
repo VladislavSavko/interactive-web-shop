@@ -97,7 +97,7 @@ class ApiClient {
     }
 
     static combine(formData): Promise<Response> {
-        return fetch('http://localhost:8083/api/v1/photos/contourOverlay', {
+        return fetch('http://localhost:8080/api/v1/photos/contourOverlayBytes', {
             method: "POST",
             body: formData
         });

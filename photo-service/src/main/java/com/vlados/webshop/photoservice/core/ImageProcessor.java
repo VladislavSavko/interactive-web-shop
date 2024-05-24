@@ -9,6 +9,7 @@ import org.opencv.imgproc.Imgproc;
 import org.opencv.objdetect.CascadeClassifier;
 
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 import static com.vlados.webshop.photoservice.core.OpenCvWrapper.bitwiseAnd;
@@ -129,6 +130,10 @@ public class ImageProcessor {
         return getBytes(finalMaskBlack3Ch);
     }
 
+    public static byte[] contourOverlayBytes(byte[] src, byte[] overlay) {
+        return contourOverlay(src, overlay);
+    }
+
     public static byte[] legsDetection(byte[] image) {
         CascadeClassifier cascadeClassifier = new CascadeClassifier("haarcascade_fullbody.xml");
 
@@ -155,7 +160,7 @@ public class ImageProcessor {
 
     private static byte[] getBytes(Mat image) {
         MatOfByte bytes = new MatOfByte();
-        Imgcodecs.imencode(".jpeg", image, bytes);
+        Imgcodecs.imencode(".png", image, bytes);
 
         return bytes.toArray();
     }
