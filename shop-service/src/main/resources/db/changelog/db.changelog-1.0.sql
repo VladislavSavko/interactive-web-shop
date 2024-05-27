@@ -47,3 +47,21 @@ CREATE TABLE IF NOT EXISTS cart_items(
                                     size tinyint NOT NULL
 
 );
+
+CREATE TABLE IF NOT EXISTS orders(
+                                    id bigint NOT NULL PRIMARY KEY,
+                                    user_id bigint NOT NULL,
+                                    created_at date NOT NULL,
+                                    updated_at date NOT NULL,
+                                    total double NOT NULL,
+                                    status tinyint NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS orders_items(
+                                         id serial NOT NULL PRIMARY KEY,
+                                         order_id bigint NOT NULL,
+                                         item_id bigint NOT NULL,
+                                         quantity int NOT NULL,
+                                         created_at date NOT NULL,
+                                         updated_at date NOT NULL
+);

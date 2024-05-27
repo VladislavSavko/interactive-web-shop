@@ -31,6 +31,18 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public List<OrderResponseDto> get(long userId) {
+        List<OrderResponseDto> result = new ArrayList<>();
+        for (Order order : orderDao.get(userId)) {
+            List<OrderItem> orderItems = orderItemDao.get(order.getId());
+
+            result.add(DtoMapper.ForOrder.toDto(order, orderItems));
+        }
+
+        return result;
+    }
+
+    @Override
     @Transactional
     public OrderResponseDto makeOrder(final long userId) {
         Cart userCart = cartDao.getCart(userId);

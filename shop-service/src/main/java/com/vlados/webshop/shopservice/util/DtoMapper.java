@@ -118,7 +118,7 @@ public class DtoMapper {
             );
         }
 
-        private static List<ResponseOrderItemDto> toDto(List<OrderItem> items) {
+        public static List<ResponseOrderItemDto> toDto(List<OrderItem> items) {
             return items.stream()
                     .map(orderItem -> new ResponseOrderItemDto(
                                     orderItem.getOrder().getId(),

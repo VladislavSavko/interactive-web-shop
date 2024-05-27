@@ -141,6 +141,11 @@ public class ShopController {
         return cartService.getCart(userId);
     }
 
+    @GetMapping("/orders/{userId}")
+    public List<OrderResponseDto> getUserOrders(@PathVariable(name = "userId") long userId) {
+        return orderService.get(userId);
+    }
+
     @PostMapping("/items")
     public ItemResponseDto addItem(@RequestBody @Valid ItemRequestDto itemDto) {
         return itemService.add(itemDto);
