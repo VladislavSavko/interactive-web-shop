@@ -15,7 +15,9 @@ class LeftFitRoomComponent extends React.Component {
     }
 
     componentDidMount() {
-
+        if (this.props.instaLoad) {
+            this.reloadForItem();
+        }
     }
 
     getSelectedItem = (item) => {
@@ -25,7 +27,9 @@ class LeftFitRoomComponent extends React.Component {
     }
 
     reloadForItem = () => {
-        ApiClient.getItemInfo(this.state.selectedItem.value).then(response => {
+        ApiClient.getItemInfo(
+            this.props.instaLoad ? new URLSearchParams(window.location.search).get('itemId') : this.state.selectedItem.value
+        ).then(response => {
             if (response.ok) {
                 response.json().then(responseJson => {
                     this.setState({

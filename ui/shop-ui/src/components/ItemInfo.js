@@ -59,7 +59,7 @@ class ItemInfo extends React.Component {
     }
 
     goToFittingRoom = () => {
-        window.location.href = "/fitroom/" + this.state.id;
+        window.location.href = "/fitroom?itemId=" + this.state.id;
     }
 
     render() {

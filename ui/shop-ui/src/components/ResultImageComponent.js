@@ -5,6 +5,7 @@ export default function ResultImageComponent(props) {
             <h2>Result image:</h2>
             <div className="result-image">
                 <img src={props.data} alt="Some error while displaying image..." className="loaded-image"/>
+                <button>Add to cart</button>
             </div>
         </div>
     );

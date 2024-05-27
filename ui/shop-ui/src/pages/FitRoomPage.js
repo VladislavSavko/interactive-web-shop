@@ -2,7 +2,7 @@ import MainHeader from "../components/MainHeader";
 import '../css/image.css'
 import LeftFitRoomComponent from "../components/LeftFitRoomComponent";
 import RightFitRoomComponent from "../components/RightFitRoomComponent";
-import React, {useRef, useState} from "react";
+import React, {useState} from "react";
 import ApiClient from "../client/ApiClient";
 import ResultImageComponent from "../components/ResultImageComponent";
 import FooterComponent from "../components/FooterComponent";
@@ -59,6 +59,9 @@ const FitRoomPage = () => {
         document.getElementById('image_result').scrollIntoView({behavior: 'smooth', block: 'center'});
     }
 
+    let flag;
+    flag = new URLSearchParams(window.location.search).has('itemId');
+
     return <>
         <div className="hero_area">
             <MainHeader active="fr"/>
@@ -73,7 +76,7 @@ const FitRoomPage = () => {
             <div className="fr-form-content">
                 <div className="form-detail">
                     <div className="fr-form-left">
-                        <LeftFitRoomComponent onChange={(value) => setLeftActive(value)}/>
+                        <LeftFitRoomComponent onChange={(value) => setLeftActive(value)} instaLoad={flag}/>
                     </div>
                     <div className="form-right">
                         <RightFitRoomComponent onChange={(value) => setRightActive(value)}
