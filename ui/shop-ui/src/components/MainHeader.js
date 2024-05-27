@@ -35,6 +35,13 @@ class MainHeader extends React.Component {
         this.activeNavItem();
     }
 
+    goTo = (id) => {
+        let w = window.open('/');
+        w.onload = function () {
+
+        }
+    }
+
 
 
     render() {
@@ -81,12 +88,13 @@ class MainHeader extends React.Component {
                             </a>
                         </li>
                         <li id="why_li" className="nav-item">
-                            <a className="nav-link" href="why.html">
+                            <a className="nav-link" href="/">
                                 Why Us
                             </a>
+                            {/*//TODO: Make href to particular section in home page*/}
                         </li>
                         <li id="contact_li" className="nav-item">
-                            <a className="nav-link" href="contact.html">Contact Us</a>
+                            <a className="nav-link" href="/">Contact Us</a>
                         </li>
                     </ul>
                     <div className="user_option">

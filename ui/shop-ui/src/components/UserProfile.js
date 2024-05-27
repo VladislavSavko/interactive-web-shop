@@ -136,7 +136,7 @@ class UserProfile extends React.Component {
                 </div>
                 <div className="mt-10 p-5 bg-white shadow"
                      style={{borderBottomLeftRadius: '15px', borderBottomRightRadius: '15px'}}>
-                    <UserCart/>
+                    <UserCart />
                 </div>
             </div>
             <div style={{display: 'flex', justifyContent: 'center'}}>

@@ -22,35 +22,16 @@ export default function CartAddingModal(props) {
     }
 
     const addItemToCart = () => {
-        const countryCode = document.getElementById('country_code').value;
-        const city = document.getElementById('city').value;
-        const street = document.getElementById('street').value;
-        const houseNumber = document.getElementById('house_number').value;
-        const flatNumber = document.getElementById('flat_number').value;
+        const userId = window.sessionStorage.getItem('userId');
+        const itemId = props.iid;
+        const quantity = document.getElementById('quantity').value;
+        const size = props.selectedSize;
 
-        ApiClient.sendUserInfo(
-            props.email,
-            props.name,
-            countryCode,
-            city,
-            street,
-            houseNumber,
-            flatNumber,
-            window.sessionStorage.getItem('userRole'),
-            window.sessionStorage.getItem('userId')
-        )
-            .then(response => {
-                if (response.ok) {
-                    switchModalState();
-                    window.location.reload();
-                } else if (response.status === 400) {
-                    response.json().then(() => {
-                        showErrors(["House number and flat number must be of integer type"]);
-                    });
-                } else {
-                    console.log('fuck');
-                }
-            });
+        ApiClient.addToCart(userId, itemId, quantity, size).then(response => {
+            if (response.ok) {
+                switchModalState();
+            }
+        })
     }
 
     const checkValue = () => {
@@ -79,12 +60,13 @@ export default function CartAddingModal(props) {
 
     return (
         <>
-            <button onClick={switchModalState} className={props.disabled ? 'btn-modal-2-disabled' : 'btn-modal-2'} disabled={props.disabled}>
+            <button onClick={switchModalState} className={props.disabled ? 'btn-modal-2-disabled' : 'btn-modal-2'}
+                    disabled={props.disabled}>
                 {props.text}
             </button>
-            {modal && (<div className={`_modal-item ${closing ? 'slide-up' : ''}`} style={{top: '10%'}}>
+            {modal && (<div className={`_modal-item ${closing ? 'slide-up' : ''}`}>
                 <div onClick={switchModalState} className="overlay"></div>
-                <div className="modal-content" style={{color: 'black'}}>
+                <div className="modal-content" style={{color: 'black', top: '50vh'}}>
                     <h2 style={{borderBottom: '3px solid #ccc', paddingBottom: '10px', textTransform: 'none'}}>Add item
                         to cart</h2>
                     <div style={{width: '100%', display: 'flex', alignItems: 'center'}}>
@@ -111,8 +93,13 @@ export default function CartAddingModal(props) {
                         <h2 style={{textTransform: 'none', color: 'black'}}>
                             {props.name}
                         </h2>
-                        <h3 style={{color: '#c3a1a0', paddingLeft: '50px', marginBottom: '9px'}}>{props.selectedSize}</h3>
-                        <h4 style={{marginLeft: '80px'}}><span style={{color: '#9c9c9f'}}>{q}</span> X ${props.price}</h4>
+                        <h3 style={{
+                            color: '#c3a1a0',
+                            paddingLeft: '50px',
+                            marginBottom: '9px'
+                        }}>{props.selectedSize}</h3>
+                        <h4 style={{marginLeft: '80px'}}><span style={{color: '#9c9c9f'}}>{q}</span> X ${props.price}
+                        </h4>
                     </div>
                     <div id="error_div" style={{color: 'red'}}></div>
                     <button onClick={switchModalState} className="close-modal">Close</button>

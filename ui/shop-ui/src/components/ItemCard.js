@@ -8,7 +8,7 @@ class ItemCard extends React.Component {
 
 
     isNew() {
-        if (this.props.new === true) {
+        if (this.props.new === true && this.props.buttonsActive === false) {
             return <div className="new">
                 <span>New</span>
             </div>

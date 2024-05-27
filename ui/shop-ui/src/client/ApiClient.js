@@ -103,6 +103,20 @@ class ApiClient {
         });
     }
 
+    static addToCart(userId, itemId, quantity, size): Promise<Response> {
+        return fetch(this.SERVER_URL + this.SHOP_API + this.CART_URL + '/' + userId, {
+            method: "POST",
+            body: JSON.stringify({
+                itemId: itemId,
+                quantity: quantity,
+                itemSize: size
+            }),
+            headers: {
+                "Content-type": "application/json; charset=UTF-8"
+            }
+        });
+    }
+
     static deleteFromCart(itemId, userId): Promise<Response> {
         return fetch(this.SERVER_URL + this.SHOP_API + this.CART_URL + '/' + userId + '/' + itemId, {
             method: "DELETE"

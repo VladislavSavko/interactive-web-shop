@@ -96,7 +96,7 @@ class ItemInfo extends React.Component {
                         <h2>${this.state.price}</h2>
                         <p className="desc">{this.state.description}</p>
                         <div>
-                            <CartAddingModal text="Add to cart" maxQuantity={this.state.quantity} mainImage={images[0]} price={this.state.price} name={this.state.name}
+                            <CartAddingModal text="Add to cart" maxQuantity={this.state.quantity} mainImage={images[0]} price={this.state.price} name={this.state.name} iid={this.state.id}
                             selectedSize={this.state.selected} disabled={this.state.selected === '' || this.state.selected === undefined}/>
                             <br/>
                             <button className="buttons try" onClick={this.goToFittingRoom}>Try in fitting room</button>
