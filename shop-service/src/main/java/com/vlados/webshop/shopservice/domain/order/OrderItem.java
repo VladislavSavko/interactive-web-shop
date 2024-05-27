@@ -18,7 +18,7 @@ import java.util.Date;
 @Data
 public class OrderItem {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     @OneToOne
     @JoinColumn(name = "order_id", referencedColumnName = "id")

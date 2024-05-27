@@ -10,6 +10,7 @@ import com.vlados.webshop.shopservice.domain.dto.inventory.InventoryRequestDto;
 import com.vlados.webshop.shopservice.domain.dto.inventory.InventoryResponseDto;
 import com.vlados.webshop.shopservice.domain.dto.item.ItemResponseDto;
 import com.vlados.webshop.shopservice.domain.dto.order.OrderResponseDto;
+import com.vlados.webshop.shopservice.domain.dto.order.ResponseOrderItemDto;
 import com.vlados.webshop.shopservice.domain.item.Category;
 import com.vlados.webshop.shopservice.domain.item.Image;
 import com.vlados.webshop.shopservice.domain.item.InventoryInfo;
@@ -112,8 +113,21 @@ public class DtoMapper {
                     order.getCreatedAt(),
                     order.getUpdatedAt(),
                     order.getTotal(),
-                    items
+                    toDto(items),
+                    order.getStatus()
             );
+        }
+
+        private static List<ResponseOrderItemDto> toDto(List<OrderItem> items) {
+            return items.stream()
+                    .map(orderItem -> new ResponseOrderItemDto(
+                                    orderItem.getOrder().getId(),
+                                    ForItem.toDto(orderItem.getItem()),
+                                    orderItem.getQuantity(),
+                                    orderItem.getCreatedAt(),
+                                    orderItem.getUpdatedAt()
+                            )
+                    ).toList();
         }
     }
 }

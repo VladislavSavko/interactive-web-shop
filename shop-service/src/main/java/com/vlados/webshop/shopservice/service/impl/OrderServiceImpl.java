@@ -45,6 +45,8 @@ public class OrderServiceImpl implements OrderService {
             OrderItem orderItem = new OrderItem(cartItem);
             orderItem.setOrder(order);
             orderItem.setQuantity(cartItem.getQuantity());
+            orderItem.setCreatedAt(order.getCreatedAt());
+            orderItem.setUpdatedAt(order.getUpdatedAt());
 
             orderItems.add(orderItem);
             orderItemDao.save(orderItem);
