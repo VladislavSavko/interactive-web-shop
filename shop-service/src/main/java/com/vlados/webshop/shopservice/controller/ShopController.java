@@ -13,6 +13,7 @@ import com.vlados.webshop.shopservice.domain.dto.inventory.InventoryUpdateDto;
 import com.vlados.webshop.shopservice.domain.dto.item.ItemRequestDto;
 import com.vlados.webshop.shopservice.domain.dto.item.ItemResponseDto;
 import com.vlados.webshop.shopservice.domain.dto.item.ItemUpdateDto;
+import com.vlados.webshop.shopservice.domain.dto.order.OrderResponseDto;
 import com.vlados.webshop.shopservice.domain.item.Category;
 import com.vlados.webshop.shopservice.domain.item.InventoryInfo;
 import com.vlados.webshop.shopservice.exception.ExceptionResponse;
@@ -39,13 +40,22 @@ public class ShopController {
     private final InventoryService inventoryService;
     private final ImageService imageService;
     private final CartService cartService;
+    private final OrderService orderService;
 
-    public ShopController(ItemService itemService, CategoryService categoryService, InventoryService inventoryService, ImageService imageService, CartService cartService) {
+    public ShopController(
+            ItemService itemService,
+            CategoryService categoryService,
+            InventoryService inventoryService,
+            ImageService imageService,
+            CartService cartService,
+            OrderService orderService
+    ) {
         this.itemService = itemService;
         this.categoryService = categoryService;
         this.inventoryService = inventoryService;
         this.imageService = imageService;
         this.cartService = cartService;
+        this.orderService = orderService;
     }
 
     @GetMapping("/items")
@@ -154,6 +164,11 @@ public class ShopController {
     @PostMapping("/cart/{id}")
     public CartResponseDto addItemToCart(@RequestBody CartItemToAddDto dto, @PathVariable(name = "id") long userId) {
         return DtoMapper.ForCart.toDto(cartService.addItemToCart(userId, dto.itemId(), dto.quantity(), ItemSize.valueOf(dto.itemSize())));
+    }
+
+    @PostMapping("/orders/{userId}")
+    public OrderResponseDto makeOrderFromCart(@PathVariable(name = "userId") long userId) {
+        return orderService.makeOrder(userId);
     }
 
     @DeleteMapping("/items/{id}")

@@ -9,10 +9,13 @@ import com.vlados.webshop.shopservice.domain.dto.image.ImageResponseDto;
 import com.vlados.webshop.shopservice.domain.dto.inventory.InventoryRequestDto;
 import com.vlados.webshop.shopservice.domain.dto.inventory.InventoryResponseDto;
 import com.vlados.webshop.shopservice.domain.dto.item.ItemResponseDto;
+import com.vlados.webshop.shopservice.domain.dto.order.OrderResponseDto;
 import com.vlados.webshop.shopservice.domain.item.Category;
 import com.vlados.webshop.shopservice.domain.item.Image;
 import com.vlados.webshop.shopservice.domain.item.InventoryInfo;
 import com.vlados.webshop.shopservice.domain.item.Item;
+import com.vlados.webshop.shopservice.domain.order.Order;
+import com.vlados.webshop.shopservice.domain.order.OrderItem;
 import com.vlados.webshop.shopservice.util.comp.ImageCompressor;
 
 import java.util.List;
@@ -99,6 +102,18 @@ public class DtoMapper {
             } else {
                 return null;
             }
+        }
+    }
+
+    public static class ForOrder {
+        public static OrderResponseDto toDto(Order order, List<OrderItem> items) {
+            return new OrderResponseDto(
+                    order.getUserId(),
+                    order.getCreatedAt(),
+                    order.getUpdatedAt(),
+                    order.getTotal(),
+                    items
+            );
         }
     }
 }
