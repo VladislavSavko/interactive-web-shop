@@ -4,8 +4,10 @@ import ApiClient from "../client/ApiClient";
 import ProfileGeneralInfoModal from "./modals/ProfileGeneralInfoModal";
 import ProfileAddressInfoModal from "./modals/ProfileAddressInfoModal";
 import UserCart from "./UserCart";
+import UserOrders from "./UserOrders";
 
 import shoppingCart from '../images/cart.png';
+import order from '../images/order.png'
 
 class UserProfile extends React.Component {
     constructor(props) {
@@ -136,7 +138,19 @@ class UserProfile extends React.Component {
                 </div>
                 <div className="mt-10 p-5 bg-white shadow"
                      style={{borderBottomLeftRadius: '15px', borderBottomRightRadius: '15px'}}>
-                    <UserCart />
+                    <UserCart/>
+                </div>
+            </div>
+            <div className="profile-body-1">
+                <div className="profile-body-1-header">
+                    <h2 style={{marginBottom: '0px'}}>Orders & History</h2>
+                    <img style={{maxWidth: '40px', maxHeight: '40px', marginLeft: '15px', paddingTop: '5px'}}
+                         src={order}
+                         alt=""/>
+                </div>
+                <div className="mt-10 p-5 bg-white shadow"
+                     style={{borderBottomLeftRadius: '15px', borderBottomRightRadius: '15px'}}>
+                    <UserOrders />
                 </div>
             </div>
             <div style={{display: 'flex', justifyContent: 'center'}}>

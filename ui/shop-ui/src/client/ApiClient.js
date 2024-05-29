@@ -9,6 +9,11 @@ class ApiClient {
     static CATEGORIES_URL = '/categories';
     static OVERLAY_URL = '/contourOverlay';
     static CART_URL = '/cart';
+    static ORDERS_URL = '/orders';
+
+    static getUserOrders(id): Promise<Response> {
+        return fetch(this.SERVER_URL + this.SHOP_API + this.ORDERS_URL + '/' + id);
+    }
 
 
     static getUserInfo(id): Promise<Response> {
