@@ -15,6 +15,12 @@ class ApiClient {
         return fetch(this.SERVER_URL + this.SHOP_API + this.ORDERS_URL + '/' + id);
     }
 
+    static makeUserOrder(id): Promise<Response> {
+        return fetch(this.SERVER_URL + this.SHOP_API + this.ORDERS_URL + '/' + id, {
+            method: "POST"
+        });
+    }
+
 
     static getUserInfo(id): Promise<Response> {
         return fetch(this.SERVER_URL + this.USERS_API + '/' + id, {

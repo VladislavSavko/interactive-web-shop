@@ -30,11 +30,6 @@ class UserCart extends React.Component {
         return ApiClient.getUserCart(userId);
     }
 
-    makeOrder() {
-
-    }
-
-
     render() {
         return <>
             {this.state.items && <div className="container shop_section">
@@ -52,9 +47,6 @@ class UserCart extends React.Component {
                             buttonsActive={true}
                             onChange={() => this.refreshItemsInCart()}/>
                     })}
-                </div>
-                <div className="button-confirm-and-order">
-                    <button onClick={this.makeOrder}>Confirm and order</button>
                 </div>
             </div>}
         </>

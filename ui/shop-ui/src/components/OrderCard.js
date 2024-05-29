@@ -26,7 +26,7 @@ class OrderCard extends React.Component {
                                 Total: <span style={{color: 'rgb(218,175,179)'}}>${this.props.total}</span>
                             </h6>
                         </div>
-                        <ShippingStatus value={this.props.status} oid={this.props.oid} />
+                        <ShippingStatus value={this.props.status} oid={this.props.oid}/>
                     </a>
                 </div>
             </div>

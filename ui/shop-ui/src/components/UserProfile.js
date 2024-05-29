@@ -35,6 +35,15 @@ class UserProfile extends React.Component {
         });
     }
 
+    makeOrder = () => {
+        const userId = window.sessionStorage.getItem('userId');
+        ApiClient.makeUserOrder(userId).then(r => {
+            if (r.ok) {
+                this.ordersComponent.refreshUserOrders(userId);
+            }
+        })
+    }
+
 
     render() {
         function logout() {
@@ -139,6 +148,9 @@ class UserProfile extends React.Component {
                 <div className="mt-10 p-5 bg-white shadow"
                      style={{borderBottomLeftRadius: '15px', borderBottomRightRadius: '15px'}}>
                     <UserCart/>
+                    <div className="button-confirm-and-order">
+                        <button onClick={this.makeOrder}>Confirm and order</button>
+                    </div>
                 </div>
             </div>
             <div className="profile-body-1">
@@ -150,7 +162,7 @@ class UserProfile extends React.Component {
                 </div>
                 <div className="mt-10 p-5 bg-white shadow"
                      style={{borderBottomLeftRadius: '15px', borderBottomRightRadius: '15px'}}>
-                    <UserOrders />
+                    <UserOrders ref={(instance) => {this.ordersComponent = instance;}} />
                 </div>
             </div>
             <div style={{display: 'flex', justifyContent: 'center'}}>

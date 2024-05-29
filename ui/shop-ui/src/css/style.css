@@ -340,6 +340,7 @@ a:focus {
   border: 0.5px solid transparent;
   border-radius: 10px;
   background-color: rgba(249, 236, 230, 0.46);
+  margin-bottom: 20px;
 
   &:hover {
     border-color: black;

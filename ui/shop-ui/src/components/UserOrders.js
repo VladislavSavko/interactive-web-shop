@@ -3,7 +3,7 @@ import ApiClient from "../client/ApiClient";
 import OrderCard from "./OrderCard";
 
 class UserOrders extends React.Component {
-    constructor(props) {
+    constructor() {
         super();
         this.state = {
             orders: []
@@ -27,7 +27,7 @@ class UserOrders extends React.Component {
     }
 
     render() {
-        return <div className="container" style={{marginLeft: '0'}}>
+        return <div className="container container-grid" style={{marginLeft: '0', marginRight: '0'}}>
             {this.state.orders && <div className="row">
                 {this.state.orders.map(order => {
                 return <OrderCard
