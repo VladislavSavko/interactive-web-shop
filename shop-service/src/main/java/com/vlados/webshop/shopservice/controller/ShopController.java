@@ -120,7 +120,7 @@ public class ShopController {
         return ResponseEntity.ok()
                 .contentType(MediaType.IMAGE_PNG)
                 .body(
-                        imageService.get(id).data()
+                        imageService.get(id).getData()
                 );
     }
 
@@ -132,7 +132,7 @@ public class ShopController {
     @GetMapping("/images")
     public List<byte[]> getImages() {
         return imageService.getAll().stream()
-                .map(ImageResponseDto::data)
+                .map(ImageResponseDto::getData)
                 .toList();
     }
 

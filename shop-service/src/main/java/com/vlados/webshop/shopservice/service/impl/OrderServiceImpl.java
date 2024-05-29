@@ -12,6 +12,7 @@ import com.vlados.webshop.shopservice.domain.order.OrderItem;
 import com.vlados.webshop.shopservice.domain.order.OrderStatus;
 import com.vlados.webshop.shopservice.service.OrderService;
 import com.vlados.webshop.shopservice.util.DtoMapper;
+import com.vlados.webshop.shopservice.util.comp.ImageCompressor;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -37,7 +38,18 @@ public class OrderServiceImpl implements OrderService {
             List<OrderItem> orderItems = orderItemDao.get(order.getId());
 
             result.add(DtoMapper.ForOrder.toDto(order, orderItems));
+
         }
+
+        result.forEach(orderResponseDto ->
+                orderResponseDto.relatedItems()
+                        .forEach(relatedItem ->
+                                relatedItem.item().images()
+                                        .forEach(imageResponseDto ->
+                                                imageResponseDto.setData(ImageCompressor.decompress(imageResponseDto.getData()))
+                                        )
+                        )
+        );
 
         return result;
     }
