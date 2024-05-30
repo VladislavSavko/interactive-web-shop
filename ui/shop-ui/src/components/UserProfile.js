@@ -98,7 +98,6 @@ class UserProfile extends React.Component {
                                                                  email={this.state.email}
                                                                  address={this.state.address}/>
                                     </div>
-
                                 </div>
                             </div>
                         </div>

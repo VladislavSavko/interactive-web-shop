@@ -5,6 +5,7 @@ import OrderItemRow from "./OrderItemRow";
 
 import orderStatus from '../images/status.png'
 import ShippingProgressBar from "./bar/ShippingProgressBar";
+import FooterComponent from "./FooterComponent";
 
 class OrderInfo extends React.Component {
     constructor(props) {
@@ -20,11 +21,15 @@ class OrderInfo extends React.Component {
     }
 
     countPercent = (status) => {
-        switch(status) {
-            case 'REQUESTED' : return 25;
-            case 'CONFIRMED' : return 50;
-            case 'SHIPPING' : return 75;
-            case 'COMPLETED' : return 100;
+        switch (status) {
+            case 'REQUESTED' :
+                return 25;
+            case 'CONFIRMED' :
+                return 50;
+            case 'SHIPPING' :
+                return 75;
+            case 'COMPLETED' :
+                return 100;
         }
     }
 
@@ -109,6 +114,9 @@ class OrderInfo extends React.Component {
                         <button>Cancel order</button>
                     </div>
                 </div>
+            </div>
+            <div style={{marginTop: '100px'}}>
+                <FooterComponent/>
             </div>
         </div>
     }

@@ -1,7 +1,8 @@
+import React from "react";
 import MainHeader from "../components/MainHeader";
 import '../css/custom.css'
 import UserProfile from "../components/UserProfile";
-import React from "react";
+import AdminProfile from "../components/AdminProfile";
 
 
 const ProfilePage = () => {
@@ -9,7 +10,7 @@ const ProfilePage = () => {
         <div className="hero_area">
             <MainHeader active="profile"/>
         </div>
-        <UserProfile/>
+        {window.sessionStorage.getItem('userRole') === 'CLIENT' ? <UserProfile/> : <AdminProfile />}
     </div>
 
 }

@@ -1,6 +1,8 @@
 import React from "react";
 import "../css/custom.css"
 
+import logo from '../images/logo.jpg'
+
 class MainHeader extends React.Component {
     constructor(props) {
         super(props);
@@ -55,7 +57,7 @@ class MainHeader extends React.Component {
                          src="https://static.vecteezy.com/system/resources/thumbnails/020/911/740/small/user-profile-icon-profile-avatar-user-icon-male-icon-face-icon-profile-icon-free-png.png"
                          alt=""/>
                     <div id="profile_div">
-                        {window.sessionStorage.getItem('username')}
+                        {window.sessionStorage.getItem('userRole') === 'ADMIN' ?  window.sessionStorage.getItem('username') + ' (admin)' : window.sessionStorage.getItem('username')}
                     </div>
                 </a>;
             }
@@ -64,9 +66,10 @@ class MainHeader extends React.Component {
         return <header className="header_section">
             <nav className="navbar navbar-expand-lg custom_nav-container ">
                 <a className="navbar-brand" href="/">
-              <span>
-                INTERACTIVE WEB-SHOP
-              </span>
+                    <img src={logo} alt="" style={{width: '30px', height: '30px', marginRight: '10px', marginBottom: '8px', borderRadius: '10px'}}/>
+                <span>
+                    INTERACTIVE WEB-SHOP
+                </span>
                 </a>
                 <button className="navbar-toggler" type="button" data-toggle="collapse"
                         data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"

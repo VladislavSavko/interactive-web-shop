@@ -13,5 +13,4 @@ CREATE TABLE IF NOT EXISTS _users(
 
 INSERT INTO _users (email, password, role, name)
 VALUES
-    ('admin@admin.com', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', 1, 'admin'),
-    ('superadmin@superadmin.com', '186cf774c97b60a1c106ef718d10970a6a06e06bef89553d9ae65d938a886eae', 2, 'superadmin');
+    ('admin@admin.com', '$2a$10$L9pqrWnlCaDXTKUgJFilZOJZCj7r6tWK1OeQTyhCBL2a1THfcxv5O', 1, 'admin')
