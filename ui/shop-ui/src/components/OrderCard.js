@@ -12,8 +12,10 @@ class OrderCard extends React.Component {
 
     render() {
         return <>
-            <div className="col-sm-6 col-md-4 col-lg-3">
-                <div className="box2">
+            <div className="col-sm-6 col-md-4 col-lg-3" onClick={() => {
+                window.location.href = this.orderHref(this.props.oid)}
+            }>
+                <div className="box2" >
                     <a href={this.orderHref(this.props.oid)}>
                         <div className="img-box" style={{marginTop: '20px'}}>
                             <img src={this.props.firstItemImage} alt="" style={{width: '200px'}}/>

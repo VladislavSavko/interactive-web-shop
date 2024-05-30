@@ -1,4 +1,5 @@
 import React from "react";
+import ShippingProgressBar from "./bar/ShippingProgressBar";
 
 export default function OrderItemRow(props) {
     return <div className="row row-main">
@@ -10,11 +11,11 @@ export default function OrderItemRow(props) {
                 <p style={{fontWeight: 'bold', fontSize: '18px'}}>{props.item.name}</p>
             </div>
             <div className="row d-flex">
-                <p className="text-muted">With charging case</p>
+                <p className="text-muted" style={{fontSize: '16px'}}>{props.size}</p>
             </div>
         </div>
         <div className="col-3 d-flex justify-content-end">
-            <p><b>$199</b></p>
+            <p style={{fontSize: '45px', fontWeight: 'bold'}}>${props.item.price}</p>
         </div>
     </div>
 }
