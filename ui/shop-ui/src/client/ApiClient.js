@@ -21,6 +21,10 @@ class ApiClient {
         });
     }
 
+    static getOrderInfo(id): Promise<Response> {
+        return fetch(this.SERVER_URL + this.SHOP_API + this.ORDERS_URL + '?orderId=' + id);
+    }
+
 
     static getUserInfo(id): Promise<Response> {
         return fetch(this.SERVER_URL + this.USERS_API + '/' + id, {
@@ -54,7 +58,7 @@ class ApiClient {
     }
 
     static getAllItems(filters): Promise<Response> {
-        if(filters === undefined) {
+        if (filters === undefined) {
             return fetch(this.SERVER_URL + this.SHOP_API + this.ITEMS_URL);
         } else {
             return fetch(this.SERVER_URL + this.SHOP_API + this.ITEMS_URL + '?' + filters);

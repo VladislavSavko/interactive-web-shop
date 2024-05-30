@@ -19,7 +19,9 @@ public class CartItem {
     @OneToOne(cascade = CascadeType.DETACH)
     @JoinColumn(name = "item_id", referencedColumnName = "id", nullable = false)
     private Item item;
+
     private int quantity;
+
     private ItemSize size;
 
     @ManyToOne

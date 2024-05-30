@@ -6,60 +6,58 @@ import OrderItemRow from "./OrderItemRow";
 class OrderInfo extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {}
+        this.state = {
+            items: [],
+            total: '',
+            created: '',
+            updated: '',
+            status: ''
+        }
     }
 
     componentDidMount() {
         const url = window.location.href;
         const orderId = url.substring(url.lastIndexOf('orders/') + 7);
+        this.getOrderInfo(orderId);
     }
 
     getOrderInfo = (orderId) => {
         ApiClient.getOrderInfo(orderId).then(response => {
             if (response.ok) {
-
+                response.json().then(responseJson => {
+                        this.setState({
+                            items: responseJson.relatedItems,
+                            total: responseJson.total,
+                            created: responseJson.createdAt,
+                            updated: responseJson.updatedAt,
+                            status: responseJson.status
+                        });
+                    }
+                );
             }
         })
     }
 
     render() {
-        return <div style={{backgroundColor: 'rgb(241, 208, 212)', marginLeft: '45px', marginRight: '45px', borderBottomLeftRadius: '15px', borderBottomRightRadius: '15px'}}>
-            <div className="col d-flex"><span className="text-muted" id="orderno" style={{paddingLeft: '45px'}}>Order #{this.state.oid}</span></div>
+        return <div style={{
+            backgroundColor: 'rgb(241, 208, 212)',
+            marginLeft: '45px',
+            marginRight: '45px',
+            borderBottomLeftRadius: '15px',
+            borderBottomRightRadius: '15px'
+        }}>
+            <div className="col d-flex"><span className="text-muted" id="orderno"
+                                              style={{paddingLeft: '45px'}}>Order #{this.state.oid}</span></div>
             <div className="order-card">
                 <div className="title"> Thank You for Your order, {window.sessionStorage.getItem('username')}!</div>
                 <div className="main">
                     <span id="sub-title">
                         <p><b>Payment Summary</b></p>
                     </span>
-                    <OrderItemRow />
-                    <div className="row row-main">
-                        <div className="col-3"><img className="img-fluid" src="https://i.imgur.com/qSnCFIS.png" alt="Having troubles loading the image..."/></div>
-                        <div className="col-6">
-                            <div className="row d-flex">
-                                <p><b>iPhone XR</b></p>
-                            </div>
-                            <div className="row d-flex">
-                                <p className="text-muted">128GB White</p>
-                            </div>
-                        </div>
-                        <div className="col-3 d-flex justify-content-end">
-                            <p><b>$599</b></p>
-                        </div>
-                    </div>
-                    <div className="row row-main">
-                        <div className="col-3 "><img className="img-fluid" src="https://i.imgur.com/hOsIes2.png"/></div>
-                        <div className="col-6">
-                            <div className="row d-flex">
-                                <p><b>Belkin Boost Up</b></p>
-                            </div>
-                            <div className="row d-flex">
-                                <p className="text-muted">Wireless charging pad</p>
-                            </div>
-                        </div>
-                        <div className="col-3 d-flex justify-content-end">
-                            <p><b>$49.95</b></p>
-                        </div>
-                    </div>
+                    {this.state.items.map(orderItem => {
+                        return <OrderItemRow item={orderItem.item}/>
+                    })}
+
                     <hr/>
                     <div className="total">
                         <div className="row">

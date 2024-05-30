@@ -60,7 +60,7 @@ public class OrderServiceImpl implements OrderService {
     public OrderResponseDto getOne(long orderId) {
         return DtoMapper.ForOrder.toDto(
                 orderDao.getOne(orderId).orElseThrow(() -> new NoSuchElementException(
-                                ResourceUtil.getMessage("db.item.not_found").formatted(orderId)
+                                ResourceUtil.getMessage("db.order.not_found").formatted(orderId)
                         )
                 ),
                 orderItemDao.get(orderId).stream()

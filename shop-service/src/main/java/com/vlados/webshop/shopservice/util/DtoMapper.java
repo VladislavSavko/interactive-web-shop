@@ -124,6 +124,7 @@ public class DtoMapper {
                                     orderItem.getOrder().getId(),
                                     ForItem.toDto(orderItem.getItem()),
                                     orderItem.getQuantity(),
+                                    orderItem.getItemSize(),
                                     orderItem.getCreatedAt(),
                                     orderItem.getUpdatedAt()
                             )

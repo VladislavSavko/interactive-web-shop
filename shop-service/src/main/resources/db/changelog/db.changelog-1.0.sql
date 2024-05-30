@@ -61,6 +61,7 @@ CREATE TABLE IF NOT EXISTS orders_items(
                                          id serial NOT NULL PRIMARY KEY,
                                          order_id bigint NOT NULL,
                                          item_id bigint NOT NULL,
+                                         item_size tinyint NOT NULL,
                                          quantity int NOT NULL,
                                          created_at date NOT NULL,
                                          updated_at date NOT NULL
