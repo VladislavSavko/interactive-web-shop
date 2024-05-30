@@ -8,7 +8,6 @@ class MainHeader extends React.Component {
 
     activeNavItem() {
         let navItem;
-        console.log(this.props.active);
         switch (this.props.active) {
             case 'home': navItem = document.getElementById('home_li');break;
             case 'shop': navItem = document.getElementById('shop_li');break;
@@ -25,6 +24,9 @@ class MainHeader extends React.Component {
             }
             case 'profile': {
                 document.getElementById('profile_div').style.color = "#f89cab";
+                return;
+            }
+            default: {
                 return;
             }
         }

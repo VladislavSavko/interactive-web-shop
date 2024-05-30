@@ -1,15 +1,15 @@
-import ItemInfo from "../components/ItemInfo";
 import MainHeader from "../components/MainHeader";
 import React from "react";
+import OrderInfo from "../components/OrderInfo";
 
-const ItemPage = () => {
+const OrderPage = () => {
     return <>
         <div className="hero_area">
-            <MainHeader active="shop"/>
+            <MainHeader />
         </div>
-        <ItemInfo/>
+        <OrderInfo />
     </>
 }
 
 
-export default ItemPage;
+export default OrderPage

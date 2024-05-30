@@ -146,6 +146,11 @@ public class ShopController {
         return orderService.get(userId);
     }
 
+    @GetMapping("/orders")
+    public OrderResponseDto getOrderById(@RequestParam(name = "orderId") long orderId) {
+        return orderService.getOne(orderId);
+    }
+
     @PostMapping("/items")
     public ItemResponseDto addItem(@RequestBody @Valid ItemRequestDto itemDto) {
         return itemService.add(itemDto);

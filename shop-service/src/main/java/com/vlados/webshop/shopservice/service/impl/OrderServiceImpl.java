@@ -12,12 +12,14 @@ import com.vlados.webshop.shopservice.domain.order.OrderItem;
 import com.vlados.webshop.shopservice.domain.order.OrderStatus;
 import com.vlados.webshop.shopservice.service.OrderService;
 import com.vlados.webshop.shopservice.util.DtoMapper;
+import com.vlados.webshop.shopservice.util.ResourceUtil;
 import com.vlados.webshop.shopservice.util.comp.ImageCompressor;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -52,6 +54,20 @@ public class OrderServiceImpl implements OrderService {
         );
 
         return result;
+    }
+
+    @Override
+    public OrderResponseDto getOne(long orderId) {
+        return DtoMapper.ForOrder.toDto(
+                orderDao.getOne(orderId).orElseThrow(() -> new NoSuchElementException(
+                                ResourceUtil.getMessage("db.item.not_found").formatted(orderId)
+                        )
+                ),
+                orderItemDao.get(orderId).stream()
+                        .peek(orderItem -> orderItem.getItem()
+                                .getImages().forEach(image -> image.setBinary(ImageCompressor.decompress(image.getBinary()))))
+                        .toList()
+        );
     }
 
     @Override

@@ -6,6 +6,7 @@ import com.vlados.webshop.shopservice.repos.OrderRepository;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class OrderDaoImpl implements OrderDao {
@@ -18,6 +19,11 @@ public class OrderDaoImpl implements OrderDao {
     @Override
     public List<Order> get(long userId) {
         return orderRepository.findByUserId(userId);
+    }
+
+    @Override
+    public Optional<Order> getOne(long orderId) {
+        return orderRepository.findById(orderId);
     }
 
     @Override
