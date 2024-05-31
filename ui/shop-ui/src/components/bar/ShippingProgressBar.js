@@ -6,7 +6,7 @@ import step1 from '../../images/requested.png'
 import step2 from '../../images/confirmed.png'
 import step3 from '../../images/shipping.png'
 import step4 from '../../images/completed.jpg'
-import ApprovalDialog from "../modals/ApprovalDialog";
+import StatusChangingApprovalDialog from "../modals/StatusChangingApprovalDialog";
 
 class ShippingProgressBar extends React.Component {
     constructor(props) {
@@ -101,7 +101,7 @@ class ShippingProgressBar extends React.Component {
                 <p style={{color: `${this.props.percent > 66 ? '#f38696' : ''}`}}>In shipping</p>
                 <p style={{color: `${this.props.percent > 99 ? '#f38696' : ''}`}}>Order completed</p>
             </div>
-            <ApprovalDialog ref={(instance) => { this.dialog = instance; }} onChange={(value) => this.props.onChange(value)}/>
+            <StatusChangingApprovalDialog ref={(instance) => { this.dialog = instance; }} onChange={(value) => this.props.onChange(value)}/>
         </>
     }
 }

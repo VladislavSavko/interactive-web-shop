@@ -160,7 +160,19 @@ body.active-modal {
     right: 0;
     bottom: 0;
     position: fixed;
-    animation: slideLeft 0.4s ease-out forwards;;
+    animation: slideLeft 0.4s ease-out forwards;
+}
+
+._modal-order1 {
+    z-index: 1;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    position: fixed;
+    animation: slideRight1 0.4s ease-out forwards;
 }
 
 ._modal-item {
@@ -173,6 +185,9 @@ body.active-modal {
 }
 ._modal-order.slide-right {
     animation: slideRight 0.4s ease-out forwards;
+}
+._modal-order1.slide-left {
+    animation: slideLeft1 0.4s ease-out forwards;
 }
 
 .overlay {
@@ -365,6 +380,17 @@ body.active-modal {
     }
 }
 
+@keyframes slideLeft1 {
+    0% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+}
+
 @keyframes slideRight {
     0% {
         transform: translateX(0);
@@ -373,5 +399,16 @@ body.active-modal {
     100% {
         transform: translateX(100%);
         opacity: 0;
+    }
+}
+
+@keyframes slideRight1 {
+    0% {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
     }
 }

@@ -5,7 +5,7 @@ import step2 from '../../images/confirmed.png'
 import step3 from '../../images/shipping.png'
 import step4 from '../../images/completed.jpg'
 
-class ApprovalDialog extends React.Component {
+class StatusChangingApprovalDialog extends React.Component {
     constructor(props) {
         super();
         this.state = {
@@ -151,4 +151,4 @@ class ApprovalDialog extends React.Component {
     }
 }
 
-export default ApprovalDialog
+export default StatusChangingApprovalDialog

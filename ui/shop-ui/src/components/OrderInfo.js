@@ -6,6 +6,7 @@ import OrderItemRow from "./OrderItemRow";
 import orderStatus from '../images/status.png'
 import ShippingProgressBar from "./bar/ShippingProgressBar";
 import FooterComponent from "./FooterComponent";
+import OrderDeletingApprovalDialog from "./modals/OrderDeletingApprovalDialog";
 
 class OrderInfo extends React.Component {
     constructor(props) {
@@ -41,8 +42,16 @@ class OrderInfo extends React.Component {
         this.getOrderInfo(orderId);
     }
 
-    deleteOrder = () => {
+    preDeleteOrder = () => {
+        this.dialog.switchModalState();
+    }
 
+    deleteOrder = () => {
+        ApiClient.deleteOrder(this.state.orderId).then(response => {
+            if(response.ok) {
+                window.location.href = '/profile'
+            }
+        })
     }
 
     getOrderInfo = (orderId) => {
@@ -141,13 +150,14 @@ class OrderInfo extends React.Component {
                      style={{borderBottomLeftRadius: '15px', borderBottomRightRadius: '15px'}}>
                     <ShippingProgressBar percent={this.countPercent(this.state.status)} admin={window.sessionStorage.getItem('userRole') === 'ADMIN'} onChange={(status) => this.changeOrderStatus(status)}/>
                     <div className="button-confirm-and-order">
-                        <button onClick={this.deleteOrder}>Delete order</button>
+                        <button onClick={this.preDeleteOrder}>Delete order</button>
                     </div>
                 </div>
             </div>
             <div style={{marginTop: '100px'}}>
                 <FooterComponent/>
             </div>
+            <OrderDeletingApprovalDialog ref={(instance) => { this.dialog = instance; }} onChange={this.deleteOrder} />
         </div>
     }
 

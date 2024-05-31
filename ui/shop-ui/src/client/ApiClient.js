@@ -38,6 +38,12 @@ class ApiClient {
         });
     }
 
+    static deleteOrder(id): Promise<Response> {
+        return fetch(this.SERVER_URL + this.SHOP_API + this.ORDERS_URL + '/' + id, {
+            method: "DELETE"
+        });
+    }
+
     static getOrderInfo(id): Promise<Response> {
         return fetch(this.SERVER_URL + this.SHOP_API + this.ORDERS_URL + '?orderId=' + id);
     }
