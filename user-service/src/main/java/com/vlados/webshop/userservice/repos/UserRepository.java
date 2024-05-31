@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -15,8 +16,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query("SELECT u.email FROM _users u WHERE u.id=:id")
     Optional<String> findEmailById(@Param("id") long id);
 
-    @Query("SELECT u.name FROM _users u WHERE u.id=:id")
-    Optional<String> findNameById(@Param("id") long id);
+    @Query("SELECT u.name, u.email FROM _users u WHERE u.id=:id")
+    Optional<List<Object>> findNameAndEmailById(@Param("id") long id);
 
     boolean existsByEmail(final String email);
 }

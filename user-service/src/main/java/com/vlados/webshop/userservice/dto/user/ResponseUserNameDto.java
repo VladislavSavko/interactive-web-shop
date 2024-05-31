@@ -1,4 +1,4 @@
 package com.vlados.webshop.userservice.dto.user;
 
-public record ResponseUserNameDto(String name) {
+public record ResponseUserNameDto(String name, String email) {
 }

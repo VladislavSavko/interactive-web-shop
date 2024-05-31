@@ -83,6 +83,14 @@ hr {
     transform: scale(1.2);
 }
 
+.for-admin {
+    transition: transform ease .3s;
+    &:hover{
+        cursor: pointer;
+        transform: scale(1.4);
+    }
+}
+
 .shipping-statuses {
     margin-top: 20px;
     display: flex;

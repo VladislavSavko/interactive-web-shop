@@ -65,6 +65,17 @@ public class OrderServiceImpl implements OrderService {
         return makeOrder(userCart, userId);
     }
 
+    @Override
+    @Transactional
+    public void changeStatus(long id, String status) {
+        Order order = orderDao.getOne(id).orElseThrow(() -> new NoSuchElementException(
+                        ResourceUtil.getMessage("db.order.not_found").formatted(id)
+                )
+        );
+
+        order.setStatus(OrderStatus.valueOf(status));
+    }
+
     private OrderResponseDto makeOrder(Cart cart, long userId) {
         Order order = orderDao.add(new Order(userId, calculateTotalPrice(cart), OrderStatus.REQUESTED));
         List<OrderItem> orderItems = new ArrayList<>();

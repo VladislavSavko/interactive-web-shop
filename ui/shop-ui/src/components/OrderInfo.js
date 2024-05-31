@@ -55,11 +55,11 @@ class OrderInfo extends React.Component {
                         userId: responseJson.userId
                     });
                     if (window.sessionStorage.getItem('userRole') === 'ADMIN') {
-                        ApiClient.getUserName(responseJson.userId).then(r => {
+                        ApiClient.getUserData(responseJson.userId).then(r => {
                                 if (r.ok) {
                                     r.json().then(rJson => {
                                         this.setState({
-                                            userName: 'Order made by ' + rJson.name
+                                            userName: 'Order made by ' + rJson.name + ' (' + rJson.email + ')'
                                         })
                                     });
                                 }
@@ -85,7 +85,7 @@ class OrderInfo extends React.Component {
                 borderBottomRightRadius: '15px'
             }}>
                 <div className="col d-flex"><span className="text-muted" id="orderno"
-                                                  style={{paddingLeft: '45px'}}>Order #{this.state.orderId}</span></div>
+                                                  style={{paddingLeft: '45px'}}>Order #{this.state.orderId} (created on {this.state.created})</span></div>
                 <div className="order-card">
                     <div className="title">{this.state.userName}</div>
                     <div className="main">
@@ -127,7 +127,7 @@ class OrderInfo extends React.Component {
                 </div>
                 <div className="mt-10 p-5 bg-white shadow"
                      style={{borderBottomLeftRadius: '15px', borderBottomRightRadius: '15px'}}>
-                    <ShippingProgressBar percent={this.countPercent(this.state.status)}/>
+                    <ShippingProgressBar percent={this.countPercent(this.state.status)} admin={window.sessionStorage.getItem('userRole') === 'ADMIN'}/>
                     <div className="button-confirm-and-order">
                         <button>Cancel order</button>
                     </div>

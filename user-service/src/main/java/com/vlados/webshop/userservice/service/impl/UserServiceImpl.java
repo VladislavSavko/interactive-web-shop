@@ -70,9 +70,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ResponseUserNameDto getName(long id) {
-        return UserMapper.mapName(
-                userDao.getName(id)
+    public ResponseUserNameDto getNameAndEmail(long id) {
+        return UserMapper.mapData(
+                userDao.getNameAndEmail(id)
                         .orElseThrow(() -> new NoSuchElementException(
                                 ResourceUtil.getMessage("db.user.id")
                                         .formatted(id))

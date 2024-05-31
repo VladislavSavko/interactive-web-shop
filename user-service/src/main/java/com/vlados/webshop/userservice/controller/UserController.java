@@ -42,9 +42,9 @@ public class UserController {
         return userService.get(id);
     }
 
-    @GetMapping("/{id}/name")
-    public ResponseUserNameDto username(@PathVariable(name = "id") long id) {
-        return userService.getName(id);
+    @GetMapping("/{id}/data")
+    public ResponseUserNameDto usernameAndEmail(@PathVariable(name = "id") long id) {
+        return userService.getNameAndEmail(id);
     }
 
     @PostMapping

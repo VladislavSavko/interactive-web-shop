@@ -12,4 +12,6 @@ public interface OrderService {
     OrderResponseDto getOne(final long orderId);
 
     OrderResponseDto makeOrder(final long userId);
+
+    void changeStatus(final long id, final String status);
 }

@@ -50,7 +50,8 @@ public class UserMapper {
                 new ResponseUserDto(user.getEmail(), user.getName(), AddressMapper.map(address), user.getRole());
     }
 
-    public static ResponseUserNameDto mapName(String name) {
-        return new ResponseUserNameDto(name);
+    public static ResponseUserNameDto mapData(List<Object> values) {
+        Object[] _values = (Object[]) values.get(0);
+        return new ResponseUserNameDto(_values[0].toString(), _values[1].toString());
     }
 }

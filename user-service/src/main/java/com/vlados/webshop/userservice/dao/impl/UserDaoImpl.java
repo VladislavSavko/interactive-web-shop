@@ -47,8 +47,8 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public Optional<String> getName(long id) {
-        return userRepository.findNameById(id);
+    public Optional<List<Object>> getNameAndEmail(long id) {
+        return userRepository.findNameAndEmailById(id);
     }
 
     @Override

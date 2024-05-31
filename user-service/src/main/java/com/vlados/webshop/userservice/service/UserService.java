@@ -19,7 +19,7 @@ public interface UserService {
 
     Optional<String> getEmailById(final long id);
 
-    ResponseUserNameDto getName(final long id);
+    ResponseUserNameDto getNameAndEmail(final long id);
 
     ResponseUserDto add(final NewUserDto user);
 

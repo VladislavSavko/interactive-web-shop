@@ -37,8 +37,8 @@ class ApiClient {
         });
     }
 
-    static getUserName(id): Promise<Response> {
-        return fetch(this.SERVER_URL + this.USERS_API + '/' + id + '/name');
+    static getUserData(id): Promise<Response> {
+        return fetch(this.SERVER_URL + this.USERS_API + '/' + id + '/data');
     }
 
     static getItemInfo(id): Promise<Response> {

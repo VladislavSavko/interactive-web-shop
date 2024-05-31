@@ -14,6 +14,7 @@ import com.vlados.webshop.shopservice.domain.dto.item.ItemRequestDto;
 import com.vlados.webshop.shopservice.domain.dto.item.ItemResponseDto;
 import com.vlados.webshop.shopservice.domain.dto.item.ItemUpdateDto;
 import com.vlados.webshop.shopservice.domain.dto.order.OrderResponseDto;
+import com.vlados.webshop.shopservice.domain.dto.order.OrderStatusUpdateDto;
 import com.vlados.webshop.shopservice.domain.item.Category;
 import com.vlados.webshop.shopservice.domain.item.InventoryInfo;
 import com.vlados.webshop.shopservice.exception.ExceptionResponse;
@@ -282,6 +283,16 @@ public class ShopController {
     public CartResponseDto updateCartItemsQuantities(@PathVariable(name = "id") long userId,
                                                      @RequestBody List<UpdateCartItemDto> dtos) {
         return cartService.updateCartItemsQuantities(userId, dtos);
+    }
+
+    @PutMapping("/orders/admin/{id}")
+    public ResponseEntity<String> changeOrderStatus(@PathVariable(name = "id") long id, @RequestBody OrderStatusUpdateDto orderStatusUpdateDto) {
+        orderService.changeStatus(id, orderStatusUpdateDto.newStatus());
+
+        return ResponseEntity.ok()
+                .body(
+                        ResourceUtil.getMessage("response.order.updated").formatted(id, orderStatusUpdateDto.newStatus())
+                );
     }
 
     @ExceptionHandler(NoSuchElementException.class)
