@@ -1,13 +1,8 @@
 import React from "react";
-import '../css/custom.css'
-import ApiClient from "../client/ApiClient";
-import ProfileGeneralInfoModal from "./modals/ProfileGeneralInfoModal";
-import ProfileAddressInfoModal from "./modals/ProfileAddressInfoModal";
-import UserCart from "./UserCart";
-import UserOrders from "./UserOrders";
-
-import shoppingCart from '../images/cart.png';
-import order from '../images/order.png'
+import '../../css/custom.css'
+import ApiClient from "../../client/ApiClient";
+import order from '../../images/order.png'
+import AdminOrders from "./AdminOrders";
 
 class AdminProfile extends React.Component {
     constructor(props) {
@@ -62,7 +57,7 @@ class AdminProfile extends React.Component {
                 </div>
                 <div className="mt-10 p-5 bg-white shadow"
                      style={{borderBottomLeftRadius: '15px', borderBottomRightRadius: '15px'}}>
-                    <UserOrders ref={(instance) => {this.ordersComponent = instance;}} />
+                    <AdminOrders />
                 </div>
             </div>
             <div style={{display: 'flex', justifyContent: 'center'}}>

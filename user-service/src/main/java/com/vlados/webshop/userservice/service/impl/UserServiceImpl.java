@@ -8,6 +8,7 @@ import com.vlados.webshop.userservice.dto.auth.UserAuthDtoRequest;
 import com.vlados.webshop.userservice.dto.auth.UserAuthDtoResponse;
 import com.vlados.webshop.userservice.dto.user.NewUserDto;
 import com.vlados.webshop.userservice.dto.user.ResponseUserDto;
+import com.vlados.webshop.userservice.dto.user.ResponseUserNameDto;
 import com.vlados.webshop.userservice.dto.user.UpdatedUserDto;
 import com.vlados.webshop.userservice.exception.DuplicateEmailException;
 import com.vlados.webshop.userservice.exception.NoSuchEntityException;
@@ -66,6 +67,17 @@ public class UserServiceImpl implements UserService {
     @Override
     public Optional<String> getEmailById(long id) {
         return userDao.getEmailById(id);
+    }
+
+    @Override
+    public ResponseUserNameDto getName(long id) {
+        return UserMapper.mapName(
+                userDao.getName(id)
+                        .orElseThrow(() -> new NoSuchElementException(
+                                ResourceUtil.getMessage("db.user.id")
+                                        .formatted(id))
+                        )
+        );
     }
 
     @Override

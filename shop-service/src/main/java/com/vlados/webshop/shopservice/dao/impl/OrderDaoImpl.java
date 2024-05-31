@@ -17,6 +17,11 @@ public class OrderDaoImpl implements OrderDao {
     }
 
     @Override
+    public List<Order> getAll() {
+        return orderRepository.findAll();
+    }
+
+    @Override
     public List<Order> get(long userId) {
         return orderRepository.findByUserId(userId);
     }

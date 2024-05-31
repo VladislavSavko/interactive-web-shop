@@ -17,6 +17,8 @@ public interface UserDao {
 
     Optional<String> getEmailById(final long id);
 
+    Optional<String> getName(final long id);
+
     User add(final NewUserDto user);
 
     void delete(final long id);
@@ -26,5 +28,6 @@ public interface UserDao {
     void update(final long id, final AddressDto addressDto);
 
     boolean exists(final long id);
+
     boolean existsByEmail(final String email);
 }

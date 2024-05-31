@@ -17,6 +17,8 @@ class OrderInfo extends React.Component {
             created: '',
             updated: '',
             status: '',
+            userId: '',
+            userName: ''
         }
     }
 
@@ -43,18 +45,34 @@ class OrderInfo extends React.Component {
         ApiClient.getOrderInfo(orderId).then(response => {
             if (response.ok) {
                 response.json().then(responseJson => {
+                    this.setState({
+                        orderId: responseJson.relatedItems[0].orderId,
+                        items: responseJson.relatedItems,
+                        total: responseJson.total,
+                        created: responseJson.createdAt,
+                        updated: responseJson.updatedAt,
+                        status: responseJson.status,
+                        userId: responseJson.userId
+                    });
+                    if (window.sessionStorage.getItem('userRole') === 'ADMIN') {
+                        ApiClient.getUserName(responseJson.userId).then(r => {
+                                if (r.ok) {
+                                    r.json().then(rJson => {
+                                        this.setState({
+                                            userName: 'Order made by ' + rJson.name
+                                        })
+                                    });
+                                }
+                            }
+                        );
+                    } else {
                         this.setState({
-                            orderId: responseJson.relatedItems[0].orderId,
-                            items: responseJson.relatedItems,
-                            total: responseJson.total,
-                            created: responseJson.createdAt,
-                            updated: responseJson.updatedAt,
-                            status: responseJson.status
+                            userName: 'Thank You for Your order, ' + window.sessionStorage.getItem('username')
                         });
                     }
-                );
+                });
             }
-        })
+        });
     }
 
     render() {
@@ -69,7 +87,7 @@ class OrderInfo extends React.Component {
                 <div className="col d-flex"><span className="text-muted" id="orderno"
                                                   style={{paddingLeft: '45px'}}>Order #{this.state.orderId}</span></div>
                 <div className="order-card">
-                    <div className="title"> Thank You for Your order, {window.sessionStorage.getItem('username')}!</div>
+                    <div className="title">{this.state.userName}</div>
                     <div className="main">
                     <span id="sub-title">
                         <p><b>Payment Summary</b></p>

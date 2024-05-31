@@ -47,6 +47,11 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
+    public Optional<String> getName(long id) {
+        return userRepository.findNameById(id);
+    }
+
+    @Override
     @Transactional
     public User add(final NewUserDto user) {
         User newUser = UserMapper.map(user);

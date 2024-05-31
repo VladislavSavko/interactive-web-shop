@@ -5,6 +5,7 @@ import com.vlados.webshop.userservice.domain.User;
 import com.vlados.webshop.userservice.dto.address.AddressDto;
 import com.vlados.webshop.userservice.dto.user.NewUserDto;
 import com.vlados.webshop.userservice.dto.user.ResponseUserDto;
+import com.vlados.webshop.userservice.dto.user.ResponseUserNameDto;
 import com.vlados.webshop.userservice.util.ResourceUtil;
 
 import java.util.List;
@@ -44,8 +45,12 @@ public class UserMapper {
         Address address = user.getAddress();
         return address == null
                 ?
-                new ResponseUserDto(user.getEmail(), user.getName(), null , user.getRole())
+                new ResponseUserDto(user.getEmail(), user.getName(), null, user.getRole())
                 :
                 new ResponseUserDto(user.getEmail(), user.getName(), AddressMapper.map(address), user.getRole());
+    }
+
+    public static ResponseUserNameDto mapName(String name) {
+        return new ResponseUserNameDto(name);
     }
 }

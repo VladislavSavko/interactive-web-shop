@@ -92,15 +92,18 @@ class MainHeader extends React.Component {
                                 Fitting Room
                             </a>
                         </li>
-                        <li id="why_li" className="nav-item">
+                        {window.sessionStorage.getItem('userRole') !== 'ADMIN' && <li id="why_li" className="nav-item">
                             <a className="nav-link" href="/">
                                 Why Us
                             </a>
                             {/*//TODO: Make href to particular section in home page*/}
-                        </li>
-                        <li id="contact_li" className="nav-item">
+                        </li>}
+                        {window.sessionStorage.getItem('userRole') !== 'ADMIN' &&<li id="contact_li" className="nav-item">
                             <a className="nav-link" href="/">Contact Us</a>
-                        </li>
+                        </li>}
+                        {window.sessionStorage.getItem('userRole') === 'ADMIN' &&<li id="contact_li" className="nav-item">
+                            <a className="nav-link" href="/users">Users</a>
+                        </li>}
                     </ul>
                     <div className="user_option">
                         <a id="login_a" href="/login">

@@ -34,26 +34,13 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public List<OrderResponseDto> getAll() {
+        return getOrderResponseDtos(orderDao.getAll());
+    }
+
+    @Override
     public List<OrderResponseDto> get(long userId) {
-        List<OrderResponseDto> result = new ArrayList<>();
-        for (Order order : orderDao.get(userId)) {
-            List<OrderItem> orderItems = orderItemDao.get(order.getId());
-
-            result.add(DtoMapper.ForOrder.toDto(order, orderItems));
-
-        }
-
-        result.forEach(orderResponseDto ->
-                orderResponseDto.relatedItems()
-                        .forEach(relatedItem ->
-                                relatedItem.item().images()
-                                        .forEach(imageResponseDto ->
-                                                imageResponseDto.setData(ImageCompressor.decompress(imageResponseDto.getData()))
-                                        )
-                        )
-        );
-
-        return result;
+        return getOrderResponseDtos(orderDao.get(userId));
     }
 
     @Override
@@ -100,5 +87,27 @@ public class OrderServiceImpl implements OrderService {
                 .map(CartItem::getItem)
                 .mapToDouble(Item::getPrice)
                 .sum();
+    }
+
+    private List<OrderResponseDto> getOrderResponseDtos(List<Order> orderDao) {
+        List<OrderResponseDto> result = new ArrayList<>();
+        for (Order order : orderDao) {
+            List<OrderItem> orderItems = orderItemDao.get(order.getId());
+
+            result.add(DtoMapper.ForOrder.toDto(order, orderItems));
+
+        }
+
+        result.forEach(orderResponseDto ->
+                orderResponseDto.relatedItems()
+                        .forEach(relatedItem ->
+                                relatedItem.item().images()
+                                        .forEach(imageResponseDto ->
+                                                imageResponseDto.setData(ImageCompressor.decompress(imageResponseDto.getData()))
+                                        )
+                        )
+        );
+
+        return result;
     }
 }

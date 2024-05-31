@@ -5,6 +5,7 @@ import com.vlados.webshop.userservice.dto.auth.UserAuthDtoResponse;
 import com.vlados.webshop.userservice.dto.exception.ExceptionResponse;
 import com.vlados.webshop.userservice.dto.user.NewUserDto;
 import com.vlados.webshop.userservice.dto.user.ResponseUserDto;
+import com.vlados.webshop.userservice.dto.user.ResponseUserNameDto;
 import com.vlados.webshop.userservice.dto.user.UpdatedUserDto;
 import com.vlados.webshop.userservice.service.UserService;
 import com.vlados.webshop.userservice.util.ResourceUtil;
@@ -39,6 +40,11 @@ public class UserController {
     @GetMapping("/{id}")
     public ResponseUserDto user(@PathVariable(name = "id") long id) {
         return userService.get(id);
+    }
+
+    @GetMapping("/{id}/name")
+    public ResponseUserNameDto username(@PathVariable(name = "id") long id) {
+        return userService.getName(id);
     }
 
     @PostMapping

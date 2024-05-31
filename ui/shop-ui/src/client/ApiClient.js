@@ -10,9 +10,14 @@ class ApiClient {
     static OVERLAY_URL = '/contourOverlay';
     static CART_URL = '/cart';
     static ORDERS_URL = '/orders';
+    static ADMIN_URL = '/admin'
 
     static getUserOrders(id): Promise<Response> {
         return fetch(this.SERVER_URL + this.SHOP_API + this.ORDERS_URL + '/' + id);
+    }
+
+    static getAllOrders(): Promise<Response> {
+        return fetch(this.SERVER_URL + this.SHOP_API + this.ORDERS_URL + '/' + this.ADMIN_URL);
     }
 
     static makeUserOrder(id): Promise<Response> {
@@ -30,6 +35,10 @@ class ApiClient {
         return fetch(this.SERVER_URL + this.USERS_API + '/' + id, {
             method: "GET"
         });
+    }
+
+    static getUserName(id): Promise<Response> {
+        return fetch(this.SERVER_URL + this.USERS_API + '/' + id + '/name');
     }
 
     static getItemInfo(id): Promise<Response> {

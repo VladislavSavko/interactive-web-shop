@@ -151,6 +151,11 @@ public class ShopController {
         return orderService.getOne(orderId);
     }
 
+    @GetMapping("/orders/admin")
+    public List<OrderResponseDto> getOrdersForAdmin() {
+        return orderService.getAll();
+    }
+
     @PostMapping("/items")
     public ItemResponseDto addItem(@RequestBody @Valid ItemRequestDto itemDto) {
         return itemService.add(itemDto);

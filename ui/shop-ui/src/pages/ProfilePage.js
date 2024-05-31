@@ -2,7 +2,7 @@ import React from "react";
 import MainHeader from "../components/MainHeader";
 import '../css/custom.css'
 import UserProfile from "../components/UserProfile";
-import AdminProfile from "../components/AdminProfile";
+import AdminProfile from "../components/admin/AdminProfile";
 
 
 const ProfilePage = () => {
