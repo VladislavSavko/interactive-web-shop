@@ -75,6 +75,14 @@ class OrderInfo extends React.Component {
         });
     }
 
+    changeOrderStatus = (status) => {
+        ApiClient.changeOrderStatus(this.state.orderId, status).then(r => {
+            if(r.ok) {
+                this.getOrderInfo(this.state.orderId);
+            }
+        })
+    }
+
     render() {
         return <div>
             <div style={{
@@ -127,7 +135,7 @@ class OrderInfo extends React.Component {
                 </div>
                 <div className="mt-10 p-5 bg-white shadow"
                      style={{borderBottomLeftRadius: '15px', borderBottomRightRadius: '15px'}}>
-                    <ShippingProgressBar percent={this.countPercent(this.state.status)} admin={window.sessionStorage.getItem('userRole') === 'ADMIN'}/>
+                    <ShippingProgressBar percent={this.countPercent(this.state.status)} admin={window.sessionStorage.getItem('userRole') === 'ADMIN'} onChange={(status) => this.changeOrderStatus(status)}/>
                     <div className="button-confirm-and-order">
                         <button>Cancel order</button>
                     </div>

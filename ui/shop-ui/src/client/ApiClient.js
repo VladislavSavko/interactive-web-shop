@@ -26,6 +26,18 @@ class ApiClient {
         });
     }
 
+    static changeOrderStatus(id, newStatus): Promise<Response> {
+        return fetch(this.SERVER_URL + this.SHOP_API + this.ORDERS_URL + this.ADMIN_URL + '/' + id, {
+            method: "PUT",
+            body: JSON.stringify({
+                newStatus: newStatus
+            }),
+            headers: {
+                "Content-type": "application/json; charset=UTF-8"
+            }
+        });
+    }
+
     static getOrderInfo(id): Promise<Response> {
         return fetch(this.SERVER_URL + this.SHOP_API + this.ORDERS_URL + '?orderId=' + id);
     }

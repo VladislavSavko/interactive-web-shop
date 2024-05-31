@@ -66,21 +66,6 @@ class ApprovalDialog extends React.Component {
     }
 
     switchModalState = (index, percent) => {
-        if (this.state.modal) {
-            this.setState({
-                closing: true
-            });
-            setTimeout(() => {
-                this.setState({
-                    modal: false,
-                    closing: false
-                });
-            }, 400);
-        } else {
-            this.setState({
-                modal: true
-            });
-        }
         let status, status1;
         if (percent < 33) {
             status = 'REQUESTED';
@@ -105,14 +90,33 @@ class ApprovalDialog extends React.Component {
                 status1 = 'COMPLETED';
                 break;
         }
-        this.setState({
-            changingToStatus: status1,
-            currentStatus: status
-        });
+        if (status !== status1) {
+            if (this.state.modal) {
+                this.setState({
+                    closing: true
+                });
+                setTimeout(() => {
+                    this.setState({
+                        modal: false,
+                        closing: false
+                    });
+                }, 400);
+            } else {
+                this.setState({
+                    modal: true
+                });
+            }
+
+            this.setState({
+                changingToStatus: status1,
+                currentStatus: status
+            });
+        }
     }
 
     changeOrderStatus = () => {
-
+        this.props.onChange(this.state.changingToStatus);
+        this.switchModalState();
     }
 
     render() {
@@ -136,7 +140,9 @@ class ApprovalDialog extends React.Component {
                         paddingTop: '13px'
                     }}>
                         <button onClick={this.switchModalState} className="close-modal">Close</button>
-                        <button onClick={this.changeOrderStatus} className="submit-modal" style={{width: '200px', height: '60px', fontSize: '25px'}}>Submit</button>
+                        <button onClick={this.changeOrderStatus} className="submit-modal"
+                                style={{width: '200px', height: '60px', fontSize: '25px'}}>Submit
+                        </button>
                     </div>
                     <div id="error_div" style={{color: 'red'}}></div>
                 </div>

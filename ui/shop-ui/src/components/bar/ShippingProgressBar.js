@@ -101,7 +101,7 @@ class ShippingProgressBar extends React.Component {
                 <p style={{color: `${this.props.percent > 66 ? '#f38696' : ''}`}}>In shipping</p>
                 <p style={{color: `${this.props.percent > 99 ? '#f38696' : ''}`}}>Order completed</p>
             </div>
-            <ApprovalDialog ref={(instance) => { this.dialog = instance; }}/>
+            <ApprovalDialog ref={(instance) => { this.dialog = instance; }} onChange={(value) => this.props.onChange(value)}/>
         </>
     }
 }
