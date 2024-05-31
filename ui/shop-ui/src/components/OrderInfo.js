@@ -41,6 +41,10 @@ class OrderInfo extends React.Component {
         this.getOrderInfo(orderId);
     }
 
+    deleteOrder = () => {
+
+    }
+
     getOrderInfo = (orderId) => {
         ApiClient.getOrderInfo(orderId).then(response => {
             if (response.ok) {
@@ -137,7 +141,7 @@ class OrderInfo extends React.Component {
                      style={{borderBottomLeftRadius: '15px', borderBottomRightRadius: '15px'}}>
                     <ShippingProgressBar percent={this.countPercent(this.state.status)} admin={window.sessionStorage.getItem('userRole') === 'ADMIN'} onChange={(status) => this.changeOrderStatus(status)}/>
                     <div className="button-confirm-and-order">
-                        <button>Cancel order</button>
+                        <button onClick={this.deleteOrder}>Delete order</button>
                     </div>
                 </div>
             </div>

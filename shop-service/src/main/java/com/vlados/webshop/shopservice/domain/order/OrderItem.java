@@ -21,10 +21,12 @@ public class OrderItem {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+
     @OneToOne
     @JoinColumn(name = "order_id", referencedColumnName = "id")
     private Order order;
-    @OneToOne
+
+    @OneToOne(cascade = CascadeType.DETACH)
     @JoinColumn(name = "item_id", referencedColumnName = "id")
     private Item item;
 

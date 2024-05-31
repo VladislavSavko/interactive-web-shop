@@ -242,6 +242,16 @@ public class ShopController {
                 );
     }
 
+    @DeleteMapping("/orders/{id}")
+    public ResponseEntity<String> deleteOrder(@PathVariable(name = "id") long id) {
+        orderService.deleteOrder(id);
+
+        return ResponseEntity.status(204)
+                .body(
+                        ResourceUtil.getMessage("response.order.deleted").formatted(id)
+                );
+    }
+
     @PutMapping("/items/{id}")
     public ResponseEntity<String> updateItem(
             @RequestBody @Valid ItemUpdateDto itemUpdateDto,

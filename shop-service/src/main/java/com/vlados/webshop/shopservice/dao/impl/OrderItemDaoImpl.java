@@ -24,4 +24,9 @@ public class OrderItemDaoImpl implements OrderItemDao {
     public OrderItem save(OrderItem orderItem) {
         return orderItemRepository.save(orderItem);
     }
+
+    @Override
+    public void delete(long orderId) {
+        orderItemRepository.deleteAllByOrderId(orderId);
+    }
 }

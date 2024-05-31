@@ -76,6 +76,13 @@ public class OrderServiceImpl implements OrderService {
         order.setStatus(OrderStatus.valueOf(status));
     }
 
+    @Override
+    @Transactional
+    public void deleteOrder(long id) {
+        orderItemDao.delete(id);
+        orderDao.delete(id);
+    }
+
     private OrderResponseDto makeOrder(Cart cart, long userId) {
         Order order = orderDao.add(new Order(userId, calculateTotalPrice(cart), OrderStatus.REQUESTED));
         List<OrderItem> orderItems = new ArrayList<>();

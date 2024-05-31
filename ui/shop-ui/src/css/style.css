@@ -523,6 +523,24 @@ a:focus {
     }
 }
 
+.button-delete-order {
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+
+  button {
+    background-color: #f39aae;
+    transition: all .3s;
+    font-size: 22px;
+    border-radius: 5px;
+
+    &:hover {
+      color: #f39aae;
+      background-color: #ffffff;
+    }
+  }
+}
+
 .saving_section {
   padding-left: 45px;
   padding-right: 45px;

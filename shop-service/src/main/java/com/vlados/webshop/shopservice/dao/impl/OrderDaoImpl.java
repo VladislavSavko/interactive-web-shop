@@ -35,4 +35,9 @@ public class OrderDaoImpl implements OrderDao {
     public Order add(Order order) {
         return orderRepository.save(order);
     }
+
+    @Override
+    public void delete(long id) {
+        orderRepository.deleteById(id);
+    }
 }

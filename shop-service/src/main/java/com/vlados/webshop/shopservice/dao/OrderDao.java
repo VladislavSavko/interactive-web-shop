@@ -13,4 +13,6 @@ public interface OrderDao {
     Optional<Order> getOne(final long orderId);
 
     Order add(Order order);
+
+    void delete(final long id);
 }

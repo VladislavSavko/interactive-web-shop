@@ -8,4 +8,6 @@ public interface OrderItemDao {
     List<OrderItem> get(long orderId);
 
     OrderItem save(OrderItem orderItem);
+
+    void delete(long orderId);
 }
