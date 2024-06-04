@@ -1,9 +1,11 @@
 package com.vlados.webshop.shopservice.service.impl;
 
 import com.vlados.webshop.shopservice.dao.CategoryDao;
+import com.vlados.webshop.shopservice.dao.ItemDao;
 import com.vlados.webshop.shopservice.domain.dto.category.CategoryResponseDto;
 import com.vlados.webshop.shopservice.domain.dto.category.CategoryUpdateDto;
 import com.vlados.webshop.shopservice.domain.item.Category;
+import com.vlados.webshop.shopservice.domain.item.Item;
 import com.vlados.webshop.shopservice.service.CategoryService;
 import com.vlados.webshop.shopservice.util.DtoMapper;
 import com.vlados.webshop.shopservice.util.ResourceUtil;
@@ -17,9 +19,12 @@ import java.util.NoSuchElementException;
 @Service
 public class CategoryServiceImpl implements CategoryService {
     private final CategoryDao categoryDao;
+    private final ItemDao itemDao;
 
-    public CategoryServiceImpl(CategoryDao categoryDao) {
+
+    public CategoryServiceImpl(CategoryDao categoryDao, ItemDao itemDao) {
         this.categoryDao = categoryDao;
+        this.itemDao = itemDao;
     }
 
     @Override
@@ -50,6 +55,20 @@ public class CategoryServiceImpl implements CategoryService {
         } else {
             throw new NoSuchElementException(ResourceUtil.getMessage("db.category.not_found_by_id").formatted(id));
         }
+    }
+
+    @Override
+    public void delete(String name) {
+        categoryDao.get(name)
+                .ifPresentOrElse(category -> {
+                            for (Item item : category.getItems()) {
+                                itemDao.delete(item.getId());
+                            }
+                            categoryDao.delete(category.getId());
+                        },
+                        () -> {
+                            throw new NoSuchElementException(ResourceUtil.getMessage("db.category.not_found_by_name").formatted(name));
+                        });
     }
 
     @Override

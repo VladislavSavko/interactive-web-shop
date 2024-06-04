@@ -155,6 +155,12 @@ class ApiClient {
         })
     }
 
+    static deleteCategory(name): Promise<Response> {
+        return fetch(this.SERVER_URL + this.SHOP_API + this.CATEGORIES_URL + '?name=' + name, {
+            method: "DELETE"
+        });
+    }
+
     static getUserCart(userId): Promise<Response> {
         return fetch(this.SERVER_URL + this.SHOP_API + this.CART_URL + '/' + userId);
     }

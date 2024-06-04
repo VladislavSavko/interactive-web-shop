@@ -208,6 +208,17 @@ public class ShopController {
         //TODO: Make a superadmin's hardDelete() method
     }
 
+    @DeleteMapping("/categories")
+    public ResponseEntity<String> deleteCategory(@RequestParam(name = "name") String categoryName) {
+        categoryService.delete(categoryName);
+
+        return ResponseEntity.status(204)
+                .body(
+                        ResourceUtil.getMessage("response.category_name.deleted").formatted(categoryName)
+                );
+        //TODO: Make a superadmin's hardDelete() method
+    }
+
     @DeleteMapping("/inventory/{id}")
     public ResponseEntity<String> deleteInventory(@PathVariable(name = "id") long id) {
         inventoryService.softDelete(id);

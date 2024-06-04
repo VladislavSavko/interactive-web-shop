@@ -13,5 +13,7 @@ public interface CategoryService {
 
     void delete(final long id);
 
+    void delete(final String name);
+
     void update(final long id, final CategoryUpdateDto dto);
 }

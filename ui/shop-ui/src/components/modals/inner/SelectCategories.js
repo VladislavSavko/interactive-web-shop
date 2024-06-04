@@ -13,9 +13,11 @@ class SelectCategories extends React.Component {
     }
 
     convertDefaultValueForSelect = (value) => {
-        return {
-            value: value,
-            label: value
+        if(this.props.defCategory) {
+            return {
+                value: value,
+                label: value
+            }
         }
     }
 

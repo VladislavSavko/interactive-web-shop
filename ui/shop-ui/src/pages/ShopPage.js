@@ -6,6 +6,7 @@ import React from "react";
 import ItemsSearchComponent from "../components/ItemsSearchComponent";
 import NewItemModal from "../components/modals/NewItemModal";
 import NewCategoryModal from "../components/modals/NewCategoryModal";
+import DeleteCategoryModal from "../components/modals/DeleteCategoryModal";
 
 
 class ShopPage extends React.Component {
@@ -25,6 +26,7 @@ class ShopPage extends React.Component {
             <>
                 <NewItemModal text="Add an item" onChange={this.triggerItemsReload} />
                 <NewCategoryModal text="Add a category" />
+                <DeleteCategoryModal text="Delete a category" onChange={this.triggerItemsReload}/>
             </>
             :
             <></>
