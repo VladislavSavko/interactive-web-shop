@@ -41,7 +41,7 @@ class NewCategoryModal extends React.Component {
 
     render() {
         return <>
-            <button onClick={this.switchModalState} className="btn-modal-6">
+            <button onClick={this.switchModalState} className="btn-modal-7">
                 {this.props.text}
             </button>
             {this.state.modal && (<div className={`_modal-item ${this.state.closing ? 'slide-up' : ''}`}>

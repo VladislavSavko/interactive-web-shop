@@ -12,6 +12,13 @@ class SelectCategories extends React.Component {
         };
     }
 
+    convertDefaultValueForSelect = (value) => {
+        return {
+            value: value,
+            label: value
+        }
+    }
+
     componentDidMount() {
         function convertForSelect(responseJson) {
             return responseJson.map(e => ({
@@ -62,7 +69,7 @@ class SelectCategories extends React.Component {
             })
         };
         return  <div style={{marginTop: '10px', marginBottom: '20px'}}>
-            <Select options={this.state.options} onChange={this.handleChange} placeholder="Choose category:" styles={stylesForSelect} />
+            <Select options={this.state.options} onChange={this.handleChange} placeholder="Choose category:" styles={stylesForSelect} defaultValue={this.convertDefaultValueForSelect(this.props.defCategory)} />
         </div>
     }
 }

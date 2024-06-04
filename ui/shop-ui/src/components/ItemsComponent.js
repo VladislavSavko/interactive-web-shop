@@ -44,6 +44,7 @@ class ItemsComponent extends React.Component {
 
 
     render() {
+        const admin = window.sessionStorage.getItem('userRole') === 'ADMIN';
         if (this.state.items !== undefined) {
             return <>
                 {this.state.items.map(item => {
@@ -53,7 +54,13 @@ class ItemsComponent extends React.Component {
                         price={item.price}
                         new={item.isNew}
                         mainImage={item.images[0]}
-                        buttonsActive={false}/>
+                        quantity={item.quantity}
+                        category={item.category}
+                        color={item.color}
+                        description={item.description}
+                        buttonsActive={false}
+                        admin={admin}
+                        onChange={() => this.refreshItems('')}/>
                 })}
             </>
         } else {

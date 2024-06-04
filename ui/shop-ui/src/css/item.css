@@ -179,3 +179,14 @@
     background: #BA7E7E;
     color: white;
 }
+
+.disabled-spinners {
+    -moz-appearance: textfield;
+    text-align: center;
+}
+
+.disabled-spinners::-webkit-inner-spin-button,
+.disabled-spinners::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}

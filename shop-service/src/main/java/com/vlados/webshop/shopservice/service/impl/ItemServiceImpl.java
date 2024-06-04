@@ -170,6 +170,7 @@ public class ItemServiceImpl implements ItemService {
                     item.setDescription(dto.description());
                     item.setName(dto.name());
                     item.getInventoryInfo().setQuantity(dto.quantity());
+                    item.setNew(dto.isNew());
                 },
                 () -> {
                     throw new NoSuchElementException(ResourceUtil.getMessage("db.item.not_found").formatted(id));

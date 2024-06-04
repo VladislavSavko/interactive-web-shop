@@ -1,5 +1,6 @@
 import React from "react";
 import ApiClient from "../client/ApiClient";
+import UpdateItemModal from "./modals/UpdateItemModal";
 
 class ItemCard extends React.Component {
     constructor(props) {
@@ -13,6 +14,18 @@ class ItemCard extends React.Component {
                 <span>New</span>
             </div>
         }
+    }
+
+    deleteItem = (itemId) => {
+        ApiClient.deleteItem(itemId).then(r => {
+            if(r.ok) {
+                this.props.onChange();
+            }
+        })
+    }
+
+    updateItem = () => {
+        this.props.onChange();
     }
 
     deleteFromCart = (itemId) => {
@@ -41,6 +54,28 @@ class ItemCard extends React.Component {
                            borderRadius: '5px'
                        }}/>
                 <div style={{marginLeft: '88px'}}>In stock: <span>{this.props.maxQuantity}</span></div>
+            </>
+        }
+        if(this.props.admin) {
+            return <>
+                <button className="card-item-buttons btn-modal-4" onClick={() => this.deleteItem(this.props.iid)}>Delete item</button>
+                <UpdateItemModal
+                    iid={this.props.iid}
+                    defName={this.props.name}
+                    defQuantity={this.props.quantity}
+                    defCategory={this.props.category}
+                    defColor={this.props.color}
+                    defDesc={this.props.description}
+                    defPrice={this.props.price}
+                    defNew={this.props.new}
+                    onChange={() => this.updateItem()}/>
+                <input type="number" id={this.itemId(this.props.iid)} value={this.props.quantity}
+                       min="1"
+                       style={{
+                           marginLeft: '100px', marginTop: '10px', width: '50px',
+                           borderRadius: '5px'
+                       }}
+                       className="disabled-spinners"/>
             </>
         }
     }
