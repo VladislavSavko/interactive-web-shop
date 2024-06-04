@@ -1,7 +1,6 @@
 import React, {useState} from "react";
 import '../../css/modal.css'
 import ApiClient from "../../client/ApiClient";
-import Dropzone from "react-dropzone";
 import SelectCategories from "./inner/SelectCategories";
 import {HexColorInput, HexColorPicker} from "react-colorful";
 
@@ -9,10 +8,6 @@ import {HexColorInput, HexColorPicker} from "react-colorful";
 export default function NewItemModal(props) {
     const [modal, setModal] = useState(false);
     const [closing, setClosing] = useState(false);
-    const [file, setFile] = useState(null);
-    const [fileName, setFileName] = useState('');
-    const [draggingActive, setDraggingActive] = useState(false);
-    const [fileDropped, setFileDropped] = useState(false);
     const [selectedCategory, setSelectedCategory] = useState([]);
     const [color, setColor] = useState('#ffffff')
 
@@ -69,7 +64,7 @@ export default function NewItemModal(props) {
             {modal && (<div className={`_modal-item ${closing ? 'slide-up' : ''}`}>
                 <div onClick={switchModalState} className="overlay"></div>
                 <div className="modal-content"
-                     style={{color: 'black', top: '50vh', overflowY: 'auto', height: '1000px'}}>
+                     style={{color: 'black', top: '50vh', overflowY: 'auto'}}>
                     <h2 style={{borderBottom: '3px solid #ccc', paddingBottom: '10px', textTransform: 'none'}}>Add item
                         to catalog</h2>
                     <div style={{width: '100%', display: 'flex', alignItems: 'center'}}>
@@ -87,49 +82,49 @@ export default function NewItemModal(props) {
                         <HexColorInput color={color} onChange={setColor}
                                        style={{marginBottom: '20px', marginTop: '15px', textAlign: 'center'}}/>
                     </div>
-                    <Dropzone
-                        onDrop={(file) => {
-                            if (file.length > 0) {
-                                const reader = new FileReader();
-                                reader.readAsDataURL(file[0]);
-                                reader.onload = () => {
-                                    setFile(reader.result);
-                                    setFileDropped(true);
-                                    setFileName(file[0].name)
-                                };
-                                reader.onerror = () => {
-                                    console.error('Ошибка при чтении файла');
-                                };
-                                setDraggingActive(false);
-                                if (this.props.onChange) {
-                                    this.props.onChange(true);
-                                }
-                            }
-                        }}
-                        maxFiles={4}
-                        onDragEnter={() => setDraggingActive(true)}
-                        onDragLeave={() => setDraggingActive(false)}>
-                        {({getRootProps, getInputProps}) => (
-                            <section>
-                                <div {...getRootProps()}>
-                                    <input {...getInputProps()} />
-                                    {!file && <div className="drag-and-drop-area"
-                                                   style={{
-                                                       background: draggingActive ? 'darkgray' : 'transparent',
-                                                       marginBottom: '20px'
-                                                   }}>
-                                        {fileDropped ? 'Image is accepted' : 'Drag \'n\' drop some images here, or click to select files'}
-                                    </div>}
-                                    {file && <div className="flex-direction-column selected-item-image">
-                                        <h2>{fileName}</h2>
-                                        <img src={file} className="loaded-image-admin"
-                                             alt="Cannot load the image right now..."/>
-                                    </div>}
-                                </div>
-                            </section>
-                        )}
-                    </Dropzone>
                     <textarea id="description" placeholder="Enter the description:..."/>
+                    {/*<Dropzone*/}
+                    {/*    onDrop={(file) => {*/}
+                    {/*        if (file.length > 0) {*/}
+                    {/*            const reader = new FileReader();*/}
+                    {/*            reader.readAsDataURL(file[0]);*/}
+                    {/*            reader.onload = () => {*/}
+                    {/*                setFile(reader.result);*/}
+                    {/*                setFileDropped(true);*/}
+                    {/*                setFileName(file[0].name)*/}
+                    {/*            };*/}
+                    {/*            reader.onerror = () => {*/}
+                    {/*                console.error('Ошибка при чтении файла');*/}
+                    {/*            };*/}
+                    {/*            setDraggingActive(false);*/}
+                    {/*            if (this.props.onChange) {*/}
+                    {/*                this.props.onChange(true);*/}
+                    {/*            }*/}
+                    {/*        }*/}
+                    {/*    }}*/}
+                    {/*    maxFiles={4}*/}
+                    {/*    onDragEnter={() => setDraggingActive(true)}*/}
+                    {/*    onDragLeave={() => setDraggingActive(false)}>*/}
+                    {/*    {({getRootProps, getInputProps}) => (*/}
+                    {/*        <section>*/}
+                    {/*            <div {...getRootProps()}>*/}
+                    {/*                <input {...getInputProps()} />*/}
+                    {/*                {!file && <div className="drag-and-drop-area"*/}
+                    {/*                               style={{*/}
+                    {/*                                   background: draggingActive ? 'darkgray' : 'transparent',*/}
+                    {/*                                   marginBottom: '20px'*/}
+                    {/*                               }}>*/}
+                    {/*                    {fileDropped ? 'Image is accepted' : 'Drag \'n\' drop some images here, or click to select files'}*/}
+                    {/*                </div>}*/}
+                    {/*                {file && <div className="flex-direction-column selected-item-image">*/}
+                    {/*                    <h2>{fileName}</h2>*/}
+                    {/*                    <img src={file} className="loaded-image-admin"*/}
+                    {/*                         alt="Cannot load the image right now..."/>*/}
+                    {/*                </div>}*/}
+                    {/*            </div>*/}
+                    {/*        </section>*/}
+                    {/*    )}*/}
+                    {/*</Dropzone>*/}
                     <div style={{
                         width: '100%',
                         display: 'flex',

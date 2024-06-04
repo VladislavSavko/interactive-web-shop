@@ -5,6 +5,7 @@ import FooterComponent from "../components/FooterComponent";
 import React from "react";
 import ItemsSearchComponent from "../components/ItemsSearchComponent";
 import NewItemModal from "../components/modals/NewItemModal";
+import NewCategoryModal from "../components/modals/NewCategoryModal";
 
 
 class ShopPage extends React.Component {
@@ -19,7 +20,14 @@ class ShopPage extends React.Component {
 
 
     render() {
-        let adminButtons = window.sessionStorage.getItem('userRole') === 'ADMIN' ? <NewItemModal text="Add an item" onChange={this.triggerItemsReload} /> : <></>
+        let adminButtons = window.sessionStorage.getItem('userRole') === 'ADMIN'
+            ?
+            <>
+                <NewItemModal text="Add an item" onChange={this.triggerItemsReload} />
+                <NewCategoryModal text="Add a category" />
+            </>
+            :
+            <></>
         return <>
             <div className="hero_area">
                 <MainHeader active="shop"/>
@@ -50,7 +58,7 @@ class ShopPage extends React.Component {
                          marginLeft: '45px', marginRight: '45px',
                          marginBottom: '50px', paddingBottom: '90px'
                      }}>
-                <ItemsSearchComponent ref={(instance) => {this.itemsSearchComponent = instance;}} />
+                <ItemsSearchComponent />
             </section>
             <FooterComponent/>
         </>

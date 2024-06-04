@@ -118,6 +118,19 @@ class ApiClient {
         return fetch(this.SERVER_URL + this.SHOP_API + this.CATEGORIES_URL);
     }
 
+    static addCategory(name, desc): Promise<Response> {
+        return fetch(this.SERVER_URL + this.SHOP_API + this.CATEGORIES_URL, {
+            method: "POST",
+            body: JSON.stringify({
+                name: name,
+                description: desc
+            }),
+            headers: {
+                "Content-type": "application/json; charset=UTF-8"
+            }
+        })
+    }
+
     static getUserCart(userId): Promise<Response> {
         return fetch(this.SERVER_URL + this.SHOP_API + this.CART_URL + '/' + userId);
     }
