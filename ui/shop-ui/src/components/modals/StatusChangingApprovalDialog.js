@@ -6,7 +6,7 @@ import step3 from '../../images/shipping.png'
 import step4 from '../../images/completed.jpg'
 
 class StatusChangingApprovalDialog extends React.Component {
-    constructor(props) {
+    constructor() {
         super();
         this.state = {
             modal: false,

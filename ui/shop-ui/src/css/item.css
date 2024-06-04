@@ -1,13 +1,13 @@
 .item-body {
     background: #e0c9cb;
     text-transform: uppercase;
-    width: 100vw;
-    height: 100vh;
     top: 125px;
     left: 0;
     right: 0;
     bottom: 0;
     position: fixed;
+    border-bottom-right-radius: 15px;
+    border-bottom-left-radius: 15px;
 }
 
 .item-container {

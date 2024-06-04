@@ -69,7 +69,7 @@ class ItemInfo extends React.Component {
             style={{position: 'absolute', top: '3%', right: '34.5%', width: '65px'}} alt=""/> : <></>;
         console.log(this.state.selected)
         return <>
-            <div className="item-body">
+            <div className="item-body" style={{marginLeft: '45px', marginRight: '45px'}}>
                 <div className="item-container">
                     <div>
                         {isNew}
@@ -101,7 +101,6 @@ class ItemInfo extends React.Component {
                             <br/>
                             <button className="buttons try" onClick={this.goToFittingRoom}>Try in fitting room</button>
                         </div>
-
                     </div>
                 </div>
             </div>

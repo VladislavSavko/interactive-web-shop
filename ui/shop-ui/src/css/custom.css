@@ -192,6 +192,11 @@
     margin-bottom: 50px;
 }
 
+.shop-after-items .btn-modal-6 {
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
 .item-search-input {
     width: 100%;
     border-color: transparent;
@@ -455,4 +460,12 @@
 
 .fa-quote-left {
     content: "\f10d";
+}
+
+
+.color-picker-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }

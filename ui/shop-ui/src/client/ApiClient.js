@@ -63,6 +63,24 @@ class ApiClient {
         return fetch(this.SERVER_URL + this.SHOP_API + this.ITEMS_URL + '/' + id);
     }
 
+    static addItemToCatalog(name, category, quantity, color, desc, price, isNew) {
+        return fetch(this.SERVER_URL + this.SHOP_API + this.ITEMS_URL, {
+            method: "POST",
+            body: JSON.stringify({
+                name: name,
+                categoryName: category.value,
+                quantity: quantity,
+                color: color,
+                description: desc,
+                price: price,
+                isNew: isNew
+            }),
+            headers: {
+                "Content-type": "application/json; charset=UTF-8"
+            }
+        })
+    }
+
     static sendUserInfo(email, name, countryCode, city, street, houseNumber, flatNumber, role, id): Promise<Response> {
         return fetch(this.SERVER_URL + this.USERS_API + '/' + id, {
             method: "PUT",

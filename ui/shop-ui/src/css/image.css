@@ -53,6 +53,12 @@
     height: auto;
 }
 
+.loaded-image-admin {
+    border-radius: 10px;
+    width: 200px;
+    height: 200px;
+}
+
 .selected-item-image {
     padding: 20px;
     display: flex;
@@ -83,7 +89,7 @@
 }
 
 .drag-and-drop-area {
-    min-height: 400px;
+    min-height: 300px;
     border: 2px dashed black;
     border-radius: 10px;
     text-align: center;
