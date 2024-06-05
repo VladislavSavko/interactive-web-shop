@@ -64,7 +64,7 @@ export default function ImageAddingModal(props) {
                     <Dropzone
                         onDrop={(files) => {
                             if (files.length > 0) {
-                                files.forEach((file, index) => {
+                                files.forEach((file) => {
                                     const reader = new FileReader();
                                     reader.readAsDataURL(file);
                                     reader.onload = () => {

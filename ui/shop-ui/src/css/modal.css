@@ -375,6 +375,31 @@ body.active-modal {
 }
 
 
+.delete-button {
+    display: inline-block;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    background-color: #db4566;
+    color: white;
+    font-size: 22px;
+    cursor: pointer;
+    position: relative;
+}
+
+.delete-button:hover {
+    background-color: #972d44;
+}
+
+.delete-button::before, .delete-button::after {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 12px;
+    height: 2px;
+    background-color: white;
+}
+
+
 
 
 

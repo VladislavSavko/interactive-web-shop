@@ -106,6 +106,12 @@ class ApiClient {
         });
     }
 
+    static deleteImagesFromItem(indexArray, itemId) : Promise<Response> {
+        return fetch(this.SERVER_URL + this.SHOP_API + this.ITEMS_URL + this.IMAGES_URL + '/' + itemId + '?indexes=' + indexArray.join(','), {
+            method: "DELETE"
+        });
+    }
+
     static sendUserInfo(email, name, countryCode, city, street, houseNumber, flatNumber, role, id): Promise<Response> {
         return fetch(this.SERVER_URL + this.USERS_API + '/' + id, {
             method: "PUT",

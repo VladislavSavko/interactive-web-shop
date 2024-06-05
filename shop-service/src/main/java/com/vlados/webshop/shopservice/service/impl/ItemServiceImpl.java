@@ -1,11 +1,13 @@
 package com.vlados.webshop.shopservice.service.impl;
 
 import com.vlados.webshop.shopservice.dao.CategoryDao;
+import com.vlados.webshop.shopservice.dao.ImageDao;
 import com.vlados.webshop.shopservice.dao.ItemDao;
 import com.vlados.webshop.shopservice.domain.dto.item.ItemRequestDto;
 import com.vlados.webshop.shopservice.domain.dto.item.ItemResponseDto;
 import com.vlados.webshop.shopservice.domain.dto.item.ItemUpdateDto;
 import com.vlados.webshop.shopservice.domain.item.Category;
+import com.vlados.webshop.shopservice.domain.item.Image;
 import com.vlados.webshop.shopservice.domain.item.InventoryInfo;
 import com.vlados.webshop.shopservice.domain.item.Item;
 import com.vlados.webshop.shopservice.service.ItemService;
@@ -22,10 +24,12 @@ import java.util.NoSuchElementException;
 public class ItemServiceImpl implements ItemService {
     private final ItemDao itemDao;
     private final CategoryDao categoryDao;
+    private final ImageDao imageDao;
 
-    public ItemServiceImpl(ItemDao itemDao, CategoryDao categoryDao) {
+    public ItemServiceImpl(ItemDao itemDao, CategoryDao categoryDao, ImageDao imageDao) {
         this.itemDao = itemDao;
         this.categoryDao = categoryDao;
+        this.imageDao = imageDao;
     }
 
     @Override
@@ -151,6 +155,21 @@ public class ItemServiceImpl implements ItemService {
             itemDao.delete(id);
         } else {
             throw new NoSuchElementException(ResourceUtil.getMessage("db.item.not_found").formatted(id));
+        }
+    }
+
+    @Override
+    @Transactional
+    public void deleteImages(long id, List<Integer> indexes) {
+        int diff = 0;
+        Item item = itemDao.get(id)
+                .orElseThrow(() -> new NoSuchElementException(ResourceUtil.getMessage("db.item.not_found").formatted(id)));
+        List<Image> images = item.getImages();
+        for (Integer index : indexes) {
+            imageDao.deleteImage(images.get(index - diff).getId());
+            item.getImages()
+                    .remove(index - diff);
+            diff++;
         }
     }
 

@@ -9,7 +9,8 @@ export default function NewItemModal(props) {
     const [modal, setModal] = useState(false);
     const [closing, setClosing] = useState(false);
     const [selectedCategory, setSelectedCategory] = useState([]);
-    const [color, setColor] = useState('#ffffff')
+    const [color, setColor] = useState('#ffffff');
+    const [checked, setChecked] = useState(false);
 
     const switchModalState = () => {
         if (modal) {
@@ -34,7 +35,7 @@ export default function NewItemModal(props) {
         const _color = color;
         const desc = document.getElementById('description').value;
         const price = document.getElementById('price').value;
-        const isNew = document.getElementById('news').value;
+        const isNew = document.getElementById('news').checked;
 
         ApiClient.addItemToCatalog(itemName, category, quantity, _color, desc, price, isNew).then(response => {
             if(response.ok) {
@@ -96,7 +97,7 @@ export default function NewItemModal(props) {
                                               min="1" style={{width: '100px'}}/>
                             </h2>
                             <h4 style={{paddingTop: '5px', marginLeft: '25px'}}>Mark as new</h4>
-                            <input type="checkbox" id="news" name="news" value="true"
+                            <input type="checkbox" id="news" name="news" checked={checked} onInput={() => setChecked(!checked)}
                                    style={{marginLeft: '30px', transform: 'scale(2)'}}/>
                         </div>
                     </div>

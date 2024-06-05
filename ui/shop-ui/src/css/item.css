@@ -131,8 +131,8 @@
 .sizes {
     display: grid;
     color: pink;
-    grid-template-columns: repeat(auto-fill, 30px);
-    width: 60%;
+    grid-template-columns: repeat(4, 30px);
+    width: 14%;
     grid-gap: 4px;
     margin-left: 20px;
     margin-top: 5px;

@@ -34,5 +34,7 @@ public interface ItemService {
 
     void delete(final long id);
 
+    void deleteImages(final long id, final List<Integer> indexes);
+
     void update(final long id, ItemUpdateDto dto);
 }

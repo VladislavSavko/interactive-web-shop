@@ -197,6 +197,15 @@ public class ShopController {
                 );
     }
 
+    @DeleteMapping("/items/images/{id}")
+    public ResponseEntity<String> deleteItemImages(@PathVariable(name = "id") long id, @RequestParam(name = "indexes") List<Integer> indexes) {
+        itemService.deleteImages(id, indexes);
+        return ResponseEntity.status(204)
+                .body(
+                        ResourceUtil.getMessage("response.item.images.deleted").formatted(id)
+                );
+    }
+
     @DeleteMapping("/categories/{id}")
     public ResponseEntity<String> deleteCategory(@PathVariable(name = "id") long id) {
         categoryService.delete(id);

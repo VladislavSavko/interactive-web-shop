@@ -3,6 +3,7 @@ import '../css/item.css'
 import ApiClient from "../client/ApiClient";
 import CartAddingModal from "./modals/CartAddingModal";
 import ImageAddingModal from "./modals/ImageAddingModal";
+import ImageDeletingModal from "./modals/ImageDeletingModal";
 
 class ItemInfo extends React.Component {
     constructor(props) {
@@ -49,7 +50,7 @@ class ItemInfo extends React.Component {
                         price: responseJson.price,
                         isNew: responseJson.isNew,
                         id: itemId,
-                        currentImageSrc: responseJson.images[0].data
+                        currentImageSrc: responseJson.images.length > 0 ? responseJson.images[0].data : ''
                     });
                     let dots = document.querySelector('.slideshow-buttons');
                     for (let i = 0; i < this.state.binary.length; i++) {
@@ -103,6 +104,11 @@ class ItemInfo extends React.Component {
                              disabled={this.state.selected === '' || this.state.selected === undefined}/>
             :
             <ImageAddingModal text="Add images" itemId={this.state.id}/>
+        let middleButton = window.sessionStorage.getItem('userRole') === 'CLIENT'
+            ?
+            <></>
+            :
+            <ImageDeletingModal text="Delete images" images={images} itemId={this.state.id}/>
         return <>
             <div className="item-body" style={{marginLeft: '45px', marginRight: '45px'}}>
                 <div className="item-container">
@@ -127,6 +133,7 @@ class ItemInfo extends React.Component {
                         <p className="desc">{this.state.description}</p>
                         <div>
                             {upperButton}
+                            {middleButton}
                             <br/>
                             <button className="buttons try" onClick={this.goToFittingRoom}>Try in fitting room</button>
                         </div>
