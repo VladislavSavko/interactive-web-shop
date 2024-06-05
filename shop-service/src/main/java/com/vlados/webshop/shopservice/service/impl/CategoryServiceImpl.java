@@ -1,10 +1,14 @@
 package com.vlados.webshop.shopservice.service.impl;
 
+import com.vlados.webshop.shopservice.dao.CartDao;
 import com.vlados.webshop.shopservice.dao.CategoryDao;
+import com.vlados.webshop.shopservice.dao.ImageDao;
 import com.vlados.webshop.shopservice.dao.ItemDao;
+import com.vlados.webshop.shopservice.domain.cart.CartItem;
 import com.vlados.webshop.shopservice.domain.dto.category.CategoryResponseDto;
 import com.vlados.webshop.shopservice.domain.dto.category.CategoryUpdateDto;
 import com.vlados.webshop.shopservice.domain.item.Category;
+import com.vlados.webshop.shopservice.domain.item.Image;
 import com.vlados.webshop.shopservice.domain.item.Item;
 import com.vlados.webshop.shopservice.service.CategoryService;
 import com.vlados.webshop.shopservice.util.DtoMapper;
@@ -20,11 +24,15 @@ import java.util.NoSuchElementException;
 public class CategoryServiceImpl implements CategoryService {
     private final CategoryDao categoryDao;
     private final ItemDao itemDao;
+    private final CartDao cartDao;
+    private final ImageDao imageDao;
 
 
-    public CategoryServiceImpl(CategoryDao categoryDao, ItemDao itemDao) {
+    public CategoryServiceImpl(CategoryDao categoryDao, ItemDao itemDao, CartDao cartDao, ImageDao imageDao) {
         this.categoryDao = categoryDao;
         this.itemDao = itemDao;
+        this.cartDao = cartDao;
+        this.imageDao = imageDao;
     }
 
     @Override
@@ -62,6 +70,12 @@ public class CategoryServiceImpl implements CategoryService {
         categoryDao.get(name)
                 .ifPresentOrElse(category -> {
                             for (Item item : category.getItems()) {
+                                for (CartItem cartItem : cartDao.findByItem(item)) {
+                                    cartDao.deleteCartItem(cartItem);
+                                }
+                                for (Image image : item.getImages()) {
+                                    imageDao.deleteImage(image.getId());
+                                }
                                 itemDao.delete(item.getId());
                             }
                             categoryDao.delete(category.getId());

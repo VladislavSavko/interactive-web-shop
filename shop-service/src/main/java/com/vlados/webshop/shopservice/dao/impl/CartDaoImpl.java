@@ -3,12 +3,14 @@ package com.vlados.webshop.shopservice.dao.impl;
 import com.vlados.webshop.shopservice.dao.CartDao;
 import com.vlados.webshop.shopservice.domain.cart.Cart;
 import com.vlados.webshop.shopservice.domain.cart.CartItem;
+import com.vlados.webshop.shopservice.domain.item.Item;
 import com.vlados.webshop.shopservice.repos.CartItemRepository;
 import com.vlados.webshop.shopservice.repos.CartRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class CartDaoImpl implements CartDao {
@@ -37,6 +39,11 @@ public class CartDaoImpl implements CartDao {
     @Transactional
     public void deleteCartItem(CartItem cartItem) {
         cartItemRepository.delete(cartItem);
+    }
+
+    @Override
+    public List<CartItem> findByItem(Item item) {
+        return cartItemRepository.findByItem_Id(item.getId());
     }
 
     private Cart createCart(long userId) {
