@@ -10,7 +10,8 @@ class ApiClient {
     static OVERLAY_URL = '/contourOverlay';
     static CART_URL = '/cart';
     static ORDERS_URL = '/orders';
-    static ADMIN_URL = '/admin'
+    static ADMIN_URL = '/admin';
+    static IMAGES_URL = '/images';
 
     static getUserOrders(id): Promise<Response> {
         return fetch(this.SERVER_URL + this.SHOP_API + this.ORDERS_URL + '/' + id);
@@ -224,6 +225,39 @@ class ApiClient {
         return fetch(this.SERVER_URL + this.SHOP_API + this.CART_URL + '/' + userId + '/' + itemId, {
             method: "DELETE"
         });
+    }
+
+    static bindImage(image, itemId): Promise<Response> {
+        function base64ToBlob(base64, mimeType) {
+            const byteCharacters = atob(base64);
+            const byteArrays = [];
+
+            for (let offset = 0; offset < byteCharacters.length; offset += 512) {
+                const slice = byteCharacters.slice(offset, offset + 512);
+                const byteNumbers = new Array(slice.length);
+                for (let i = 0; i < slice.length; i++) {
+                    byteNumbers[i] = slice.charCodeAt(i);
+                }
+                const byteArray = new Uint8Array(byteNumbers);
+                byteArrays.push(byteArray);
+            }
+
+            return new Blob(byteArrays, {type: mimeType});
+        }
+
+        const src = image.match(/,(.*)/)[1];
+
+        const imageBlob = base64ToBlob(src, 'image/png');
+
+        const imageFile = new File([imageBlob], "image.png", {type: 'image/png'});
+
+        const formData = new FormData();
+        formData.append('image', imageFile);
+
+        return fetch(this.SERVER_URL + this.SHOP_API + this.IMAGES_URL + '?itemId=' + itemId, {
+            method: "POST",
+            body: formData
+        })
     }
 }
 

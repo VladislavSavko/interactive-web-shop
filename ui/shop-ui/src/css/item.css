@@ -37,38 +37,24 @@
 }
 
 .slideshow-buttons {
-    top: 70%;
+    padding-left: 24%;
+    padding-right: 57%;
+    margin-top: 10px;
+    justify-content: space-around;
+    display: flex;
 }
 
-.one, .two, .three, .four {
-    position: absolute;
+.slideshow-buttons div {
     width: 10px;
     height: 10px;
     border-radius: 50%;
     background: #E0C9CB;
-    margin-top: 15px;
 
     &:hover {
         cursor: pointer;
         background: #BA7E7E;
-        transition: all .4s ease-in-out;
+        transition: all .3s ease;
     }
-}
-
-.one {
-    left: 24%;
-}
-
-.two {
-    left: 29%;
-}
-
-.three {
-    left: 34%;
-}
-
-.four {
-    left: 39%;
 }
 
 .product {
@@ -125,7 +111,7 @@
 
     &:hover {
         background: #BA7E7E;
-        transition: all .4s ease-in-out;
+        transition: all .4s ease;
     }
 }
 
@@ -189,4 +175,55 @@
 .disabled-spinners::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
+}
+
+.slider-container {
+    position: relative;
+    width: 600px; /* Установите желаемую ширину */
+    overflow: hidden;
+}
+
+.slider {
+    display: flex;
+    transition: transform 0.5s ease;
+}
+
+.slide {
+    min-width: 100%; /* Ширина равна ширине контейнера */
+    height: 400px; /* Установите желаемую высоту */
+    background-size: cover;
+    background-position: center;
+}
+
+.prev, .next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+}
+
+.prev { left: 10px; }
+.next { right: 10px; }
+
+.dots-container {
+    text-align: center;
+    padding: 10px 0;
+}
+
+.dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    margin: 0 5px;
+    background-color: #bbb;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.dot.active {
+    background-color: #717171;
 }

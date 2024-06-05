@@ -42,7 +42,9 @@
 }
 
 .flex-direction-column {
-    flex-direction: column;
+    /*flex-direction: column;*/
+    margin-bottom: 20px;
+    margin-top: 20px;
 }
 
 

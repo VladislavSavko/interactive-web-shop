@@ -83,48 +83,6 @@ export default function NewItemModal(props) {
                                        style={{marginBottom: '20px', marginTop: '15px', textAlign: 'center'}}/>
                     </div>
                     <textarea id="description" placeholder="Enter the description:..."/>
-                    {/*<Dropzone*/}
-                    {/*    onDrop={(file) => {*/}
-                    {/*        if (file.length > 0) {*/}
-                    {/*            const reader = new FileReader();*/}
-                    {/*            reader.readAsDataURL(file[0]);*/}
-                    {/*            reader.onload = () => {*/}
-                    {/*                setFile(reader.result);*/}
-                    {/*                setFileDropped(true);*/}
-                    {/*                setFileName(file[0].name)*/}
-                    {/*            };*/}
-                    {/*            reader.onerror = () => {*/}
-                    {/*                console.error('Ошибка при чтении файла');*/}
-                    {/*            };*/}
-                    {/*            setDraggingActive(false);*/}
-                    {/*            if (this.props.onChange) {*/}
-                    {/*                this.props.onChange(true);*/}
-                    {/*            }*/}
-                    {/*        }*/}
-                    {/*    }}*/}
-                    {/*    maxFiles={4}*/}
-                    {/*    onDragEnter={() => setDraggingActive(true)}*/}
-                    {/*    onDragLeave={() => setDraggingActive(false)}>*/}
-                    {/*    {({getRootProps, getInputProps}) => (*/}
-                    {/*        <section>*/}
-                    {/*            <div {...getRootProps()}>*/}
-                    {/*                <input {...getInputProps()} />*/}
-                    {/*                {!file && <div className="drag-and-drop-area"*/}
-                    {/*                               style={{*/}
-                    {/*                                   background: draggingActive ? 'darkgray' : 'transparent',*/}
-                    {/*                                   marginBottom: '20px'*/}
-                    {/*                               }}>*/}
-                    {/*                    {fileDropped ? 'Image is accepted' : 'Drag \'n\' drop some images here, or click to select files'}*/}
-                    {/*                </div>}*/}
-                    {/*                {file && <div className="flex-direction-column selected-item-image">*/}
-                    {/*                    <h2>{fileName}</h2>*/}
-                    {/*                    <img src={file} className="loaded-image-admin"*/}
-                    {/*                         alt="Cannot load the image right now..."/>*/}
-                    {/*                </div>}*/}
-                    {/*            </div>*/}
-                    {/*        </section>*/}
-                    {/*    )}*/}
-                    {/*</Dropzone>*/}
                     <div style={{
                         width: '100%',
                         display: 'flex',

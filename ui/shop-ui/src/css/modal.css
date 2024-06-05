@@ -257,6 +257,8 @@ body.active-modal {
     max-width: 600px;
     min-width: 300px;
     z-index: 2;
+    max-height: 1000px;
+    overflow-y: auto;
 }
 
 .modal-content-order {
