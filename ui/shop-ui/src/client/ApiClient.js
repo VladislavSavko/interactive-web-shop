@@ -13,6 +13,14 @@ class ApiClient {
     static ADMIN_URL = '/admin';
     static IMAGES_URL = '/images';
 
+    static getUsers() : Promise<Response> {
+        return fetch(this.SERVER_URL + this.USERS_API);
+    }
+
+    static searchForUsers(email) : Promise<Response> {
+        return fetch(this.SERVER_URL + this.USERS_API + this.SEARCH_URL + '?email=' + email);
+    }
+
     static getUserOrders(id): Promise<Response> {
         return fetch(this.SERVER_URL + this.SHOP_API + this.ORDERS_URL + '/' + id);
     }

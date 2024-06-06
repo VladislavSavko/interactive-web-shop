@@ -8,6 +8,7 @@ import ShopPage from "../pages/ShopPage";
 import ItemPage from "../pages/ItemPage";
 import FitRoomPage from "../pages/FitRoomPage";
 import OrderPage from "../pages/OrderPage";
+import UsersPage from "../pages/UsersPage";
 
 const Home = () => {
     return <BrowserRouter>
@@ -20,7 +21,7 @@ const Home = () => {
             <Route element={<ItemPage/>} path='/item/*'/>
             <Route element={<FitRoomPage />} path='/fitroom'/>
             <Route element={<OrderPage />} path='/orders/*'/>
-            {/*<Route element={<UserEditPage/>} path='/myPage/edit'/>*/}
+            <Route element={<UsersPage />} path='/users'/>
             {/*<Route element={<ChangePasswordPage/>} path='/myPage/password'/>*/}
 
 

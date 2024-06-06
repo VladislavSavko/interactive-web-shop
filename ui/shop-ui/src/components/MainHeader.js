@@ -16,6 +16,7 @@ class MainHeader extends React.Component {
             case 'fr': navItem = document.getElementById('fr_li');break;
             case 'why': navItem = document.getElementById('why_li');break;
             case 'contact': navItem = document.getElementById('contact_li');break;
+            case 'users' : navItem = document.getElementById('contact_li');break;
             case 'login': {
                 document.getElementById('login_a').style.color = "#f89cab";
                 return;

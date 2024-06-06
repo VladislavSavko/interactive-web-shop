@@ -97,6 +97,8 @@ public class OrderServiceImpl implements OrderService {
             orderItemDao.save(orderItem);
         }
 
+        clear(cart);
+
         return DtoMapper.ForOrder.toDto(order, orderItems);
     }
 
@@ -105,6 +107,12 @@ public class OrderServiceImpl implements OrderService {
                 .map(CartItem::getItem)
                 .mapToDouble(Item::getPrice)
                 .sum();
+    }
+
+    private void clear(Cart cart) {
+        for (CartItem cartItem : cart.getItems()) {
+            cartDao.deleteCartItem(cartItem);
+        }
     }
 
     private List<OrderResponseDto> getOrderResponseDtos(List<Order> orderDao) {

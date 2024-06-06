@@ -81,6 +81,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<ResponseUserDto> search(String email) {
+        return UserMapper.map(userDao.searchByEmail(email));
+    }
+
+    @Override
     public ResponseUserDto add(final NewUserDto user) {
         checkDuplicateEmail(user.email());
         return UserMapper.map(userDao.add(user));

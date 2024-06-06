@@ -40,8 +40,9 @@ class UserProfile extends React.Component {
         ApiClient.makeUserOrder(userId).then(r => {
             if (r.ok) {
                 this.ordersComponent.refreshUserOrders(userId);
+                this.userCart.refreshItemsInCart();
             }
-        })
+        });
     }
 
 
@@ -146,7 +147,7 @@ class UserProfile extends React.Component {
                 </div>
                 <div className="mt-10 p-5 bg-white shadow"
                      style={{borderBottomLeftRadius: '15px', borderBottomRightRadius: '15px'}}>
-                    <UserCart/>
+                    <UserCart ref={(instance) => {this.userCart = instance;}}/>
                     <div className="button-confirm-and-order">
                         <button onClick={this.makeOrder}>Confirm and order</button>
                     </div>

@@ -47,6 +47,11 @@ public class UserController {
         return userService.getNameAndEmail(id);
     }
 
+    @GetMapping("/search")
+    public List<ResponseUserDto> searchByEmail(@RequestParam(name = "email") String email) {
+        return userService.search(email);
+    }
+
     @PostMapping
     public ResponseUserDto newUser(@RequestBody @Valid NewUserDto newUserDto) {
         return userService.add(newUserDto);

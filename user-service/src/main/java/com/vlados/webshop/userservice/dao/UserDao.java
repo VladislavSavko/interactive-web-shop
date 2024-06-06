@@ -19,6 +19,8 @@ public interface UserDao {
 
     Optional<List<Object>> getNameAndEmail(final long id);
 
+    List<User> searchByEmail(final String email);
+
     User add(final NewUserDto user);
 
     void delete(final long id);

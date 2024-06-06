@@ -21,6 +21,8 @@ public interface UserService {
 
     ResponseUserNameDto getNameAndEmail(final long id);
 
+    List<ResponseUserDto> search(final String email);
+
     ResponseUserDto add(final NewUserDto user);
 
     void delete(final long id);
