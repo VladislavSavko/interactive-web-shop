@@ -21,6 +21,8 @@ public interface UserDao {
 
     List<User> searchByEmail(final String email);
 
+    List<User> searchByName(final String name);
+
     User add(final NewUserDto user);
 
     void delete(final long id);

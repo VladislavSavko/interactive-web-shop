@@ -57,6 +57,11 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
+    public List<User> searchByName(String name) {
+        return userRepository.findByNameContainingIgnoreCase(name);
+    }
+
+    @Override
     @Transactional
     public User add(final NewUserDto user) {
         User newUser = UserMapper.map(user);

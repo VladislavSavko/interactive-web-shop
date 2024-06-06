@@ -7,6 +7,7 @@ import com.vlados.webshop.userservice.dto.user.NewUserDto;
 import com.vlados.webshop.userservice.dto.user.ResponseUserDto;
 import com.vlados.webshop.userservice.dto.user.ResponseUserNameDto;
 import com.vlados.webshop.userservice.dto.user.UpdatedUserDto;
+import com.vlados.webshop.userservice.exception.WrongParamsException;
 import com.vlados.webshop.userservice.service.UserService;
 import com.vlados.webshop.userservice.util.ResourceUtil;
 import jakarta.validation.Valid;
@@ -48,8 +49,14 @@ public class UserController {
     }
 
     @GetMapping("/search")
-    public List<ResponseUserDto> searchByEmail(@RequestParam(name = "email") String email) {
-        return userService.search(email);
+    public List<ResponseUserDto> search(@RequestParam(name = "email", required = false) String email, @RequestParam(name = "name", required = false) String name) {
+        if (email == null && name != null) {
+            return userService.searchByName(name);
+        }
+        if (email != null && name == null) {
+            return userService.searchByEmail(email);
+        }
+        throw new WrongParamsException(ResourceUtil.getMessage("response.bad_request"));
     }
 
     @PostMapping

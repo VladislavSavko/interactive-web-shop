@@ -17,8 +17,8 @@ class ApiClient {
         return fetch(this.SERVER_URL + this.USERS_API);
     }
 
-    static searchForUsers(email) : Promise<Response> {
-        return fetch(this.SERVER_URL + this.USERS_API + this.SEARCH_URL + '?email=' + email);
+    static searchForUsers(by, _with) : Promise<Response> {
+        return fetch(this.SERVER_URL + this.USERS_API + this.SEARCH_URL + '?' + by + '=' + _with);
     }
 
     static getUserOrders(id): Promise<Response> {

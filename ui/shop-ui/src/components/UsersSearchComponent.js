@@ -14,7 +14,7 @@ class UsersSearchComponent extends React.Component {
     }
 
     searchForItems = (value) => {
-        ApiClient.searchForUsers(value).then(response => {
+        ApiClient.searchForUsers(this.props.option, value).then(response => {
             if(response.ok) {
                 response.json().then(responseJson => {
                     this.setState({
@@ -30,8 +30,12 @@ class UsersSearchComponent extends React.Component {
     }
 
     render() {
-        return <>
-            <UsersSearch onChange={this.searchForItems}/>
+        return <section className="shop_section"
+                        style={{
+                            borderRadius: '15px', backgroundColor: '#f39aae',
+                            marginLeft: '45px', marginRight: '45px', marginTop: '30px', paddingBottom: '40px'
+                        }}>
+            <UsersSearch onChange={this.searchForItems} label={this.props.option}/>
             {this.state.searchResult && <div className="container">
                 <div className="heading_container heading_center">
                     <h2 style={{marginTop: '50px'}}>
@@ -44,7 +48,7 @@ class UsersSearchComponent extends React.Component {
                     })}
                 </div>
             </div>}
-        </>
+        </section>
     }
 
 }

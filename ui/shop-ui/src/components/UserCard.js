@@ -20,11 +20,11 @@ class UserCard extends React.Component {
                         <div className="img-box">
                             <img src="https://static.vecteezy.com/system/resources/thumbnails/020/911/740/small/user-profile-icon-profile-avatar-user-icon-male-icon-face-icon-profile-icon-free-png.png" alt="" style={{width: '200px'}}/>
                         </div>
-                        <div className="detail-box">
+                        <div className="detail-box" style={{justifyContent: 'normal', display: 'block'}}>
                             <h6>
                                 {this.props.name}
                             </h6>
-                            {this.props.withEmail ? <h7>{this.props.email}</h7> : <></>}
+                             <h7>{this.props.email}</h7>
                         </div>
                     </a>
                 </div>

@@ -21,7 +21,9 @@ public interface UserService {
 
     ResponseUserNameDto getNameAndEmail(final long id);
 
-    List<ResponseUserDto> search(final String email);
+    List<ResponseUserDto> searchByEmail(final String email);
+
+    List<ResponseUserDto> searchByName(final String name);
 
     ResponseUserDto add(final NewUserDto user);
 

@@ -4,6 +4,7 @@ import com.vlados.webshop.userservice.dto.exception.ExceptionResponse;
 import com.vlados.webshop.userservice.exception.DuplicateEmailException;
 import com.vlados.webshop.userservice.exception.NoSuchEntityException;
 import com.vlados.webshop.userservice.exception.WrongCredentialsException;
+import com.vlados.webshop.userservice.exception.WrongParamsException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -29,5 +30,11 @@ public class UserExceptionHandler {
     public ResponseEntity<ExceptionResponse> handleDuplicateEmailException(DuplicateEmailException dee) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(new ExceptionResponse(dee.getMessage(), LocalDateTime.now()));
+    }
+
+    @ExceptionHandler(WrongParamsException.class)
+    public ResponseEntity<ExceptionResponse> handleWrongParamsException(WrongParamsException wpe) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(new ExceptionResponse(wpe.getMessage(), LocalDateTime.now()));
     }
 }

@@ -81,8 +81,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<ResponseUserDto> search(String email) {
+    public List<ResponseUserDto> searchByEmail(String email) {
         return UserMapper.map(userDao.searchByEmail(email));
+    }
+
+    @Override
+    public List<ResponseUserDto> searchByName(String name) {
+        return UserMapper.map(userDao.searchByName(name));
     }
 
     @Override

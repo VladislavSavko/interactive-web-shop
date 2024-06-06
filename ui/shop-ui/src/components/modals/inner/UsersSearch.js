@@ -31,7 +31,7 @@ class UsersSearch extends React.Component {
     }
 
     render() {
-        return <input type="text" placeholder="Enter item name:" onInput={this.handleInputChange} className="item-search-input"/>
+        return <input type="text" placeholder={`Enter ${this.props.label} to search:`} onInput={this.handleInputChange} className="item-search-input"/>
     }
 }
 
