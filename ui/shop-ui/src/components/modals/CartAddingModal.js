@@ -1,6 +1,8 @@
 import React, {useState} from "react";
 import '../../css/modal.css'
 import ApiClient from "../../client/ApiClient";
+import {Slide, toast, ToastContainer} from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 
 export default function CartAddingModal(props) {
@@ -30,8 +32,19 @@ export default function CartAddingModal(props) {
         ApiClient.addToCart(userId, itemId, quantity, size).then(response => {
             if (response.ok) {
                 switchModalState();
+                toast.info(`${props.name} was successfully added to cart!`, {
+                    position: "top-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                    transition: Slide,
+                });
             }
-        })
+        });
     }
 
     const checkValue = () => {
@@ -60,6 +73,20 @@ export default function CartAddingModal(props) {
 
     return (
         <>
+            <ToastContainer
+                position="top-center"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+                transition='Slide'
+                toastClassName="shop-toast"
+            />
             <button onClick={switchModalState} className={props.disabled ? 'btn-modal-2-disabled' : 'btn-modal-2'}
                     disabled={props.disabled}>
                 {props.text}

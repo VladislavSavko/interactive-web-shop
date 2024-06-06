@@ -402,6 +402,23 @@ body.active-modal {
 
 
 
+.shop-toast .Toastify__progress-bar {
+    background: #f89cab;
+}
+
+.shop-toast .Toastify__toast-body {
+    text-transform: none;
+    color: black;
+    font-family: "poppins", sans-serif;
+}
+
+:root {
+    --toastify-icon-color-info: #f15c74 !important;
+}
+
+
+
+
 
 
 

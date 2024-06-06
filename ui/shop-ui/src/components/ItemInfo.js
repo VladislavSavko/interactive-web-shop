@@ -4,6 +4,7 @@ import ApiClient from "../client/ApiClient";
 import CartAddingModal from "./modals/CartAddingModal";
 import ImageAddingModal from "./modals/ImageAddingModal";
 import ImageDeletingModal from "./modals/ImageDeletingModal";
+import UpdateItemModal from "./modals/UpdateItemModal";
 
 class ItemInfo extends React.Component {
     constructor(props) {
@@ -18,12 +19,39 @@ class ItemInfo extends React.Component {
             isNew: false,
             id: '',
             selected: '',
-            currentImageSrc: ''
+            currentImageSrc: '',
+            color: ''
         }
     }
 
     getItemInfo(id): Promise<Response> {
         return ApiClient.getItemInfo(id);
+    }
+
+    updateItem = () => {
+        const url = window.location.href;
+        const itemId = url.substring(url.lastIndexOf('item/') + 5);
+
+        this.getItemInfo(itemId).then(response => {
+            if (response.ok) {
+                response.json().then(responseJson => {
+                    this.setState({
+                        binary: responseJson.images,
+                        category: responseJson.category,
+                        name: responseJson.name,
+                        quantity: responseJson.quantity,
+                        description: responseJson.description,
+                        price: responseJson.price,
+                        isNew: responseJson.isNew,
+                        color: responseJson.color,
+                        id: itemId,
+                        currentImageSrc: responseJson.images.length > 0 ? responseJson.images[0].data : ''
+                    });
+                });
+            } else {
+                ///////////////////////////////////////////////////////////////
+            }
+        });
     }
 
     updateDots = (index) => {
@@ -49,6 +77,7 @@ class ItemInfo extends React.Component {
                         description: responseJson.description,
                         price: responseJson.price,
                         isNew: responseJson.isNew,
+                        color: responseJson.color,
                         id: itemId,
                         currentImageSrc: responseJson.images.length > 0 ? responseJson.images[0].data : ''
                     });
@@ -109,6 +138,20 @@ class ItemInfo extends React.Component {
             <></>
             :
             <ImageDeletingModal text="Delete images" images={images} itemId={this.state.id}/>
+        let updateButton = window.sessionStorage.getItem('userRole') === 'CLIENT' ? <></> : <UpdateItemModal
+            iid={this.state.id}
+            defName={this.state.name}
+            defQuantity={this.state.quantity}
+            defCategory={this.state.category}
+            defColor={this.state.color}
+            defDesc={this.state.description}
+            defPrice={this.state.price}
+            defNew={this.state.isNew}
+            onChange={() => this.updateItem()}
+            classForButton="btn-modal-2"
+            stylesForButton={{marginTop: '9px'}}
+        />
+
         return <>
             <div className="item-body" style={{marginLeft: '45px', marginRight: '45px'}}>
                 <div className="item-container">
@@ -134,6 +177,7 @@ class ItemInfo extends React.Component {
                         <div>
                             {upperButton}
                             {middleButton}
+                            {updateButton}
                             <br/>
                             <button className="buttons try" onClick={this.goToFittingRoom}>Try in fitting room</button>
                         </div>

@@ -22,6 +22,9 @@ export default function UpdateItemModal(props) {
         } else {
             setModal(true);
         }
+        setColor(props.defColor);
+        setChecked(props.defNew);
+        setSelectedCategory({value: props.defCategory, label: props.defCategory});
     }
 
     const getSelectedCategory = (value) => {
@@ -57,9 +60,14 @@ export default function UpdateItemModal(props) {
         document.getElementById('flat_number').style.color = 'red';
     }
 
+    let classForButton = props.classForButton ? props.classForButton : 'card-item-buttons btn-modal-5';
+    let stylesForButton = props.stylesForButton ? props.stylesForButton : {};
+
+
+
     return (
         <>
-            <button className="card-item-buttons btn-modal-5" onClick={switchModalState}>Edit item</button>
+            <button className={classForButton} onClick={switchModalState} style={stylesForButton}>Edit item</button>
             {modal && (<div className={`_modal-item ${closing ? 'slide-up' : ''}`}>
             <div onClick={switchModalState} className="overlay"></div>
                 <div className="modal-content"

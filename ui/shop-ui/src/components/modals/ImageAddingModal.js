@@ -26,15 +26,18 @@ export default function ImageAddingModal(props) {
 
     const bindImagesToItem = () => {
         const itemId = props.itemId;
+        let bindings = [];
         files.forEach(file => {
-            ApiClient.bindImage(file, itemId).then(response => {
+            bindings.push(ApiClient.bindImage(file, itemId).then(response => {
                 if(!response.ok) {
                     console.log('error while adding images to an item')
                 }
-            });
+            }));
         });
-        switchModalState();
-        window.location.reload();
+        Promise.all(bindings).then(() => {
+            switchModalState();
+            window.location.reload();
+        });
     }
 
     const showErrors = (errors) => {
