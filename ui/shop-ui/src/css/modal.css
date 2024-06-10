@@ -333,6 +333,21 @@ body.active-modal {
     color: #9c9c9f;
 }
 
+.modal-user-input {
+    display: block;
+    border-radius: 5px;
+    font-size: 20px;
+    background: white;
+    width: 100%;
+    border: 0;
+    padding: 10px 10px;
+    margin-left: 15px;
+
+    &:focus {
+        color: black;
+    }
+}
+
 .image-modal {
     width: 140px;
     max-height: 140px;
