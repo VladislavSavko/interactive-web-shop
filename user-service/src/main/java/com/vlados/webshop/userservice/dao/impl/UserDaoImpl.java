@@ -72,8 +72,8 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     @Transactional
-    public void delete(final long id) {
-        userRepository.deleteById(id);
+    public void delete(String email) {
+        userRepository.deleteByEmail(email);
     }
 
     @Override

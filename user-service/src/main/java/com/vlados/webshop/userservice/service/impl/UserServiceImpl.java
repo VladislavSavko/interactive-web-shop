@@ -97,11 +97,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void delete(final long id) throws NoSuchElementException {
-        if (exists(id)) {
-            userDao.delete(id);
+    public void delete(final String email) throws NoSuchElementException {
+        if (exists(email)) {
+            userDao.delete(email);
         } else {
-            throw new NoSuchElementException(ResourceUtil.getMessage("db.user.id").formatted(id));
+            throw new NoSuchElementException(ResourceUtil.getMessage("db.user.email").formatted(email));
         }
     }
 
@@ -121,6 +121,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean exists(final long id) {
         return userDao.exists(id);
+    }
+
+    private boolean exists(final String email) {
+        return userDao.existsByEmail(email);
     }
 
     @Override

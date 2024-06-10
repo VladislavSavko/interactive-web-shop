@@ -1,7 +1,5 @@
 import React from "react";
-import ItemsSearch from "./modals/inner/ItemsSearch";
 import ApiClient from "../client/ApiClient";
-import ItemCard from "./ItemCard";
 import UsersSearch from "./modals/inner/UsersSearch";
 import UserCard from "./UserCard";
 
@@ -13,7 +11,7 @@ class UsersSearchComponent extends React.Component {
         }
     }
 
-    searchForItems = (value) => {
+    searchForUsers = (value) => {
         ApiClient.searchForUsers(this.props.option, value).then(response => {
             if(response.ok) {
                 response.json().then(responseJson => {
@@ -26,7 +24,7 @@ class UsersSearchComponent extends React.Component {
     }
 
     componentDidMount() {
-        this.searchForItems('');
+        this.searchForUsers('');
     }
 
     render() {
@@ -36,7 +34,7 @@ class UsersSearchComponent extends React.Component {
                             marginLeft: '45px', marginRight: '45px', marginTop: '30px', paddingBottom: '40px',
                             marginBottom: '50px'
                         }}>
-            <UsersSearch onChange={this.searchForItems} label={this.props.option}/>
+            <UsersSearch onChange={this.searchForUsers} label={this.props.option}/>
             {this.state.searchResult && <div className="container">
                 <div className="heading_container heading_center">
                     <h2 style={{marginTop: '50px'}}>
@@ -45,7 +43,7 @@ class UsersSearchComponent extends React.Component {
                 </div>
                 <div className="row">
                     {this.state.searchResult && this.state.searchResult.map(u => {
-                        return <UserCard email={u.email} name={u.name} withEmail={true} admin={u.role === 'ADMIN'} address={u.address}/>
+                        return <UserCard email={u.email} name={u.name} withEmail={true} admin={u.role === 'ADMIN'} address={u.address} />
                     })}
                 </div>
             </div>}

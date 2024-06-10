@@ -1,7 +1,6 @@
 import React from "react";
 import ApiClient from "../client/ApiClient";
 import UserCard from "./UserCard";
-import ItemsComponent from "./ItemsComponent";
 
 class UsersComponent extends React.Component {
     constructor() {
@@ -28,6 +27,15 @@ class UsersComponent extends React.Component {
         )
     }
 
+    deleteUser = (email) => {
+        ApiClient.deleteUser(email).then(resp => {
+            if(resp.ok) {
+                this.refreshUsers();
+                this.props.onChange();
+            }
+        });
+    }
+
     render() {
         return <>
             <section className="shop_section"
@@ -43,7 +51,7 @@ class UsersComponent extends React.Component {
                     </div>
                     <div className="row">
                         {this.state.users && this.state.users.map(u => {
-                            return <UserCard email={u.email} name={u.name} admin={u.role === 'ADMIN'} address={u.address}/>
+                            return <UserCard email={u.email} name={u.name} admin={u.role === 'ADMIN'} address={u.address} onChange={() => this.deleteUser(u.email)}/>
                         })}
                     </div>
                 </div>

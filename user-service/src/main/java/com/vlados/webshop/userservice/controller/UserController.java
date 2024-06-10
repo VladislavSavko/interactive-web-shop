@@ -69,13 +69,13 @@ public class UserController {
         return ResponseEntity.of(userService.jwtTokenOf(dto));
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteUser(@PathVariable(name = "id") long id) {
+    @DeleteMapping("/{email}")
+    public ResponseEntity<String> deleteUser(@PathVariable(name = "email") String email) {
 
-        userService.delete(id);
+        userService.delete(email);
 
         return ResponseEntity.ok()
-                .body(ResourceUtil.getMessage("response.user.deleted").formatted(id));
+                .body(ResourceUtil.getMessage("response.user.deleted").formatted(email));
     }
 
     @PutMapping("/{id}")

@@ -25,7 +25,7 @@ public interface UserDao {
 
     User add(final NewUserDto user);
 
-    void delete(final long id);
+    void delete(final String email);
 
     void update(final long id, final UpdatedUserDto dto);
 

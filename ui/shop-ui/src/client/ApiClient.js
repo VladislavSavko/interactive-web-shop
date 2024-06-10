@@ -25,6 +25,12 @@ class ApiClient {
         return fetch(this.SERVER_URL + this.SHOP_API + this.ORDERS_URL + '/' + id);
     }
 
+    static deleteUser(email) : Promise<Response> {
+        return fetch(this.SERVER_URL + this.USERS_API + '/' + email, {
+            method: "DELETE"
+        });
+    }
+
     static getAllOrders(): Promise<Response> {
         return fetch(this.SERVER_URL + this.SHOP_API + this.ORDERS_URL + '/' + this.ADMIN_URL);
     }

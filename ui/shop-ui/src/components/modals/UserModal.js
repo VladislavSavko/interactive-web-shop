@@ -1,5 +1,4 @@
 import React from "react";
-import ApiClient from "../../client/ApiClient";
 
 class UserModal extends React.Component {
     constructor() {
@@ -29,6 +28,10 @@ class UserModal extends React.Component {
         }
     }
 
+    deleteUser = () => {
+        this.props.onChange();
+    }
+
     render() {
         return <>
             {this.state.modal && (<div className={`_modal-order1 ${this.state.closing ? 'slide-left' : ''}`}>
@@ -45,11 +48,17 @@ class UserModal extends React.Component {
                     }}>
                         Email: <span style={{fontWeight: 'lighter'}}>{this.props.email}</span>
                     </h3>
-                    {!this.props.admin && <h3 style={{paddingBottom: '10px',
+                    {!this.props.admin && <h3 style={{
+                        paddingBottom: '10px',
                         textTransform: 'none',
                         borderTop: '2px solid black',
-                        paddingTop: '18px'}}>Address: <span style={{fontWeight: 'lighter'}}>{this.props.address.city}, {this.props.address.street} st., {this.props.address.houseNumber} - {this.props.address.flatNumber}</span></h3>}
+                        paddingTop: '18px'
+                    }}>Address: <span
+                        style={{fontWeight: 'lighter'}}>{this.props.address.city}, {this.props.address.street} st., {this.props.address.houseNumber} - {this.props.address.flatNumber}</span>
+                    </h3>}
                     <div id="error_div" style={{color: 'red'}}></div>
+                    <button onClick={this.switchModalState} className="close-modal">Close</button>
+                    <button onClick={this.deleteUser} className="submit-modal" style={{marginTop: '10px'}}>Delete user</button>
                 </div>
             </div>)}
         </>
