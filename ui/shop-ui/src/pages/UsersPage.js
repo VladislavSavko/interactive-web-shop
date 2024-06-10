@@ -4,6 +4,7 @@ import UsersComponent from "../components/UsersComponent";
 import UsersSearchComponent from "../components/UsersSearchComponent";
 
 import '../css/custom.css'
+import FooterComponent from "../components/FooterComponent";
 
 const UsersPage = () => {
     const [checked, setChecked] = useState(false);
@@ -23,6 +24,7 @@ const UsersPage = () => {
             <span>Name</span>
         </div>
         <UsersSearchComponent option={checked ? 'name' : 'email'}/>
+        <FooterComponent />
     </>
 }
 

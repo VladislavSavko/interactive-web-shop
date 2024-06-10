@@ -43,7 +43,7 @@ class UsersComponent extends React.Component {
                     </div>
                     <div className="row">
                         {this.state.users && this.state.users.map(u => {
-                            return <UserCard email={u.email} name={u.name}/>
+                            return <UserCard email={u.email} name={u.name} admin={u.role === 'ADMIN'} address={u.address}/>
                         })}
                     </div>
                 </div>

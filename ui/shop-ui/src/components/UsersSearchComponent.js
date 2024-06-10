@@ -33,7 +33,8 @@ class UsersSearchComponent extends React.Component {
         return <section className="shop_section"
                         style={{
                             borderRadius: '15px', backgroundColor: '#f39aae',
-                            marginLeft: '45px', marginRight: '45px', marginTop: '30px', paddingBottom: '40px'
+                            marginLeft: '45px', marginRight: '45px', marginTop: '30px', paddingBottom: '40px',
+                            marginBottom: '50px'
                         }}>
             <UsersSearch onChange={this.searchForItems} label={this.props.option}/>
             {this.state.searchResult && <div className="container">
@@ -44,7 +45,7 @@ class UsersSearchComponent extends React.Component {
                 </div>
                 <div className="row">
                     {this.state.searchResult && this.state.searchResult.map(u => {
-                        return <UserCard email={u.email} name={u.name} withEmail={true}/>
+                        return <UserCard email={u.email} name={u.name} withEmail={true} admin={u.role === 'ADMIN'} address={u.address}/>
                     })}
                 </div>
             </div>}
