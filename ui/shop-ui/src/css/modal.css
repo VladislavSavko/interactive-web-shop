@@ -435,6 +435,7 @@ body.active-modal {
 
 :root {
     --toastify-icon-color-info: #f15c74 !important;
+    --toastify-icon-color-warning: #f15c74 !important;
 }
 
 

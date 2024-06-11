@@ -152,6 +152,7 @@ public class ItemServiceImpl implements ItemService {
     @Transactional
     public void delete(long id) {
         if (itemDao.exists(id)) {
+            deleteImages(id);
             itemDao.delete(id);
         } else {
             throw new NoSuchElementException(ResourceUtil.getMessage("db.item.not_found").formatted(id));
@@ -203,5 +204,19 @@ public class ItemServiceImpl implements ItemService {
                                 ResourceUtil.getMessage("db.category.not_found_by_name").formatted(dto.categoryName())
                         )
                 );
+    }
+
+    private void deleteImages(final long id) {
+        Item item = itemDao.get(id).get();
+        List<Long> imagesIds = item.getImages().stream()
+                .map(Image::getId)
+                .toList();
+
+        for (long imageId : imagesIds) {
+            Image image = imageDao.get(imageId).get();
+            imageDao.deleteImage(imageId);
+            item.getImages()
+                    .remove(image);
+        }
     }
 }

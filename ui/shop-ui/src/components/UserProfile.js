@@ -8,6 +8,8 @@ import UserOrders from "./UserOrders";
 
 import shoppingCart from '../images/cart.png';
 import order from '../images/order.png'
+import {Slide, toast, ToastContainer} from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 class UserProfile extends React.Component {
     constructor(props) {
@@ -39,6 +41,17 @@ class UserProfile extends React.Component {
         const userId = window.sessionStorage.getItem('userId');
         ApiClient.makeUserOrder(userId).then(r => {
             if (r.ok) {
+                toast.info(`Order was created successfully!`, {
+                    position: "top-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                    transition: Slide,
+                });
                 this.ordersComponent.refreshUserOrders(userId);
                 this.userCart.refreshItemsInCart();
             }
@@ -57,6 +70,20 @@ class UserProfile extends React.Component {
         }
 
         return <>
+            <ToastContainer
+                position="top-center"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+                transition='Slide'
+                toastClassName="shop-toast"
+            />
             <div className="profile-body">
                 <div className="profile-upper-div">
                     <p style={{textAlign: 'center'}}>Profile</p>

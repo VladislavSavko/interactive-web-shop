@@ -11,6 +11,20 @@ export default function CartAddingModal(props) {
     const [q, setQ] = useState(1);
 
     const switchModalState = () => {
+        if(props.disabled) {
+            toast.warn(`Please, choose item size first!`, {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                transition: Slide,
+            });
+            return;
+        }
         if (modal) {
             setClosing(true);
             setTimeout(() => {
@@ -87,8 +101,7 @@ export default function CartAddingModal(props) {
                 transition='Slide'
                 toastClassName="shop-toast"
             />
-            <button onClick={switchModalState} className={props.disabled ? 'btn-modal-2-disabled' : 'btn-modal-2'}
-                    disabled={props.disabled}>
+            <button onClick={switchModalState} className={props.disabled ? 'btn-modal-2-disabled' : 'btn-modal-2'}>
                 {props.text}
             </button>
             {modal && (<div className={`_modal-item ${closing ? 'slide-up' : ''}`}>
