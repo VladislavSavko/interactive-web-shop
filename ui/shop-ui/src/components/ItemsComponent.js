@@ -1,6 +1,8 @@
 import React from "react";
 import ApiClient from "../client/ApiClient";
 import ItemCard from "./ItemCard";
+import 'react-toastify/dist/ReactToastify.css';
+import {Slide, toast, ToastContainer} from "react-toastify";
 
 class ItemsComponent extends React.Component {
     constructor(props) {
@@ -24,6 +26,20 @@ class ItemsComponent extends React.Component {
     }
 
     refreshItems(filters) {
+        if(window.localStorage.getItem('toast') !== null) {
+            toast.info(`${window.localStorage.getItem('toast')} was successfully deleted!`, {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                transition: Slide
+            });
+            window.localStorage.removeItem('toast');
+        }
         this.getItemsData(filters).then(response => {
             this.setState({
                 items: response
@@ -47,6 +63,20 @@ class ItemsComponent extends React.Component {
         const admin = window.sessionStorage.getItem('userRole') === 'ADMIN';
         if (this.state.items !== undefined) {
             return <>
+                <ToastContainer
+                    position="top-center"
+                    autoClose={5000}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                    theme="light"
+                    transition='Slide'
+                    toastClassName="shop-toast"
+                />
                 {this.state.items.map(item => {
                     return <ItemCard
                         iid={item.id}
@@ -60,7 +90,7 @@ class ItemsComponent extends React.Component {
                         description={item.description}
                         buttonsActive={false}
                         admin={admin}
-                        onChange={() => this.refreshItems('')}/>
+                        onChange={() => this.props.onChange()}/>
                 })}
             </>
         } else {

@@ -17,11 +17,12 @@ class ItemCard extends React.Component {
     }
 
     deleteItem = (itemId) => {
+        window.localStorage.setItem('toast', this.props.name)
         ApiClient.deleteItem(itemId).then(r => {
             if(r.ok) {
                 this.props.onChange();
             }
-        })
+        });
     }
 
     updateItem = () => {

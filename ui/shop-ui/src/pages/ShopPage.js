@@ -7,6 +7,7 @@ import ItemsSearchComponent from "../components/ItemsSearchComponent";
 import NewItemModal from "../components/modals/NewItemModal";
 import NewCategoryModal from "../components/modals/NewCategoryModal";
 import DeleteCategoryModal from "../components/modals/DeleteCategoryModal";
+import {Slide, toast} from "react-toastify";
 
 
 class ShopPage extends React.Component {
@@ -16,7 +17,39 @@ class ShopPage extends React.Component {
 
 
     triggerItemsReload = () => {
+        if(window.localStorage.getItem('toast') !== null) {
+            toast.info(`${window.localStorage.getItem('toast')} was successfully deleted!`, {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                transition: Slide
+            });
+            window.localStorage.removeItem('toast');
+        }
         this.itemsComponent.refreshItems();
+        this.itemsSearchComponent.searchForItems('');
+    }
+
+    triggerNewCategoryToast = () => {
+        if(window.localStorage.getItem('toast') !== null) {
+            toast.info(`${window.localStorage.getItem('toast')} was successfully created!`, {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                transition: Slide
+            });
+            window.localStorage.removeItem('toast');
+        }
     }
 
 
@@ -25,7 +58,7 @@ class ShopPage extends React.Component {
             ?
             <>
                 <NewItemModal text="Add an item" onChange={this.triggerItemsReload} />
-                <NewCategoryModal text="Add a category" />
+                <NewCategoryModal text="Add a category" onChange={this.triggerNewCategoryToast}/>
                 <DeleteCategoryModal text="Delete a category" onChange={this.triggerItemsReload}/>
             </>
             :
@@ -46,7 +79,7 @@ class ShopPage extends React.Component {
                         </h2>
                     </div>
                     <div className="row">
-                        <ItemsComponent ref={(instance) => {this.itemsComponent = instance;}}/>
+                        <ItemsComponent ref={(instance) => {this.itemsComponent = instance;}} onChange={this.triggerItemsReload}/>
                     </div>
                 </div>
             </section>
@@ -60,7 +93,7 @@ class ShopPage extends React.Component {
                          marginLeft: '45px', marginRight: '45px',
                          marginBottom: '50px', paddingBottom: '90px'
                      }}>
-                <ItemsSearchComponent />
+                <ItemsSearchComponent ref={(instance) => {this.itemsSearchComponent = instance;}} />
             </section>
             <FooterComponent/>
         </>

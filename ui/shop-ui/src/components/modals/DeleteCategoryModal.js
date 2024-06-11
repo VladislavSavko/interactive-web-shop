@@ -33,6 +33,7 @@ class DeleteCategoryModal extends React.Component {
     deleteCategory = () => {
         ApiClient.deleteCategory(this.state.selectedCategory.value).then(response => {
             if(response.ok) {
+                window.localStorage.setItem('toast', this.state.selectedCategory.value)
                 this.props.onChange();
                 this.switchModalState();
             }

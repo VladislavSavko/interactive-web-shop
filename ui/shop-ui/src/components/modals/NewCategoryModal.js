@@ -31,9 +31,11 @@ class NewCategoryModal extends React.Component {
     createCategory = () => {
         const newCategoryName = document.getElementById('name').value;
         const desc = document.getElementById('description').value;
+        window.localStorage.setItem('toast', newCategoryName)
 
         ApiClient.addCategory(newCategoryName, desc).then(response => {
-            if(response.ok) {
+            if (response.ok) {
+                this.props.onChange();
                 this.switchModalState();
             }
         })
@@ -52,7 +54,8 @@ class NewCategoryModal extends React.Component {
                     </h2>
                     <input id="name" type="text" placeholder="Name" className="modal-item-price-input"
                            style={{marginLeft: '0', width: '100%'}}/>
-                    <textarea id="description" placeholder="Enter a category description..." style={{marginTop: '20px', width: '100%'}}/>
+                    <textarea id="description" placeholder="Enter a category description..."
+                              style={{marginTop: '20px', width: '100%'}}/>
                     <div style={{
                         width: '100%',
                         display: 'flex',
