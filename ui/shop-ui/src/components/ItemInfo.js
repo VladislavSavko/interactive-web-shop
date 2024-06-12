@@ -116,6 +116,14 @@ class ItemInfo extends React.Component {
         })
     }
 
+    deleteItem = (id) => {
+        ApiClient.deleteItem(id).then(response => {
+            if(response.ok) {
+                window.location.href = "/shop";
+            }
+        });
+    }
+
     goToFittingRoom = () => {
         window.location.href = "/fitroom?itemId=" + this.state.id;
     }
@@ -151,7 +159,14 @@ class ItemInfo extends React.Component {
             classForButton="btn-modal-2"
             stylesForButton={{marginTop: '9px'}}
         />
-
+        let deleteButton = window.sessionStorage.getItem('userRole') === 'CLIENT'
+            ?
+            <></>
+            :
+            <button onClick={() => this.deleteItem(this.state.id)} className='btn-modal-2'
+                    style={{marginTop: '9px'}}>
+                Delete item
+            </button>
         return <>
             <div className="item-body" style={{marginLeft: '45px', marginRight: '45px'}}>
                 <div className="item-container">
@@ -178,6 +193,7 @@ class ItemInfo extends React.Component {
                             {upperButton}
                             {middleButton}
                             {updateButton}
+                            {deleteButton}
                             <br/>
                             <button className="buttons try" onClick={this.goToFittingRoom}>Try in fitting room</button>
                         </div>

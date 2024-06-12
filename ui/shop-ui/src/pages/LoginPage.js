@@ -1,13 +1,16 @@
 import '../css/custom.css'
 import ApiClient from "../client/ApiClient";
 import MainHeader from "../components/MainHeader";
+import React from "react";
 
 
 const LoginPage = () => {
     return <div>
-        <MainHeader active="login"/>
+        <div className="hero_area">
+            <MainHeader active="login"/>
+        </div>
         <div className="login-page-content">
-            <div className="form-v10-content" style={{width: '500px'}}>
+            <div className="form-v10-content" style={{width: '600px'}}>
                 <form className="login" onSubmit={sendData}>
                     <span>Welcome to our web-shop!</span>
                     <br/>

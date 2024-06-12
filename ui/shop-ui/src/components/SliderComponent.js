@@ -79,7 +79,7 @@ class SliderComponent extends React.Component {
                                         </div>
                                     </div>
                                     <div className="col-md-5 ">
-                                        <div className="img-box">
+                                        <div className="img-box" style={{paddingTop: '10px'}}>
                                             <img src={sliderGirl} alt="aaa"/>
                                         </div>
                                     </div>
@@ -170,7 +170,7 @@ class SliderComponent extends React.Component {
                                     </div>
                                     <div className="col-md-5 ">
                                         <div className="img-box">
-                                            <img src={dressingRoom} alt="" style={{width: '380px', height: '400px'}}/>
+                                            <img src={dressingRoom} alt="" style={{width: '320px', height: '340px'}}/>
                                         </div>
                                     </div>
                                 </div>

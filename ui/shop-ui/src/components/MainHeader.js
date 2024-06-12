@@ -2,6 +2,7 @@ import React from "react";
 import "../css/custom.css"
 
 import logo from '../images/logo.jpg'
+import user from '../images/user1.png'
 
 class MainHeader extends React.Component {
     constructor(props) {
@@ -55,7 +56,7 @@ class MainHeader extends React.Component {
                 && window.sessionStorage.getItem('username') != null && window.sessionStorage.getItem('username').length > 0) {
                 return <a href="/profile" className="user-info">
                     <img style={{maxWidth: '40px', maxHeight: '40px', marginLeft: '30px'}}
-                         src="https://static.vecteezy.com/system/resources/thumbnails/020/911/740/small/user-profile-icon-profile-avatar-user-icon-male-icon-face-icon-profile-icon-free-png.png"
+                         src={user}
                          alt=""/>
                     <div id="profile_div">
                         {window.sessionStorage.getItem('userRole') === 'ADMIN' ?  window.sessionStorage.getItem('username') + ' (admin)' : window.sessionStorage.getItem('username')}

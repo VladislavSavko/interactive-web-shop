@@ -68,7 +68,7 @@ body.active-modal {
 }
 
 .btn-modal-4 {
-    border: 1px solid;
+    border: 1px solid rgb(241, 208, 212);
     border-radius: 5px;
     transition: all .3s;
     background-color: #db4566;
@@ -77,7 +77,7 @@ body.active-modal {
 }
 
 .btn-modal-5 {
-    border: 1px solid;
+    border: 1px solid rgb(241, 208, 212);
     border-radius: 5px;
     transition: all .3s;
     background-color: #e4b39c;
@@ -150,11 +150,13 @@ body.active-modal {
 
 .btn-modal-4:hover {
     background-color: #ffffff;
+    border-color: #db4566;
     color: #db4566;
 }
 
 .btn-modal-5:hover {
     background-color: #ffffff;
+    border-color: #e4b39c;
     color: #e4b39c;
 }
 

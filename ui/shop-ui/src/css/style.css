@@ -237,6 +237,7 @@ a:focus {
   padding: 25px;
   border-bottom-left-radius: 15px;
   border-bottom-right-radius: 15px;
+  overflow: hidden;
 }
 
 .slider_section .img-box {

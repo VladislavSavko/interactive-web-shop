@@ -9,6 +9,7 @@ import ItemPage from "../pages/ItemPage";
 import FitRoomPage from "../pages/FitRoomPage";
 import OrderPage from "../pages/OrderPage";
 import UsersPage from "../pages/UsersPage";
+import ErrorPage from "../pages/ErrorPage";
 
 const Home = () => {
     return <BrowserRouter>
@@ -25,7 +26,7 @@ const Home = () => {
             {/*<Route element={<ChangePasswordPage/>} path='/myPage/password'/>*/}
 
 
-            {/*<Route path="*" element={<ErrorPage/>}/>*/}
+            <Route path="*" element={<ErrorPage />}/>
         </Routes>
     </BrowserRouter>
 }

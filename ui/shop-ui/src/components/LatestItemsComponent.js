@@ -36,16 +36,16 @@ class LatestItemsComponent extends React.Component {
 
 
     render() {
-        if (this.state.items !== undefined) {
+        if (this.state.items !== undefined && this.state.items.length > 0) {
             return <>
                 {this.state.items.map(item => {
                     return <ItemCard iid={item.id} name={item.name} price={item.price} new={item.isNew} mainImage={item.images[0]}/>
                 })}
             </>
         } else {
-            return <>
+            return <div style={{fontSize: '30px'}}>
                 Sorry, we haven't found any items!
-            </>
+            </div>
         }
     }
 }

@@ -4,7 +4,6 @@
     padding: 25px 30px 30px 30px;
     border-radius: 10px;
     height: 300px;
-    box-shadow: 5px 10px 10px rgba(229, 235, 236, 0.94);
 
     span {
         font-weight: 400;
@@ -333,21 +332,15 @@
 
 
 .login-page-content {
-    width: 100%;
-    margin: 0 auto;
+    height: 850px;
+    margin-left: 45px;
+    margin-right: 45px;
     display: flex;
-    display: -webkit-flex;
     justify-content: center;
-    -o-justify-content: center;
-    -ms-justify-content: center;
-    -moz-justify-content: center;
-    -webkit-justify-content: center;
     align-items: center;
-    -o-align-items: center;
-    -ms-align-items: center;
-    -moz-align-items: center;
-    -webkit-align-items: center;
     background-color: rgb(241, 208, 212);
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
 }
 
 .form-v10-content {
