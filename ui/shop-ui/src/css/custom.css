@@ -551,3 +551,8 @@ input:checked + ._slider:before {
 ._slider.round:before {
     border-radius: 50%;
 }
+
+.applied-filters {
+    display: flex;
+    align-items: center;
+}

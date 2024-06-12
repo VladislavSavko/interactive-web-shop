@@ -60,7 +60,22 @@ class MultiSelectCategories extends React.Component {
                 }
             }),
         };
-        return  <Select isMulti options={this.state.options} onChange={this.handleChange} placeholder="Choose categories:" styles={stylesForSelect}/>
+        if(this.props.values) {
+            return <Select
+                isMulti
+                components={{DropdownIndicator: null, ClearIndicator: null, MultiValueRemove: () => null}}//TODO: Check if all params are in request URL
+                value={this.props.values}
+                styles={stylesForSelect}
+                isDisabled={true}
+            />
+        }
+        return  <Select
+            isMulti
+            options={this.state.options}
+            onChange={this.handleChange}
+            placeholder="Choose categories:"
+            styles={stylesForSelect}
+        />
     }
 }
 
