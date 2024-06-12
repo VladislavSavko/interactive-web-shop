@@ -18,13 +18,16 @@ class FiltersModal extends React.Component {
             window.location.href = '/shop?' + this.needToApplyNews(flag) + this.applyPrices(priceArray);
             return;
         }
-        window.location.href = '/shop?categories=' + array + '&' + this.needToApplyNews(flag);
+        window.location.href = '/shop?categories=' + array + '&' + this.needToApplyNews(flag) + this.applyPrices(priceArray);
     }
 
     sendFilters = () => {
         const arr = this.state.selectedOptions.map(option => (option.value));
         const _new = document.getElementById('news').checked;
         const priceRange = [document.getElementById('minPrice').value, document.getElementById('maxPrice').value];
+        console.log(arr);
+        console.log(_new);
+        console.log(priceRange);
         this.applyFilters(arr, _new, priceRange);
     }
 

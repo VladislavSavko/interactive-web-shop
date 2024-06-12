@@ -32,15 +32,27 @@ class ShopPage extends React.Component {
             this.setState({
                 news: true
             });
+        } else {
+            this.setState({
+                news: false
+            });
         }
         if (params.has('minPrice')) {
             this.setState({
                 minPrice: params.get('minPrice')
             });
+        } else {
+            this.setState({
+                minPrice: ''
+            });
         }
         if (params.has('maxPrice')) {
             this.setState({
                 maxPrice: params.get('maxPrice')
+            });
+        } else {
+            this.setState({
+                maxPrice: ''
             });
         }
     }
@@ -90,6 +102,11 @@ class ShopPage extends React.Component {
         }
     }
 
+    componentDidMount() {
+        const params = new URLSearchParams(window.location.search);
+        this.calculateContent(params);
+    }
+
 
     render() {
         let adminButtons = window.sessionStorage.getItem('userRole') === 'ADMIN'
@@ -102,7 +119,6 @@ class ShopPage extends React.Component {
             :
             <></>
         const params = new URLSearchParams(window.location.search);
-        this.calculateContent(params);
         return <>
             <div className="hero_area">
                 <MainHeader active="shop"/>
@@ -119,23 +135,26 @@ class ShopPage extends React.Component {
                         </h2>
                     </div>
                     {params.size > 0 && <div className="applied-filters">
-                        <h4>Applied filters:</h4>
+                        <h4 style={{marginBottom: '0'}}>Applied filters:</h4>
                         <div style={{marginLeft: '20px'}}>
                             {this.state.select && this.state.select.length > 0 &&
                                 <MultiSelectCategories values={this.state.select}/>}
                         </div>
-                        <div style={{marginLeft: '20px'}}>
-                            {this.state.minPrice && this.state.maxPrice &&
-                                <>
-                                    {this.state.minPrice}$ - {this.state.maxPrice}$
-                                </>}
-                        </div>
-                        <div style={{marginLeft: '20px'}}>
-                            {this.state.news &&
-                                <>
-                                    New {<input type="checkbox" checked={true} style={{marginLeft: '50px', transform: 'scale(2)'}} />}
-                                </>}
-                        </div>
+                        {this.state.minPrice && this.state.maxPrice &&
+                            <div style={{marginLeft: '20px', padding: '5px'}} className="bordered">
+                                <span>Price:</span>
+                                {
+                                    <>
+                                        {this.state.minPrice}$ - {this.state.maxPrice}$
+                                    </>
+                                }
+                            </div>}
+                        {this.state.news && <div style={{marginLeft: '20px', padding: '5px'}} className="bordered">
+                            <>
+                                New {<input type="checkbox" checked={true}
+                                            style={{marginLeft: '50px', transform: 'scale(2)'}}/>}
+                            </>
+                        </div>}
                     </div>}
                     <div className="row">
                         <ItemsComponent ref={(instance) => {
