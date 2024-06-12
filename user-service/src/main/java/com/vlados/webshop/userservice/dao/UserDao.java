@@ -17,7 +17,7 @@ public interface UserDao {
 
     Optional<String> getEmailById(final long id);
 
-    Optional<List<Object>> getNameAndEmail(final long id);
+    Optional<List<Object>> getData(final long id);
 
     List<User> searchByEmail(final String email);
 

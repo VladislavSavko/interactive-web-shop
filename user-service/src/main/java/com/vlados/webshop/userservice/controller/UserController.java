@@ -5,7 +5,7 @@ import com.vlados.webshop.userservice.dto.auth.UserAuthDtoResponse;
 import com.vlados.webshop.userservice.dto.exception.ExceptionResponse;
 import com.vlados.webshop.userservice.dto.user.NewUserDto;
 import com.vlados.webshop.userservice.dto.user.ResponseUserDto;
-import com.vlados.webshop.userservice.dto.user.ResponseUserNameDto;
+import com.vlados.webshop.userservice.dto.user.ResponseUserDataDto;
 import com.vlados.webshop.userservice.dto.user.UpdatedUserDto;
 import com.vlados.webshop.userservice.exception.WrongParamsException;
 import com.vlados.webshop.userservice.service.UserService;
@@ -44,8 +44,8 @@ public class UserController {
     }
 
     @GetMapping("/{id}/data")
-    public ResponseUserNameDto usernameAndEmail(@PathVariable(name = "id") long id) {
-        return userService.getNameAndEmail(id);
+    public ResponseUserDataDto userData(@PathVariable(name = "id") long id) {
+        return userService.getUserData(id);
     }
 
     @GetMapping("/search")

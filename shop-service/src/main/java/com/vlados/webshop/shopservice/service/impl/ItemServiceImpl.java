@@ -190,6 +190,7 @@ public class ItemServiceImpl implements ItemService {
                     item.setDescription(dto.description());
                     item.setName(dto.name());
                     item.getInventoryInfo().setQuantity(dto.quantity());
+                    item.setPrice(dto.price());
                     item.setNew(dto.isNew());
                 },
                 () -> {

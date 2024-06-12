@@ -174,10 +174,7 @@ class UserProfile extends React.Component {
                 </div>
                 <div className="mt-10 p-5 bg-white shadow"
                      style={{borderBottomLeftRadius: '15px', borderBottomRightRadius: '15px'}}>
-                    <UserCart ref={(instance) => {this.userCart = instance;}}/>
-                    <div className="button-confirm-and-order">
-                        <button onClick={this.makeOrder}>Confirm and order</button>
-                    </div>
+                    <UserCart ref={(instance) => {this.userCart = instance;}} onChange={this.makeOrder}/>
                 </div>
             </div>
             <div className="profile-body-1">

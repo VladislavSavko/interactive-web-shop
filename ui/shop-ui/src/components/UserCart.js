@@ -49,6 +49,9 @@ class UserCart extends React.Component {
                     })}
                 </div>
             </div>}
+            {this.state.items.length > 0 && <div className="button-confirm-and-order">
+                <button onClick={() => this.props.onChange()}>Confirm and order</button>
+            </div>}
         </>
     }
 }

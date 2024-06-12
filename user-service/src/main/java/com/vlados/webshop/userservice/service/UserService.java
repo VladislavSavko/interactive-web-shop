@@ -4,7 +4,7 @@ import com.vlados.webshop.userservice.dto.auth.UserAuthDtoRequest;
 import com.vlados.webshop.userservice.dto.auth.UserAuthDtoResponse;
 import com.vlados.webshop.userservice.dto.user.NewUserDto;
 import com.vlados.webshop.userservice.dto.user.ResponseUserDto;
-import com.vlados.webshop.userservice.dto.user.ResponseUserNameDto;
+import com.vlados.webshop.userservice.dto.user.ResponseUserDataDto;
 import com.vlados.webshop.userservice.dto.user.UpdatedUserDto;
 
 import java.util.List;
@@ -19,7 +19,7 @@ public interface UserService {
 
     Optional<String> getEmailById(final long id);
 
-    ResponseUserNameDto getNameAndEmail(final long id);
+    ResponseUserDataDto getUserData(final long id);
 
     List<ResponseUserDto> searchByEmail(final String email);
 
