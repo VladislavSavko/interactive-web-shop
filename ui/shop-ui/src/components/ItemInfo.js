@@ -6,6 +6,8 @@ import ImageAddingModal from "./modals/ImageAddingModal";
 import ImageDeletingModal from "./modals/ImageDeletingModal";
 import UpdateItemModal from "./modals/UpdateItemModal";
 
+import newMark from '../images/new_mark.png'
+
 class ItemInfo extends React.Component {
     constructor(props) {
         super(props);
@@ -49,7 +51,7 @@ class ItemInfo extends React.Component {
                     });
                 });
             } else {
-                ///////////////////////////////////////////////////////////////
+                console.error('Failed to fetch item info');
             }
         });
     }
@@ -98,7 +100,7 @@ class ItemInfo extends React.Component {
                     }
                 });
             } else {
-                ///////////////////////////////////////////////////////////////
+                console.error('Failed to fetch item info');
             }
         });
 
@@ -113,13 +115,15 @@ class ItemInfo extends React.Component {
         event.target.classList.add('focus');
         this.setState({
             selected: event.target.textContent
-        })
+        });
     }
 
     deleteItem = (id) => {
         ApiClient.deleteItem(id).then(response => {
             if(response.ok) {
                 window.location.href = "/shop";
+            } else {
+                console.error('Failed to delete item');
             }
         });
     }
@@ -131,7 +135,7 @@ class ItemInfo extends React.Component {
     render() {
         const images = this.state.binary.map(i => i.data);
         const isNew = this.state.isNew ? <img
-            src="https://th.bing.com/th/id/R.a75f2bc0fd676a9b44beb67580e46719?rik=rgqLLsea1oUvuQ&riu=http%3a%2f%2fgetdrawings.com%2ffree-icon%2fnew-icon-transparent-74.png&ehk=T0Tvxuk5h3p4TwT8F21ozdLHa1fqFj4YObc4hZI4GhM%3d&risl=&pid=ImgRaw&r=0"
+            src={newMark}
             style={{position: 'absolute', top: '3%', right: '34.5%', width: '65px'}} alt=""/> : <></>;
         let upperButton = window.sessionStorage.getItem('userRole') === 'CLIENT'
             ?

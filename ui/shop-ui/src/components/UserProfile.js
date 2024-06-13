@@ -54,6 +54,8 @@ class UserProfile extends React.Component {
                 });
                 this.ordersComponent.refreshUserOrders(userId);
                 this.userCart.refreshItemsInCart();
+            } else {
+                console.error('Failed to make order');
             }
         });
     }

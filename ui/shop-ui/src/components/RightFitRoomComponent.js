@@ -37,7 +37,7 @@ class RightFitRoomComponent extends React.Component {
                             });
                         };
                         reader.onerror = () => {
-                            console.error('Ошибка при чтении файла');
+                            console.error('File reading error!');
                         };
                         this.setState({
                             isDraggingActive: false

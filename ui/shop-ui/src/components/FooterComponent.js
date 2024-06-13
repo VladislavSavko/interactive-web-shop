@@ -72,7 +72,7 @@ class FooterComponent extends React.Component {
             <footer className="footer_section">
                 <div className="container">
                     <p style={{color: '#cbc9c9'}}>
-                        © 2024 All Rights Reserved. By <a href="">Vlados</a>
+                        © 2024 All Rights Reserved. By <a href="/">Vlados</a>
                     </p>
                 </div>
             </footer>

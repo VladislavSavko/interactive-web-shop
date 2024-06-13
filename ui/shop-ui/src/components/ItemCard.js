@@ -19,8 +19,10 @@ class ItemCard extends React.Component {
     deleteItem = (itemId) => {
         window.localStorage.setItem('toast', this.props.name)
         ApiClient.deleteItem(itemId).then(r => {
-            if(r.ok) {
+            if (r.ok) {
                 this.props.onChange();
+            } else {
+                console.error('Failed to delete item');
             }
         });
     }
@@ -31,12 +33,12 @@ class ItemCard extends React.Component {
 
     deleteFromCart = (itemId) => {
         ApiClient.deleteFromCart(itemId, window.sessionStorage.getItem('userId')).then(r => {
-            if(!r.ok) {
+            if (!r.ok) {
                 r.json().then(rJson => {
-                    console.log(rJson);
+                    console.error('Failed to delete data from cart: ' + rJson);
                 })
             } else {
-                if(this.props.onChange) {
+                if (this.props.onChange) {
                     this.props.onChange();
                 }
             }
@@ -46,8 +48,12 @@ class ItemCard extends React.Component {
     withButtons() {
         if (this.props.buttonsActive === true) {
             return <>
-                <button className="card-item-buttons btn-modal-4" onClick={() => this.deleteFromCart(this.props.iid)}>Delete from cart</button>
-                {this.props.mainImage? <button className="card-item-buttons btn-modal-5" onClick={() => window.location.href = '/fitroom?itemId=' + this.props.iid}>Try in fitting room</button> : <></>}
+                <button className="card-item-buttons btn-modal-4"
+                        onClick={() => this.deleteFromCart(this.props.iid)}>Delete from cart
+                </button>
+                {this.props.mainImage ? <button className="card-item-buttons btn-modal-5"
+                                                onClick={() => window.location.href = '/fitroom?itemId=' + this.props.iid}>Try
+                    in fitting room</button> : <></>}
                 <input type="number" id={this.itemId(this.props.iid)} defaultValue={this.props.selectedQuantity}
                        max={this.props.maxQuantity} min="1" onInput={this.checkValue}
                        style={{
@@ -57,9 +63,11 @@ class ItemCard extends React.Component {
                 <div style={{marginLeft: '88px'}}>In stock: <span>{this.props.maxQuantity}</span></div>
             </>
         }
-        if(this.props.admin) {
+        if (this.props.admin) {
             return <>
-                <button className="card-item-buttons btn-modal-4" onClick={() => this.deleteItem(this.props.iid)}>Delete item</button>
+                <button className="card-item-buttons btn-modal-4" onClick={() => this.deleteItem(this.props.iid)}>Delete
+                    item
+                </button>
                 <UpdateItemModal
                     iid={this.props.iid}
                     defName={this.props.name}
@@ -82,7 +90,7 @@ class ItemCard extends React.Component {
     }
 
     withSize() {
-        if(this.props.buttonsActive === true) {
+        if (this.props.buttonsActive === true) {
             return <span style={{fontSize: '20px'}}>{this.props.size}</span>
         }
     }

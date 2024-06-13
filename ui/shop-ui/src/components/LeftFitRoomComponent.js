@@ -40,6 +40,8 @@ class LeftFitRoomComponent extends React.Component {
                         this.props.onChange(true);
                     }
                 });
+            } else {
+                console.error('Failed to fetch item info');
             }
         });
     }

@@ -51,8 +51,10 @@ class OrderInfo extends React.Component {
         ApiClient.deleteOrder(this.state.orderId).then(response => {
             if (response.ok) {
                 window.location.href = '/profile'
+            } else {
+                console.error('Failed to delete order');
             }
-        })
+        });
     }
 
     getOrderInfo = (orderId) => {
@@ -89,9 +91,13 @@ class OrderInfo extends React.Component {
                                     }
                                 });
                             });
+                        } else {
+                            console.error('Failed to fetch user data');
                         }
                     });
                 });
+            } else {
+                console.error('Failed to fetch order info');
             }
         });
     }
@@ -100,6 +106,8 @@ class OrderInfo extends React.Component {
         ApiClient.changeOrderStatus(this.state.orderId, status).then(r => {
             if (r.ok) {
                 this.getOrderInfo(this.state.orderId);
+            } else {
+                console.error('Failed to change order status');
             }
         })
     }

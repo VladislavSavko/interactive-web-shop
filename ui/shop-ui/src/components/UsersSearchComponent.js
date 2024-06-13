@@ -19,6 +19,8 @@ class UsersSearchComponent extends React.Component {
                         searchResult: responseJson
                     });
                 });
+            } else {
+                console.error('Failed to execute searching with value: ' + value);
             }
         });
     }

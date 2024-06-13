@@ -53,6 +53,8 @@ class ItemsComponent extends React.Component {
             response => {
                 if (response.ok) {
                     return response.json();
+                } else {
+                    console.error('Failed to fetch items');
                 }
             }
         )

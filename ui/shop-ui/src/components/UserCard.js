@@ -2,6 +2,7 @@ import React from "react";
 import UserModal from "./modals/UserModal";
 import '../css/modal.css'
 import admin from '../images/admin.png'
+import user from '../images/user1.png'
 
 class UserCard extends React.Component {
     constructor() {
@@ -41,9 +42,7 @@ class UserCard extends React.Component {
                 <div className="box1">
                     <a onClick={() => this.openUserModal(this.props.email)} className="cursored">
                         <div className="img-box">
-                            <img
-                                src="https://static.vecteezy.com/system/resources/thumbnails/020/911/740/small/user-profile-icon-profile-avatar-user-icon-male-icon-face-icon-profile-icon-free-png.png"
-                                alt="" style={{width: '200px'}}/>
+                            <img src={user} alt="" style={{width: '200px'}}/>
                             {this.state.isAdmin ?
                                 <img src={admin} style={{position: 'absolute', top: '3%', right: '2%', width: '35px'}}
                                      alt=""/> : <></>}

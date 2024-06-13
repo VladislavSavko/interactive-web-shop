@@ -22,16 +22,20 @@ class UsersComponent extends React.Component {
                             users: responseJson
                         });
                     });
+                } else {
+                    console.log('Failed to fetch users');
                 }
             }
-        )
+        );
     }
 
     deleteUser = (email) => {
         ApiClient.deleteUser(email).then(resp => {
-            if(resp.ok) {
+            if (resp.ok) {
                 this.refreshUsers();
                 this.props.onChange();
+            } else {
+                console.error('Failed to delete user with email: ' + email);
             }
         });
     }
@@ -51,7 +55,8 @@ class UsersComponent extends React.Component {
                     </div>
                     <div className="row">
                         {this.state.users && this.state.users.map(u => {
-                            return <UserCard email={u.email} name={u.name} admin={u.role === 'ADMIN'} address={u.address} onChange={() => this.deleteUser(u.email)}/>
+                            return <UserCard email={u.email} name={u.name} admin={u.role === 'ADMIN'}
+                                             address={u.address} onChange={() => this.deleteUser(u.email)}/>
                         })}
                     </div>
                 </div>

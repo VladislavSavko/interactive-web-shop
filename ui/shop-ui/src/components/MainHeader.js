@@ -12,12 +12,24 @@ class MainHeader extends React.Component {
     activeNavItem() {
         let navItem;
         switch (this.props.active) {
-            case 'home': navItem = document.getElementById('home_li');break;
-            case 'shop': navItem = document.getElementById('shop_li');break;
-            case 'fr': navItem = document.getElementById('fr_li');break;
-            case 'why': navItem = document.getElementById('why_li');break;
-            case 'contact': navItem = document.getElementById('contact_li');break;
-            case 'users' : navItem = document.getElementById('contact_li');break;
+            case 'home':
+                navItem = document.getElementById('home_li');
+                break;
+            case 'shop':
+                navItem = document.getElementById('shop_li');
+                break;
+            case 'fr':
+                navItem = document.getElementById('fr_li');
+                break;
+            case 'why':
+                navItem = document.getElementById('why_li');
+                break;
+            case 'contact':
+                navItem = document.getElementById('contact_li');
+                break;
+            case 'users' :
+                navItem = document.getElementById('contact_li');
+                break;
             case 'login': {
                 document.getElementById('login_a').style.color = "#f89cab";
                 return;
@@ -49,17 +61,16 @@ class MainHeader extends React.Component {
     }
 
 
-
     render() {
         function displayUserInfo() {
-            if(window.sessionStorage.getItem('token') != null && window.sessionStorage.getItem('token').length > 0
+            if (window.sessionStorage.getItem('token') != null && window.sessionStorage.getItem('token').length > 0
                 && window.sessionStorage.getItem('username') != null && window.sessionStorage.getItem('username').length > 0) {
                 return <a href="/profile" className="user-info">
                     <img style={{maxWidth: '40px', maxHeight: '40px', marginLeft: '30px'}}
                          src={user}
                          alt=""/>
                     <div id="profile_div">
-                        {window.sessionStorage.getItem('userRole') === 'ADMIN' ?  window.sessionStorage.getItem('username') + ' (admin)' : window.sessionStorage.getItem('username')}
+                        {window.sessionStorage.getItem('userRole') === 'ADMIN' ? window.sessionStorage.getItem('username') + ' (admin)' : window.sessionStorage.getItem('username')}
                     </div>
                 </a>;
             }
@@ -68,8 +79,14 @@ class MainHeader extends React.Component {
         return <header className="header_section">
             <nav className="navbar navbar-expand-lg custom_nav-container ">
                 <a className="navbar-brand" href="/">
-                    <img src={logo} alt="" style={{width: '30px', height: '30px', marginRight: '10px', marginBottom: '8px', borderRadius: '10px'}}/>
-                <span>
+                    <img src={logo} alt="" style={{
+                        width: '30px',
+                        height: '30px',
+                        marginRight: '10px',
+                        marginBottom: '8px',
+                        borderRadius: '10px'
+                    }}/>
+                    <span>
                     INTERACTIVE WEB-SHOP
                 </span>
                 </a>
@@ -100,12 +117,14 @@ class MainHeader extends React.Component {
                             </a>
                             {/*//TODO: Make href to particular section in home page*/}
                         </li>}
-                        {window.sessionStorage.getItem('userRole') !== 'ADMIN' &&<li id="contact_li" className="nav-item">
-                            <a className="nav-link" href="/">Contact Us</a>
-                        </li>}
-                        {window.sessionStorage.getItem('userRole') === 'ADMIN' &&<li id="contact_li" className="nav-item">
-                            <a className="nav-link" href="/users">Users</a>
-                        </li>}
+                        {window.sessionStorage.getItem('userRole') !== 'ADMIN' &&
+                            <li id="contact_li" className="nav-item">
+                                <a className="nav-link" href="/">Contact Us</a>
+                            </li>}
+                        {window.sessionStorage.getItem('userRole') === 'ADMIN' &&
+                            <li id="contact_li" className="nav-item">
+                                <a className="nav-link" href="/users">Users</a>
+                            </li>}
                     </ul>
                     <div className="user_option">
                         <a id="login_a" href="/login">
