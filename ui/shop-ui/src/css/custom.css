@@ -15,7 +15,7 @@
         font-size: 16px;
         background: white;
         width: 100%;
-        border: 0;
+        border: 0.5px solid transparent;
         padding: 10px 10px;
         margin: 15px -10px;
     }
@@ -104,6 +104,10 @@
     display: none;
     animation: slideDownError 0.5s ease forwards;
     position: relative;
+    overflow-wrap: break-word;
+    word-break: normal;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .user-info {

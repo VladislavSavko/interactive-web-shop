@@ -33,7 +33,7 @@ const SignUpPage = () => {
                         <div className="form-row">
                             <input id="name" name="name" type="text" placeholder="Your name" onFocus={blackText}/>
                         </div>
-                        <div id="error_div" style={{top: '60%', left: '2.3%'}} className="error"></div>
+                        <div id="error_div" className="error"></div>
                     </div>
                     <div className="form-right">
                         <h2>Address Details</h2>
@@ -144,6 +144,11 @@ const showErrors = (errors) => {
     errors.forEach(error => response += error + '\n');
 
     errorDiv.innerText = response;
+    errorDiv.style.borderBottomRightRadius = 0;
+    if(errors.length !== 5) {
+        errorDiv.style.borderBottomLeftRadius = 0;
+    }
+    errorDiv.style.display = 'block';
 
     document.getElementById('email').style.color = 'red';
     document.getElementById('password').style.color = 'red';

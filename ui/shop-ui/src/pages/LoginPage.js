@@ -33,7 +33,9 @@ const LoginPage = () => {
     </div>
 
     function blackText() {
+        document.getElementById('email').style.borderColor = 'transparent';
         document.getElementById('email').style.color = 'black';
+        document.getElementById('password').style.borderColor = 'transparent';
         document.getElementById('password').style.color = 'black';
     }
 }
@@ -44,7 +46,9 @@ const showError = (message) => {
     errorDiv.style.display = 'block';
 
     document.getElementById('email').style.color = 'red';
+    document.getElementById('email').style.borderColor = 'red';
     document.getElementById('password').style.color = 'red';
+    document.getElementById('password').style.borderColor = 'red';
 
     const content = document.getElementById('content');
     content.style.borderBottomLeftRadius = '0';
