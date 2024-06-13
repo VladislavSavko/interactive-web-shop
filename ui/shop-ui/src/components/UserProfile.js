@@ -32,7 +32,7 @@ class UserProfile extends React.Component {
                     });
                 });
             } else {
-                //TODO: Redirect to error page????????????
+                console.error('Failed to fetch user info');
             }
         });
     }

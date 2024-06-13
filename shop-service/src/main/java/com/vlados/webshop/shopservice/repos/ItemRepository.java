@@ -38,4 +38,7 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
             @Param("categories") List<String> categories,
             @Param("min") double minPrice,
             @Param("max") double maxPrice);
+
+    @Query("SELECT item FROM Item item WHERE size(item.images) > :imagesSize")
+    List<Item> findByImagesSizeGreaterThan(@Param("imagesSize") int imagesSize);
 }

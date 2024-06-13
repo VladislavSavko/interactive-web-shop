@@ -10,6 +10,8 @@ import java.util.List;
 public interface ItemService {
     List<ItemResponseDto> getAll();
 
+    List<ItemResponseDto> getAllWithImages();
+
     List<ItemResponseDto> getAll(List<String> categories);
 
     List<ItemResponseDto> getAll(double minPrice, double maxPrice);

@@ -8,6 +8,8 @@ import java.util.Optional;
 public interface ItemDao {
     List<Item> getAll();
 
+    List<Item> getAllWithImages();
+
     List<Item> getAll(List<String> categories);
 
     List<Item> getAll(double minPrice, double maxPrice);

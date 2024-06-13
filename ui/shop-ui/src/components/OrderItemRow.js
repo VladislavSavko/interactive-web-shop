@@ -1,10 +1,10 @@
 import React from "react";
-import ShippingProgressBar from "./bar/ShippingProgressBar";
 
 export default function OrderItemRow(props) {
+    const imgSrc = props.item.images.length > 0 ? props.item.images[0].data : null;
     return <div className="row row-main">
         <div className="col-3">
-            <img className="img-fluid" src={`data:image/png;base64,${props.item.images[0].data}`} alt="Having troubles loading the image..."/>
+            <img className="img-fluid" src={`data:image/png;base64,${imgSrc}`} alt="Having troubles loading the image..."/>
         </div>
         <div className="col-6">
             <div className="row d-flex">

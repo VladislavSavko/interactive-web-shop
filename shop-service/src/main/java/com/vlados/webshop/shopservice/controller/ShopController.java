@@ -95,6 +95,11 @@ public class ShopController {
         }
     }
 
+    @GetMapping("/items/forFr")
+    public List<ItemResponseDto> getItemsWithImages() {
+        return itemService.getAllWithImages();
+    }
+
     @GetMapping("/items/{id}")
     public ItemResponseDto getItem(@PathVariable(name = "id") long id) {
         return itemService.getAsResponse(id);

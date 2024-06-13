@@ -22,6 +22,8 @@ class AdminOrders extends React.Component {
                         orders: rJson
                     });
                 });
+            } else {
+                console.error('Failed to fetch users\' orders');
             }
         })
     }
@@ -32,8 +34,13 @@ class AdminOrders extends React.Component {
                 {this.state.orders && <div className="row">
                     {this.state.orders.map(order => {
                         return <OrderCard
-                            firstItemName={this.state.orders[0].relatedItems[0].item.name}
-                            firstItemImage={'data:image/png;base64,' + this.state.orders[0].relatedItems[0].item.images[0].data}
+                            firstItemName={order.relatedItems[0].item.name}
+                            firstItemImage={
+                                order.relatedItems[0].item.images.length > 0
+                                    ?
+                                    'data:image/png;base64,' + order.relatedItems[0].item.images[0].data
+                                    :
+                                    null}
                             total={order.total}
                             status={order.status}
                             oid={order.relatedItems[0].orderId}

@@ -12,12 +12,13 @@ class ApiClient {
     static ORDERS_URL = '/orders';
     static ADMIN_URL = '/admin';
     static IMAGES_URL = '/images';
+    static FOR_FITTING_ROOM_URL = '/forFr';
 
-    static getUsers() : Promise<Response> {
+    static getUsers(): Promise<Response> {
         return fetch(this.SERVER_URL + this.USERS_API);
     }
 
-    static searchForUsers(by, _with) : Promise<Response> {
+    static searchForUsers(by, _with): Promise<Response> {
         return fetch(this.SERVER_URL + this.USERS_API + this.SEARCH_URL + '?' + by + '=' + _with);
     }
 
@@ -25,7 +26,7 @@ class ApiClient {
         return fetch(this.SERVER_URL + this.SHOP_API + this.ORDERS_URL + '/' + id);
     }
 
-    static deleteUser(email) : Promise<Response> {
+    static deleteUser(email): Promise<Response> {
         return fetch(this.SERVER_URL + this.USERS_API + '/' + email, {
             method: "DELETE"
         });
@@ -120,7 +121,7 @@ class ApiClient {
         });
     }
 
-    static deleteImagesFromItem(indexArray, itemId) : Promise<Response> {
+    static deleteImagesFromItem(indexArray, itemId): Promise<Response> {
         return fetch(this.SERVER_URL + this.SHOP_API + this.ITEMS_URL + this.IMAGES_URL + '/' + itemId + '?indexes=' + indexArray.join(','), {
             method: "DELETE"
         });
@@ -153,6 +154,10 @@ class ApiClient {
         } else {
             return fetch(this.SERVER_URL + this.SHOP_API + this.ITEMS_URL + '?' + filters);
         }
+    }
+
+    static getAllItemsWithImages(): Promise<Response> {
+        return fetch(this.SERVER_URL + this.SHOP_API + this.ITEMS_URL + this.FOR_FITTING_ROOM_URL);
     }
 
     static searchForItems(name): Promise<Response> {

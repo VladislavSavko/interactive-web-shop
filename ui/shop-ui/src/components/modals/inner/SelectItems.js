@@ -20,7 +20,7 @@ class SelectItems extends React.Component {
             }));
         }
 
-        ApiClient.getAllItems().then(response => {
+        ApiClient.getAllItemsWithImages().then(response => {
             if (response.ok) {
                 response.json().then(responseJson => {
                     this.setState({

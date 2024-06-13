@@ -42,6 +42,13 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
+    public List<ItemResponseDto> getAllWithImages() {
+        return itemDao.getAllWithImages().stream()
+                .map(DtoMapper.ForItem::toDto)
+                .toList();
+    }
+
+    @Override
     public List<ItemResponseDto> getAll(List<String> categories) {
         return itemDao.getAll(categories).stream()
                 .peek(item -> item.getImages()

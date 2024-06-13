@@ -195,7 +195,7 @@ class ItemInfo extends React.Component {
                             {updateButton}
                             {deleteButton}
                             <br/>
-                            <button className="buttons try" onClick={this.goToFittingRoom}>Try in fitting room</button>
+                            {this.state.binary.length > 0 && <button className="buttons try" onClick={this.goToFittingRoom}>Try in fitting room</button>}
                         </div>
                     </div>
                 </div>

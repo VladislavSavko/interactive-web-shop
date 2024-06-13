@@ -22,6 +22,8 @@ class UserCart extends React.Component {
                         items: json.items
                     });
                 });
+            } else {
+                console.error('Failed to fetch user cart');
             }
         });
     }

@@ -16,12 +16,14 @@ class UserOrders extends React.Component {
 
     refreshUserOrders = (userId) => {
         ApiClient.getUserOrders(userId).then(response => {
-            if(response.ok) {
+            if (response.ok) {
                 response.json().then(responseJson => {
                     this.setState({
                         orders: responseJson
                     })
                 });
+            } else {
+                console.error('Failed to fetch user orders');
             }
         })
     }
@@ -30,12 +32,17 @@ class UserOrders extends React.Component {
         return <div className="container container-grid" style={{marginLeft: '0', marginRight: '0'}}>
             {this.state.orders && <div className="row">
                 {this.state.orders.map(order => {
-                return <OrderCard
-                    firstItemName={this.state.orders[0].relatedItems[0].item.name}
-                    firstItemImage={'data:image/png;base64,' + this.state.orders[0].relatedItems[0].item.images[0].data}
-                    total={order.total}
-                    status={order.status}
-                    oid={order.relatedItems[0].orderId}/>
+                    return <OrderCard
+                        firstItemName={order.relatedItems[0].item.name}
+                        firstItemImage={
+                            order.relatedItems[0].item.images.length > 0
+                                ?
+                                'data:image/png;base64,' + order.relatedItems[0].item.images[0].data
+                                :
+                                null}
+                        total={order.total}
+                        status={order.status}
+                        oid={order.relatedItems[0].orderId}/>
                 })}
             </div>}
         </div>

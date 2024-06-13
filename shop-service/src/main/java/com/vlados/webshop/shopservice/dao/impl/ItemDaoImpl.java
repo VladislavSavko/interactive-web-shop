@@ -22,6 +22,11 @@ public class ItemDaoImpl implements ItemDao {
     }
 
     @Override
+    public List<Item> getAllWithImages() {
+        return itemRepository.findByImagesSizeGreaterThan(0);
+    }
+
+    @Override
     public List<Item> getAll(List<String> categories) {
         return (categories.isEmpty()) ? itemRepository.findAll() : itemRepository.findByRelatedCategoryNameIn(categories);
     }
