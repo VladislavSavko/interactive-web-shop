@@ -7,6 +7,8 @@ import React, {useState} from "react";
 const LoginPage = () => {
     const params = new URLSearchParams(window.location.search);
     const [initEmail, setInitEmail] = useState(params.has('email') ? params.get('email') : '');
+
+
     return <div>
         <div className="hero_area">
             <MainHeader active="login"/>

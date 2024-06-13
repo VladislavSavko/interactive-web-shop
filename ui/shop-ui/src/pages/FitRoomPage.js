@@ -53,15 +53,15 @@ const FitRoomPage = () => {
                         setImageResponse("data:image/png;base64," + responseJson.data);
                     }
                 )
+            } else {
+                console.error('Failed to perform fitting');
             }
         });
 
         document.getElementById('image_result').scrollIntoView({behavior: 'smooth', block: 'center'});
     }
 
-    let flag;
-    flag = new URLSearchParams(window.location.search).has('itemId');
-
+    let flag= new URLSearchParams(window.location.search).has('itemId');
     return <>
         <div className="hero_area">
             <MainHeader active="fr"/>

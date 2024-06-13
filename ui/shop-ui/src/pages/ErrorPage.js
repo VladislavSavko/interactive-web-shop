@@ -7,7 +7,6 @@ import SelectPages from "../components/modals/inner/SelectPages";
 
 export default function ErrorPage() {
     const showButton = (value) => {
-        console.log(value.value)
         let button = document.getElementById('router');
         button.style.display = 'block';
         switch (value.value) {

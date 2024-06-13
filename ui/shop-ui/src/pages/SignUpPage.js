@@ -24,7 +24,8 @@ const SignUpPage = () => {
                     <div className="form-left">
                         <h2>General information</h2>
                         <div className="form-row">
-                            <input id="email" name="email" type="text" placeholder="Email" onFocus={blackText} defaultValue={initEmail}/>
+                            <input id="email" name="email" type="text" placeholder="Email" onFocus={blackText}
+                                   defaultValue={initEmail}/>
                         </div>
                         <div className="form-row">
                             <input id="password" name="password" type="password" placeholder="Password"
@@ -80,7 +81,6 @@ const SignUpPage = () => {
             </div>
         </div>
     </div>
-
 }
 
 
@@ -110,7 +110,6 @@ const sendData = () => {
                             });
                         }
                     });
-                    //     window.sessionStorage.setItem('isAdmin', responseJson['admin']);
                 });
             } else if (response.status === 400) {
                 response.json().then(responseJson => {
@@ -121,7 +120,7 @@ const sendData = () => {
                     }
                 });
             } else {
-                console.log('fuck');
+                console.error('Failed to register user with email: ' + email);
             }
         });
 }
@@ -145,7 +144,7 @@ const showErrors = (errors) => {
 
     errorDiv.innerText = response;
     errorDiv.style.borderBottomRightRadius = 0;
-    if(errors.length !== 5) {
+    if (errors.length !== 5) {
         errorDiv.style.borderBottomLeftRadius = 0;
     }
     errorDiv.style.display = 'block';

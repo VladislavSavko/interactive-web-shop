@@ -23,7 +23,6 @@ const Home = () => {
             <Route element={<FitRoomPage />} path='/fitroom'/>
             <Route element={<OrderPage />} path='/orders/*'/>
             <Route element={<UsersPage />} path='/users'/>
-            {/*<Route element={<ChangePasswordPage/>} path='/myPage/password'/>*/}
 
 
             <Route path="*" element={<ErrorPage />}/>
