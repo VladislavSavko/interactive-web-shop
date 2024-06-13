@@ -6,7 +6,9 @@ import {useState} from "react";
 
 
 const SignUpPage = () => {
+    const params = new URLSearchParams(window.location.search);
     const [country, setCountry] = useState('');
+    const [initEmail, setInitEmail] = useState(params.has('email') ? params.get('email') : '');
 
 
     function blackText() {
@@ -22,7 +24,7 @@ const SignUpPage = () => {
                     <div className="form-left">
                         <h2>General information</h2>
                         <div className="form-row">
-                            <input id="email" name="email" type="text" placeholder="Email" onFocus={blackText}/>
+                            <input id="email" name="email" type="text" placeholder="Email" onFocus={blackText} defaultValue={initEmail}/>
                         </div>
                         <div className="form-row">
                             <input id="password" name="password" type="password" placeholder="Password"
@@ -51,7 +53,7 @@ const SignUpPage = () => {
                                     border: '0',
                                     padding: '10px 10px',
                                     margin: '15px -10px'
-                            }}/>
+                                }}/>
                         </div>
                         <div className="form-row">
                             <input id="city" name="city" type="text" placeholder="City" onFocus={blackText}/>
@@ -60,7 +62,8 @@ const SignUpPage = () => {
                             <input id="street" name="street" type="text" placeholder="Street" onFocus={blackText}/>
                         </div>
                         <div className="form-row">
-                            <input id="house_number" name="house_number" type="text" placeholder="House number" onFocus={blackText}/>
+                            <input id="house_number" name="house_number" type="text" placeholder="House number"
+                                   onFocus={blackText}/>
                         </div>
                         <div className="form-row">
                             <input id="flat_number" name="flat_number" type="text" placeholder="Flat number"
@@ -69,7 +72,8 @@ const SignUpPage = () => {
                         <div className="form-row-last">
                             <button onClick={sendData}>Sign Up</button>
                             <button style={{marginLeft: '275px'}}
-                                    onClick={() => window.location.href = "/login"}>Login</button>
+                                    onClick={() => goToLogin()}>Login
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -120,6 +124,17 @@ const sendData = () => {
                 console.log('fuck');
             }
         });
+}
+
+const goToLogin = () => {
+    const email = document.getElementById('email').value;
+    let redirectUrl = '/login?';
+
+    if (email !== undefined && email.length > 0) {
+        redirectUrl += `email=${email}`
+    }
+
+    window.location.href = redirectUrl;
 }
 
 const showErrors = (errors) => {

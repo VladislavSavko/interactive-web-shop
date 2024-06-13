@@ -1,10 +1,12 @@
 import '../css/custom.css'
 import ApiClient from "../client/ApiClient";
 import MainHeader from "../components/MainHeader";
-import React from "react";
+import React, {useState} from "react";
 
 
 const LoginPage = () => {
+    const params = new URLSearchParams(window.location.search);
+    const [initEmail, setInitEmail] = useState(params.has('email') ? params.get('email') : '');
     return <div>
         <div className="hero_area">
             <MainHeader active="login"/>
@@ -15,11 +17,13 @@ const LoginPage = () => {
                     <span>Welcome to our web-shop!</span>
                     <br/>
                     <span>Please, enter your credentials:</span>
-                    <input id="email" name="email" type="text" placeholder="Email" onFocus={blackText} onInput={blackText}/>
-                    <input id="password" name="password" type="password" placeholder="Password" onFocus={blackText} onInput={blackText}/>
+                    <input id="email" name="email" type="text" placeholder="Email" onFocus={blackText}
+                           onInput={blackText} defaultValue={initEmail}/>
+                    <input id="password" name="password" type="password" placeholder="Password" onFocus={blackText}
+                           onInput={blackText}/>
                     <div style={{display: 'flex', justifyContent: 'space-between'}}>
                         <button>Login</button>
-                        <button style={{marginRight: '11px'}} onClick={() => window.location.href = "/signUp"}>Sign up
+                        <button style={{marginRight: '11px'}} onClick={() => goToSignUp()}>Sign up
                         </button>
                     </div>
                 </form>
@@ -71,6 +75,17 @@ const sendData = (event) => {
                 console.log('fuck');
             }
         })
+}
+
+const goToSignUp = () => {
+    const email = document.getElementById('email').value;
+    let redirectUrl = '/signUp?';
+
+    if (email !== undefined && email.length > 0) {
+        redirectUrl += `email=${email}`
+    }
+
+    window.location.href = redirectUrl;
 }
 
 
