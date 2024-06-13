@@ -11,19 +11,21 @@ const LoginPage = () => {
         </div>
         <div className="login-page-content">
             <div className="form-v10-content" style={{width: '600px'}}>
-                <form className="login" onSubmit={sendData}>
+                <form id="content" className="login" onSubmit={sendData}>
                     <span>Welcome to our web-shop!</span>
                     <br/>
                     <span>Please, enter your credentials:</span>
-                    <input id="email" name="email" type="text" placeholder="Email" onFocus={blackText}/>
-                    <input id="password" name="password" type="password" placeholder="Password" onFocus={blackText}/>
-                    <button>Login</button>
-                    <button style={{marginLeft: '275px'}} onClick={() => window.location.href = "/signUp"}>Sign up
-                    </button>
+                    <input id="email" name="email" type="text" placeholder="Email" onFocus={blackText} onInput={blackText}/>
+                    <input id="password" name="password" type="password" placeholder="Password" onFocus={blackText} onInput={blackText}/>
+                    <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                        <button>Login</button>
+                        <button style={{marginRight: '11px'}} onClick={() => window.location.href = "/signUp"}>Sign up
+                        </button>
+                    </div>
                 </form>
+                <div id="error_div" className="error"></div>
             </div>
         </div>
-        <div id="error_div" className="error"></div>
     </div>
 
     function blackText() {
@@ -35,9 +37,14 @@ const LoginPage = () => {
 const showError = (message) => {
     const errorDiv = document.getElementById('error_div');
     errorDiv.innerText = message;
+    errorDiv.style.display = 'block';
 
     document.getElementById('email').style.color = 'red';
     document.getElementById('password').style.color = 'red';
+
+    const content = document.getElementById('content');
+    content.style.borderBottomLeftRadius = '0';
+    content.style.borderBottomRightRadius = '0';
 
     //TODO: Add error codes on back to highlight only email field when email error?
 }

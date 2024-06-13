@@ -1,6 +1,5 @@
 import Select from 'react-select';
 import React from "react";
-import ApiClient from "../../../client/ApiClient";
 
 
 class SelectPages extends React.Component {
@@ -47,7 +46,7 @@ class SelectPages extends React.Component {
                 }
             }),
         };
-        return  <Select options={this.state.options} onChange={this.handleChange} placeholder="Choose items:" styles={stylesForSelect}/>
+        return  <Select options={this.state.options} onChange={this.handleChange} placeholder="Choose pages:" styles={stylesForSelect}/>
     }
 }
 

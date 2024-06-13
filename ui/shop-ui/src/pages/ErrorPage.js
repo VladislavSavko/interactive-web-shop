@@ -5,7 +5,7 @@ import error from '../images/error.png'
 import FooterComponent from "../components/FooterComponent";
 import SelectPages from "../components/modals/inner/SelectPages";
 
-export default function ErrorPage(props) {
+export default function ErrorPage() {
     const showButton = (value) => {
         console.log(value.value)
         let button = document.getElementById('router');

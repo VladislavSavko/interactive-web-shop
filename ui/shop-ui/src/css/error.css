@@ -79,7 +79,7 @@
     -o-border-radius: 5px;
     box-shadow: inset 0 0 5px rgba(156, 156, 156, 0.75);
     -moz-box-shadow: inset 0 0 5px rgba(156, 156, 156, 0.75);
-    -webkit-box-shadow: inset 0px 0px 5px rgba(156, 156, 156, 0.75);
+    -webkit-box-shadow: inset 0 0 5px rgba(156, 156, 156, 0.75);
 }
 
 .search_box input[type="text"] {
