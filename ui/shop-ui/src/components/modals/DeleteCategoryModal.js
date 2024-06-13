@@ -31,14 +31,30 @@ class DeleteCategoryModal extends React.Component {
     }
 
     deleteCategory = () => {
-        ApiClient.deleteCategory(this.state.selectedCategory.value).then(response => {
-            if(response.ok) {
-                window.localStorage.setItem('toast', this.state.selectedCategory.value)
-                this.props.onChange();
-                this.switchModalState();
-            }
-        })
+        if (this.state.selectedCategory !== null && this.state.selectedCategory !== undefined) {
+            ApiClient.deleteCategory(this.state.selectedCategory.value).then(response => {
+                if (response.ok) {
+                    window.localStorage.setItem('toast', this.state.selectedCategory.value)
+                    this.props.onChange();
+                    this.switchModalState();
+                } else {
+                    console.error('Failed to delete category');
+                }
+            });
+        } else {
+            this.showErrors(["Please, select a category to delete"])
+        }
 
+    }
+
+    showErrors = (errors) => {
+        const errorDiv = document.getElementById('error_div');
+        let response = "";
+
+        errors.forEach(error => response += error + '\n');
+
+        errorDiv.innerText = response;
+        errorDiv.style.display = 'block';
     }
 
     getSelectedCategory = (value) => {
@@ -59,6 +75,7 @@ class DeleteCategoryModal extends React.Component {
                         Choose the category to delete <span style={{fontSize: '22px'}}>(mind that this means removing all related items)</span>:
                     </h3>
                     <SelectCategories onChange={this.getSelectedCategory}/>
+                    <div id="error_div" className="error" style={{backgroundColor: 'transparent'}}></div>
                     <div style={{
                         width: '100%',
                         display: 'flex',
@@ -71,7 +88,7 @@ class DeleteCategoryModal extends React.Component {
                                 style={{width: '200px', height: '60px', fontSize: '25px'}}>Delete
                         </button>
                     </div>
-                    <div id="error_div" style={{color: 'red'}}></div>
+
                 </div>
             </div>)}
         </>

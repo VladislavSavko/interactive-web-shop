@@ -33,9 +33,13 @@ export default function UserAddingModal(props) {
         const flatNumber = document.getElementById('flat_number').value;
 
         ApiClient.register(email, password, name, country, city, street, houseNumber, flatNumber).then(r => {
-            if(r.ok) {
+            if (r.ok) {
                 switchModalState();
                 props.onChange();
+            } else if(r.status === 400) {
+                r.json().then(responseJson => {
+                    showErrors(responseJson.errors)
+                });
             }
         });
     }
@@ -47,9 +51,7 @@ export default function UserAddingModal(props) {
         errors.forEach(error => response += error + '\n');
 
         errorDiv.innerText = response;
-
-        document.getElementById('house_number').style.color = 'red';
-        document.getElementById('flat_number').style.color = 'red';
+        errorDiv.style.display = 'block';
     }
 
     return (
@@ -171,7 +173,7 @@ export default function UserAddingModal(props) {
                         <h2 style={{textTransform: 'none'}}>Flat number:</h2>
                         <input type="text" id="flat_number" className="modal-user-input" placeholder="123"/>
                     </div>
-                    <div id="error_div" style={{color: 'red'}}></div>
+                    <div id="error_div" className="error" style={{backgroundColor: 'transparent', overflowY: 'auto'}}></div>
                     <button onClick={switchModalState} className="close-modal">Close</button>
                     <button onClick={addUser} className="submit-modal">Submit</button>
                 </div>

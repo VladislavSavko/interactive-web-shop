@@ -38,9 +38,13 @@ export default function NewItemModal(props) {
         const isNew = document.getElementById('news').checked;
 
         ApiClient.addItemToCatalog(itemName, category, quantity, _color, desc, price, isNew).then(response => {
-            if(response.ok) {
+            if (response.ok) {
                 props.onChange();
                 switchModalState();
+            } else if (response.status === 400) {
+                response.json().then(responseJson => {
+                    showErrors(responseJson.errors)
+                });
             }
         })
     }
@@ -52,9 +56,7 @@ export default function NewItemModal(props) {
         errors.forEach(error => response += error + '\n');
 
         errorDiv.innerText = response;
-
-        document.getElementById('house_number').style.color = 'red';
-        document.getElementById('flat_number').style.color = 'red';
+        errorDiv.style.display = 'block';
     }
 
     return (
@@ -70,7 +72,8 @@ export default function NewItemModal(props) {
                         to catalog</h2>
                     <div style={{width: '100%', display: 'flex', alignItems: 'center'}}>
                         <h2 style={{textTransform: 'none'}}>Name:</h2>
-                        <input id="name" type="text" placeholder="Enter an item name" className="modal-item-price-input"/>
+                        <input id="name" type="text" placeholder="Enter an item name"
+                               className="modal-item-price-input"/>
                     </div>
                     <div style={{width: '100%', display: 'flex', alignItems: 'center', marginTop: '10px'}}>
                         <h2 style={{textTransform: 'none'}}>Quantity:</h2>
@@ -91,19 +94,22 @@ export default function NewItemModal(props) {
                         borderTop: '3px solid #ccc',
                         paddingTop: '10px'
                     }}>
-                        <div style={{width: '100%', display: 'flex', alignItems: 'center', borderTop: '3px solid #ccc'}}>
+                        <div
+                            style={{width: '100%', display: 'flex', alignItems: 'center', borderTop: '3px solid #ccc'}}>
                             <h2 style={{textTransform: 'none'}}>
                                 Price: <input type="number" id="price" defaultValue="1" className="modal-item-input"
                                               min="1" style={{width: '100px'}}/>
                             </h2>
                             <h4 style={{paddingTop: '5px', marginLeft: '25px'}}>Mark as new</h4>
-                            <input type="checkbox" id="news" name="news" checked={checked} onInput={() => setChecked(!checked)}
+                            <input type="checkbox" id="news" name="news" checked={checked}
+                                   onInput={() => setChecked(!checked)}
                                    style={{marginLeft: '30px', transform: 'scale(2)'}}/>
                         </div>
                     </div>
-                    <div id="error_div" style={{color: 'red'}}></div>
+                    <div id="error_div" className="error" style={{backgroundColor: 'transparent'}}></div>
                     <button onClick={switchModalState} className="close-modal">Close</button>
-                    <button onClick={addItemToCatalog} className="submit-modal" style={{marginTop: '10px'}}>Submit</button>
+                    <button onClick={addItemToCatalog} className="submit-modal" style={{marginTop: '10px'}}>Submit
+                    </button>
                 </div>
             </div>)}
         </>

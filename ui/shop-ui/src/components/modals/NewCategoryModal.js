@@ -31,14 +31,28 @@ class NewCategoryModal extends React.Component {
     createCategory = () => {
         const newCategoryName = document.getElementById('name').value;
         const desc = document.getElementById('description').value;
-        window.localStorage.setItem('toast', newCategoryName)
 
         ApiClient.addCategory(newCategoryName, desc).then(response => {
             if (response.ok) {
+                window.localStorage.setItem('toast', newCategoryName);
                 this.props.onChange();
                 this.switchModalState();
+            } else if(response.status === 400) {
+                response.json().then(responseJson => {
+                    this.showErrors(responseJson.errors)
+                });
             }
         })
+    }
+
+    showErrors = (errors) => {
+        const errorDiv = document.getElementById('error_div');
+        let response = "";
+
+        errors.forEach(error => response += error + '\n');
+
+        errorDiv.innerText = response;
+        errorDiv.style.display = 'block';
     }
 
     render() {
@@ -56,6 +70,7 @@ class NewCategoryModal extends React.Component {
                            style={{marginLeft: '0', width: '100%'}}/>
                     <textarea id="description" placeholder="Enter a category description..."
                               style={{marginTop: '20px', width: '100%'}}/>
+                    <div id="error_div" className="error" style={{backgroundColor: 'transparent'}}></div>
                     <div style={{
                         width: '100%',
                         display: 'flex',
@@ -68,7 +83,6 @@ class NewCategoryModal extends React.Component {
                                 style={{width: '200px', height: '60px', fontSize: '25px'}}>Create
                         </button>
                     </div>
-                    <div id="error_div" style={{color: 'red'}}></div>
                 </div>
             </div>)}
         </>

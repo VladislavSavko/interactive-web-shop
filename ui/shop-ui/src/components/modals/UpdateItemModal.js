@@ -41,9 +41,13 @@ export default function UpdateItemModal(props) {
         const isNew = checked;
 
         ApiClient.updateItem(props.iid, itemName, category, quantity, _color, desc, price, isNew).then(response => {
-            if(response.ok) {
+            if (response.ok) {
                 props.onChange();
                 switchModalState();
+            } else if (response.status === 400) {
+                response.json().then(responseJson => {
+                    showErrors(responseJson.errors)
+                });
             }
         })
     }
@@ -55,27 +59,26 @@ export default function UpdateItemModal(props) {
         errors.forEach(error => response += error + '\n');
 
         errorDiv.innerText = response;
-
-        document.getElementById('house_number').style.color = 'red';
-        document.getElementById('flat_number').style.color = 'red';
+        errorDiv.style.display = 'block'
     }
 
     let classForButton = props.classForButton ? props.classForButton : 'card-item-buttons btn-modal-5';
     let stylesForButton = props.stylesForButton ? props.stylesForButton : {};
 
 
-
     return (
         <>
             <button className={classForButton} onClick={switchModalState} style={stylesForButton}>Edit item</button>
             {modal && (<div className={`_modal-item ${closing ? 'slide-up' : ''}`}>
-            <div onClick={switchModalState} className="overlay"></div>
+                <div onClick={switchModalState} className="overlay"></div>
                 <div className="modal-content"
                      style={{color: 'black', top: '50vh', overflowY: 'auto'}}>
-                    <h2 style={{borderBottom: '3px solid #ccc', paddingBottom: '10px', textTransform: 'none'}}>Edit item</h2>
+                    <h2 style={{borderBottom: '3px solid #ccc', paddingBottom: '10px', textTransform: 'none'}}>Edit
+                        item</h2>
                     <div style={{width: '100%', display: 'flex', alignItems: 'center'}}>
                         <h2 style={{textTransform: 'none'}}>Name:</h2>
-                        <input id="name" type="text" placeholder="Enter an item name" className="modal-item-price-input" defaultValue={props.defName}/>
+                        <input id="name" type="text" placeholder="Enter an item name" className="modal-item-price-input"
+                               defaultValue={props.defName}/>
                     </div>
                     <div style={{width: '100%', display: 'flex', alignItems: 'center', marginTop: '10px'}}>
                         <h2 style={{textTransform: 'none'}}>Quantity:</h2>
@@ -96,17 +99,20 @@ export default function UpdateItemModal(props) {
                         borderTop: '3px solid #ccc',
                         paddingTop: '10px'
                     }}>
-                        <div style={{width: '100%', display: 'flex', alignItems: 'center', borderTop: '3px solid #ccc'}}>
+                        <div
+                            style={{width: '100%', display: 'flex', alignItems: 'center', borderTop: '3px solid #ccc'}}>
                             <h2 style={{textTransform: 'none'}}>
-                                Price: <input type="number" id="price" defaultValue={props.defPrice} className="modal-item-input"
+                                Price: <input type="number" id="price" defaultValue={props.defPrice}
+                                              className="modal-item-input"
                                               min="1" style={{width: '100px'}}/>
                             </h2>
                             <h4 style={{paddingTop: '5px', marginLeft: '25px'}}>Mark as new</h4>
-                            <input type="checkbox" id="news" name="news" checked={checked} onChange={(event) => setChecked(event.target.checked)}
+                            <input type="checkbox" id="news" name="news" checked={checked}
+                                   onChange={(event) => setChecked(event.target.checked)}
                                    style={{marginLeft: '30px', transform: 'scale(2)'}}/>
                         </div>
                     </div>
-                    <div id="error_div" style={{color: 'red'}}></div>
+                    <div id="error_div" className="error" style={{backgroundColor: 'transparent', textTransform: 'none'}}></div>
                     <button onClick={switchModalState} className="close-modal">Close</button>
                     <button onClick={updateItem} className="submit-modal" style={{marginTop: '10px'}}>Submit</button>
                 </div>
