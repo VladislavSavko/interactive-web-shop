@@ -3,6 +3,7 @@ import '../css/custom.css'
 import ApiClient from "../client/ApiClient";
 import {CountryDropdown} from "react-country-region-selector";
 import {useState} from "react";
+import TokenKeeper from "../components/token/TokenKeeper";
 
 
 const SignUpPage = () => {
@@ -103,7 +104,7 @@ const sendData = () => {
                     ApiClient.authenticate(email, password).then(response => {
                         if (response.ok) {
                             response.json().then(responseJson => {
-                                window.sessionStorage.setItem('token', responseJson.tokenString);
+                                TokenKeeper.setToken(responseJson.tokenString);
                                 window.sessionStorage.setItem('userId', responseJson.id);
                                 window.sessionStorage.setItem('userRole', responseJson.role);
                                 window.location.href = '/';

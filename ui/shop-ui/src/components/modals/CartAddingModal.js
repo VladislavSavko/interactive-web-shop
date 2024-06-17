@@ -11,7 +11,7 @@ export default function CartAddingModal(props) {
     const [q, setQ] = useState(1);
 
     const switchModalState = () => {
-        if(props.disabled) {
+        if (props.disabled) {
             toast.warn(`Please, choose item size first!`, {
                 position: "top-center",
                 autoClose: 5000,

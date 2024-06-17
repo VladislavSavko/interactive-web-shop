@@ -48,7 +48,7 @@ public class SecurityConfig {
                                 .hasAuthority("ADMIN")
                                 .pathMatchers(HttpMethod.GET, "/api/v1/shop/items/forFr", "/api/v1/shop/items/search/**")
                                 .hasAnyAuthority("CLIENT", "ADMIN")
-                                .pathMatchers(HttpMethod.GET, "/api/v1/shop/items", "/api/v1/shop/items/{id}")
+                                .pathMatchers(HttpMethod.GET, "/api/v1/shop/items", "/api/v1/shop/items/{id}", "/api/v1/shop/categories/**")
                                 .permitAll()
                                 .pathMatchers(HttpMethod.POST, "/api/v1/users/**")
                                 .permitAll()

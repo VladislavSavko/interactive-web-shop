@@ -97,7 +97,8 @@ class ApiClient {
                 isNew: isNew
             }),
             headers: {
-                "Content-type": "application/json; charset=UTF-8"
+                "Content-type": "application/json; charset=UTF-8",
+                "Authorization": `Bearer ${TokenKeeper.getToken()}`
             }
         })
     }
@@ -115,20 +116,27 @@ class ApiClient {
                 isNew: isNew
             }),
             headers: {
-                "Content-type": "application/json; charset=UTF-8"
+                "Content-type": "application/json; charset=UTF-8",
+                "Authorization": `Bearer ${TokenKeeper.getToken()}`
             }
         })
     }
 
     static deleteItem(id): Promise<Response> {
         return fetch(this.SERVER_URL + this.SHOP_API + this.ITEMS_URL + '/' + id, {
-            method: "DELETE"
+            method: "DELETE",
+            headers: {
+                "Authorization": `Bearer ${TokenKeeper.getToken()}`
+            }
         });
     }
 
     static deleteImagesFromItem(indexArray, itemId): Promise<Response> {
         return fetch(this.SERVER_URL + this.SHOP_API + this.ITEMS_URL + this.IMAGES_URL + '/' + itemId + '?indexes=' + indexArray.join(','), {
-            method: "DELETE"
+            method: "DELETE",
+            headers: {
+                "Authorization": `Bearer ${TokenKeeper.getToken()}`
+            }
         });
     }
 
@@ -167,7 +175,11 @@ class ApiClient {
     }
 
     static searchForItems(name): Promise<Response> {
-        return fetch(this.SERVER_URL + this.SHOP_API + this.ITEMS_URL + this.SEARCH_URL + '?name=' + name);
+        return fetch(this.SERVER_URL + this.SHOP_API + this.ITEMS_URL + this.SEARCH_URL + '?name=' + name, {
+            headers: {
+                "Authorization": `Bearer ${TokenKeeper.getToken()}`
+            }
+        });
     }
 
     static getAllCategories(): Promise<Response> {
@@ -182,14 +194,18 @@ class ApiClient {
                 description: desc
             }),
             headers: {
-                "Content-type": "application/json; charset=UTF-8"
+                "Content-type": "application/json; charset=UTF-8",
+                "Authorization": `Bearer ${TokenKeeper.getToken()}`
             }
         })
     }
 
     static deleteCategory(name): Promise<Response> {
         return fetch(this.SERVER_URL + this.SHOP_API + this.CATEGORIES_URL + '?name=' + name, {
-            method: "DELETE"
+            method: "DELETE",
+            headers: {
+                "Authorization": `Bearer ${TokenKeeper.getToken()}`
+            }
         });
     }
 
@@ -247,7 +263,8 @@ class ApiClient {
                 itemSize: size
             }),
             headers: {
-                "Content-type": "application/json; charset=UTF-8"
+                "Content-type": "application/json; charset=UTF-8",
+                "Authorization": `Bearer ${TokenKeeper.getToken()}`
             }
         });
     }
@@ -287,6 +304,9 @@ class ApiClient {
 
         return fetch(this.SERVER_URL + this.SHOP_API + this.IMAGES_URL + '?itemId=' + itemId, {
             method: "POST",
+            headers: {
+                "Authorization": `Bearer ${TokenKeeper.getToken()}`
+            },
             body: formData
         })
     }

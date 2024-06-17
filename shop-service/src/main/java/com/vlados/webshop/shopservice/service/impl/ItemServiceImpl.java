@@ -1,8 +1,10 @@
 package com.vlados.webshop.shopservice.service.impl;
 
+import com.vlados.webshop.shopservice.dao.CartDao;
 import com.vlados.webshop.shopservice.dao.CategoryDao;
 import com.vlados.webshop.shopservice.dao.ImageDao;
 import com.vlados.webshop.shopservice.dao.ItemDao;
+import com.vlados.webshop.shopservice.domain.cart.CartItem;
 import com.vlados.webshop.shopservice.domain.dto.item.ItemRequestDto;
 import com.vlados.webshop.shopservice.domain.dto.item.ItemResponseDto;
 import com.vlados.webshop.shopservice.domain.dto.item.ItemUpdateDto;
@@ -25,11 +27,13 @@ public class ItemServiceImpl implements ItemService {
     private final ItemDao itemDao;
     private final CategoryDao categoryDao;
     private final ImageDao imageDao;
+    private final CartDao cartDao;
 
-    public ItemServiceImpl(ItemDao itemDao, CategoryDao categoryDao, ImageDao imageDao) {
+    public ItemServiceImpl(ItemDao itemDao, CategoryDao categoryDao, ImageDao imageDao, CartDao cartDao) {
         this.itemDao = itemDao;
         this.categoryDao = categoryDao;
         this.imageDao = imageDao;
+        this.cartDao = cartDao;
     }
 
     @Override
@@ -160,6 +164,7 @@ public class ItemServiceImpl implements ItemService {
     public void delete(long id) {
         if (itemDao.exists(id)) {
             deleteImages(id);
+            deleteCartItems(id);
             itemDao.delete(id);
         } else {
             throw new NoSuchElementException(ResourceUtil.getMessage("db.item.not_found").formatted(id));
@@ -225,6 +230,15 @@ public class ItemServiceImpl implements ItemService {
             imageDao.deleteImage(imageId);
             item.getImages()
                     .remove(image);
+        }
+    }
+
+    private void deleteCartItems(final long id) {
+        Item item = itemDao.get(id).get();
+        List<CartItem> cartItems = cartDao.findByItem(item);
+
+        for(CartItem cartItem : cartItems) {
+            cartDao.deleteCartItem(cartItem);
         }
     }
 }

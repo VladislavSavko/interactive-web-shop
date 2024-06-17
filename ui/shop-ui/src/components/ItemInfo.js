@@ -7,6 +7,7 @@ import ImageDeletingModal from "./modals/ImageDeletingModal";
 import UpdateItemModal from "./modals/UpdateItemModal";
 
 import newMark from '../images/new_mark.png'
+import TokenKeeper from "./token/TokenKeeper";
 
 class ItemInfo extends React.Component {
     constructor(props) {
@@ -65,6 +66,10 @@ class ItemInfo extends React.Component {
     }
 
     componentDidMount() {
+        if (TokenKeeper.getToken() === null || TokenKeeper.getToken() === undefined) {
+            window.location.href = '/error?status=401';
+            return;
+        }
         const url = window.location.href;
         const itemId = url.substring(url.lastIndexOf('item/') + 5);
 
@@ -120,7 +125,7 @@ class ItemInfo extends React.Component {
 
     deleteItem = (id) => {
         ApiClient.deleteItem(id).then(response => {
-            if(response.ok) {
+            if (response.ok) {
                 window.location.href = "/shop";
             } else {
                 console.error('Failed to delete item');
@@ -133,78 +138,83 @@ class ItemInfo extends React.Component {
     }
 
     render() {
-        const images = this.state.binary.map(i => i.data);
-        const isNew = this.state.isNew ? <img
-            src={newMark}
-            style={{position: 'absolute', top: '3%', right: '34.5%', width: '65px'}} alt=""/> : <></>;
-        let upperButton = window.sessionStorage.getItem('userRole') === 'CLIENT'
-            ?
-            <CartAddingModal text="Add to cart" maxQuantity={this.state.quantity} mainImage={images[0]}
-                             price={this.state.price} name={this.state.name} iid={this.state.id}
-                             selectedSize={this.state.selected}
-                             disabled={this.state.selected === '' || this.state.selected === undefined}/>
-            :
-            <ImageAddingModal text="Add images" itemId={this.state.id}/>
-        let middleButton = window.sessionStorage.getItem('userRole') === 'CLIENT'
-            ?
-            <></>
-            :
-            <ImageDeletingModal text="Delete images" images={images} itemId={this.state.id}/>
-        let updateButton = window.sessionStorage.getItem('userRole') === 'CLIENT' ? <></> : <UpdateItemModal
-            iid={this.state.id}
-            defName={this.state.name}
-            defQuantity={this.state.quantity}
-            defCategory={this.state.category}
-            defColor={this.state.color}
-            defDesc={this.state.description}
-            defPrice={this.state.price}
-            defNew={this.state.isNew}
-            onChange={() => this.updateItem()}
-            classForButton="btn-modal-2"
-            stylesForButton={{marginTop: '9px'}}
-        />
-        let deleteButton = window.sessionStorage.getItem('userRole') === 'CLIENT'
-            ?
-            <></>
-            :
-            <button onClick={() => this.deleteItem(this.state.id)} className='btn-modal-2'
-                    style={{marginTop: '9px'}}>
-                Delete item
-            </button>
-        return <>
-            <div className="item-body" style={{marginLeft: '45px', marginRight: '45px'}}>
-                <div className="item-container">
-                    <div>
-                        {isNew}
-                        <img src={`data:image/png;base64,${this.state.currentImageSrc}`}
-                             alt="Cannot load the image right now..."
-                             className="item-image"/>
-                    </div>
-                    <div className="slideshow-buttons"></div>
-                    <p className="pick">choose size</p>
-                    <div className="sizes">
-                        <div className="size" onClick={this.select}>S</div>
-                        <div className="size" onClick={this.select}>M</div>
-                        <div className="size" onClick={this.select}>L</div>
-                        <div className="size" onClick={this.select}>XL</div>
-                    </div>
-                    <div className="product">
-                        <p>{this.state.category}</p>
-                        <h1>{this.state.name}</h1>
-                        <h2>${this.state.price}</h2>
-                        <p className="desc">{this.state.description}</p>
+        //TODO: Find a way to perform instant redirect without page loading
+        if (TokenKeeper.getToken() !== null && TokenKeeper.getToken() !== undefined) {
+            const images = this.state.binary.map(i => i.data);
+            const isNew = this.state.isNew ? <img
+                src={newMark}
+                style={{position: 'absolute', top: '3%', right: '34.5%', width: '65px'}} alt=""/> : <></>;
+            let upperButton = window.sessionStorage.getItem('userRole') === 'CLIENT'
+                ?
+                <CartAddingModal text="Add to cart" maxQuantity={this.state.quantity} mainImage={images[0]}
+                                 price={this.state.price} name={this.state.name} iid={this.state.id}
+                                 selectedSize={this.state.selected}
+                                 disabled={this.state.selected === '' || this.state.selected === undefined}/>
+                :
+                <ImageAddingModal text="Add images" itemId={this.state.id}/>
+            let middleButton = window.sessionStorage.getItem('userRole') === 'CLIENT'
+                ?
+                <></>
+                :
+                <ImageDeletingModal text="Delete images" images={images} itemId={this.state.id}/>
+            let updateButton = window.sessionStorage.getItem('userRole') === 'CLIENT' ? <></> : <UpdateItemModal
+                iid={this.state.id}
+                defName={this.state.name}
+                defQuantity={this.state.quantity}
+                defCategory={this.state.category}
+                defColor={this.state.color}
+                defDesc={this.state.description}
+                defPrice={this.state.price}
+                defNew={this.state.isNew}
+                onChange={() => this.updateItem()}
+                classForButton="btn-modal-2"
+                stylesForButton={{marginTop: '9px'}}
+            />
+            let deleteButton = window.sessionStorage.getItem('userRole') === 'CLIENT'
+                ?
+                <></>
+                :
+                <button onClick={() => this.deleteItem(this.state.id)} className='btn-modal-2'
+                        style={{marginTop: '9px'}}>
+                    Delete item
+                </button>
+            return <>
+                <div className="item-body" style={{marginLeft: '45px', marginRight: '45px'}}>
+                    <div className="item-container">
                         <div>
-                            {upperButton}
-                            {middleButton}
-                            {updateButton}
-                            {deleteButton}
-                            <br/>
-                            {this.state.binary.length > 0 && <button className="buttons try" onClick={this.goToFittingRoom}>Try in fitting room</button>}
+                            {isNew}
+                            <img src={`data:image/png;base64,${this.state.currentImageSrc}`}
+                                 alt="Cannot load the image right now..."
+                                 className="item-image"/>
+                        </div>
+                        <div className="slideshow-buttons"></div>
+                        <p className="pick">choose size</p>
+                        <div className="sizes">
+                            <div className="size" onClick={this.select}>S</div>
+                            <div className="size" onClick={this.select}>M</div>
+                            <div className="size" onClick={this.select}>L</div>
+                            <div className="size" onClick={this.select}>XL</div>
+                        </div>
+                        <div className="product">
+                            <p>{this.state.category}</p>
+                            <h1>{this.state.name}</h1>
+                            <h2>${this.state.price}</h2>
+                            <p className="desc">{this.state.description}</p>
+                            <div>
+                                {upperButton}
+                                {middleButton}
+                                {updateButton}
+                                {deleteButton}
+                                <br/>
+                                {this.state.binary.length > 0 &&
+                                    <button className="buttons try" onClick={this.goToFittingRoom}>Try in fitting
+                                        room</button>}
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </>
+            </>
+        }
     }
 }
 

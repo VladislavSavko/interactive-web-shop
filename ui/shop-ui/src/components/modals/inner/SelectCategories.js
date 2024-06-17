@@ -13,7 +13,7 @@ class SelectCategories extends React.Component {
     }
 
     convertDefaultValueForSelect = (value) => {
-        if(this.props.defCategory) {
+        if (this.props.defCategory) {
             return {
                 value: value,
                 label: value
@@ -39,6 +39,7 @@ class SelectCategories extends React.Component {
             }
         });
     }
+
     handleChange = (selectedOptions) => {
         if (this.props.onChange) {
             this.props.onChange(selectedOptions);
@@ -70,8 +71,9 @@ class SelectCategories extends React.Component {
                 }
             })
         };
-        return  <div style={{marginTop: '10px', marginBottom: '20px'}}>
-            <Select options={this.state.options} onChange={this.handleChange} placeholder="Choose category:" styles={stylesForSelect} defaultValue={this.convertDefaultValueForSelect(this.props.defCategory)} />
+        return <div style={{marginTop: '10px', marginBottom: '20px'}}>
+            <Select options={this.state.options} onChange={this.handleChange} placeholder="Choose category:"
+                    styles={stylesForSelect} defaultValue={this.convertDefaultValueForSelect(this.props.defCategory)}/>
         </div>
     }
 }
