@@ -18,7 +18,9 @@ const SignUpPage = () => {
     }
 
     return <div>
-        <MainHeader active="signup"/>
+        <div className="hero_area">
+            <MainHeader active="signup"/>
+        </div>
         <div className="login-page-content">
             <div className="form-v10-content">
                 <div className="form-detail">

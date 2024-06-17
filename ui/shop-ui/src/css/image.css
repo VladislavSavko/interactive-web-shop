@@ -120,4 +120,18 @@
     align-items: center;
     border-radius: 10px;
 
+    button {
+        padding: 10px 20px;
+        border: 1px solid transparent;
+        border-radius: 5px;
+        transition: all .3s;
+        background-color: #db4566;
+        color: white;
+    }
+
+    button:hover {
+        background-color: #ffffff;
+        color: #db4566;
+        border: 1px solid #db4566;
+    }
 }
