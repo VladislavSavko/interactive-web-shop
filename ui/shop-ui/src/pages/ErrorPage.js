@@ -36,6 +36,25 @@ export default function ErrorPage() {
             }
         }
     }
+    let status, text, imgSrc;
+    if (!new URLSearchParams(window.location.search).has('status')) {
+        status = 404;
+        text = 'Oops! The Page you requested was not found!';
+        imgSrc = _404;
+    } else {
+        switch (new URLSearchParams(window.location.search).get('status')) {
+            case '403' : {
+                status = 403;
+                text = 'Oops! You have no rights to visit this page!';
+                break;
+            }
+            case '401' : {
+                status = 401;
+                text = 'Oops! You haven\'t been authorized!';
+                break;
+            }
+        }
+    }
     return <>
         <div className="error-page-body">
             <div className="wrap">
@@ -43,12 +62,12 @@ export default function ErrorPage() {
                     <div className="logo">
                         <h1>
                             <a href="/">
-                                <img src={_404} alt={''}/>
+                                <img src={imgSrc} alt={''}/>
                             </a>
                         </h1>
                         <span>
                             <img src={error} alt={''} style={{paddingBottom: '3px'}}/>
-                            Oops! The Page you requested was not found!
+                            {text}
                         </span>
                     </div>
                     <div className="buttom">
@@ -57,7 +76,13 @@ export default function ErrorPage() {
                             <div className="search_box">
                                 <SelectPages onChange={(value) => showButton(value)}/>
                             </div>
-                            <div style={{alignItems: 'center', display: 'flex', justifyContent: 'center', marginRight: '30px', marginTop: '40px'}}>
+                            <div style={{
+                                alignItems: 'center',
+                                display: 'flex',
+                                justifyContent: 'center',
+                                marginRight: '30px',
+                                marginTop: '40px'
+                            }}>
                                 <button id="router" className="btn-modal-9" style={{display: 'none'}}>Submit</button>
                             </div>
                         </div>

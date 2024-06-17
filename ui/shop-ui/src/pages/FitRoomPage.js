@@ -2,7 +2,8 @@ import MainHeader from "../components/MainHeader";
 import '../css/image.css'
 import LeftFitRoomComponent from "../components/LeftFitRoomComponent";
 import RightFitRoomComponent from "../components/RightFitRoomComponent";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
+import {useNavigate} from 'react-router-dom';
 import ApiClient from "../client/ApiClient";
 import ResultImageComponent from "../components/ResultImageComponent";
 import FooterComponent from "../components/FooterComponent";
@@ -12,6 +13,15 @@ const FitRoomPage = () => {
     const [rightActive, setRightActive] = useState(false);
     const [rightLoaded, setRightLoaded] = useState(false);
     const [imageResponse, setImageResponse] = useState(null);
+
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const item = localStorage.getItem('userName');
+        if (!item) {
+            navigate('/error?status=401');
+        }
+    }, [navigate]);
 
     const combineItems = () => {
         function base64ToBlob(base64, mimeType) {

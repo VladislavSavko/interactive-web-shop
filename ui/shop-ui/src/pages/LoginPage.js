@@ -2,6 +2,7 @@ import '../css/custom.css'
 import ApiClient from "../client/ApiClient";
 import MainHeader from "../components/MainHeader";
 import React, {useState} from "react";
+import TokenKeeper from "../components/token/TokenKeeper";
 
 
 const LoginPage = () => {
@@ -67,7 +68,7 @@ const sendData = (event) => {
             if (response.ok) {
                 response.json().then(responseJson => {
                     window.sessionStorage.setItem('username', responseJson.name);
-                    window.sessionStorage.setItem('token', responseJson.tokenString);
+                    TokenKeeper.setToken(responseJson.tokenString);
                     window.sessionStorage.setItem('userId', responseJson.id);
                     window.sessionStorage.setItem('userRole', responseJson.role);
 

@@ -63,7 +63,7 @@ class MainHeader extends React.Component {
 
     render() {
         function displayUserInfo() {
-            if (window.sessionStorage.getItem('token') != null && window.sessionStorage.getItem('token').length > 0
+            if (window.localStorage.getItem('token') != null && window.localStorage.getItem('token').length > 0
                 && window.sessionStorage.getItem('username') != null && window.sessionStorage.getItem('username').length > 0) {
                 return <a href="/profile" className="user-info">
                     <img style={{maxWidth: '40px', maxHeight: '40px', marginLeft: '30px'}}

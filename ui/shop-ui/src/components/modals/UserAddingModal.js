@@ -1,7 +1,6 @@
 import React, {useState} from "react";
 import '../../css/modal.css'
 import ApiClient from "../../client/ApiClient";
-import {Slide, toast, ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import {CountryDropdown} from "react-country-region-selector";
 

@@ -1,3 +1,5 @@
+import TokenKeeper from "../components/token/TokenKeeper";
+
 class ApiClient {
     static SERVER_URL = 'http://localhost:8080';
     static USERS_API = '/api/v1/users';
@@ -67,7 +69,10 @@ class ApiClient {
 
     static getUserInfo(id): Promise<Response> {
         return fetch(this.SERVER_URL + this.USERS_API + '/' + id, {
-            method: "GET"
+            method: "GET",
+            headers: {
+                "Authorization": `Bearer ${TokenKeeper.getToken()}`
+            }
         });
     }
 
