@@ -17,7 +17,11 @@ class ApiClient {
     static FOR_FITTING_ROOM_URL = '/forFr';
 
     static getUsers(): Promise<Response> {
-        return fetch(this.SERVER_URL + this.USERS_API);
+        return fetch(this.SERVER_URL + this.USERS_API, {
+            headers: {
+                "Authorization": `Bearer ${TokenKeeper.getToken()}`
+            }
+        });
     }
 
     static searchForUsers(by, _with): Promise<Response> {
@@ -25,7 +29,11 @@ class ApiClient {
     }
 
     static getUserOrders(id): Promise<Response> {
-        return fetch(this.SERVER_URL + this.SHOP_API + this.ORDERS_URL + '/' + id);
+        return fetch(this.SERVER_URL + this.SHOP_API + this.ORDERS_URL + '/' + id, {
+            headers: {
+                "Authorization": `Bearer ${TokenKeeper.getToken()}`
+            }
+        });
     }
 
     static deleteUser(email): Promise<Response> {
@@ -35,12 +43,19 @@ class ApiClient {
     }
 
     static getAllOrders(): Promise<Response> {
-        return fetch(this.SERVER_URL + this.SHOP_API + this.ORDERS_URL + '/' + this.ADMIN_URL);
+        return fetch(this.SERVER_URL + this.SHOP_API + this.ORDERS_URL + '/' + this.ADMIN_URL, {
+            headers: {
+                "Authorization": `Bearer ${TokenKeeper.getToken()}`
+            }
+        });
     }
 
     static makeUserOrder(id): Promise<Response> {
         return fetch(this.SERVER_URL + this.SHOP_API + this.ORDERS_URL + '/' + id, {
-            method: "POST"
+            method: "POST",
+            headers: {
+                "Authorization": `Bearer ${TokenKeeper.getToken()}`
+            }
         });
     }
 
@@ -51,19 +66,27 @@ class ApiClient {
                 newStatus: newStatus
             }),
             headers: {
-                "Content-type": "application/json; charset=UTF-8"
+                "Content-type": "application/json; charset=UTF-8",
+                "Authorization": `Bearer ${TokenKeeper.getToken()}`
             }
         });
     }
 
     static deleteOrder(id): Promise<Response> {
         return fetch(this.SERVER_URL + this.SHOP_API + this.ORDERS_URL + '/' + id, {
-            method: "DELETE"
+            method: "DELETE",
+            headers: {
+                "Authorization": `Bearer ${TokenKeeper.getToken()}`
+            }
         });
     }
 
     static getOrderInfo(id): Promise<Response> {
-        return fetch(this.SERVER_URL + this.SHOP_API + this.ORDERS_URL + '?orderId=' + id);
+        return fetch(this.SERVER_URL + this.SHOP_API + this.ORDERS_URL + '?orderId=' + id, {
+            headers: {
+                "Authorization": `Bearer ${TokenKeeper.getToken()}`
+            }
+        });
     }
 
 
@@ -77,7 +100,11 @@ class ApiClient {
     }
 
     static getUserData(id): Promise<Response> {
-        return fetch(this.SERVER_URL + this.USERS_API + '/' + id + '/data');
+        return fetch(this.SERVER_URL + this.USERS_API + '/' + id + '/data', {
+            headers: {
+                "Authorization": `Bearer ${TokenKeeper.getToken()}`
+            }
+        });
     }
 
     static getItemInfo(id): Promise<Response> {
@@ -171,7 +198,11 @@ class ApiClient {
     }
 
     static getAllItemsWithImages(): Promise<Response> {
-        return fetch(this.SERVER_URL + this.SHOP_API + this.ITEMS_URL + this.FOR_FITTING_ROOM_URL);
+        return fetch(this.SERVER_URL + this.SHOP_API + this.ITEMS_URL + this.FOR_FITTING_ROOM_URL, {
+            headers: {
+                "Authorization": `Bearer ${TokenKeeper.getToken()}`
+            }
+        });
     }
 
     static searchForItems(name): Promise<Response> {
@@ -210,7 +241,11 @@ class ApiClient {
     }
 
     static getUserCart(userId): Promise<Response> {
-        return fetch(this.SERVER_URL + this.SHOP_API + this.CART_URL + '/' + userId);
+        return fetch(this.SERVER_URL + this.SHOP_API + this.CART_URL + '/' + userId, {
+            headers: {
+                "Authorization": `Bearer ${TokenKeeper.getToken()}`
+            }
+        });
     }
 
     static authenticate(email, password): Promise<Response> {
@@ -271,7 +306,10 @@ class ApiClient {
 
     static deleteFromCart(itemId, userId): Promise<Response> {
         return fetch(this.SERVER_URL + this.SHOP_API + this.CART_URL + '/' + userId + '/' + itemId, {
-            method: "DELETE"
+            method: "DELETE",
+            headers: {
+                "Authorization": `Bearer ${TokenKeeper.getToken()}`
+            }
         });
     }
 

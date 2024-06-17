@@ -3,6 +3,7 @@ import '../../css/custom.css'
 import ApiClient from "../../client/ApiClient";
 import order from '../../images/order.png'
 import AdminOrders from "./AdminOrders";
+import TokenKeeper from "../token/TokenKeeper";
 
 class AdminProfile extends React.Component {
     constructor(props) {
@@ -31,10 +32,10 @@ class AdminProfile extends React.Component {
 
     render() {
         function logout() {
-            window.sessionStorage.setItem('username', "");
-            window.sessionStorage.setItem('userRole', "");
-            window.sessionStorage.setItem('userId', "");
-            window.sessionStorage.setItem('token', "");
+            window.sessionStorage.removeItem('username');
+            window.sessionStorage.removeItem('userRole');
+            window.sessionStorage.removeItem('userId');
+            TokenKeeper.clear();
 
             window.location.href = "/";
         }

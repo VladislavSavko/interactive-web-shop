@@ -17,7 +17,7 @@ const FitRoomPage = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        const item = localStorage.getItem('userName');
+        const item = window.sessionStorage.getItem('username');
         if (!item) {
             navigate('/error?status=401');
         }
