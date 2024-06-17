@@ -8,6 +8,10 @@ class TokenKeeper extends React.Component {
     static setToken = (value) => {
         window.localStorage.setItem('token', value);
     }
+
+    static clear = () => {
+        window.localStorage.removeItem('token');
+    }
 }
 
 export default TokenKeeper

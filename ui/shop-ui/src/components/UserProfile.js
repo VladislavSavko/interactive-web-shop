@@ -10,6 +10,11 @@ import shoppingCart from '../images/cart.png';
 import order from '../images/order.png'
 import {Slide, toast, ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import TokenKeeper from "./token/TokenKeeper";
+
+import user from '../images/user1.png';
+import mail from '../images/message.png';
+import map from '../images/map-marker.png'
 
 class UserProfile extends React.Component {
     constructor(props) {
@@ -28,7 +33,7 @@ class UserProfile extends React.Component {
                     this.setState({
                         name: responseJson.name,
                         email: responseJson.email,
-                        address: responseJson.address
+                        address: responseJson.address,
                     });
                 });
             } else {
@@ -63,10 +68,10 @@ class UserProfile extends React.Component {
 
     render() {
         function logout() {
-            window.sessionStorage.setItem('username', "");
-            window.sessionStorage.setItem('userRole', "");
-            window.sessionStorage.setItem('userId', "");
-            window.sessionStorage.setItem('token', "");
+            window.sessionStorage.removeItem('username');
+            window.sessionStorage.removeItem('userRole');
+            window.sessionStorage.removeItem('userId');
+            TokenKeeper.clear();
 
             window.location.href = "/";
         }
@@ -109,7 +114,7 @@ class UserProfile extends React.Component {
                                         }}>General info</h2>
                                         <div style={{alignItems: 'center', display: 'flex'}}>
                                             <img style={{maxWidth: '35px', maxHeight: '35px', paddingBottom: '7px'}}
-                                                 src="https://static.vecteezy.com/system/resources/thumbnails/020/911/740/small/user-profile-icon-profile-avatar-user-icon-male-icon-face-icon-profile-icon-free-png.png"
+                                                 src={user}
                                                  alt=""/>
                                             <h3 style={{paddingLeft: '10px'}}>{this.state.name}</h3>
                                         </div>
@@ -120,13 +125,14 @@ class UserProfile extends React.Component {
                                                 paddingBottom: '4px',
                                                 paddingRight: '7px'
                                             }}
-                                                 src="https://th.bing.com/th/id/R.3ea5d09ed6d30dbf6f1f4871e5e4c788?rik=0iGQR9DRLKii1w&riu=http%3a%2f%2fpluspng.com%2fimg-png%2femail-icon-png-email-icon-2048.png&ehk=ahnNwHNab9Dq7qF3w%2fPChLDTTN3R5mvMWkD739gMXIg%3d&risl=&pid=ImgRaw&r=0"
+                                                 src={mail}
                                                  alt=""/>
                                             <h3 style={{paddingLeft: '4px'}}>{this.state.email}</h3>
                                         </div>
                                         <ProfileGeneralInfoModal text="Change" name={this.state.name}
                                                                  email={this.state.email}
-                                                                 address={this.state.address}/>
+                                                                 address={this.state.address}
+                                                                 />
                                     </div>
                                 </div>
                             </div>
@@ -153,7 +159,7 @@ class UserProfile extends React.Component {
                                                 paddingBottom: '7px',
                                                 paddingLeft: '3px'
                                             }}
-                                                 src="https://th.bing.com/th/id/R.15a4741cc6f0e74233e1a3fe65ec15db?rik=NqxGUu6tIuFrYg&pid=ImgRaw&r=0"
+                                                 src={map}
                                                  alt=""/>
                                             <h3 style={{paddingLeft: '15px'}}>{this.state.address.countryCode}</h3>
                                         </div>

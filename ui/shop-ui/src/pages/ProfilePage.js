@@ -23,7 +23,7 @@ const ProfilePage = () => {
                 <MainHeader active="profile"/>
             </div>
         }
-        {window.sessionStorage.getItem('userRole') === 'CLIENT' ? <UserProfile/> : <AdminProfile/>}
+        {window.sessionStorage.getItem('userRole') === 'CLIENT' ? <UserProfile /> : <AdminProfile/>}
     </div>
 
 }

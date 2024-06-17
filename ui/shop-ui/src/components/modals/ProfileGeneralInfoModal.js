@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import '../../css/modal.css'
 import ApiClient from "../../client/ApiClient";
+import TokenKeeper from "../token/TokenKeeper";
 
 
 export default function ProfileGeneralInfoModal(props) {
@@ -40,6 +41,15 @@ export default function ProfileGeneralInfoModal(props) {
         )
             .then(response => {
                 if (response.ok) {
+                    if (email !== props.email) {
+                        window.localStorage.setItem('toast', 'Please, login to access your profile!');
+                        window.sessionStorage.removeItem('username');
+                        window.sessionStorage.removeItem('userRole');
+                        window.sessionStorage.removeItem('userId');
+                        TokenKeeper.clear();
+                        window.location.href = '/login';
+                        return;
+                    }
                     switchModalState();
                     window.location.reload();
                 } else if (response.status === 400) {
@@ -47,7 +57,7 @@ export default function ProfileGeneralInfoModal(props) {
                         showErrors(responseJson.errors);
                     });
                 } else {
-                    console.log('fuck');
+                    console.error('Failed to update user info');
                 }
             });
         window.sessionStorage.setItem('username', name);

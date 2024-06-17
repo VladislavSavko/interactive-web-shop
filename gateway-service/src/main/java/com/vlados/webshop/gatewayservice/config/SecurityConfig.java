@@ -42,7 +42,7 @@ public class SecurityConfig {
         return httpSecurity
                 .authorizeExchange(
                         authorizationManagerRequestMatcherRegistry -> authorizationManagerRequestMatcherRegistry
-                                .pathMatchers(HttpMethod.GET, "/api/v1/users/{id}/data")
+                                .pathMatchers(HttpMethod.GET, "/api/v1/users/{id}", "/api/v1/users/{id}/data")
                                 .hasAnyAuthority("CLIENT", "ADMIN")
                                 .pathMatchers(HttpMethod.GET, "/api/v1/users/**")
                                 .hasAuthority("ADMIN")

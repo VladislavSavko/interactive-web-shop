@@ -1,20 +1,53 @@
 import '../css/custom.css'
 import ApiClient from "../client/ApiClient";
 import MainHeader from "../components/MainHeader";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import TokenKeeper from "../components/token/TokenKeeper";
+import {Slide, toast, ToastContainer} from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const LoginPage = () => {
     const params = new URLSearchParams(window.location.search);
     const [initEmail, setInitEmail] = useState(params.has('email') ? params.get('email') : '');
+    const [flag, setFlag] = useState(window.localStorage.getItem('toast'))
 
+    useEffect(() => {
+        if (flag) {
+            toast.info(flag, {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                transition: Slide
+            });
+            window.localStorage.removeItem('toast');
+        }
+    }, []);
 
     return <div>
         <div className="hero_area">
             <MainHeader active="login"/>
         </div>
         <div className="login-page-content">
+            <ToastContainer
+                position="top-center"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+                transition='Slide'
+                toastClassName="shop-toast"
+            />
             <div className="form-v10-content" style={{width: '600px'}}>
                 <form id="content" className="login" onSubmit={sendData}>
                     <span>Welcome to our web-shop!</span>
