@@ -51,8 +51,8 @@ class RightFitRoomComponent extends React.Component {
                 onDragEnter={() => this.setState({isDraggingActive: true})}
                 onDragLeave={() => this.setState({isDraggingActive: false})}>
                 {({getRootProps, getInputProps}) => (
-                    <section>
-                        <div {...getRootProps()}>
+                    <section style={{height: '100%'}}>
+                        <div {...getRootProps()} style={{height: '100%'}}>
                             <input {...getInputProps()} />
                             {!this.state.file && <div className="drag-and-drop-area"
                                  style={{background: this.state.isDraggingActive ? 'darkgray' : 'transparent'}}>

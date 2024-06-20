@@ -14,6 +14,17 @@ class LeftFitRoomComponent extends React.Component {
         }
     }
 
+    select = (event) => {
+        const sizes = document.querySelectorAll('.size1');
+        sizes.forEach(element => {
+            element.classList.remove('focus');
+        });
+        event.target.classList.add('focus');
+        this.setState({
+            selected: event.target.textContent
+        });
+    }
+
     componentDidMount() {
         if (this.props.instaLoad) {
             this.reloadForItem();
@@ -24,6 +35,7 @@ class LeftFitRoomComponent extends React.Component {
         this.setState({
             selectedItem: item
         });
+        this.props.item(item.value);
     }
 
     reloadForItem = () => {
@@ -55,6 +67,12 @@ class LeftFitRoomComponent extends React.Component {
                 <img id="image1" src={`data:image/png;base64,${this.state.item.images[0].data}`}
                      alt="Cannot load the image right now..."
                      className="loaded-image"/>
+                <div className="sizes">
+                    <div className="size1" onClick={this.select}>S</div>
+                    <div className="size1" onClick={this.select}>M</div>
+                    <div className="size1" onClick={this.select}>L</div>
+                    <div className="size1" onClick={this.select}>XL</div>
+                </div>
             </div>}
         </>
     }

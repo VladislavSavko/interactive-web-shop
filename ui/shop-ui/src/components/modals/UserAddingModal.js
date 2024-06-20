@@ -37,7 +37,11 @@ export default function UserAddingModal(props) {
                 props.onChange();
             } else if(r.status === 400) {
                 r.json().then(responseJson => {
-                    showErrors(responseJson.errors)
+                    if(responseJson.errors) {
+                        showErrors(responseJson.errors)
+                    } else {
+                        showError(responseJson.message);
+                    }
                 });
             }
         });
@@ -50,6 +54,13 @@ export default function UserAddingModal(props) {
         errors.forEach(error => response += error + '\n');
 
         errorDiv.innerText = response;
+        errorDiv.style.display = 'block';
+    }
+
+    const showError = (message) => {
+        const errorDiv = document.getElementById('error_div');
+
+        errorDiv.innerText = message;
         errorDiv.style.display = 'block';
     }
 

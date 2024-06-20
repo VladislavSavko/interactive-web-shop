@@ -91,7 +91,7 @@
 }
 
 .drag-and-drop-area {
-    min-height: 300px;
+    height: 100%;
     border: 2px dashed black;
     border-radius: 10px;
     text-align: center;

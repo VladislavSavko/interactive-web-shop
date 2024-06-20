@@ -13,6 +13,7 @@ const FitRoomPage = () => {
     const [rightActive, setRightActive] = useState(false);
     const [rightLoaded, setRightLoaded] = useState(false);
     const [imageResponse, setImageResponse] = useState(null);
+    const [itemId, setItemId] = useState(null);
 
     const navigate = useNavigate();
 
@@ -86,7 +87,7 @@ const FitRoomPage = () => {
             <div className="fr-form-content">
                 <div className="form-detail">
                     <div className="fr-form-left">
-                        <LeftFitRoomComponent onChange={(value) => setLeftActive(value)} instaLoad={flag}/>
+                        <LeftFitRoomComponent onChange={(value) => setLeftActive(value)} instaLoad={flag} item={(id) => setItemId(id)} />
                     </div>
                     <div className="form-right">
                         <RightFitRoomComponent onChange={(value) => setRightActive(value)}
@@ -96,8 +97,8 @@ const FitRoomPage = () => {
             </div>
         </div>
         {leftActive && rightActive && <button className="combine-button" onClick={combineItems}>Combine</button>}
-        {imageResponse && <ResultImageComponent data={imageResponse}/>}
-        {!imageResponse && rightLoaded  && <ResultImageComponent data={document.getElementById('image2').src}/>}
+        {imageResponse && <ResultImageComponent data={imageResponse} item={itemId}/>}
+        {!imageResponse && rightLoaded  && <ResultImageComponent data={document.getElementById('image2').src} item={itemId}/>}
         <div style={{marginTop: '40px'}}>
             <FooterComponent />
         </div>

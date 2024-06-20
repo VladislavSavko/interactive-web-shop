@@ -52,7 +52,7 @@ public class SecurityConfig {
                                 .permitAll()
                                 .pathMatchers(HttpMethod.POST, "/api/v1/users/**")
                                 .permitAll()
-                                .pathMatchers(HttpMethod.POST, "/api/v1/shop/cart/{id}", "/api/v1/shop/orders/{id}")
+                                .pathMatchers(HttpMethod.POST, "/api/v1/shop/cart/{id}", "/api/v1/shop/orders/{id}", "api/v1/photos/**")
                                 .hasAnyAuthority("CLIENT", "ADMIN")
                                 .pathMatchers(HttpMethod.POST, "/api/v1/shop/items", "/api/v1/shop/categories", "/api/v1/shop/images")
                                 .hasAuthority("ADMIN")

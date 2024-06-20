@@ -25,7 +25,11 @@ class ApiClient {
     }
 
     static searchForUsers(by, _with): Promise<Response> {
-        return fetch(this.SERVER_URL + this.USERS_API + this.SEARCH_URL + '?' + by + '=' + _with);
+        return fetch(this.SERVER_URL + this.USERS_API + this.SEARCH_URL + '?' + by + '=' + _with, {
+            headers: {
+                "Authorization": `Bearer ${TokenKeeper.getToken()}`
+            }
+        });
     }
 
     static getUserOrders(id): Promise<Response> {
@@ -285,7 +289,10 @@ class ApiClient {
     static combine(formData): Promise<Response> {
         return fetch('http://localhost:8080/api/v1/photos/contourOverlayBytes', {
             method: "POST",
-            body: formData
+            body: formData,
+            headers: {
+                "Authorization": `Bearer ${TokenKeeper.getToken()}`
+            }
         });
     }
 

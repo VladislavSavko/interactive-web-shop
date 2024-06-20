@@ -161,6 +161,21 @@
     }
 }
 
+.size1 {
+    padding: 9px;
+    border: 1px solid #E0C9CB;
+    font-size: 0.7em;
+    text-align: center;
+    background-color: #daafb3;
+    color: black;
+
+    &:hover {
+        background: #BA7E7E;
+        color: white;
+        transition: all .4s ease-in-out;
+    }
+}
+
 .focus {
     background: #BA7E7E;
     color: white;

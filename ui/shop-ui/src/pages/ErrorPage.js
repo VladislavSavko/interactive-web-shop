@@ -1,6 +1,7 @@
 import '../css/error.css'
 
 import _404 from '../images/404.png'
+import _401 from '../images/401.png'
 import error from '../images/error.png'
 import FooterComponent from "../components/FooterComponent";
 import SelectPages from "../components/modals/inner/SelectPages";
@@ -51,6 +52,7 @@ export default function ErrorPage() {
             case '401' : {
                 status = 401;
                 text = 'Oops! You haven\'t been authorized!';
+                imgSrc = _401;
                 break;
             }
         }
@@ -62,7 +64,7 @@ export default function ErrorPage() {
                     <div className="logo">
                         <h1>
                             <a href="/">
-                                <img src={imgSrc} alt={''}/>
+                                <img src={imgSrc} alt={''} className="error-image"/>
                             </a>
                         </h1>
                         <span>
