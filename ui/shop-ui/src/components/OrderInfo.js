@@ -113,6 +113,7 @@ class OrderInfo extends React.Component {
     }
 
     render() {
+        const date = new Date(this.state.created)
         return <div>
             <div style={{
                 backgroundColor: 'rgb(241, 208, 212)',
@@ -123,7 +124,7 @@ class OrderInfo extends React.Component {
             }}>
                 <div className="col d-flex">
                     <span className="text-muted" id="orderno"
-                          style={{paddingLeft: '45px'}}>Order #{this.state.orderId} (created on {this.state.created})
+                          style={{paddingLeft: '45px'}}>Order #{this.state.orderId} (created on {date.getDate()}-{date.getMonth() + 1}-{date.getFullYear()} {date.getHours()}:{date.getMinutes()}:{date.getSeconds()})
                     </span>
                 </div>
                 {this.state.address && <div className="col d-flex">
