@@ -5,7 +5,7 @@ import OrderItemRow from "./OrderItemRow";
 
 import orderStatus from '../images/status.png'
 import ShippingProgressBar from "./bar/ShippingProgressBar";
-import FooterComponent from "./FooterComponent";
+import HomePageFooter from "./structure/HomePageFooter";
 import OrderDeletingApprovalDialog from "./modals/OrderDeletingApprovalDialog";
 
 class OrderInfo extends React.Component {
@@ -182,7 +182,7 @@ class OrderInfo extends React.Component {
             </div>
         </div>
         <div style={{marginTop: '100px'}}>
-            <FooterComponent/>
+            <HomePageFooter/>
         </div>
         <OrderDeletingApprovalDialog ref={(instance) => {
             this.dialog = instance;

@@ -216,14 +216,10 @@
 .item-search-input {
     width: 100%;
     border-color: transparent;
-    background-color: #fae4db;
-    border-radius: 4px;
-    height: 60px;
-    font-size: 25px;
-
-    &:hover {
-        border: 2px solid black;
-    }
+    border-style: solid;
+    border-radius: 0;
+    height: 40px;
+    font-size: 20px;
 }
 
 

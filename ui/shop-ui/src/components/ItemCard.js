@@ -133,11 +133,10 @@ class ItemCard extends React.Component {
                             <h6>
                                 {this.props.name}
                             </h6>
-                            <h6>
-                                <span>${this.props.price}</span>
-                            </h6>
+                            {/*<h6>*/}
+                            {/*    <span>${this.props.price}</span>*/}
+                            {/*</h6>*/}
                         </div>
-                        {this.isNew()}
                     </a>
                 </div>
                 {this.withButtons()}

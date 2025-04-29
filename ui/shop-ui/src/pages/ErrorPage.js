@@ -3,7 +3,7 @@ import '../css/error.css'
 import _404 from '../images/404.png'
 import _401 from '../images/401.png'
 import error from '../images/error.png'
-import FooterComponent from "../components/FooterComponent";
+import HomePageFooter from "../components/structure/HomePageFooter";
 import SelectPages from "../components/modals/inner/SelectPages";
 
 export default function ErrorPage() {
@@ -90,7 +90,7 @@ export default function ErrorPage() {
                         </div>
                     </div>
                 </div>
-                <FooterComponent/>
+                <HomePageFooter/>
             </div>
         </div>
     </>

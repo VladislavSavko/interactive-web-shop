@@ -1,6 +1,8 @@
 import React from "react";
 import ApiClient from "../../../client/ApiClient";
 
+import search from '../../../images/search.png'
+
 
 class ItemsSearch extends React.Component {
     constructor(props) {
@@ -38,7 +40,10 @@ class ItemsSearch extends React.Component {
     }
 
     render() {
-        return <input type="text" placeholder="Enter item name:" onInput={this.handleInputChange} className="item-search-input"/>
+        return <div className="item-search-container">
+            <input type="text" placeholder="Поиск..." onInput={this.handleInputChange} className="item-search-input"/>
+            <img src={search} style={{width: '30px', height: '30px'}} alt="Поиск" />
+        </div>
     }
 }
 

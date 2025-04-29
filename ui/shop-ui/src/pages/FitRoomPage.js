@@ -6,7 +6,7 @@ import React, {useEffect, useState} from "react";
 import {useNavigate} from 'react-router-dom';
 import ApiClient from "../client/ApiClient";
 import ResultImageComponent from "../components/ResultImageComponent";
-import FooterComponent from "../components/FooterComponent";
+import HomePageFooter from "../components/structure/HomePageFooter";
 
 const FitRoomPage = () => {
     const [leftActive, setLeftActive] = useState(false);
@@ -100,7 +100,7 @@ const FitRoomPage = () => {
         {imageResponse && <ResultImageComponent data={imageResponse} item={itemId}/>}
         {!imageResponse && rightLoaded  && <ResultImageComponent data={document.getElementById('image2').src} item={itemId}/>}
         <div style={{marginTop: '40px'}}>
-            <FooterComponent />
+            <HomePageFooter />
         </div>
     </>
 }

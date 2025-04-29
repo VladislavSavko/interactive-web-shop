@@ -1,7 +1,7 @@
 import MainHeader from "../components/MainHeader";
 import ItemsComponent from "../components/ItemsComponent";
 import FiltersModal from "../components/modals/FiltersModal";
-import FooterComponent from "../components/FooterComponent";
+import HomePageFooter from "../components/structure/HomePageFooter";
 import React from "react";
 import ItemsSearchComponent from "../components/ItemsSearchComponent";
 import NewItemModal from "../components/modals/NewItemModal";
@@ -177,7 +177,7 @@ class ShopPage extends React.Component {
                     this.itemsSearchComponent = instance;
                 }}/>
             </section>
-            <FooterComponent/>
+            <HomePageFooter/>
         </>
     }
 }

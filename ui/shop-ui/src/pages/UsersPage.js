@@ -4,7 +4,7 @@ import UsersComponent from "../components/UsersComponent";
 import UsersSearchComponent from "../components/UsersSearchComponent";
 
 import '../css/custom.css'
-import FooterComponent from "../components/FooterComponent";
+import HomePageFooter from "../components/structure/HomePageFooter";
 import UserAddingModal from "../components/modals/UserAddingModal";
 
 const UsersPage = () => {
@@ -42,7 +42,7 @@ const UsersPage = () => {
             <UserAddingModal onChange={updateAllComponents}/>
         </div>
         <UsersSearchComponent option={checked ? 'name' : 'email'} ref={usersSearch}/>
-        <FooterComponent/>
+        <HomePageFooter/>
     </>
 }
 
