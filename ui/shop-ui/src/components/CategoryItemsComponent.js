@@ -20,7 +20,7 @@ class CategoryItemsComponent extends React.Component {
         if (this.state.items !== undefined && this.state.items.length > 0) {
             return <>
                 {this.state.items.map(item => {
-                    return <ItemCard iid={item.id} name={item.name} mainImage={item.images[0]} category={false}/>
+                    return <ItemCard iid={item.id} name={item.name} mainImage={item.images[0]} price={item.price} category={false}/>
                 })}
             </>
         } else {

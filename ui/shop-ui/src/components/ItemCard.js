@@ -112,6 +112,12 @@ class ItemCard extends React.Component {
         }
     }
 
+    add = (event) => {
+        event.stopPropagation(); // Останавливает распространение события клика
+        event.preventDefault();  // Предотвращает переход по ссылке
+        console.log('Элемент был кликнут!');
+    }
+
     render() {
         let imgSrc;
         if (this.props.mainImage) {
@@ -119,34 +125,41 @@ class ItemCard extends React.Component {
         } else {
             imgSrc = '';
         }
-        console.log(imgSrc)
         return <>
             <div className="col-sm-6 col-md-4 col-lg-3">
-                <div className="box1">
+                <div className={this.props.category ? 'box1' : 'box1'}>
                     {this.props.category && <a href={this.categoryHref(this.props.iid)}>
                         <div className="img-box">
                             <img src={imgSrc} alt="" style={{width: '300px', height: '300px'}}/>
                         </div>
                         <div className="detail-box">
-                            <h6>
+                            <h6 className="hovered-text">
                                 {this.props.name}
                             </h6>
                         </div>
                     </a>}
-                    {!this.props.category && <a href={this.itemHref(this.props.iid)}>
-                        {/*{this.withSize()}*/}
-                        <div className="img-box">
-                            <img src={imgSrc} alt="" style={{width: '300px', height: '300px'}}/>
-                        </div>
-                        <div className="detail-box">
-                            <h6>
-                                {this.props.name}
-                            </h6>
-                            {/*<h6>*/}
-                            {/*    <span>${this.props.price}</span>*/}
-                            {/*</h6>*/}
-                        </div>
-                    </a>}
+                    {!this.props.category && <div className="with-shadow">
+                        <a href={this.itemHref(this.props.iid)}>
+                            {/*{this.withSize()}*/}
+                            <div className="img-box">
+                                <img src={imgSrc} alt="" style={{width: '300px', height: '300px'}}/>
+                            </div>
+                            <div className="detail-item-box">
+                                <div className="icons">
+                                    <a className="icon icon1" onClick={event => this.add(event)}/>
+                                </div>
+                                <h6 className="hovered-text">
+                                    {this.props.name}
+                                </h6>
+                                {this.props.price && <h6>
+                                <span style={{fontSize: '18px', fontWeight: 'bold'}}>
+                                    {this.props.price}&nbsp;<span>BYN</span>&nbsp;&nbsp;<span
+                                    style={{fontSize: '90%', fontWeight: 'lighter'}}>+НДС</span>
+                                </span>
+                                </h6>}
+                            </div>
+                        </a>
+                    </div>}
 
                 </div>
                 {this.withButtons()}

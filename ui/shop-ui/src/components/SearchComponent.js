@@ -27,10 +27,12 @@ class SearchComponent extends React.Component {
         return <section className="search-container" style={{padding: '5px 40px'}}>
             <div className="custom-container" style={{gap: '40px'}}>
                 <div style={{width: '22%'}}>
-                    <img src={logo} alt="Микстиль" width="184" height="107" style={{clipPath: 'inset(40% 0 40% 0)'}}/>
+                    <a href="/">
+                        <img src={logo} alt="Микстиль" width="184" height="107" style={{clipPath: 'inset(40% 0 40% 0)'}}/>
+                    </a>
                 </div>
                 <div style={{width: '48%'}}>
-                    <div style={{paddingLeft: '15px', paddingRight: '15px', paddingTop: '30px'}}>
+                <div style={{paddingLeft: '15px', paddingRight: '15px', paddingTop: '30px'}}>
                         <ItemsSearch/>
                     </div>
                 </div>
