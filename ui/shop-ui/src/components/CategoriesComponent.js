@@ -2,11 +2,11 @@ import React from "react";
 import ApiClient from "../client/ApiClient";
 import ItemCard from "./ItemCard";
 
-class LatestItemsComponent extends React.Component {
+class CategoriesComponent extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            items: []
+            data: []
         }
     }
 
@@ -16,16 +16,17 @@ class LatestItemsComponent extends React.Component {
     }
 
     refreshItems() {
-        this.getItemsData().then(response => {
+        this.getCategoriesData().then(response => {
+            console.log(response)
             this.setState({
-                items: response
+                data: response
             })
         })
     }
 
 
-    getItemsData(): Promise {
-        return ApiClient.getAllItems().then(
+    getCategoriesData(): Promise {
+        return ApiClient.getAllCategories().then(
             response => {
                 if (response.ok) {
                     return response.json();
@@ -38,19 +39,19 @@ class LatestItemsComponent extends React.Component {
 
 
     render() {
-        if (this.state.items !== undefined && this.state.items.length > 0) {
+        if (this.state.data !== undefined && this.state.data.length > 0) {
             return <>
-                {this.state.items.map(item => {
-                    return <ItemCard iid={item.id} name={item.name} price={item.price} new={item.isNew} mainImage={item.images[0]}/>
+                {this.state.data.map(item => {
+                    return <ItemCard iid={item.id} name={item.name} mainImage={item.image} category={true}/>
                 })}
             </>
         } else {
             return <div style={{fontSize: '30px'}}>
-                Sorry, we haven't found any items!
+                На данный момент товаров нет...
             </div>
         }
     }
 }
 
 
-export default LatestItemsComponent
+export default CategoriesComponent

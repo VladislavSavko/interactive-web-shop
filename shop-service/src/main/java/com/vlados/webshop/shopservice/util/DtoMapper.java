@@ -54,8 +54,9 @@ public class DtoMapper {
     public static class ForCategory {
         public static CategoryResponseDto toDto(Category category) {
             return new CategoryResponseDto(
+                    category.getId(),
                     category.getName(),
-                    category.getDescription(),
+                    ForImage.toDto(category.getImage()),
                     category.getItems().stream()
                             .map(DtoMapper.ForItem::toDto)
                             .toList()

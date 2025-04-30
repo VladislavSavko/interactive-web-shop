@@ -6,7 +6,7 @@ class NavigationBar extends React.Component {
     }
 
     componentDidMount() {
-        let string = this.props.parts;
+        let string = this.props.string;
         const arr = string.split(" / ").map(i => i.trim());
         const div = document.getElementById('parts');
         console.log(div)

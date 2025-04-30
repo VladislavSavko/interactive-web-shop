@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS items_inventory(
 CREATE TABLE IF NOT EXISTS items_categories(
                                                id bigint NOT NULL PRIMARY KEY,
                                                name varchar(255) NOT NULL,
-    description varchar(255)
+    image_id bigint NOT NULL
     );
 
 
@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS items(
 CREATE TABLE IF NOT EXISTS images(
                                      id serial NOT NULL PRIMARY KEY,
                                      binary_data blob NOT NULL,
-                                     item_id bigint NOT NULL,
+                                     item_id bigint,
                                      FOREIGN KEY (item_id) REFERENCES items(id)
 );
 
@@ -66,3 +66,5 @@ CREATE TABLE IF NOT EXISTS orders_items(
                                          created_at date NOT NULL,
                                          updated_at date NOT NULL
 );
+
+

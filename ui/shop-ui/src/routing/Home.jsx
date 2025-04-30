@@ -6,26 +6,27 @@ import SignUpPage from "../pages/SignUpPage";
 import ProfilePage from "../pages/ProfilePage";
 import ShopPage from "../pages/ShopPage";
 import ItemPage from "../pages/ItemPage";
-import FitRoomPage from "../pages/FitRoomPage";
 import OrderPage from "../pages/OrderPage";
 import UsersPage from "../pages/UsersPage";
 import ErrorPage from "../pages/ErrorPage";
+import CategoryPage from "../pages/CategoryPage";
 
 const Home = () => {
     return <BrowserRouter>
         <Routes>
-            <Route element={<HomePage />} path='/'/>
-            <Route element={<LoginPage />} path='/login'/>
+            <Route element={<HomePage/>} path='/'/>
+            <Route element={<LoginPage/>} path='/login'/>
             <Route element={<SignUpPage/>} path='/signUp'/>
-            <Route element={<ProfilePage />} path='/profile'/>
-            <Route element={<ShopPage />} path='/shop'/>
+            <Route element={<ProfilePage/>} path='/profile'/>
+            <Route element={<ShopPage/>} path='/shop'/>
             <Route element={<ItemPage/>} path='/item/*'/>
-            <Route element={<FitRoomPage />} path='/fitroom'/>
-            <Route element={<OrderPage />} path='/orders/*'/>
-            <Route element={<UsersPage />} path='/users'/>
+            <Route element={<CategoryPage/>} path='/category/*' />
+                {/*<Route element={<FitRoomPage />} path='/fitroom'/>*/}
+            <Route element={<OrderPage/>} path='/orders/*'/>
+            <Route element={<UsersPage/>} path='/users'/>
 
 
-            <Route path="*" element={<ErrorPage />}/>
+            <Route path="*" element={<ErrorPage/>}/>
         </Routes>
     </BrowserRouter>
 }

@@ -23,14 +23,16 @@ public class Category {
     private String name;
 
     @NotNull
-    private String description;
+    @OneToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "image_id")
+    private Image image;
 
     @OneToMany(mappedBy = "relatedCategory")
     private List<Item> items;
 
-    public Category(String name, String description, List<Item> items) {
+    public Category(String name, Image image, List<Item> items) {
         this.name = name;
-        this.description = description;
+        this.image = image;
         this.items = items;
     }
 }

@@ -9,6 +9,8 @@ import java.util.List;
 public interface CategoryService {
     List<CategoryResponseDto> getAll();
 
+    CategoryResponseDto get(long id);
+
     Category add(final Category category);
 
     void delete(final long id);

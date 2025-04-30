@@ -89,14 +89,12 @@ class ItemCard extends React.Component {
         }
     }
 
-    withSize() {
-        if (this.props.buttonsActive === true) {
-            return <span style={{fontSize: '20px'}}>{this.props.size}</span>
-        }
-    }
-
     itemHref(id) {
         return '/item/' + id;
+    }
+
+    categoryHref(id) {
+        return '/category/' + id;
     }
 
     itemId(id) {
@@ -121,13 +119,24 @@ class ItemCard extends React.Component {
         } else {
             imgSrc = '';
         }
+        console.log(imgSrc)
         return <>
             <div className="col-sm-6 col-md-4 col-lg-3">
                 <div className="box1">
-                    <a href={this.itemHref(this.props.iid)}>
-                        {this.withSize()}
+                    {this.props.category && <a href={this.categoryHref(this.props.iid)}>
                         <div className="img-box">
-                            <img src={imgSrc} alt="" style={{width: '200px'}}/>
+                            <img src={imgSrc} alt="" style={{width: '300px', height: '300px'}}/>
+                        </div>
+                        <div className="detail-box">
+                            <h6>
+                                {this.props.name}
+                            </h6>
+                        </div>
+                    </a>}
+                    {!this.props.category && <a href={this.itemHref(this.props.iid)}>
+                        {/*{this.withSize()}*/}
+                        <div className="img-box">
+                            <img src={imgSrc} alt="" style={{width: '300px', height: '300px'}}/>
                         </div>
                         <div className="detail-box">
                             <h6>
@@ -137,7 +146,8 @@ class ItemCard extends React.Component {
                             {/*    <span>${this.props.price}</span>*/}
                             {/*</h6>*/}
                         </div>
-                    </a>
+                    </a>}
+
                 </div>
                 {this.withButtons()}
             </div>

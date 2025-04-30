@@ -21,7 +21,7 @@ public class Image {
     private byte[] binary;
 
     @ManyToOne
-    @JoinColumn(name = "item_id", nullable = false)
+    @JoinColumn(name = "item_id")
     private Item relatedItem;
 
     public Image(byte[] binary, Item relatedItem) {

@@ -22,7 +22,7 @@ const HomePageFooter = () => {
             <div>Вопросы и ответы</div>
         </div>
         <div className="social_container" style={{width: '100%', justifyContent: 'space-between'}}>
-            <div className="custom-container" style={{width: '45%'}}>
+            <div className="custom-container" style={{width: '40%'}}>
                 <table className="custom-table">
                     <tr>
                         <td className="custom-image-cell" rowSpan="2">
@@ -48,7 +48,7 @@ const HomePageFooter = () => {
                     </tr>
                 </table>
             </div>
-            <div className="custom-container" style={{width: '20%'}}>
+            <div className="custom-container" style={{width: '25%'}}>
                 <table className="custom-table">
                     <tr>
                         <td className="custom-image-cell" rowSpan="2">

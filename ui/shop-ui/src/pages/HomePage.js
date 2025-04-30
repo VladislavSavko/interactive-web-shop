@@ -2,7 +2,7 @@ import '../css/bootstrap.css'
 import '../css/responsive.css'
 import '../css/style.css'
 import '../css/custom.css'
-import LatestItemsComponent from "../components/LatestItemsComponent";
+import CategoriesComponent from "../components/CategoriesComponent";
 import HomePageFooter from "../components/structure/HomePageFooter";
 import React from "react";
 import HomePageHeader from "../components/structure/HomePageHeader";
@@ -18,7 +18,7 @@ const HomePage = () => {
     return <div>
         <HomePageHeader/>
         <SearchComponent/>
-        <NavigationBar parts={createParts()}/>
+        <NavigationBar string={createParts()}/>
         <section className="shop_section layout_padding">
             <div className="container">
                 <div className="heading_container heading_center">
@@ -27,7 +27,7 @@ const HomePage = () => {
                     </h2>
                 </div>
                 <div className="row">
-                    <LatestItemsComponent/>
+                    <CategoriesComponent/>
                 </div>
             </div>
         </section>

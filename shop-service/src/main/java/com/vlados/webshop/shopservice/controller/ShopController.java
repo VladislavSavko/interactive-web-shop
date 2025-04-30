@@ -16,6 +16,7 @@ import com.vlados.webshop.shopservice.domain.dto.item.ItemUpdateDto;
 import com.vlados.webshop.shopservice.domain.dto.order.OrderResponseDto;
 import com.vlados.webshop.shopservice.domain.dto.order.OrderStatusUpdateDto;
 import com.vlados.webshop.shopservice.domain.item.Category;
+import com.vlados.webshop.shopservice.domain.item.Image;
 import com.vlados.webshop.shopservice.domain.item.InventoryInfo;
 import com.vlados.webshop.shopservice.exception.ExceptionResponse;
 import com.vlados.webshop.shopservice.service.*;
@@ -116,6 +117,11 @@ public class ShopController {
         return categoryService.getAll();
     }
 
+    @GetMapping("/categories/{id}")
+    public CategoryResponseDto getCategory(@PathVariable(name = "id") long id) {
+        return categoryService.get(id);
+    }
+
     @GetMapping("/inventory")
     public List<InventoryResponseDto> getInventoryInfo() {
         return inventoryService.getAll();
@@ -168,8 +174,8 @@ public class ShopController {
     }
 
     @PostMapping("/categories")
-    public Category addCategory(@RequestBody @Valid Category category) {
-        return categoryService.add(category);
+    public Category addCategory(@RequestParam(name = "image") MultipartFile image, @RequestParam(name = "name") String name) throws IOException {
+        return categoryService.add(new Category(name, new Image(image.getBytes(), null), null));
     }
 
     @PostMapping("/inventory")

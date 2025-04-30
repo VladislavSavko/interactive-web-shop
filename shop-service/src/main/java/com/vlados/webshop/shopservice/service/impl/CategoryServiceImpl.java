@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 public class CategoryServiceImpl implements CategoryService {
@@ -47,6 +48,23 @@ public class CategoryServiceImpl implements CategoryService {
                     return DtoMapper.ForCategory.toDto(category);
                 })
                 .toList();
+    }
+
+    @Override
+    public CategoryResponseDto get(long id) {
+        Optional<Category> optCategory = categoryDao.get(id);
+        if (optCategory.isPresent()) {
+            Category category = optCategory.get();
+            category.getItems()
+                    .forEach(item -> item.getImages()
+                            .forEach(image -> image.setBinary(
+                                    ImageCompressor.decompress(image.getBinary())
+                            )));
+
+            return DtoMapper.ForCategory.toDto(category);
+        } else {
+            throw new NoSuchElementException(ResourceUtil.getMessage("db.category.not_found_by_id").formatted(id));
+        }
     }
 
     @Override
@@ -91,7 +109,7 @@ public class CategoryServiceImpl implements CategoryService {
         categoryDao.get(id)
                 .ifPresentOrElse(category -> {
                             category.setName(dto.name());
-                            category.setDescription(dto.description());
+                            category.setImage(dto.image());
                         },
                         () -> {
                             throw new NoSuchElementException(ResourceUtil.getMessage("db.category.not_found_by_id").formatted(id));

@@ -221,6 +221,10 @@ class ApiClient {
         return fetch(this.SERVER_URL + this.SHOP_API + this.CATEGORIES_URL);
     }
 
+    static getCategory(id): Promise<Response> {
+        return fetch(this.SERVER_URL + this.SHOP_API + this.CATEGORIES_URL + '/' + id);
+    }
+
     static addCategory(name, desc): Promise<Response> {
         return fetch(this.SERVER_URL + this.SHOP_API + this.CATEGORIES_URL, {
             method: "POST",
