@@ -948,7 +948,7 @@ a:focus {
 /* info section */
 .info_section {
     position: relative;
-    background-image: url("https://mixtil.by/wp-content/uploads/2022/04/footer-bg.jpg.webp");
+    background-image: url("../images/background-footer.webp");
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -1355,7 +1355,7 @@ a:focus {
     right: -50px;
     top: 50%;
     transform: translateY(-50%);
-    transition: right 0.3s ease, opacity 0.3s ease;;
+    transition: right 0.3s ease, opacity 0.3s ease;
     opacity: 0;
 }
 
@@ -1385,4 +1385,74 @@ a:focus {
 
 .icon1:hover::before {
     color: #8ed9fa;
+}
+
+
+.info-container {
+    display: flex;
+
+    ol {
+        display: flex;
+        list-style: none;
+    }
+}
+
+.info-summary {
+
+}
+
+.summary-row {
+    display: flex;
+    gap: 90px;
+}
+
+.summary-row:last-child {
+    border-bottom: none;
+}
+
+.cart-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #2d2d2d;
+    margin-top: 100px;
+    height: 60px;
+    color: white;
+    font-weight: bolder;
+
+    transition: background-color 0.3s ease;
+
+    &:hover {
+        background-color: black;
+        cursor: pointer;
+    }
+}
+
+.description-header {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 80px;
+}
+
+.images-for-select {
+    li {
+        position: relative;
+    }
+    li::after {
+        content: "";
+        position: absolute;
+        top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(0, 0, 0, 0.3);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    li:hover::after {
+        opacity: 1;
+    }
+
+    li.selected::after {
+        opacity: 1;
+    }
 }

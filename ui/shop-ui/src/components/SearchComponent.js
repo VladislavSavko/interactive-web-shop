@@ -3,6 +3,7 @@ import React from "react";
 import logo from '../images/logo.png'
 import user from '../images/user1.png'
 import cart from '../images/cart.png'
+import like from '../images/heart.png'
 import ItemsSearch from "./modals/inner/ItemsSearch";
 
 class SearchComponent extends React.Component {
@@ -38,6 +39,7 @@ class SearchComponent extends React.Component {
                 </div>
                 <div style={{width: '30%', paddingTop: '30px'}}>
                     <div style={{display: 'flex', gap: '30px', justifyContent: 'flex-end', alignItems: 'center'}}>
+                        <img src={like} style={{width: '27px', height: '27px', marginRight: '10px'}} alt="Избранное"/>
                         <div style={{display: 'flex'}}>
                             <img src={cart} style={{width: '40px', height: '40px'}} alt="Корзина"/>
                             <div className="custom-circle count-circle">

@@ -8,6 +8,7 @@ import UpdateItemModal from "./modals/UpdateItemModal";
 
 import newMark from '../images/new_mark.png'
 import TokenKeeper from "./token/TokenKeeper";
+import cart from "../images/cart.png";
 
 class ItemInfo extends React.Component {
     constructor(props) {
@@ -22,92 +23,108 @@ class ItemInfo extends React.Component {
             isNew: false,
             id: '',
             selected: '',
-            currentImageSrc: '',
-            color: ''
+            currentImageSrc: 'data:image/png;base64,' + props.item.images[0].data,
+            color: '',
+            item: props.item,
+            multiplier: 1
         }
     }
 
-    getItemInfo(id): Promise<Response> {
-        return ApiClient.getItemInfo(id);
-    }
-
-    updateItem = () => {
-        const url = window.location.href;
-        const itemId = url.substring(url.lastIndexOf('item/') + 5);
-
-        this.getItemInfo(itemId).then(response => {
-            if (response.ok) {
-                response.json().then(responseJson => {
-                    this.setState({
-                        binary: responseJson.images,
-                        category: responseJson.category,
-                        name: responseJson.name,
-                        quantity: responseJson.quantity,
-                        description: responseJson.description,
-                        price: responseJson.price,
-                        isNew: responseJson.isNew,
-                        color: responseJson.color,
-                        id: itemId,
-                        currentImageSrc: responseJson.images.length > 0 ? responseJson.images[0].data : ''
-                    });
-                });
-            } else {
-                console.error('Failed to fetch item info');
+    checkValue = () => {
+        let input = document.getElementById('quantity');
+        if (input.value === '' || input.value === null || input.value === undefined) {
+            input.value = input.min;
+        } else {
+            let value = parseInt(input.value, 10);
+            if (value < input.min) {
+                input.value = input.min;
+            } else if (value > input.max) {
+                input.value = input.max;
             }
+        }
+        this.setState({
+            multiplier: input.value
         });
-    }
-
-    updateDots = (index) => {
-        let dots = document.querySelectorAll('.dot');
-        dots.forEach(d => {
-            d.classList.remove('active');
-        });
-        dots[index].classList.add('active');
     }
 
     componentDidMount() {
-        if (TokenKeeper.getToken() === null || TokenKeeper.getToken() === undefined) {
-            window.location.href = '/error?status=401';
-            return;
-        }
-        const url = window.location.href;
-        const itemId = url.substring(url.lastIndexOf('item/') + 5);
+        let ol = document.getElementById('images');
+        ol.innerHTML = '';
+        let id = '0';
+        this.state.item.images.map(image => {
+            const imgSrc = "data:image/png;base64," + image.data;
+            const li = document.createElement("li");
 
-        this.getItemInfo(itemId).then(response => {
-            if (response.ok) {
-                response.json().then(responseJson => {
-                    this.setState({
-                        binary: responseJson.images,
-                        category: responseJson.category,
-                        name: responseJson.name,
-                        quantity: responseJson.quantity,
-                        description: responseJson.description,
-                        price: responseJson.price,
-                        isNew: responseJson.isNew,
-                        color: responseJson.color,
-                        id: itemId,
-                        currentImageSrc: responseJson.images.length > 0 ? responseJson.images[0].data : ''
-                    });
-                    let dots = document.querySelector('.slideshow-buttons');
-                    for (let i = 0; i < this.state.binary.length; i++) {
-                        const dot = document.createElement('div');
-                        if (i === 0) {
-                            dot.classList.add('active');
-                        }
-                        dot.classList.add('dot');
-                        dot.onclick = () => {
-                            this.setState({
-                                currentImageSrc: responseJson.images[i].data
-                            });
-                            this.updateDots(i);
-                        }
-                        dots.appendChild(dot);
-                    }
+            const div = document.createElement("div");
+            div.style.border = "solid 0.5px gray";
+            div.style.display = "inline-block";
+
+            const img = document.createElement("img");
+            img.src = imgSrc;
+            img.alt = "Загрузка...";
+            img.width = 100;
+            img.height = 100;
+
+            li.addEventListener('click', () => {
+                this.setState({
+                    currentImageSrc: imgSrc
                 });
-            } else {
-                console.error('Failed to fetch item info');
-            }
+                document.querySelectorAll("li").forEach(li => {
+                    li.classList.remove("selected");
+                });
+
+                li.classList.toggle('selected');
+            });
+
+            div.appendChild(img);
+            li.appendChild(div);
+            ol.appendChild(li);
+
+            id++;
         });
+        // if (TokenKeeper.getToken() === null || TokenKeeper.getToken() === undefined) {
+        //     TokenKeeper.setToken('aaa')
+        //     window.location.href = '/error?status=401';
+        //     return;
+        // }
+        // const url = window.location.href;
+        // const itemId = url.substring(url.lastIndexOf('item/') + 5);
+        //
+        // this.getItemInfo(itemId).then(response => {
+        //     if (response.ok) {
+        //         response.json().then(responseJson => {
+        //             this.setState({
+        //                 binary: responseJson.images,
+        //                 category: responseJson.category,
+        //                 name: responseJson.name,
+        //                 quantity: responseJson.quantity,
+        //                 description: responseJson.description,
+        //                 price: responseJson.price,
+        //                 isNew: responseJson.isNew,
+        //                 color: responseJson.color,
+        //                 id: itemId,
+        //                 currentImageSrc: responseJson.images.length > 0 ? responseJson.images[0].data : ''
+        //             });
+        //             let dots = document.querySelector('.slideshow-buttons');
+        //             for (let i = 0; i < this.state.binary.length; i++) {
+        //                 const dot = document.createElement('div');
+        //                 if (i === 0) {
+        //                     dot.classList.add('active');
+        //                 }
+        //                 dot.classList.add('dot');
+        //                 dot.onclick = () => {
+        //                     this.setState({
+        //                         currentImageSrc: responseJson.images[i].data
+        //                     });
+        //                     this.updateDots(i);
+        //                 }
+        //                 // dots.appendChild(dot);
+        //             }
+        //         });
+        //     } else {
+        //         console.error('Failed to fetch item info');
+        //     }
+        // });
 
 
     }
@@ -138,7 +155,6 @@ class ItemInfo extends React.Component {
     }
 
     render() {
-        //TODO: Find a way to perform instant redirect without page loading
         if (TokenKeeper.getToken() !== null && TokenKeeper.getToken() !== undefined) {
             const images = this.state.binary.map(i => i.data);
             const isNew = this.state.isNew ? <img
@@ -178,42 +194,105 @@ class ItemInfo extends React.Component {
                         style={{marginTop: '9px'}}>
                     Delete item
                 </button>
-            return <>
-                <div className="item-body" style={{marginLeft: '45px', marginRight: '45px'}}>
-                    <div className="item-container">
+
+            return <section>
+                <div className="container" style={{paddingLeft: '200px', display: 'flex', gap: '100px'}}>
+                    <div className="info-container">
                         <div>
-                            {isNew}
-                            <img src={`data:image/png;base64,${this.state.currentImageSrc}`}
-                                 alt="Cannot load the image right now..."
-                                 className="item-image"/>
+                            <ol id="images" style={{flexDirection: 'column', gap: '15px'}}
+                                className="images-for-select"/>
                         </div>
-                        <div className="slideshow-buttons"></div>
-                        <p className="pick">choose size</p>
-                        <div className="sizes">
-                            <div className="size" onClick={this.select}>S</div>
-                            <div className="size" onClick={this.select}>M</div>
-                            <div className="size" onClick={this.select}>L</div>
-                            <div className="size" onClick={this.select}>XL</div>
+                        <div style={{paddingLeft: '40px', overflow: 'hidden'}}>
+                            {this.state.currentImageSrc && <img src={this.state.currentImageSrc} alt="Загрузка..."
+                                                                width="562" height="562"/>}
                         </div>
-                        <div className="product">
-                            <p>{this.state.category}</p>
-                            <h1>{this.state.name}</h1>
-                            <h2>${this.state.price}</h2>
-                            <p className="desc">{this.state.description}</p>
-                            <div>
-                                {upperButton}
-                                {middleButton}
-                                {updateButton}
-                                {deleteButton}
-                                <br/>
-                                {this.state.binary.length > 0 &&
-                                    <button className="buttons try" onClick={this.goToFittingRoom}>Try in fitting
-                                        room</button>}
+                    </div>
+                    <div className="info-summary">
+                        {this.state.item.name && <h1>{this.state.item.name}</h1>}
+                        <div>Срок изготовления 3-21 день. Подробности товара и его наличие уточняйте у менеджера.</div>
+                        <p style={{paddingTop: '30px', paddingBottom: '25px', fontWeight: '300px'}}><em>Цена указана без
+                            учета НДС</em></p>
+
+                        {this.state.item.price && <h6>
+                                <span style={{fontSize: '28px', fontWeight: 'bold'}}>
+                                    {this.state.item.price}&nbsp;<span>BYN</span>&nbsp;&nbsp;<span
+                                    style={{fontSize: '70%', fontWeight: 'lighter'}}>+НДС</span>
+                                </span>
+                        </h6>}
+
+                        {this.state.item.price && <div style={{paddingTop: '15px'}}>
+                            <span style={{color: 'rgb(119, 119, 119)', fontWeight: 'bolder'}}>Оптовые цены</span>
+                            <div style={{
+                                display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '5px',
+                                gridTemplateRows: 'auto auto', textAlign: 'center'
+                            }}>
+                                <div className="summary-row" style={{
+                                    borderTop: 'solid 0.5px gray', color: 'rgb(68, 68,68)',
+                                    fontWeight: 'bold', fontSize: '18px'
+                                }}>1 - 20
+                                </div>
+                                <div className="summary-row" style={{
+                                    borderTop: 'solid 0.5px gray', color: 'rgb(68, 68,68)',
+                                    fontWeight: 'bold', fontSize: '18px'
+                                }}>21 - 50
+                                </div>
+                                <div className="summary-row" style={{
+                                    borderTop: 'solid 0.5px gray', color: 'rgb(68, 68,68)',
+                                    fontWeight: 'bold', fontSize: '18px'
+                                }}>51+
+                                </div>
+                                <div className="summary-row"
+                                     style={{borderTop: 'solid 0.5px gray', color: 'rgb(68, 68,68)'}}>
+                                    <bdi>{this.state.item.price} BYN</bdi>
+                                </div>
+                                <div className="summary-row"
+                                     style={{borderTop: 'solid 0.5px gray', color: 'rgb(68, 68,68)'}}>
+                                    <bdi>{this.state.item.price - 2.21} BYN</bdi>
+                                </div>
+                                <div className="summary-row"
+                                     style={{borderTop: 'solid 0.5px gray', color: 'rgb(68, 68,68)'}}>
+                                    <bdi>{this.state.item.price - 4.42} BYN</bdi>
+                                </div>
                             </div>
+                        </div>}
+
+                        {this.state.item.price && <div style={{
+                            display: 'flex', marginTop: '100px', justifyContent: 'space-between'
+                        }}>
+                            <span style={{fontSize: '18px', color: 'rgb(119, 119, 119)', fontWeight: 'bolder'}}>Ваша цена:</span>
+                            <div style={{display: 'table'}}>
+                                <div style={{
+                                    borderBottom: 'solid 0.5px gray', fontSize: '20px', color: 'rgb(119, 119, 119)',
+                                    fontWeight: 'bold'
+                                }}>{this.state.item.price} BYN
+                                    × {this.state.multiplier}</div>
+                                <div style={{
+                                    textAlign: 'right', fontSize: '20px', color: 'rgb(119, 119, 119)',
+                                    fontWeight: 'bold'
+                                }}>{this.state.item.price * this.state.multiplier} BYN
+                                </div>
+                            </div>
+                        </div>}
+                        <input type="number" id="quantity" defaultValue="1" className="modal-item-input"
+                               max={52} min="1" onInput={() => this.checkValue()}/>
+                        <div className="cart-button">
+                            <img src={cart} style={{width: '40px', height: '40px', filter: 'invert(100%)'}}
+                                 alt="Корзина"/>
+                            <span style={{marginLeft: '12px'}}>В Корзину</span>
                         </div>
                     </div>
                 </div>
-            </>
+                <div className="description-header">
+                    <h4 style={{borderBottom: 'solid 2px black'}}>ОПИСАНИЕ</h4>
+                </div>
+                {this.state.item.description && <div style={{
+                    paddingLeft: '240px', paddingRight: '100px', color: 'rgb(119, 119, 119)',
+                    fontSize: '17px', fontWeight: '300px', paddingTop: '50px',
+                    marginBottom: '150px'
+                }}>
+                    {this.state.item.description}
+                </div>}
+            </section>
         }
     }
 }

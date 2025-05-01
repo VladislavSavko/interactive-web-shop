@@ -314,11 +314,21 @@ body.active-modal {
 
 .modal-item-input {
     border: none;
-    width: 65px;
+    width: 30%;
     background-color: transparent;
-    margin-left: 30px;
-    margin-top: -9px;
+    margin-top: 20px;
     font-size: 28px;
+    font-weight: 500;
+    border-bottom: solid 0.2px gray;
+}
+
+.modal-item-input::-webkit-inner-spin-button,
+.modal-item-input::-webkit-outer-spin-button {
+    opacity: 1 !important;
+}
+
+.modal-item-input:focus {
+    outline: none;
 }
 
 .modal-item-price-input {
