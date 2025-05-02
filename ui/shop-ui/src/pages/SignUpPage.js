@@ -1,9 +1,9 @@
-import MainHeader from "../components/MainHeader";
 import '../css/custom.css'
 import ApiClient from "../client/ApiClient";
-import {CountryDropdown} from "react-country-region-selector";
-import {useState} from "react";
+import React, {useState} from "react";
 import TokenKeeper from "../components/token/TokenKeeper";
+import HomePageHeader from "../components/structure/HomePageHeader";
+import HomePageFooter from "../components/structure/HomePageFooter";
 
 
 const SignUpPage = () => {
@@ -18,71 +18,38 @@ const SignUpPage = () => {
     }
 
     return <div>
-        <div className="hero_area">
-            <MainHeader active="signup"/>
-        </div>
+        <HomePageHeader/>
         <div className="login-page-content">
             <div className="form-v10-content">
                 <div className="form-detail">
                     <div className="form-left">
-                        <h2>General information</h2>
+                        <h2>Добро пожаловать!</h2>
                         <div className="form-row">
                             <input id="email" name="email" type="text" placeholder="Email" onFocus={blackText}
                                    defaultValue={initEmail}/>
                         </div>
                         <div className="form-row">
-                            <input id="password" name="password" type="password" placeholder="Password"
+                            <input id="password" name="password" type="password" placeholder="Пароль"
                                    onFocus={blackText}/>
                         </div>
                         <div className="form-row">
-                            <input id="name" name="name" type="text" placeholder="Your name" onFocus={blackText}/>
+                            <input id="name" name="name" type="text" placeholder="Ваше имя" onFocus={blackText}/>
+                        </div>
+                        <div className="form-row">
+                            <input id="phone" name="phone" type="text" placeholder="Телефон" onFocus={blackText}/>
                         </div>
                         <div id="error_div" className="error"></div>
                     </div>
-                    <div className="form-right">
-                        <h2>Address Details</h2>
-                        <div className="form-row">
-                            <CountryDropdown
-                                id="country_code"
-                                labelType="long"
-                                valueType="short"
-                                onChange={(selected) => setCountry(selected)}
-                                value={country}
-                                style={{
-                                    display: 'block',
-                                    borderRadius: '5px',
-                                    fontSize: '16px',
-                                    background: 'white',
-                                    width: '100%',
-                                    border: '0',
-                                    padding: '10px 10px',
-                                    margin: '15px -10px'
-                                }}/>
-                        </div>
-                        <div className="form-row">
-                            <input id="city" name="city" type="text" placeholder="City" onFocus={blackText}/>
-                        </div>
-                        <div className="form-row">
-                            <input id="street" name="street" type="text" placeholder="Street" onFocus={blackText}/>
-                        </div>
-                        <div className="form-row">
-                            <input id="house_number" name="house_number" type="text" placeholder="House number"
-                                   onFocus={blackText}/>
-                        </div>
-                        <div className="form-row">
-                            <input id="flat_number" name="flat_number" type="text" placeholder="Flat number"
-                                   onFocus={blackText}/>
-                        </div>
-                        <div className="form-row-last">
-                            <button onClick={sendData}>Sign Up</button>
-                            <button style={{marginLeft: '275px'}}
-                                    onClick={() => goToLogin()}>Login
-                            </button>
-                        </div>
-                    </div>
+
                 </div>
             </div>
         </div>
+        <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+            <div className="cart-button" style={{width: '30%', marginTop: '50px', marginBottom: '70px'}} onClick={sendData}>
+                <span style={{marginLeft: '12px'}}>Зарегистрироваться</span>
+            </div>
+        </div>
+        <HomePageFooter/>
     </div>
 }
 
@@ -91,14 +58,10 @@ const sendData = () => {
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
     const name = document.getElementById('name').value;
-    const countryCode = document.getElementById('country_code').value;
-    const city = document.getElementById('city').value;
-    const street = document.getElementById('street').value;
-    const houseNumber = document.getElementById('house_number').value;
-    const flatNumber = document.getElementById('flat_number').value;
+    const phone = document.getElementById('phone').value;
 
 
-    ApiClient.register(email, password, name, countryCode, city, street, houseNumber, flatNumber)
+    ApiClient.register(email, password, name, phone)
         .then(response => {
             if (response.ok) {
                 response.json().then(responseJson => {

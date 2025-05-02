@@ -48,7 +48,8 @@ class SearchComponent extends React.Component {
                                 </span>
                             </div>
                         </div>
-                        <img src={user} style={{width: '40px', height: '40px'}} alt="Профиль"/>
+                        <img src={user} style={{width: '40px', height: '40px', cursor: 'pointer'}} alt="Профиль"
+                        onClick={() => window.location.href = '/profile'}/>
                     </div>
                 </div>
             </div>

@@ -1,6 +1,5 @@
 package com.vlados.webshop.userservice.dto.user;
 
-import com.vlados.webshop.userservice.dto.address.AddressDto;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -18,5 +17,7 @@ public record NewUserDto(
         @NotBlank(message = "Name cannot be blank!")
         String name,
         @Valid
-        AddressDto address) {
+        @NotBlank
+        @Pattern(regexp = "^(\\+7|8|\\+375)(\\d{9})$")
+        String phone) {
 }

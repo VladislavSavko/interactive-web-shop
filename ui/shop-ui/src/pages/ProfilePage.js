@@ -12,7 +12,7 @@ const ProfilePage = () => {
     useEffect(() => {
         const item = window.sessionStorage.getItem('username');
         if (!item) {
-            navigate('/error?status=401');
+            navigate('/signUp');
         }
     }, [navigate]);
 

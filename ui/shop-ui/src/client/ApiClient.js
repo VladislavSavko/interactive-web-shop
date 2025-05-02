@@ -269,20 +269,14 @@ class ApiClient {
         });
     }
 
-    static register(email, password, name, countryCode, city, street, houseNumber, flatNumber): Promise<Response> {
+    static register(email, password, name, phone): Promise<Response> {
         return fetch(this.SERVER_URL + this.USERS_API, {
             method: "POST",
             body: JSON.stringify({
                 name: name,
                 email: email,
                 password: password,
-                address: {
-                    countryCode: countryCode,
-                    city: city,
-                    street: street,
-                    houseNumber: houseNumber,
-                    flatNumber: flatNumber
-                }
+                phone: phone
             }),
             headers: {
                 "Content-type": "application/json; charset=UTF-8"
