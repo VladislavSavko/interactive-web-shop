@@ -73,7 +73,7 @@ services:
       eureka-server:
         condition: service_healthy
       user-service-db:
-        condition: service_started
+        condition: service_healthy
     healthcheck:
       test: [ "CMD", "curl", "-I", "http://localhost:8081" ]
       interval: 5s
@@ -90,6 +90,11 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: interactive-web-shop-users
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
 
   shop-service-db:
      image: mysql:latest
