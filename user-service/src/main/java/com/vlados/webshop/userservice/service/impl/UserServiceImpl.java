@@ -2,13 +2,14 @@ package com.vlados.webshop.userservice.service.impl;
 
 import com.vlados.webshop.userservice.dao.AddressDao;
 import com.vlados.webshop.userservice.dao.UserDao;
+import com.vlados.webshop.userservice.domain.Address;
 import com.vlados.webshop.userservice.domain.User;
 import com.vlados.webshop.userservice.dto.address.AddressDto;
 import com.vlados.webshop.userservice.dto.auth.UserAuthDtoRequest;
 import com.vlados.webshop.userservice.dto.auth.UserAuthDtoResponse;
 import com.vlados.webshop.userservice.dto.user.NewUserDto;
-import com.vlados.webshop.userservice.dto.user.ResponseUserDto;
 import com.vlados.webshop.userservice.dto.user.ResponseUserDataDto;
+import com.vlados.webshop.userservice.dto.user.ResponseUserDto;
 import com.vlados.webshop.userservice.dto.user.UpdatedUserDto;
 import com.vlados.webshop.userservice.exception.DuplicateEmailException;
 import com.vlados.webshop.userservice.exception.NoSuchEntityException;
@@ -110,9 +111,7 @@ public class UserServiceImpl implements UserService {
         if (exists(id)) {
             userDao.update(id, dto);
             AddressDto newAddressDto = dto.address();
-            if (addressChanged(id, newAddressDto)) {
-                userDao.update(id, newAddressDto);
-            }
+            userDao.update(id, newAddressDto);
         } else {
             throw new NoSuchElementException(ResourceUtil.getMessage("db.user.id").formatted(id));
         }
@@ -168,6 +167,7 @@ public class UserServiceImpl implements UserService {
     }
 
     private boolean addressChanged(long id, AddressDto dto) {
-        return !dto.equals(AddressMapper.map(addressDao.getForUser(id).get()));
+        Optional<Address> optAddress = addressDao.getForUser(id);
+        return optAddress.isPresent() && !dto.equals(AddressMapper.map(optAddress.get()));
     }
 }

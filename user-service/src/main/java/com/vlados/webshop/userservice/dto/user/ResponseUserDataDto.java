@@ -6,6 +6,7 @@ public record ResponseUserDataDto(
         String countryCode,
         String city,
         String street,
+        String phone,
         int houseNumber,
         int flatNumber) {
 }

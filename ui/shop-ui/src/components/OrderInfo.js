@@ -1,12 +1,6 @@
 import React from "react";
 import ApiClient from "../client/ApiClient";
 import '../css/order.css'
-import OrderItemRow from "./OrderItemRow";
-
-import orderStatus from '../images/status.png'
-import ShippingProgressBar from "./bar/ShippingProgressBar";
-import HomePageFooter from "./structure/HomePageFooter";
-import OrderDeletingApprovalDialog from "./modals/OrderDeletingApprovalDialog";
 
 class OrderInfo extends React.Component {
     constructor(props) {
@@ -20,7 +14,8 @@ class OrderInfo extends React.Component {
             status: '',
             userId: '',
             userName: '',
-            address: null
+            address: null,
+            userInfo: null
         }
     }
 
@@ -38,9 +33,37 @@ class OrderInfo extends React.Component {
     }
 
     componentDidMount() {
-        const url = window.location.href;
-        const orderId = url.substring(url.lastIndexOf('orders/') + 7);
-        this.getOrderInfo(orderId);
+        // const url = window.location.href;
+        // const orderId = url.substring(url.lastIndexOf('orders/') + 7);
+        // this.getOrderInfo(orderId);
+        const userId = window.sessionStorage.getItem('userId');
+        this.getState(userId);
+    }
+
+    getState = async (id) => {
+        const [r1, r2] = await Promise.all([
+            ApiClient.getUserData(id),
+            ApiClient.getUserCart(id)
+        ]);
+
+        this.getUserInfo(r1);
+        this.getItems(r2);
+    }
+
+    getUserInfo = (response) => {
+        response.json().then(responseJson => {
+            this.setState({
+                userInfo: responseJson
+            });
+        });
+    }
+
+    getItems = (response) => {
+        response.json().then(responseJson => {
+            this.setState({
+                items: responseJson.items
+            });
+        });
     }
 
     preDeleteOrder = () => {
@@ -114,80 +137,125 @@ class OrderInfo extends React.Component {
 
     render() {
         const date = new Date(this.state.created)
-        return <div>
-            <div style={{
-                backgroundColor: 'rgb(241, 208, 212)',
-                marginLeft: '45px',
-                marginRight: '45px',
-                borderBottomLeftRadius: '15px',
-                borderBottomRightRadius: '15px'
+        return <div className="container" style={{paddingLeft: '40px', paddingRight: '40px'}}>
+            <div className="heading_container heading_center" style={{marginTop: '50px'}}>
+                <h2 style={{fontSize: '2.7rem'}}>
+                    Оформление заказа
+                </h2>
+            </div>
+            <div className="container" style={{
+                marginLeft: '40px', marginRight: '40px', marginTop: '55px',
+                display: 'flex', gap: '70px', width: '100%',
+                paddingBottom: '55px'
             }}>
-                <div className="col d-flex">
-                    <span className="text-muted" id="orderno"
-                          style={{paddingLeft: '45px'}}>Order #{this.state.orderId} (created on {date.getDate()}-{date.getMonth() + 1}-{date.getFullYear()} {date.getHours()}:{date.getMinutes()}:{date.getSeconds()})
-                    </span>
-                </div>
-                {this.state.address && <div className="col d-flex">
-                    <span className="text-muted" id="orderno"
-                          style={{paddingLeft: '45px'}}>Shipping to {this.state.address.city}, {this.state.address.street} st., {this.state.address.houseNumber} - {this.state.address.flatNumber}
-                    </span>
-                </div>}
-                    <div className="order-card">
-                    <div className="title">{this.state.userName}</div>
-            <div className="main">
-                    <span id="sub-title">
-                        <p><b>Payment Summary</b></p>
-                    </span>
-                {this.state.items.map(orderItem => {
-                    return <OrderItemRow item={orderItem.item} size={orderItem.itemSize}/>
-                })}
-                <hr/>
-                <div className="total">
-                    <div className="row">
-                        <div className="col"><b> Price:</b></div>
-                        <div className="col d-flex justify-content-end"
-                             style={{fontSize: '30px', fontWeight: 'bold'}}>${this.state.total}</div>
+                <div className="info-container" style={{flexDirection: 'column', color: '#111111', width: '60%'}}>
+                    <h3>Детали оплаты</h3>
+                    <div className="quatro" style={{marginTop: '30px'}}>
+                        <p>Имя <span style={{color: 'red'}}>*</span></p>
+                        <p>Название компании</p>
+                        <input id="name" name="name" type="text"
+                               value={this.state.userInfo && this.state.userInfo.name} className="checkout-input"
+                               onChange={(event) => this.setState(prevState => ({userInfo: {...prevState.userInfo, name: event.target.value}}))}/>
+                        <input id="name" name="name" type="text"
+                               value={this.state.street} className="checkout-input"
+                               onChange={(event) => this.setState({street: event.target.value})}/>
                     </div>
-                    <div className="row">
-                        <div className="col"><b> Shipping:</b></div>
-                        <div className="col d-flex justify-content-end"
-                             style={{fontSize: '30px', fontWeight: 'bold'}}>$15
+                    <div style={{marginTop: '30px'}}>
+                        <h4>Адрес <span style={{color: 'red', fontSize: '16px'}}>*</span></h4>
+                        <div className="quatro" style={{marginTop: '30px', rowGap: '40px'}}>
+                            <input id="city" name="city" type="text"
+                                   value={this.state.street} className="checkout-input"
+                                   onChange={(event) => this.setState({street: event.target.value})}
+                                   placeholder="Город"/>
+                            <input id="street" name="street" type="text"
+                                   value={this.state.street} className="checkout-input"
+                                   onChange={(event) => this.setState({street: event.target.value})}
+                                   placeholder="Название улицы"/>
+                            <input id="house" name="house" type="text"
+                                   value={this.state.street} className="checkout-input"
+                                   onChange={(event) => this.setState({street: event.target.value})}
+                                   placeholder="Номер дома (здания)"/>
+                            <input id="flat" name="flat" type="text"
+                                   value={this.state.street} className="checkout-input"
+                                   onChange={(event) => this.setState({street: event.target.value})}
+                                   placeholder="Номер квартиры (офиса)"/>
                         </div>
                     </div>
-                    <hr/>
-                    <div className="row">
-                        <div className="col"><b> Total:</b></div>
-                        <div className="col d-flex justify-content-end"
-                             style={{fontSize: '45px', fontWeight: 'bold'}}>${this.state.total + 15}</div>
+                    <div style={{marginTop: '30px'}}>
+                        <h4>Контактная информация <span style={{color: 'red', fontSize: '16px'}}>*</span></h4>
+                        <div className="dos" style={{marginTop: '30px'}}>
+                            <input id="phone" name="phone" type="text"
+                                   value={this.state.street} className="checkout-input"
+                                   onChange={(event) => this.setState({street: event.target.value})}
+                                   placeholder="Номер телефона"/>
+                            <input id="email" name="email" type="text"
+                                   value={this.state.street} className="checkout-input"
+                                   onChange={(event) => this.setState({street: event.target.value})}
+                                   placeholder="Email"/>
+                        </div>
+                    </div>
+                    <div style={{marginTop: '30px'}}>
+                        <h4>Примечание к заказу</h4>
+                        <textarea id="description" style={{
+                            width: '100%', resize: 'none', overflow: 'auto'
+                        }}
+                                  placeholder="Примечание к вашему заказу, например, особые пожелания отделу доставки."/>
+                    </div>
+                </div>
+                <div className="info-summary" style={{width: '40%', backgroundColor: 'rgb(250, 250, 250)'}}>
+                    <div style={{paddingLeft: '20px', paddingRight: '20px', paddingTop: '40px', paddingBottom: '40px'}}>
+                        <h3 style={{fontWeight: 'bold', borderBottom: 'solid 1px gray', paddingBottom: '30px'}}>ВАШ
+                            ЗАКАЗ</h3>
+                        <div style={{
+                            display: 'flex', justifyContent: 'space-between', width: '100%',
+                            marginTop: '20px', borderBottom: 'solid 1px gray', paddingBottom: '20px'
+                        }}>
+                            <span style={{maxWidth: '70%'}}>hdfgdhfdfgdhf</span>
+                            <span style={{color: '#777777'}}>22.09 BYN</span>
+                        </div>
+                        <div style={{
+                            display: 'flex', justifyContent: 'space-between', width: '100%',
+                            marginTop: '15px'
+                        }}>
+                            <span style={{maxWidth: '70%'}}>Подытог</span>
+                            <span style={{color: '#222222'}}>22.09 BYN</span>
+                        </div>
+                        <div style={{
+                            display: 'flex', justifyContent: 'space-between', width: '100%',
+                            marginTop: '20px'
+                        }}>
+                            <span style={{maxWidth: '70%'}}>Доставка</span>
+                            <span style={{color: '#111111', fontWeight: 'bold'}}>Самовывоз</span>
+                        </div>
+                        <div style={{
+                            display: 'flex', justifyContent: 'space-between', width: '100%',
+                            marginTop: '20px'
+                        }}>
+                            <span style={{maxWidth: '70%'}}>НДС (19%)</span>
+                            <span style={{color: '#222222'}}>100 BYN</span>
+                        </div>
+                        <div style={{
+                            display: 'flex', justifyContent: 'space-between', width: '100%',
+                            marginTop: '30px'
+                        }}>
+                            <span style={{maxWidth: '70%'}}>Итого</span>
+                            <span style={{color: '#111111', fontWeight: 'bold', fontSize: '26px'}}>100 BYN</span>
+                        </div>
+                        <p style={{color: '#777777', marginTop: '50px'}}>
+                            Ваши личные данные будут использоваться для обработки вашего заказа, поддержки вашего опыта
+                            на этом веб-сайте и для других целей,
+                            описанных на странице&nbsp;
+                            <a href="https://mixtil.by/privacy-policy/" className="hovered-text">политика
+                                конфиденциальности</a>.
+                        </p>
+                        <div className="cart-button" style={{marginBottom: '20px', marginTop: '20px'}}
+                             onClick={this.checkout}>
+                            <span>Подтвердить заказ</span>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-        <div className="profile-body-1">
-            <div className="profile-body-1-header">
-                <h2 style={{marginBottom: '0px'}}>Order Status</h2>
-                <img style={{maxWidth: '40px', maxHeight: '40px', marginLeft: '18px'}}
-                     src={orderStatus}
-                     alt=""/>
-            </div>
-            <div className="mt-10 p-5 bg-white shadow"
-                 style={{borderBottomLeftRadius: '15px', borderBottomRightRadius: '15px'}}>
-                <ShippingProgressBar percent={this.countPercent(this.state.status)}
-                                     admin={window.sessionStorage.getItem('userRole') === 'ADMIN'}
-                                     onChange={(status) => this.changeOrderStatus(status)}/>
-                <div className="button-confirm-and-order">
-                    <button onClick={this.preDeleteOrder}>Delete order</button>
-                </div>
-            </div>
-        </div>
-        <div style={{marginTop: '100px'}}>
-            <HomePageFooter/>
-        </div>
-        <OrderDeletingApprovalDialog ref={(instance) => {
-            this.dialog = instance;
-        }} onChange={this.deleteOrder}/>
-    </div>
     }
 
 }

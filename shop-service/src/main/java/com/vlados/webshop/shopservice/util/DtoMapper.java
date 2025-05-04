@@ -31,6 +31,7 @@ public class DtoMapper {
                     original.getId(),
                     original.getName(),
                     original.getRelatedCategory().getName(),
+                    original.getRelatedCategory().getId(),
                     original.getInventoryInfo().getQuantity(),
                     original.getColor(),
                     original.getDescription(),

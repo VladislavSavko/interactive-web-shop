@@ -95,7 +95,7 @@ class ApiClient {
 
 
     static getUserInfo(id): Promise<Response> {
-        return fetch(this.SERVER_URL + this.USERS_API + '/' + id, {
+        return fetch(this.SERVER_URL + this.USERS_API + '/' + id + '/data', {
             method: "GET",
             headers: {
                 "Authorization": `Bearer ${TokenKeeper.getToken()}`
@@ -171,15 +171,15 @@ class ApiClient {
         });
     }
 
-    static sendUserInfo(email, name, countryCode, city, street, houseNumber, flatNumber, role, id): Promise<Response> {
+    static sendUserInfo(email, name, phone, city, street, houseNumber, flatNumber, role, id): Promise<Response> {
         return fetch(this.SERVER_URL + this.USERS_API + '/' + id, {
             method: "PUT",
             body: JSON.stringify({
                 name: name,
                 email: email,
+                phone: phone,
                 role: role,
                 address: {
-                    countryCode: countryCode,
                     city: city,
                     street: street,
                     houseNumber: houseNumber,

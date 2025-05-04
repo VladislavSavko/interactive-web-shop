@@ -96,17 +96,13 @@
 
 .error {
     color: red;
-    max-width: 600px;
-    font-size: 25px;
-    background-color: #f9ece6;
-    border-bottom-right-radius: 15px;
-    border-bottom-left-radius: 15px;
+    font-size: 21px;
+    background-color: white;
     display: none;
     animation: slideDownError 0.5s ease forwards;
     position: relative;
     overflow-wrap: break-word;
     word-break: normal;
-    overflow: hidden;
     text-overflow: ellipsis;
 }
 
@@ -126,11 +122,9 @@
 
 
 .profile-body {
-    background-color: #f1f1f1;
-    margin-left: 45px;
-    margin-right: 45px;
-    border-bottom-left-radius: 15px;
-    border-bottom-right-radius: 15px;
+    background-color: rgb(244, 244, 244);
+    margin-left: 40px;
+    margin-right: 40px;
 }
 
 .profile-body-1 {
@@ -345,6 +339,10 @@
     width: 50%;
     box-shadow: 0 8px 20px 0 rgba(0, 0, 0, .15);
     position: relative;
+
+    max-height: 550px;
+    overflow-y: auto;
+    overflow-x: hidden;
 
 
     h2 {

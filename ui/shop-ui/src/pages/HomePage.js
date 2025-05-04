@@ -9,11 +9,14 @@ import HomePageHeader from "../components/structure/HomePageHeader";
 import SearchComponent from "../components/SearchComponent";
 import NavigationBar from "../components/bar/NavigationBar";
 import DescriptionSection from "../components/structure/DescriptionSection";
+import NavigationStringCreator from "../components/navigation-util/NavigationStringCreator";
 
 
 const HomePage = () => {
     const createParts = () => {
-        return 'Главная / Сувенирная продукция';
+        return NavigationStringCreator.get(
+            ['Главная', '/', 'Сувенирная продукция', null]
+        );
     };
     return <div>
         <HomePageHeader/>

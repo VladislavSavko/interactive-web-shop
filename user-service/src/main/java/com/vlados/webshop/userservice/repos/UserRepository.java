@@ -16,7 +16,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query("SELECT u.email FROM _users u WHERE u.id=:id")
     Optional<String> findEmailById(@Param("id") long id);
 
-    @Query("SELECT u.name, u.email, u.address FROM _users u WHERE u.id=:id")
+    @Query("SELECT u.name, u.email, u.phone, a.city, a.countryCode, a.flatNumber, a.houseNumber, a.street FROM _users u " +
+            "LEFT JOIN addresses a ON u.address = a WHERE u.id=:id")
     Optional<List<Object>> findNameAndEmailAndAddressById(@Param("id") long id);
 
     List<User> findByEmailContainingIgnoreCase(final String email);

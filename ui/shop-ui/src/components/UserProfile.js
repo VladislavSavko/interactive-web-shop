@@ -1,20 +1,11 @@
 import React from "react";
 import '../css/custom.css'
 import ApiClient from "../client/ApiClient";
-import ProfileGeneralInfoModal from "./modals/ProfileGeneralInfoModal";
-import ProfileAddressInfoModal from "./modals/ProfileAddressInfoModal";
-import UserCart from "./UserCart";
-import UserOrders from "./UserOrders";
-
-import shoppingCart from '../images/cart.png';
-import order from '../images/order.png'
 import {Slide, toast, ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import TokenKeeper from "./token/TokenKeeper";
-
-import user from '../images/user1.png';
-import mail from '../images/message.png';
-import map from '../images/map-marker.png'
+import CartItems from "./CartItems";
+import CategoriesComponent from "./CategoriesComponent";
 
 class UserProfile extends React.Component {
     constructor(props) {
@@ -22,7 +13,16 @@ class UserProfile extends React.Component {
         this.state = {
             name: "",
             email: "",
-            address: ""
+            phone: "",
+            nameIsEditable: false,
+            mailIsEditable: false,
+            phoneIsEditable: false,
+            addressIsEditable: false,
+            city: '-',
+            street: '-',
+            house: '-',
+            flat: '-',
+            initEmail: ''
         }
     }
 
@@ -33,7 +33,12 @@ class UserProfile extends React.Component {
                     this.setState({
                         name: responseJson.name,
                         email: responseJson.email,
-                        address: responseJson.address,
+                        city: responseJson.city === null ? '-' : responseJson.city,
+                        phone: responseJson.phone,
+                        street: responseJson.street === null ? '-' : responseJson.street,
+                        house: responseJson.houseNumber === 0 ? '-' : responseJson.houseNumber,
+                        flat: responseJson.flatNumber === 0 ? '-' : responseJson.flatNumber,
+                        initEmail: responseJson.email
                     });
                 });
             } else {
@@ -65,6 +70,53 @@ class UserProfile extends React.Component {
         });
     }
 
+    showErrors = (errors) => {
+        const errorDiv = document.getElementById('error_div');
+        let response = "";
+
+        errors.forEach(error => response += error + '\n');
+
+        errorDiv.innerText = response;
+        errorDiv.style.borderBottomRightRadius = 0;
+        if (errors.length !== 5) {
+            errorDiv.style.borderBottomLeftRadius = 0;
+        }
+        errorDiv.style.display = 'block';
+
+        document.getElementById('email').style.color = 'red';
+        document.getElementById('password').style.color = 'red';
+        //TODO: Сделать коды ошибок для подсветки нужных полей?
+    }
+
+    toggleEdit = (name) => {
+        switch (name) {
+            case 'name' : {
+                this.setState({
+                    nameIsEditable: true
+                });
+                break;
+            }
+            case 'mail' : {
+                this.setState({
+                    mailIsEditable: true
+                });
+                break;
+            }
+            case 'phone' : {
+                this.setState({
+                    phoneIsEditable: true
+                });
+                break;
+            }
+            case 'address' : {
+                this.setState({
+                    addressIsEditable: true
+                });
+                break;
+            }
+        }
+    }
+
 
     render() {
         function logout() {
@@ -93,113 +145,208 @@ class UserProfile extends React.Component {
             />
             <div className="profile-body">
                 <div className="profile-upper-div">
-                    <p style={{textAlign: 'center'}}>Profile</p>
-                    <h2>
-                        Welcome, {this.state.name}
-                    </h2>
-                    <p style={{textAlign: 'center'}}>
-                        Here you can view and update your profile information.
-                    </p>
+                    <h1 style={{paddingLeft: '20px', fontSize: '35px', display: 'flex', flexDirection: 'column'}}>
+                        {!this.state.nameIsEditable && <div>
+                            <span style={{
+                                display: 'inline-block',
+                                borderBottom: 'solid 2px black'
+                            }}>{this.state.name}</span>
+                            <span className="icon icon2" onClick={event => this.toggleEdit('name')}/>
+                        </div>}
+                        {this.state.nameIsEditable && <input id="name" name="name" type="text"
+                                                             value={this.state.name}
+                                                             onChange={(event) => this.setState({name: event.target.value})}/>}
+                        {!this.state.mailIsEditable && <div>
+                            <span>{this.state.email}</span>
+                            <span className="icon icon2" onClick={event => this.toggleEdit('mail')}/>
+                        </div>}
+                        {this.state.mailIsEditable &&
+                            <input id="email" name="email" type="text"
+                                   value={this.state.email}
+                                   onChange={(event) => this.setState({email: event.target.value})}/>}
+                    </h1>
+                    <h3 style={{paddingLeft: '20px'}}>
+                        {!this.state.phoneIsEditable && <div>
+                            <span>{this.state.phone}</span>
+                            <span className="icon icon2" onClick={event => this.toggleEdit('phone')}/>
+                        </div>}
+                        {this.state.phoneIsEditable &&
+                            <input id="phone" name="phone" type="text"
+                                   value={this.state.phone}
+                                   onChange={(event) => this.setState({phone: event.target.value})}/>}
+                    </h3>
+                    <h4 style={{textAlign: 'center'}}>
+                        Адресная информация
+                        <span className="icon icon2 f24"
+                              onClick={event => this.toggleEdit('address')}/>
+                    </h4>
+                    <div style={{
+                        display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', gap: '5px',
+                        gridTemplateRows: 'auto auto', textAlign: 'center', paddingLeft: '20px',
+                        paddingRight: '20px'
+                    }}>
+                        <div className="summary-row" style={{
+                            borderTop: 'solid 0.5px gray', color: 'rgb(68, 68,68)',
+                            fontWeight: 'bold', fontSize: '18px'
+                        }}>Город
+                        </div>
+                        <div className="summary-row" style={{
+                            borderTop: 'solid 0.5px gray', color: 'rgb(68, 68,68)',
+                            fontWeight: 'bold', fontSize: '18px'
+                        }}>Улица
+                        </div>
+                        <div className="summary-row" style={{
+                            borderTop: 'solid 0.5px gray', color: 'rgb(68, 68,68)',
+                            fontWeight: 'bold', fontSize: '18px'
+                        }}>Номер дома
+                        </div>
+                        <div className="summary-row" style={{
+                            borderTop: 'solid 0.5px gray', color: 'rgb(68, 68,68)',
+                            fontWeight: 'bold', fontSize: '18px'
+                        }}>Квартира (офис)
+                        </div>
+                        <div className="summary-row"
+                             style={{borderTop: 'solid 0.5px gray', color: 'rgb(68, 68,68)'}}>
+                            {!this.state.addressIsEditable && <bdi>{this.state.city}</bdi>}
+                            {this.state.addressIsEditable &&
+                                <input id="city" name="city" type="text"
+                                       value={this.state.city}
+                                       onChange={(event) => this.setState({city: event.target.value})}/>}
+                        </div>
+                        <div className="summary-row"
+                             style={{borderTop: 'solid 0.5px gray', color: 'rgb(68, 68,68)'}}>
+                            {!this.state.addressIsEditable && <bdi>{this.state.street}</bdi>}
+                            {this.state.addressIsEditable &&
+                                <input id="street" name="street" type="text"
+                                       value={this.state.street}
+                                       onChange={(event) => this.setState({street: event.target.value})}/>}
+                        </div>
+                        <div className="summary-row"
+                             style={{borderTop: 'solid 0.5px gray', color: 'rgb(68, 68,68)'}}>
+                            {!this.state.addressIsEditable && <bdi>{this.state.house}</bdi>}
+                            {this.state.addressIsEditable &&
+                                <input id="house" name="house" type="text"
+                                       value={this.state.house}
+                                       onChange={(event) => this.setState({house: event.target.value})}/>}
+                        </div>
+                        <div className="summary-row"
+                             style={{borderTop: 'solid 0.5px gray', color: 'rgb(68, 68,68)'}}>
+                            {!this.state.addressIsEditable && <bdi>{this.state.flat}</bdi>}
+                            {this.state.addressIsEditable &&
+                                <input id="flat" name="flat" type="text"
+                                       value={this.state.flat}
+                                       onChange={(event) => this.setState({flat: event.target.value})}/>}
+                        </div>
+                        <div id="error_div" className="error"></div>
+                    </div>
+                    {(this.state.nameIsEditable || this.state.mailIsEditable || this.state.phoneIsEditable || this.state.addressIsEditable) &&
+                        <div id="save" className="cart-button" onClick={() => {
+                            let email = document.getElementById('email')?.value;
+                            if (email === null || email === undefined) {
+                                email = this.state.email;
+                            }
+                            let name = document.getElementById('name')?.value;
+                            if (name === null || name === undefined) {
+                                name = this.state.name;
+                            }
+                            let phone = document.getElementById('phone')?.value;
+                            if (phone === null || phone === undefined) {
+                                phone = this.state.phone;
+                            }
+                            let city = document.getElementById('city')?.value;
+                            if (city === null || city === undefined) {
+                                city = this.state.city;
+                                if (city === '-' || city === '') {
+                                    city = null
+                                }
+                            }
+                            let street = document.getElementById('street')?.value;
+                            if (street === null || street === undefined) {
+                                street = this.state.street;
+                                if (street === '-' || street === '') {
+                                    street = null
+                                }
+                            }
+                            let houseNumber = document.getElementById('house')?.value;
+                            if (houseNumber === null || houseNumber === undefined) {
+                                houseNumber = this.state.house;
+                                if (houseNumber === '-' || houseNumber === '') {
+                                    houseNumber = null
+                                }
+                            } else if (houseNumber === '-') {
+                                houseNumber = null
+                            }
+                            let flatNumber = document.getElementById('flat')?.value;
+                            if (flatNumber === null || flatNumber === undefined) {
+                                flatNumber = this.state.flat;
+                                if (flatNumber === '-' || flatNumber === '') {
+                                    flatNumber = null
+                                }
+                            } else if (flatNumber === '-') {
+                                flatNumber = null
+                            }
+
+                            ApiClient.sendUserInfo(
+                                email,
+                                name,
+                                phone,
+                                city,
+                                street,
+                                houseNumber,
+                                flatNumber,
+                                window.sessionStorage.getItem('userRole'),
+                                window.sessionStorage.getItem('userId')
+                            )
+                                .then(response => {
+                                    if (response.ok) {
+                                        if (email !== this.state.initEmail) {
+                                            window.localStorage.setItem('toast', 'Please, login to access your profile!');
+                                            window.sessionStorage.removeItem('username');
+                                            window.sessionStorage.removeItem('userRole');
+                                            window.sessionStorage.removeItem('userId');
+                                            TokenKeeper.clear();
+                                            window.location.href = '/signUp';
+                                            return;
+                                        }
+                                        window.location.reload();
+                                    } else if (response.status === 400) {
+                                        response.json().then(responseJson => {
+                                            this.showErrors(responseJson.errors);
+                                        });
+                                    } else {
+                                        console.error('Failed to update user info');
+                                    }
+                                });
+                            window.sessionStorage.setItem('username', name);
+                        }}>
+                            <span style={{marginLeft: '12px'}}>Сохранить</span>
+                        </div>}
                 </div>
-                <div className="container">
-                    <div className="row ">
-                        <div className="col-xl-6 col-lg-6">
-                            <div className="card l-bg-cherry">
-                                <div className="card-statistic-3 p-4">
-                                    <div className="mb-4">
-                                        <h2 style={{
-                                            borderBottom: '3px solid #ccc',
-                                            paddingBottom: '5px',
-                                            textAlign: 'center'
-                                        }}>General info</h2>
-                                        <div style={{alignItems: 'center', display: 'flex'}}>
-                                            <img style={{maxWidth: '35px', maxHeight: '35px', paddingBottom: '7px'}}
-                                                 src={user}
-                                                 alt=""/>
-                                            <h3 style={{paddingLeft: '10px'}}>{this.state.name}</h3>
-                                        </div>
-                                        <div style={{alignItems: 'center', display: 'flex'}}>
-                                            <img style={{
-                                                maxWidth: '35px',
-                                                maxHeight: '35px',
-                                                paddingBottom: '4px',
-                                                paddingRight: '7px'
-                                            }}
-                                                 src={mail}
-                                                 alt=""/>
-                                            <h3 style={{paddingLeft: '4px'}}>{this.state.email}</h3>
-                                        </div>
-                                        <ProfileGeneralInfoModal text="Change" name={this.state.name}
-                                                                 email={this.state.email}
-                                                                 address={this.state.address}
-                                                                 />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-xl-6 col-lg-6">
-                            <div className="card l-bg-blue-dark">
-                                <div className="card-statistic-3 p-4">
-                                    <div className="mb-4">
-                                        <h2 style={{
-                                            borderBottom: '3px solid #ccc',
-                                            paddingBottom: '5px',
-                                            textAlign: 'center'
-                                        }}>Address info</h2>
-                                        <div style={{alignItems: 'center', display: 'flex'}}>
-                                            <img style={{maxWidth: '35px', maxHeight: '35px', paddingBottom: '7px'}}
-                                                 src="https://icon-library.com/images/shipping-icon-png/shipping-icon-png-11.jpg"
-                                                 alt=""/>
-                                            <h3 style={{paddingLeft: '10px'}}>{this.state.address.city}, {this.state.address.street} st., {this.state.address.houseNumber} - {this.state.address.flatNumber}</h3>
-                                        </div>
-                                        <div style={{alignItems: 'center', display: 'flex'}}>
-                                            <img style={{
-                                                maxWidth: '35px',
-                                                maxHeight: '35px',
-                                                paddingBottom: '7px',
-                                                paddingLeft: '3px'
-                                            }}
-                                                 src={map}
-                                                 alt=""/>
-                                            <h3 style={{paddingLeft: '15px'}}>{this.state.address.countryCode}</h3>
-                                        </div>
-                                        <ProfileAddressInfoModal text="Change" name={this.state.name}
-                                                                 email={this.state.email}
-                                                                 address={this.state.address}/>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+            </div>
+            <div className="container" style={{paddingLeft: '40px', paddingRight: '40px'}}>
+                <div className="heading_container heading_center" style={{marginTop: '50px'}}>
+                    <h2 style={{fontSize: '2.7rem'}}>
+                        Корзина
+                    </h2>
+                </div>
+                <div className="info-container">
+                    <div style={{width: '100%'}}>
+                        <CartItems/>
                     </div>
                 </div>
             </div>
-            <div className="profile-body-1">
-                <div className="profile-body-1-header">
-                    <h2 style={{marginBottom: '0px'}}>Cart</h2>
-                    <img style={{maxWidth: '40px', maxHeight: '40px', marginLeft: '15px'}}
-                         src={shoppingCart}
-                         alt=""/>
+            <section className="shop_section layout_padding">
+                <div className="container">
+                    <div className="heading_container heading_center">
+                        <h2>
+                            Подписки на товары
+                        </h2>
+                    </div>
+                    <div className="row">
+                        <CategoriesComponent/>
+                    </div>
                 </div>
-                <div className="mt-10 p-5 bg-white shadow"
-                     style={{borderBottomLeftRadius: '15px', borderBottomRightRadius: '15px'}}>
-                    <UserCart ref={(instance) => {this.userCart = instance;}} onChange={this.makeOrder}/>
-                </div>
-            </div>
-            <div className="profile-body-1">
-                <div className="profile-body-1-header">
-                    <h2 style={{marginBottom: '0px'}}>Orders & History</h2>
-                    <img style={{maxWidth: '40px', maxHeight: '40px', marginLeft: '15px', paddingTop: '5px'}}
-                         src={order}
-                         alt=""/>
-                </div>
-                <div className="mt-10 p-5 bg-white shadow"
-                     style={{borderBottomLeftRadius: '15px', borderBottomRightRadius: '15px'}}>
-                    <UserOrders ref={(instance) => {this.ordersComponent = instance;}} />
-                </div>
-            </div>
-            <div style={{display: 'flex', justifyContent: 'center'}}>
-                <button onClick={logout} className="btn-modal">Log out</button>
-            </div>
+            </section>
         </>
     }
 }

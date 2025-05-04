@@ -18,11 +18,11 @@ class CategoryItemsComponent extends React.Component {
 
     render() {
         if (this.state.items !== undefined && this.state.items.length > 0) {
-            return <>
+            return <div className="row">
                 {this.state.items.map(item => {
                     return <ItemCard iid={item.id} name={item.name} mainImage={item.images[0]} price={item.price} category={false}/>
                 })}
-            </>
+            </div>
         } else {
             return <div style={{fontSize: '30px'}}>
                 На данный момент товаров нет...

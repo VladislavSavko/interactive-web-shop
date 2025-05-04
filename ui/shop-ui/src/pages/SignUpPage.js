@@ -8,7 +8,6 @@ import HomePageFooter from "../components/structure/HomePageFooter";
 
 const SignUpPage = () => {
     const params = new URLSearchParams(window.location.search);
-    const [country, setCountry] = useState('');
     const [initEmail, setInitEmail] = useState(params.has('email') ? params.get('email') : '');
 
 
@@ -45,8 +44,9 @@ const SignUpPage = () => {
             </div>
         </div>
         <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-            <div className="cart-button" style={{width: '30%', marginTop: '50px', marginBottom: '70px'}} onClick={sendData}>
-                <span style={{marginLeft: '12px'}}>Зарегистрироваться</span>
+            <div className="cart-button" style={{width: '30%', marginTop: '50px', marginBottom: '70px'}}
+                 onClick={sendData}>
+                <span style={{marginLeft: '12px'}}>Войти / Зарегистрироваться</span>
             </div>
         </div>
         <HomePageFooter/>
@@ -60,35 +60,54 @@ const sendData = () => {
     const name = document.getElementById('name').value;
     const phone = document.getElementById('phone').value;
 
+    ApiClient.authenticate(email, password)
+        .then(_response => {
+            if (_response.ok) {
+                _response.json().then(_responseJson => {
+                    window.sessionStorage.setItem('username', _responseJson.name);
+                    TokenKeeper.setToken(_responseJson.tokenString);
+                    window.sessionStorage.setItem('userId', _responseJson.id);
+                    window.sessionStorage.setItem('userRole', _responseJson.role);
 
-    ApiClient.register(email, password, name, phone)
-        .then(response => {
-            if (response.ok) {
-                response.json().then(responseJson => {
-                    window.sessionStorage.setItem('username', responseJson['name']);
-                    ApiClient.authenticate(email, password).then(response => {
-                        if (response.ok) {
-                            response.json().then(responseJson => {
-                                TokenKeeper.setToken(responseJson.tokenString);
-                                window.sessionStorage.setItem('userId', responseJson.id);
-                                window.sessionStorage.setItem('userRole', responseJson.role);
-                                window.location.href = '/';
-                            });
-                        }
-                    });
+                    window.location.href = '/';
                 });
-            } else if (response.status === 400) {
-                response.json().then(responseJson => {
-                    if ("errors" in responseJson) {
-                        showErrors(responseJson.errors);
+            } else if (_response.status === 400) {
+                _response.json().then(__responseJson => {
+                    if ("message" in __responseJson) {
+                        ApiClient.register(email, password, name, phone)
+                            .then(responsee => {
+                                if (responsee.ok) {
+                                    responsee.json().then(responseeJson => {
+                                        window.sessionStorage.setItem('username', responseeJson['name']);
+                                        ApiClient.authenticate(email, password).then(responseee => {
+                                            if (responseee.ok) {
+                                                responseee.json().then(responseJson1 => {
+                                                    TokenKeeper.setToken(responseJson1.tokenString);
+                                                    window.sessionStorage.setItem('userId', responseJson1.id);
+                                                    window.sessionStorage.setItem('userRole', responseJson1.role);
+                                                    window.location.href = '/';
+                                                });
+                                            }
+                                        });
+                                    });
+                                } else if (responsee.status === 400) {
+                                    responsee.json().then(responseJson2 => {
+                                        if ("errors" in responseJson2) {
+                                            showErrors(responseJson2.errors);
+                                        } else {
+
+                                        }
+                                    });
+                                } else {
+                                    console.error('Failed to register user with email: ' + email);
+                                }
+                            });
                     } else {
-                        showError(responseJson.message);
+                        showError(__responseJson.message);
                     }
                 });
-            } else {
-                console.error('Failed to register user with email: ' + email);
             }
-        });
+        })
 }
 
 const goToLogin = () => {
@@ -124,6 +143,7 @@ const showError = (error) => {
     const errorDiv = document.getElementById('error_div');
 
     errorDiv.innerText = error;
+    errorDiv.style.display = 'block';
 
     document.getElementById('email').style.color = 'red';
     document.getElementById('password').style.color = 'red';

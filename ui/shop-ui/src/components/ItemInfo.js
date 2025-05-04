@@ -150,10 +150,6 @@ class ItemInfo extends React.Component {
         });
     }
 
-    goToFittingRoom = () => {
-        window.location.href = "/fitroom?itemId=" + this.state.id;
-    }
-
     render() {
         if (TokenKeeper.getToken() !== null && TokenKeeper.getToken() !== undefined) {
             const images = this.state.binary.map(i => i.data);

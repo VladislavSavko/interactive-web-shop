@@ -9,15 +9,15 @@ import jakarta.validation.constraints.Size;
 public record NewUserDto(
         @Email(regexp = "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}",
                 flags = Pattern.Flag.CASE_INSENSITIVE,
-                message = "Wrong email pattern! Ex. user@user.com (case insensitive)")
+                message = "Неправильный формат почты! Прим. user@user.com")
         String email,
-        @NotBlank(message = "Password cannot be blank!")
-        @Size(min = 5, max = 20, message = "Password size must be between 5 and 20 including")
+        @NotBlank(message = "Пароль не может быть пустым!")
+        @Size(min = 5, max = 20, message = "Размер пароля: 5 - 20 символов (включительно)")
         String password,
-        @NotBlank(message = "Name cannot be blank!")
+        @NotBlank(message = "Имя не может быть пустым!")
         String name,
         @Valid
-        @NotBlank
-        @Pattern(regexp = "^(\\+7|8|\\+375)(\\d{9})$")
+        @NotBlank(message = "Телефон не может быть пустым!")
+        @Pattern(regexp = "^(\\+7|8|\\+375)(\\d{9})$", message = "Неправильный формат телефона! Прим. +375331234567")
         String phone) {
 }

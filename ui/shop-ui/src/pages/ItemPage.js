@@ -5,9 +5,10 @@ import SearchComponent from "../components/SearchComponent";
 import NavigationBar from "../components/bar/NavigationBar";
 import HomePageFooter from "../components/structure/HomePageFooter";
 import ApiClient from "../client/ApiClient";
+import NavigationStringCreator from "../components/navigation-util/NavigationStringCreator";
 
 const ItemPage = () => {
-    const [navigationString, setNavigationString] = useState('');
+    const [navigationString, setNavigationString] = useState(null);
     const [item, setItem] = useState(null);
 
     const url = window.location.href;
@@ -17,7 +18,13 @@ const ItemPage = () => {
         ApiClient.getItemInfo(itemId).then(response => {
             if (response.ok) {
                 response.json().then(responseJson => {
-                    setNavigationString('Главная / Сувенирная продукция / ' + responseJson.category + ' / ' + responseJson.name);
+                    setNavigationString(NavigationStringCreator.get(
+                            ['Главная', '/', 'Сувенирная продукция', '/',
+                                responseJson.category, '/category/' + responseJson.categoryId,
+                                responseJson.name, null
+                            ]
+                        )
+                    );
                     setItem(responseJson);
                 });
             } else {

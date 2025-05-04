@@ -82,6 +82,7 @@ public class UserDaoImpl implements UserDao {
         User user = userRepository.findById(id).get();
         user.setEmail(dto.email());
         user.setName(dto.name());
+        user.setPhone(dto.phone());
         user.setRole(dto.role());
     }
 
