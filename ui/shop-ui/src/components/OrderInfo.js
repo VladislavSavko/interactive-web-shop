@@ -1,6 +1,7 @@
 import React from "react";
 import ApiClient from "../client/ApiClient";
 import '../css/order.css'
+import {Slide, toast} from "react-toastify";
 
 class OrderInfo extends React.Component {
     constructor(props) {
@@ -15,7 +16,9 @@ class OrderInfo extends React.Component {
             userId: '',
             userName: '',
             address: null,
-            userInfo: null
+            userInfo: null,
+            companyName: '',
+            sum: 0
         }
     }
 
@@ -55,13 +58,32 @@ class OrderInfo extends React.Component {
             this.setState({
                 userInfo: responseJson
             });
+            if(responseJson.houseNumber === 0) {
+                this.setState(
+                    prevState => ({userInfo: {...prevState.userInfo, houseNumber: ''}}))
+            }
+            if(responseJson.flatNumber === 0) {
+                this.setState(
+                    prevState => ({userInfo: {...prevState.userInfo, flatNumber: ''}}))
+            }
+            if(responseJson.city === '-' || responseJson.city === null) {
+                this.setState(
+                    prevState => ({userInfo: {...prevState.userInfo, city: ''}}))
+            }
+            if(responseJson.street === '-' || responseJson.street === null) {
+                this.setState(
+                    prevState => ({userInfo: {...prevState.userInfo, street: ''}}))
+            }
         });
     }
 
     getItems = (response) => {
         response.json().then(responseJson => {
             this.setState({
-                items: responseJson.items
+                items: responseJson.items,
+                sum: responseJson.items.reduce((accumulator, current) => {
+                    return accumulator + current.item.price;
+                }, 0)
             });
         });
     }
@@ -135,6 +157,29 @@ class OrderInfo extends React.Component {
         })
     }
 
+    checkout = () => {
+        const userId = window.sessionStorage.getItem('userId');
+        ApiClient.makeUserOrder(userId).then(r => {
+            if (r.ok) {
+                toast.info(`Order was created successfully!`, {
+                    position: "top-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                    transition: Slide,
+                });
+                this.ordersComponent.refreshUserOrders(userId);
+                this.userCart.refreshItemsInCart();
+            } else {
+                console.error('Failed to make order');
+            }
+        });
+    }
+
     render() {
         const date = new Date(this.state.created)
         return <div className="container" style={{paddingLeft: '40px', paddingRight: '40px'}}>
@@ -156,28 +201,28 @@ class OrderInfo extends React.Component {
                         <input id="name" name="name" type="text"
                                value={this.state.userInfo && this.state.userInfo.name} className="checkout-input"
                                onChange={(event) => this.setState(prevState => ({userInfo: {...prevState.userInfo, name: event.target.value}}))}/>
-                        <input id="name" name="name" type="text"
-                               value={this.state.street} className="checkout-input"
-                               onChange={(event) => this.setState({street: event.target.value})}/>
+                        <input id="cname" name="cname" type="text"
+                               value={this.state.companyName} className="checkout-input"
+                               onChange={(event) => this.setState({companyName: event.target.value})}/>
                     </div>
                     <div style={{marginTop: '30px'}}>
                         <h4>Адрес <span style={{color: 'red', fontSize: '16px'}}>*</span></h4>
                         <div className="quatro" style={{marginTop: '30px', rowGap: '40px'}}>
                             <input id="city" name="city" type="text"
-                                   value={this.state.street} className="checkout-input"
-                                   onChange={(event) => this.setState({street: event.target.value})}
+                                   value={this.state.userInfo && this.state.userInfo.city} className="checkout-input"
+                                   onChange={(event) => this.setState(prevState => ({userInfo: {...prevState.userInfo, city: event.target.value}}))}
                                    placeholder="Город"/>
                             <input id="street" name="street" type="text"
-                                   value={this.state.street} className="checkout-input"
-                                   onChange={(event) => this.setState({street: event.target.value})}
+                                   value={this.state.userInfo && this.state.userInfo.street} className="checkout-input"
+                                   onChange={(event) => this.setState(prevState => ({userInfo: {...prevState.userInfo, street: event.target.value}}))}
                                    placeholder="Название улицы"/>
                             <input id="house" name="house" type="text"
-                                   value={this.state.street} className="checkout-input"
-                                   onChange={(event) => this.setState({street: event.target.value})}
+                                   value={this.state.userInfo && this.state.userInfo.houseNumber} className="checkout-input"
+                                   onChange={(event) => this.setState(prevState => ({userInfo: {...prevState.userInfo, houseNumber: event.target.value}}))}
                                    placeholder="Номер дома (здания)"/>
                             <input id="flat" name="flat" type="text"
-                                   value={this.state.street} className="checkout-input"
-                                   onChange={(event) => this.setState({street: event.target.value})}
+                                   value={this.state.userInfo && this.state.userInfo.flatNumber} className="checkout-input"
+                                   onChange={(event) => this.setState(prevState => ({userInfo: {...prevState.userInfo, flatNumber: event.target.value}}))}
                                    placeholder="Номер квартиры (офиса)"/>
                         </div>
                     </div>
@@ -185,12 +230,12 @@ class OrderInfo extends React.Component {
                         <h4>Контактная информация <span style={{color: 'red', fontSize: '16px'}}>*</span></h4>
                         <div className="dos" style={{marginTop: '30px'}}>
                             <input id="phone" name="phone" type="text"
-                                   value={this.state.street} className="checkout-input"
-                                   onChange={(event) => this.setState({street: event.target.value})}
+                                   value={this.state.userInfo && this.state.userInfo.phone} className="checkout-input"
+                                   onChange={(event) => this.setState(prevState => ({userInfo: {...prevState.userInfo, phone: event.target.value}}))}
                                    placeholder="Номер телефона"/>
                             <input id="email" name="email" type="text"
-                                   value={this.state.street} className="checkout-input"
-                                   onChange={(event) => this.setState({street: event.target.value})}
+                                   value={this.state.userInfo && this.state.userInfo.email} className="checkout-input"
+                                   onChange={(event) => this.setState(prevState => ({userInfo: {...prevState.userInfo, email: event.target.value}}))}
                                    placeholder="Email"/>
                         </div>
                     </div>
@@ -207,18 +252,22 @@ class OrderInfo extends React.Component {
                         <h3 style={{fontWeight: 'bold', borderBottom: 'solid 1px gray', paddingBottom: '30px'}}>ВАШ
                             ЗАКАЗ</h3>
                         <div style={{
-                            display: 'flex', justifyContent: 'space-between', width: '100%',
+                            display: 'flex', flexDirection: 'column', width: '100%',
                             marginTop: '20px', borderBottom: 'solid 1px gray', paddingBottom: '20px'
                         }}>
-                            <span style={{maxWidth: '70%'}}>hdfgdhfdfgdhf</span>
-                            <span style={{color: '#777777'}}>22.09 BYN</span>
+                            {this.state.items && this.state.items.map(item => {
+                                return <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                                    <span style={{maxWidth: '70%'}}>{item.item.name}</span>
+                                    <span style={{color: '#777777'}}>{item.item.price} BYN</span>
+                                </div>
+                            })}
                         </div>
                         <div style={{
                             display: 'flex', justifyContent: 'space-between', width: '100%',
                             marginTop: '15px'
                         }}>
                             <span style={{maxWidth: '70%'}}>Подытог</span>
-                            <span style={{color: '#222222'}}>22.09 BYN</span>
+                            <span id="sum" style={{color: '#222222'}}>{this.state.sum} BYN</span>
                         </div>
                         <div style={{
                             display: 'flex', justifyContent: 'space-between', width: '100%',
@@ -232,14 +281,14 @@ class OrderInfo extends React.Component {
                             marginTop: '20px'
                         }}>
                             <span style={{maxWidth: '70%'}}>НДС (19%)</span>
-                            <span style={{color: '#222222'}}>100 BYN</span>
+                            <span style={{color: '#222222'}}>{this.state.sum && 0.19 * this.state.sum} BYN</span>
                         </div>
                         <div style={{
                             display: 'flex', justifyContent: 'space-between', width: '100%',
                             marginTop: '30px'
                         }}>
                             <span style={{maxWidth: '70%'}}>Итого</span>
-                            <span style={{color: '#111111', fontWeight: 'bold', fontSize: '26px'}}>100 BYN</span>
+                            <span style={{color: '#111111', fontWeight: 'bold', fontSize: '26px'}}>{this.state.sum && 1.19 * this.state.sum} BYN</span>
                         </div>
                         <p style={{color: '#777777', marginTop: '50px'}}>
                             Ваши личные данные будут использоваться для обработки вашего заказа, поддержки вашего опыта
