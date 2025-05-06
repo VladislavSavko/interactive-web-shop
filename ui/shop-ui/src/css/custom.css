@@ -209,11 +209,11 @@
 
 .item-search-input {
     width: 100%;
-    border-color: transparent;
-    border-style: solid;
-    border-radius: 0;
     height: 40px;
     font-size: 20px;
+    outline: none;
+    border-color: transparent;
+    border-width: 0 0 1px;
 }
 
 

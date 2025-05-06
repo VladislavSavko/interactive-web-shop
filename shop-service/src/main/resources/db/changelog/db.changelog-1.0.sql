@@ -48,13 +48,25 @@ CREATE TABLE IF NOT EXISTS cart_items(
 
 );
 
+CREATE TABLE IF NOT EXISTS address(
+    id bigint NOT NULL PRIMARY KEY,
+    city varchar(255) NOT NULL,
+    street varchar(255) NOT NULL,
+    house_number varchar(10) NOT NULL,
+    flat_number varchar(10) NOT NULL
+);
+
 CREATE TABLE IF NOT EXISTS orders(
                                     id bigint NOT NULL PRIMARY KEY,
                                     user_id bigint NOT NULL,
                                     created_at date NOT NULL,
                                     updated_at date NOT NULL,
                                     total double NOT NULL,
-                                    status tinyint NOT NULL
+                                    status tinyint NOT NULL,
+    user_company_name varchar(255),
+    address_id bigint,
+    description varchar(1000),
+    FOREIGN KEY (address_id) REFERENCES address(id)
 );
 
 CREATE TABLE IF NOT EXISTS orders_items(

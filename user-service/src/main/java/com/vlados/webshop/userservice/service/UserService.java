@@ -2,9 +2,10 @@ package com.vlados.webshop.userservice.service;
 
 import com.vlados.webshop.userservice.dto.auth.UserAuthDtoRequest;
 import com.vlados.webshop.userservice.dto.auth.UserAuthDtoResponse;
+import com.vlados.webshop.userservice.dto.subs.SubscriptionUpdateDto;
 import com.vlados.webshop.userservice.dto.user.NewUserDto;
-import com.vlados.webshop.userservice.dto.user.ResponseUserDto;
 import com.vlados.webshop.userservice.dto.user.ResponseUserDataDto;
+import com.vlados.webshop.userservice.dto.user.ResponseUserDto;
 import com.vlados.webshop.userservice.dto.user.UpdatedUserDto;
 
 import java.util.List;
@@ -30,6 +31,8 @@ public interface UserService {
     void delete(final String email);
 
     void update(final long id, final UpdatedUserDto dto);
+
+    void update(final long id, final SubscriptionUpdateDto dto);
 
     boolean exists(final long id);
 

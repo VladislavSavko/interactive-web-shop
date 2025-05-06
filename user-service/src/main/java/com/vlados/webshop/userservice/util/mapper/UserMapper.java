@@ -1,5 +1,6 @@
 package com.vlados.webshop.userservice.util.mapper;
 
+import com.vlados.webshop.userservice.domain.SubscriptionType;
 import com.vlados.webshop.userservice.domain.User;
 import com.vlados.webshop.userservice.dto.user.NewUserDto;
 import com.vlados.webshop.userservice.dto.user.ResponseUserDataDto;
@@ -49,7 +50,9 @@ public class UserMapper {
                 safeGetString(_values, 7),
                 _values[2].toString(),
                 safeGetInt(_values, 6),
-                safeGetInt(_values, 5)
+                safeGetInt(_values, 5),
+                (SubscriptionType) _values[8],
+                safeGetString(_values, 9)
         );
     }
 

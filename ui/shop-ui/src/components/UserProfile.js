@@ -5,7 +5,7 @@ import {Slide, toast, ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import TokenKeeper from "./token/TokenKeeper";
 import CartItems from "./CartItems";
-import CategoriesComponent from "./CategoriesComponent";
+import cart from "../images/cart.png";
 
 class UserProfile extends React.Component {
     constructor(props) {
@@ -22,7 +22,9 @@ class UserProfile extends React.Component {
             street: '-',
             house: '-',
             flat: '-',
-            initEmail: ''
+            initEmail: '',
+            subscriptionType: '',
+            subscriptionCategory: ''
         }
     }
 
@@ -38,13 +40,39 @@ class UserProfile extends React.Component {
                         street: responseJson.street === null ? '-' : responseJson.street,
                         house: responseJson.houseNumber === 0 ? '-' : responseJson.houseNumber,
                         flat: responseJson.flatNumber === 0 ? '-' : responseJson.flatNumber,
-                        initEmail: responseJson.email
+                        initEmail: responseJson.email,
+                        subscriptionType: this.resolveSubscriptionType(responseJson.type),
+                        subscriptionCategory: responseJson.subscriptionCategory
                     });
                 });
             } else {
                 console.error('Failed to fetch user info');
             }
         });
+    }
+
+    resolveSubscriptionType = (type) => {
+        let result;
+        switch (type) {
+            case 'NONE': {
+                result = '';
+                break;
+            }
+            case 'ONE_MONTH': {
+                result = 'LIGHT';
+                break;
+            }
+            case 'THREE_MONTHS': {
+                result = 'MEDIUM';
+                break;
+            }
+            case 'FIVE_MONTHS': {
+                result = 'SUPER';
+                break;
+            }
+        }
+
+        return result;
     }
 
     makeOrder = () => {
@@ -85,7 +113,6 @@ class UserProfile extends React.Component {
 
         document.getElementById('email').style.color = 'red';
         document.getElementById('password').style.color = 'red';
-        //TODO: Сделать коды ошибок для подсветки нужных полей?
     }
 
     toggleEdit = (name) => {
@@ -115,6 +142,27 @@ class UserProfile extends React.Component {
                 break;
             }
         }
+    }
+
+    redirectAndHighlightSub = () => {
+        let param;
+
+        switch (this.state.subscriptionType) {
+            case 'LIGHT': {
+                param = 1;
+                break;
+            }
+            case 'MEDIUM': {
+                param = 2;
+                break;
+            }
+            case 'SUPER': {
+                param = 3;
+                break;
+            }
+        }
+
+        window.location.href = '/subs?target=' + param;
     }
 
 
@@ -175,6 +223,13 @@ class UserProfile extends React.Component {
                                    value={this.state.phone}
                                    onChange={(event) => this.setState({phone: event.target.value})}/>}
                     </h3>
+                    {this.state.subscriptionType && <h3 style={{paddingLeft: '20px'}}>
+                        Подписка: <span>
+                        <span className="hovered-text" onClick={this.redirectAndHighlightSub}
+                              style={{cursor: "pointer"}}>{this.state.subscriptionType}</span>
+                        - {this.state.subscriptionCategory}
+                    </span>
+                    </h3>}
                     <h4 style={{textAlign: 'center'}}>
                         Адресная информация
                         <span className="icon icon2 f24"
@@ -335,18 +390,10 @@ class UserProfile extends React.Component {
                     </div>
                 </div>
             </div>
-            <section className="shop_section layout_padding">
-                <div className="container">
-                    <div className="heading_container heading_center">
-                        <h2>
-                            Подписки на товары
-                        </h2>
-                    </div>
-                    <div className="row">
-                        <CategoriesComponent/>
-                    </div>
-                </div>
-            </section>
+            <div className="cart-button" style={{marginBottom: '50px', marginLeft: '40px', marginRight: '40px'}}
+            onClick={() => logout()}>
+                <span style={{marginLeft: '12px'}}>Выйти из аккаунта</span>
+            </div>
         </>
     }
 }

@@ -1074,7 +1074,8 @@ a:focus {
 
 .item-search-container {
     display: flex;
-    border-bottom: 2px solid black;
+    border-bottom: 1.5px solid gray;
+    transition: border-color 0.3s ease;
 }
 
 .search-container {
@@ -1559,7 +1560,7 @@ a:focus {
     transition: border-color 0.3s ease;
 }
 
-.checkout-input:focus-visible {
+.item-search-clicked {
     outline: none;
     border-width: 0 0 1px !important;
     border-color: #8ed9fa !important;

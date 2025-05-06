@@ -2,6 +2,8 @@ package com.vlados.webshop.shopservice.dao.impl;
 
 import com.vlados.webshop.shopservice.dao.OrderDao;
 import com.vlados.webshop.shopservice.domain.order.Order;
+import com.vlados.webshop.shopservice.domain.order.OrderAddressInfo;
+import com.vlados.webshop.shopservice.repos.OrderAddressRepository;
 import com.vlados.webshop.shopservice.repos.OrderRepository;
 import org.springframework.stereotype.Component;
 
@@ -11,9 +13,11 @@ import java.util.Optional;
 @Component
 public class OrderDaoImpl implements OrderDao {
     private final OrderRepository orderRepository;
+    private final OrderAddressRepository orderAddressRepository;
 
-    public OrderDaoImpl(OrderRepository orderRepository) {
+    public OrderDaoImpl(OrderRepository orderRepository, OrderAddressRepository orderAddressRepository) {
         this.orderRepository = orderRepository;
+        this.orderAddressRepository = orderAddressRepository;
     }
 
     @Override
@@ -34,6 +38,11 @@ public class OrderDaoImpl implements OrderDao {
     @Override
     public Order add(Order order) {
         return orderRepository.save(order);
+    }
+
+    @Override
+    public OrderAddressInfo add(OrderAddressInfo orderAddressInfo) {
+        return orderAddressRepository.save(orderAddressInfo);
     }
 
     @Override

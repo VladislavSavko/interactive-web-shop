@@ -159,7 +159,15 @@ class OrderInfo extends React.Component {
 
     checkout = () => {
         const userId = window.sessionStorage.getItem('userId');
-        ApiClient.makeUserOrder(userId).then(r => {
+        const orderInfo = {
+            company: this.state.companyName,
+            city: this.state.userInfo.city,
+            street: this.state.userInfo.street,
+            house: this.state.userInfo.houseNumber,
+            flat: this.state.userInfo.houseNumber,
+            description: document.getElementById('description').value
+        }
+        ApiClient.makeUserOrder(userId, orderInfo).then(r => {
             if (r.ok) {
                 toast.info(`Order was created successfully!`, {
                     position: "top-center",
@@ -172,8 +180,7 @@ class OrderInfo extends React.Component {
                     theme: "light",
                     transition: Slide,
                 });
-                this.ordersComponent.refreshUserOrders(userId);
-                this.userCart.refreshItemsInCart();
+                window.location.href = '/profile'
             } else {
                 console.error('Failed to make order');
             }

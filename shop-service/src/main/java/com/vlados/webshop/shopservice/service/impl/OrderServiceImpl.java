@@ -5,9 +5,11 @@ import com.vlados.webshop.shopservice.dao.OrderDao;
 import com.vlados.webshop.shopservice.dao.OrderItemDao;
 import com.vlados.webshop.shopservice.domain.cart.Cart;
 import com.vlados.webshop.shopservice.domain.cart.CartItem;
+import com.vlados.webshop.shopservice.domain.dto.order.OrderRequestDto;
 import com.vlados.webshop.shopservice.domain.dto.order.OrderResponseDto;
 import com.vlados.webshop.shopservice.domain.item.Item;
 import com.vlados.webshop.shopservice.domain.order.Order;
+import com.vlados.webshop.shopservice.domain.order.OrderAddressInfo;
 import com.vlados.webshop.shopservice.domain.order.OrderItem;
 import com.vlados.webshop.shopservice.domain.order.OrderStatus;
 import com.vlados.webshop.shopservice.service.OrderService;
@@ -59,10 +61,10 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Transactional
-    public OrderResponseDto makeOrder(final long userId) {
+    public OrderResponseDto makeOrder(final long userId, final OrderRequestDto dto) {
         Cart userCart = cartDao.getCart(userId);
 
-        return makeOrder(userCart, userId);
+        return makeOrder(userCart, userId, dto);
     }
 
     @Override
@@ -83,8 +85,19 @@ public class OrderServiceImpl implements OrderService {
         orderDao.delete(id);
     }
 
-    private OrderResponseDto makeOrder(Cart cart, long userId) {
-        Order order = orderDao.add(new Order(userId, calculateTotalPrice(cart), OrderStatus.REQUESTED));
+    private OrderResponseDto makeOrder(Cart cart, long userId, OrderRequestDto dto) {
+        Order order = orderDao.add(
+                new Order(
+                        userId,
+                        calculateTotalPrice(cart),
+                        OrderStatus.REQUESTED,
+                        dto.companyName(),
+                        new OrderAddressInfo(
+                                dto.city(), dto.street(), dto.house(), dto.flat()
+                        ),
+                        dto.description()
+                )
+        );
         List<OrderItem> orderItems = new ArrayList<>();
         for (CartItem cartItem : cart.getItems()) {
             OrderItem orderItem = new OrderItem(cartItem);

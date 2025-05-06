@@ -2,11 +2,14 @@ package com.vlados.webshop.userservice.dao.impl;
 
 import com.vlados.webshop.userservice.dao.UserDao;
 import com.vlados.webshop.userservice.domain.Address;
+import com.vlados.webshop.userservice.domain.SubscriptionType;
 import com.vlados.webshop.userservice.domain.User;
 import com.vlados.webshop.userservice.dto.address.AddressDto;
+import com.vlados.webshop.userservice.dto.subs.SubscriptionUpdateDto;
 import com.vlados.webshop.userservice.dto.user.NewUserDto;
 import com.vlados.webshop.userservice.dto.user.UpdatedUserDto;
 import com.vlados.webshop.userservice.repos.UserRepository;
+import com.vlados.webshop.userservice.util.ResourceUtil;
 import com.vlados.webshop.userservice.util.mapper.UserMapper;
 import jakarta.transaction.Transactional;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -67,6 +70,7 @@ public class UserDaoImpl implements UserDao {
         User newUser = UserMapper.map(user);
         newUser.setRole(User.Role.CLIENT);
         newUser.setPassword(passwordEncoder.encode(user.password()));
+        newUser.setSubscription(SubscriptionType.NONE);
         return userRepository.save(newUser);
     }
 
@@ -84,6 +88,7 @@ public class UserDaoImpl implements UserDao {
         user.setName(dto.name());
         user.setPhone(dto.phone());
         user.setRole(dto.role());
+        user.setSubscription(dto.subscription());
     }
 
     @Override
@@ -107,6 +112,21 @@ public class UserDaoImpl implements UserDao {
         address.setUser(currentUser);
         currentUser.setAddress(address);
         userRepository.save(currentUser);
+    }
+
+    @Override
+    public void update(long id, SubscriptionUpdateDto subDto) {
+        String type = subDto.type();
+        SubscriptionType subscriptionType = SubscriptionType.fromString(type);
+        if (subscriptionType != null) {
+            User currentUser = userRepository.findById(id).get();
+            currentUser.setSubscription(subscriptionType);
+            currentUser.setSubscriptionCategory(subDto.category());
+        } else {
+            throw new NoSuchElementException(
+                    ResourceUtil.getMessage("response.wrong.subscriptionType").formatted(type)
+            );
+        }
     }
 
     @Override

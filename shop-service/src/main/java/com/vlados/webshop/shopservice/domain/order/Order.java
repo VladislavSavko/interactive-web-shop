@@ -22,14 +22,32 @@ public class Order {
     @CreationTimestamp
     private Date createdAt;
 
+    private String userCompanyName;
+
+    @OneToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "address_id", referencedColumnName = "id")
+    private OrderAddressInfo address;
+
+    private String description;
+
     @UpdateTimestamp
     private Date updatedAt;
     private Double total;
     private OrderStatus status;
 
-    public Order(long userId, Double total, OrderStatus status) {
+    public Order(
+            long userId,
+            Double total,
+            OrderStatus status,
+            String userCompanyName,
+            OrderAddressInfo address,
+            String description
+    ) {
         this.userId = userId;
         this.total = total;
         this.status = status;
+        this.userCompanyName = userCompanyName;
+        this.address = address;
+        this.description = description;
     }
 }

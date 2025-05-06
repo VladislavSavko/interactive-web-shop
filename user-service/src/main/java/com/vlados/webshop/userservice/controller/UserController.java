@@ -3,6 +3,7 @@ package com.vlados.webshop.userservice.controller;
 import com.vlados.webshop.userservice.dto.auth.UserAuthDtoRequest;
 import com.vlados.webshop.userservice.dto.auth.UserAuthDtoResponse;
 import com.vlados.webshop.userservice.dto.exception.ExceptionResponse;
+import com.vlados.webshop.userservice.dto.subs.SubscriptionUpdateDto;
 import com.vlados.webshop.userservice.dto.user.NewUserDto;
 import com.vlados.webshop.userservice.dto.user.ResponseUserDto;
 import com.vlados.webshop.userservice.dto.user.ResponseUserDataDto;
@@ -86,6 +87,16 @@ public class UserController {
         return ResponseEntity
                 .ok()
                 .body(ResourceUtil.getMessage("response.user.updated").formatted(user.email()));
+    }
+
+    @PutMapping("/{id}/subscription")
+    public ResponseEntity<String> updateUserSubscription(@PathVariable(name = "id") long id,
+                                             @RequestBody SubscriptionUpdateDto sub) {
+        userService.update(id, sub);
+
+        return ResponseEntity
+                .ok()
+                .body(ResourceUtil.getMessage("response.user.updatedById").formatted(id));
     }
 
     @ExceptionHandler(NoSuchElementException.class)

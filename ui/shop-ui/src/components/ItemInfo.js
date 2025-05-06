@@ -9,6 +9,7 @@ import UpdateItemModal from "./modals/UpdateItemModal";
 import newMark from '../images/new_mark.png'
 import TokenKeeper from "./token/TokenKeeper";
 import cart from "../images/cart.png";
+import {Slide, toast, ToastContainer} from "react-toastify";
 
 class ItemInfo extends React.Component {
     constructor(props) {
@@ -150,6 +151,29 @@ class ItemInfo extends React.Component {
         });
     }
 
+    addToCart = () => {
+        const userId = window.sessionStorage.getItem('userId');
+        const itemId = this.state.item.id;
+        const quantity = this.state.multiplier;
+        const size = 'L';
+
+        ApiClient.addToCart(userId, itemId, quantity, size).then(response => {
+            if (response.ok) {
+                toast.info(`Товар ${this.state.item.name} был успешно добавлен в корзину!`, {
+                    position: "top-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                    transition: Slide,
+                });
+            }
+        });
+    }
+
     render() {
         if (TokenKeeper.getToken() !== null && TokenKeeper.getToken() !== undefined) {
             const images = this.state.binary.map(i => i.data);
@@ -192,6 +216,20 @@ class ItemInfo extends React.Component {
                 </button>
 
             return <section>
+                <ToastContainer
+                    position="top-center"
+                    autoClose={5000}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                    theme="light"
+                    transition='Slide'
+                    toastClassName="shop-toast"
+                />
                 <div className="container" style={{paddingLeft: '200px', display: 'flex', gap: '100px'}}>
                     <div className="info-container">
                         <div>
@@ -265,13 +303,15 @@ class ItemInfo extends React.Component {
                                 <div style={{
                                     textAlign: 'right', fontSize: '20px', color: 'rgb(119, 119, 119)',
                                     fontWeight: 'bold'
-                                }}>{this.state.item.price * this.state.multiplier} BYN
+                                }}>{this.state.multiplier < 21 ? this.state.item.price * this.state.multiplier :
+                                this.state.multiplier < 51 ? (this.state.item.price - 2.21) * this.state.multiplier :
+                                    (this.state.item.price - 4.42) * this.state.multiplier} BYN
                                 </div>
                             </div>
                         </div>}
                         <input type="number" id="quantity" defaultValue="1" className="modal-item-input"
                                max={52} min="1" onInput={() => this.checkValue()}/>
-                        <div className="cart-button">
+                        <div className="cart-button" onClick={this.addToCart}>
                             <img src={cart} style={{width: '40px', height: '40px', filter: 'invert(100%)'}}
                                  alt="Корзина"/>
                             <span style={{marginLeft: '12px'}}>В Корзину</span>

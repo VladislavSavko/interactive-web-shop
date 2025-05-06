@@ -1,5 +1,6 @@
 package com.vlados.webshop.userservice.dto.user;
 
+import com.vlados.webshop.userservice.domain.SubscriptionType;
 import com.vlados.webshop.userservice.domain.User;
 import com.vlados.webshop.userservice.dto.address.AddressDto;
 import jakarta.validation.Valid;
@@ -16,5 +17,7 @@ public record UpdatedUserDto(
         String name,
         String phone,
         User.Role role,
-        @Valid AddressDto address) {
+        @Valid AddressDto address,
+        SubscriptionType subscription
+) {
 }

@@ -13,6 +13,7 @@ import com.vlados.webshop.shopservice.domain.dto.inventory.InventoryUpdateDto;
 import com.vlados.webshop.shopservice.domain.dto.item.ItemRequestDto;
 import com.vlados.webshop.shopservice.domain.dto.item.ItemResponseDto;
 import com.vlados.webshop.shopservice.domain.dto.item.ItemUpdateDto;
+import com.vlados.webshop.shopservice.domain.dto.order.OrderRequestDto;
 import com.vlados.webshop.shopservice.domain.dto.order.OrderResponseDto;
 import com.vlados.webshop.shopservice.domain.dto.order.OrderStatusUpdateDto;
 import com.vlados.webshop.shopservice.domain.item.Category;
@@ -64,7 +65,9 @@ public class ShopController {
     public List<ItemResponseDto> getItems(@RequestParam(name = "categories", required = false) List<String> categories,
                                           @RequestParam(name = "isNew", required = false) Boolean isNew,
                                           @RequestParam(name = "minPrice", required = false) Double minPrice,
-                                          @RequestParam(name = "maxPrice", required = false) Double maxPrice) {
+                                          @RequestParam(name = "maxPrice", required = false) Double maxPrice,
+                                          @RequestParam(name = "sort", required = false) String field,
+                                          @RequestParam(name = "type", required = false) Byte type) {
         if (categories == null) {
             if (isNew == null || !isNew) {
                 if (minPrice == null || maxPrice == null) {
@@ -80,6 +83,9 @@ public class ShopController {
                 }
             }
         } else {
+            if (field != null) {
+                return type != null ? itemService.getAll(field, type) : itemService.getAll(field, 0);
+            }
             if (isNew == null || !isNew) {
                 if (minPrice == null || maxPrice == null) {
                     return itemService.getAll(categories);
@@ -194,8 +200,8 @@ public class ShopController {
     }
 
     @PostMapping("/orders/{userId}")
-    public OrderResponseDto makeOrderFromCart(@PathVariable(name = "userId") long userId) {
-        return orderService.makeOrder(userId);
+    public OrderResponseDto makeOrderFromCart(@PathVariable(name = "userId") long userId, @RequestBody OrderRequestDto order) {
+        return orderService.makeOrder(userId, order);
     }
 
     @DeleteMapping("/items/{id}")

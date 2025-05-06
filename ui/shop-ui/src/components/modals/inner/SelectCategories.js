@@ -50,29 +50,35 @@ class SelectCategories extends React.Component {
         const stylesForSelect = {
             control: (provided) => ({
                 ...provided,
-                backgroundColor: '#fae4db',
+                color: '#777777',
+                backgroundColor: 'white',
                 borderColor: '#ffffff',
+                borderBottom: 'solid 2px black',
                 boxShadow: '',
+                borderRadius: 0,
                 '&:hover': {
-                    borderColor: 'black'
+                    cursor: 'pointer'
                 }
             }),
             menu: (provided) => ({
                 ...provided,
-                backgroundColor: '#fae4db',
-                zIndex: 1000
+                backgroundColor: 'white',
+                zIndex: 1000,
+                cursor: 'pointer',
             }),
             option: (provided) => ({
                 ...provided,
-                backgroundColor: '#fae4db',
-                // Цвет текста для выбранного и обычного элемента списка
+                backgroundColor: 'white',
+                cursor: 'pointer',
+                color: 'black',
                 '&:hover': {
-                    backgroundColor: 'rgba(205,198,198,0.98)'
+                    backgroundColor: '#f3f7f9',
+                    color: '#8ed9fa'
                 }
             })
         };
-        return <div style={{marginTop: '10px', marginBottom: '20px'}}>
-            <Select options={this.state.options} onChange={this.handleChange} placeholder="Choose category:"
+        return <div style={{marginTop: '20px', width: '100%'}}>
+            <Select options={this.state.options} onChange={this.handleChange} placeholder="Выберите категорию:"
                     styles={stylesForSelect} defaultValue={this.convertDefaultValueForSelect(this.props.defCategory)}/>
         </div>
     }

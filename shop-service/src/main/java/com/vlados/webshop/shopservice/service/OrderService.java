@@ -1,5 +1,6 @@
 package com.vlados.webshop.shopservice.service;
 
+import com.vlados.webshop.shopservice.domain.dto.order.OrderRequestDto;
 import com.vlados.webshop.shopservice.domain.dto.order.OrderResponseDto;
 
 import java.util.List;
@@ -11,7 +12,7 @@ public interface OrderService {
 
     OrderResponseDto getOne(final long orderId);
 
-    OrderResponseDto makeOrder(final long userId);
+    OrderResponseDto makeOrder(final long userId, final OrderRequestDto order);
 
     void changeStatus(final long id, final String status);
 

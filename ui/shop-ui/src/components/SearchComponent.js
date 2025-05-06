@@ -34,12 +34,16 @@ class SearchComponent extends React.Component {
                 </div>
                 <div style={{width: '48%'}}>
                 <div style={{paddingLeft: '15px', paddingRight: '15px', paddingTop: '30px'}}>
-                        <ItemsSearch/>
+                        <ItemsSearch />
                     </div>
                 </div>
                 <div style={{width: '30%', paddingTop: '30px'}}>
                     <div style={{display: 'flex', gap: '30px', justifyContent: 'flex-end', alignItems: 'center'}}>
-                        <img src={like} style={{width: '27px', height: '27px', marginRight: '10px'}} alt="Избранное"/>
+                        <img src={like} style={{
+                            width: '27px', height: '27px', marginRight: '10px',
+                            cursor: 'pointer'
+                        }} alt="Избранное"
+                             onClick={() => window.location.href = '/subs'}/>
                         <div style={{display: 'flex'}}>
                             <img src={cart} style={{width: '40px', height: '40px'}} alt="Корзина"/>
                             <div className="custom-circle count-circle">

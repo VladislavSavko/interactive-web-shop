@@ -10,6 +10,8 @@ import OrderPage from "../pages/OrderPage";
 import UsersPage from "../pages/UsersPage";
 import ErrorPage from "../pages/ErrorPage";
 import CategoryPage from "../pages/CategoryPage";
+import SubscriptionsPage from "../pages/SubscriptionsPage";
+import SearchPage from "../pages/SearchPage";
 
 const Home = () => {
     return <BrowserRouter>
@@ -21,9 +23,10 @@ const Home = () => {
             <Route element={<ShopPage/>} path='/shop'/>
             <Route element={<ItemPage/>} path='/item/*'/>
             <Route element={<CategoryPage/>} path='/category/*' />
-                {/*<Route element={<FitRoomPage />} path='/fitroom'/>*/}
             <Route element={<OrderPage/>} path='/checkout'/>
             <Route element={<UsersPage/>} path='/users'/>
+            <Route element={<SubscriptionsPage />} path='/subs'/>
+            <Route element={<SearchPage />} path='/search'/>
 
 
             <Route path="*" element={<ErrorPage/>}/>

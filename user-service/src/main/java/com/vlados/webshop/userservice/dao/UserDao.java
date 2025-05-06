@@ -2,6 +2,7 @@ package com.vlados.webshop.userservice.dao;
 
 import com.vlados.webshop.userservice.domain.User;
 import com.vlados.webshop.userservice.dto.address.AddressDto;
+import com.vlados.webshop.userservice.dto.subs.SubscriptionUpdateDto;
 import com.vlados.webshop.userservice.dto.user.NewUserDto;
 import com.vlados.webshop.userservice.dto.user.UpdatedUserDto;
 
@@ -30,6 +31,8 @@ public interface UserDao {
     void update(final long id, final UpdatedUserDto dto);
 
     void update(final long id, final AddressDto addressDto);
+
+    void update(final long id, final SubscriptionUpdateDto subDto);
 
     boolean exists(final long id);
 

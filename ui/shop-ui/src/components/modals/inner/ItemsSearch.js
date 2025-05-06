@@ -10,7 +10,8 @@ class ItemsSearch extends React.Component {
         this.state = {
             options: [],
             selectedOptions: [],
-            inputValue: ''
+            inputValue: '',
+            searchActive: false
         };
     }
 
@@ -33,16 +34,36 @@ class ItemsSearch extends React.Component {
         });
     }
 
+    goToSearch = (input) => {
+        window.location.href = '/search?name=' + input;
+    }
+
     handleInputChange = (event) => {
+        this.setState({
+            inputValue: event.target.value
+        });
         if (this.props.onChange) {
             this.props.onChange(event.target.value)
         }
     }
 
+    highlight = () => {
+        this.setState({
+            searchActive: true
+        });
+    }
+
+    blur = () => {
+        this.setState({
+            searchActive: false
+        });
+    }
+
     render() {
-        return <div className="item-search-container">
-            <input type="text" placeholder="Поиск..." onInput={this.handleInputChange} className="item-search-input"/>
-            <img src={search} style={{width: '30px', height: '30px'}} alt="Поиск" />
+        return <div className="item-search-container" style={{borderColor: this.state.searchActive === true ? '#8ed9fa' : 'gray'}}>
+            <input type="text" placeholder="Поиск..." onInput={this.handleInputChange} className="item-search-input"
+            onFocus={this.highlight} onBlur={this.blur}/>
+            <img src={search} style={{width: '30px', height: '30px', cursor: 'pointer'}} alt="Поиск" onClick={() => this.goToSearch(this.state.inputValue)}/>
         </div>
     }
 }

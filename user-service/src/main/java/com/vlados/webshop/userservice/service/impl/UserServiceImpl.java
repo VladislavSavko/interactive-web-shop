@@ -7,6 +7,7 @@ import com.vlados.webshop.userservice.domain.User;
 import com.vlados.webshop.userservice.dto.address.AddressDto;
 import com.vlados.webshop.userservice.dto.auth.UserAuthDtoRequest;
 import com.vlados.webshop.userservice.dto.auth.UserAuthDtoResponse;
+import com.vlados.webshop.userservice.dto.subs.SubscriptionUpdateDto;
 import com.vlados.webshop.userservice.dto.user.NewUserDto;
 import com.vlados.webshop.userservice.dto.user.ResponseUserDataDto;
 import com.vlados.webshop.userservice.dto.user.ResponseUserDto;
@@ -19,6 +20,7 @@ import com.vlados.webshop.userservice.util.ResourceUtil;
 import com.vlados.webshop.userservice.util.jwt.JwtGenerator;
 import com.vlados.webshop.userservice.util.mapper.AddressMapper;
 import com.vlados.webshop.userservice.util.mapper.UserMapper;
+import jakarta.transaction.Transactional;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -112,6 +114,16 @@ public class UserServiceImpl implements UserService {
             userDao.update(id, dto);
             AddressDto newAddressDto = dto.address();
             userDao.update(id, newAddressDto);
+        } else {
+            throw new NoSuchElementException(ResourceUtil.getMessage("db.user.id").formatted(id));
+        }
+    }
+
+    @Override
+    @Transactional
+    public void update(final long id, SubscriptionUpdateDto dto) {
+        if (exists(id)) {
+            userDao.update(id, dto);
         } else {
             throw new NoSuchElementException(ResourceUtil.getMessage("db.user.id").formatted(id));
         }

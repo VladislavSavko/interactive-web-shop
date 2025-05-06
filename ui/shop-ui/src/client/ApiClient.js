@@ -54,12 +54,21 @@ class ApiClient {
         });
     }
 
-    static makeUserOrder(id): Promise<Response> {
+    static makeUserOrder(id, orderInfo): Promise<Response> {
         return fetch(this.SERVER_URL + this.SHOP_API + this.ORDERS_URL + '/' + id, {
             method: "POST",
             headers: {
+                "Content-type": "application/json; charset=UTF-8",
                 "Authorization": `Bearer ${TokenKeeper.getToken()}`
-            }
+            },
+            body: JSON.stringify({
+                companyName: orderInfo.company,
+                city: orderInfo.city,
+                street: orderInfo.street,
+                house: orderInfo.house,
+                flat: orderInfo.flat,
+                description: orderInfo.description
+            })
         });
     }
 
@@ -352,6 +361,20 @@ class ApiClient {
             },
             body: formData
         })
+    }
+
+    static setUserSubscription(type, userId, category): Promise<Response> {
+        return fetch(this.SERVER_URL + this.USERS_API + '/' + userId + '/subscription', {
+            method: "PUT",
+            body: JSON.stringify({
+                type: type,
+                category: category
+            }),
+            headers: {
+                "Content-type": "application/json",
+                "Authorization": `Bearer ${TokenKeeper.getToken()}`
+            }
+        });
     }
 }
 
