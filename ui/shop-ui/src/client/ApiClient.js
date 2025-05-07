@@ -218,11 +218,18 @@ class ApiClient {
         });
     }
 
-    static searchForItems(name): Promise<Response> {
-        return fetch(this.SERVER_URL + this.SHOP_API + this.ITEMS_URL + this.SEARCH_URL + '?name=' + name, {
+    static searchForItems(name, field, type): Promise<Response> {
+        return fetch(this.SERVER_URL + this.SHOP_API + this.ITEMS_URL + this.SEARCH_URL, {
+            method: "POST",
             headers: {
+                "Content-type": "application/json; charset=UTF-8",
                 "Authorization": `Bearer ${TokenKeeper.getToken()}`
-            }
+            },
+            body: JSON.stringify({
+                name: name,
+                field: field,
+                type: type
+            })
         });
     }
 
@@ -230,8 +237,12 @@ class ApiClient {
         return fetch(this.SERVER_URL + this.SHOP_API + this.CATEGORIES_URL);
     }
 
-    static getCategory(id): Promise<Response> {
-        return fetch(this.SERVER_URL + this.SHOP_API + this.CATEGORIES_URL + '/' + id);
+    static getCategory(id, field, type): Promise<Response> {
+        if (field === undefined || field === null) {
+            return fetch(this.SERVER_URL + this.SHOP_API + this.CATEGORIES_URL + '/' + id);
+        } else {
+            return fetch(this.SERVER_URL + this.SHOP_API + this.CATEGORIES_URL + '/' + id + '?sort=' + field + '&type=' + type);
+        }
     }
 
     static addCategory(name, desc): Promise<Response> {

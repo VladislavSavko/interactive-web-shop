@@ -17,7 +17,7 @@ class SelectSorting extends React.Component {
         function convertForSelect(arr) {
             let i = 0;
             return arr.map(e => ({
-                value: i,
+                value: i++,
                 label: e
             }));
         }

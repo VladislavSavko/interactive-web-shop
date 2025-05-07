@@ -17,6 +17,7 @@ import com.vlados.webshop.shopservice.util.comp.ImageCompressor;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -51,7 +52,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public CategoryResponseDto get(long id) {
+    public CategoryResponseDto get(long id, String field, Byte type) {
         Optional<Category> optCategory = categoryDao.get(id);
         if (optCategory.isPresent()) {
             Category category = optCategory.get();
@@ -60,6 +61,15 @@ public class CategoryServiceImpl implements CategoryService {
                             .forEach(image -> image.setBinary(
                                     ImageCompressor.decompress(image.getBinary())
                             )));
+            if(field != null) {
+                if(type != null) {
+                    category.getItems()
+                            .sort(type == 0 ? Comparator.comparing(Item::getPrice) : Comparator.comparing(Item::getPrice).reversed());
+                } else {
+                    category.getItems()
+                            .sort(Comparator.comparing(Item::getPrice));
+                }
+            }
 
             return DtoMapper.ForCategory.toDto(category);
         } else {

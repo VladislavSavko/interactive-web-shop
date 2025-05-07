@@ -2,6 +2,7 @@ package com.vlados.webshop.shopservice.service;
 
 import com.vlados.webshop.shopservice.domain.dto.item.ItemRequestDto;
 import com.vlados.webshop.shopservice.domain.dto.item.ItemResponseDto;
+import com.vlados.webshop.shopservice.domain.dto.item.ItemSearchDto;
 import com.vlados.webshop.shopservice.domain.dto.item.ItemUpdateDto;
 import com.vlados.webshop.shopservice.domain.item.Item;
 
@@ -26,7 +27,7 @@ public interface ItemService {
 
     List<ItemResponseDto> getAllNew(List<String> categories, double minPrice, double maxPrice);
 
-    List<ItemResponseDto> getForName(String name);
+    List<ItemResponseDto> getForName(ItemSearchDto dto);
 
     ItemResponseDto getAsResponse(final long id);
 

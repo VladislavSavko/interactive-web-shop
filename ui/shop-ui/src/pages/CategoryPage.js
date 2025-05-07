@@ -36,6 +36,37 @@ const CategoryPage = () => {
 
     const num = items !== undefined && items !== null ? items.length : 0;
 
+    const reloadItems = (value, sort) => {
+        const field = 'price';
+        let type;
+        switch (sort.value) {
+            case 3 : {
+                type = 0;
+                break;
+            }
+            case 4 : {
+                type = 1;
+                break;
+            }
+        }
+
+        ApiClient.getCategory(categoryId, field, type).then(response => {
+            if (response.ok) {
+                response.json().then(responseJson => {
+                    setNavigationString(
+                        NavigationStringCreator.get(
+                            ['Главная', '/', 'Сувенирная продукция', '/',
+                                responseJson.name, null]
+                        )
+                    )
+                    setItems(responseJson.relatedItems);
+                });
+            } else {
+                console.error('Failed to fetch category info');
+            }
+        });
+    }
+
 
     return <>
         <HomePageHeader/>
@@ -49,7 +80,7 @@ const CategoryPage = () => {
                     </h2>
                 </div>
                 <div className="sorting-tags" style={{marginLeft: '200px'}}>
-                    <SelectSorting/>
+                    <SelectSorting onChange={(sort) => reloadItems(categoryId, sort)}/>
                     <span style={{marginRight: '200px', color: '#555555'}}>Количество товаров: {num}</span>
                 </div>
                 {items !== undefined && items.length > 0 && <CategoryItemsComponent items={items}/>}

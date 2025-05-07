@@ -7,6 +7,7 @@ import com.vlados.webshop.shopservice.dao.ItemDao;
 import com.vlados.webshop.shopservice.domain.cart.CartItem;
 import com.vlados.webshop.shopservice.domain.dto.item.ItemRequestDto;
 import com.vlados.webshop.shopservice.domain.dto.item.ItemResponseDto;
+import com.vlados.webshop.shopservice.domain.dto.item.ItemSearchDto;
 import com.vlados.webshop.shopservice.domain.dto.item.ItemUpdateDto;
 import com.vlados.webshop.shopservice.domain.item.Category;
 import com.vlados.webshop.shopservice.domain.item.Image;
@@ -19,6 +20,7 @@ import com.vlados.webshop.shopservice.util.comp.ImageCompressor;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -116,12 +118,36 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public List<ItemResponseDto> getForName(String name) {
-        return itemDao.get(name).stream()
-                .peek(item -> item.getImages()
-                        .forEach(image -> image.setBinary(ImageCompressor.decompress(image.getBinary()))))
-                .map(DtoMapper.ForItem::toDto)
-                .toList();
+    public List<ItemResponseDto> getForName(ItemSearchDto dto) {
+        List<ItemResponseDto> result;
+        Byte type = dto.type();
+        String nameToSearch = dto.name();
+
+        if (dto.field() != null) {
+            if (type == null) {
+                result = itemDao.get(nameToSearch).stream()
+                        .peek(item -> item.getImages()
+                                .forEach(image -> image.setBinary(ImageCompressor.decompress(image.getBinary()))))
+                        .map(DtoMapper.ForItem::toDto)
+                        .sorted(Comparator.comparing(ItemResponseDto::price))
+                        .toList();
+            } else {
+                result = itemDao.get(nameToSearch).stream()
+                        .peek(item -> item.getImages()
+                                .forEach(image -> image.setBinary(ImageCompressor.decompress(image.getBinary()))))
+                        .map(DtoMapper.ForItem::toDto)
+                        .sorted(type == 0 ? Comparator.comparing(ItemResponseDto::price) : Comparator.comparing(ItemResponseDto::price).reversed())
+                        .toList();
+            }
+        } else {
+            result = itemDao.get(nameToSearch).stream()
+                    .peek(item -> item.getImages()
+                            .forEach(image -> image.setBinary(ImageCompressor.decompress(image.getBinary()))))
+                    .map(DtoMapper.ForItem::toDto)
+                    .toList();
+        }
+
+        return result;
     }
 
     @Override
@@ -237,7 +263,7 @@ public class ItemServiceImpl implements ItemService {
         Item item = itemDao.get(id).get();
         List<CartItem> cartItems = cartDao.findByItem(item);
 
-        for(CartItem cartItem : cartItems) {
+        for (CartItem cartItem : cartItems) {
             cartDao.deleteCartItem(cartItem);
         }
     }

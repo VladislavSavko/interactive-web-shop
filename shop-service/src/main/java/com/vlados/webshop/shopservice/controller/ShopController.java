@@ -12,6 +12,7 @@ import com.vlados.webshop.shopservice.domain.dto.inventory.InventoryResponseDto;
 import com.vlados.webshop.shopservice.domain.dto.inventory.InventoryUpdateDto;
 import com.vlados.webshop.shopservice.domain.dto.item.ItemRequestDto;
 import com.vlados.webshop.shopservice.domain.dto.item.ItemResponseDto;
+import com.vlados.webshop.shopservice.domain.dto.item.ItemSearchDto;
 import com.vlados.webshop.shopservice.domain.dto.item.ItemUpdateDto;
 import com.vlados.webshop.shopservice.domain.dto.order.OrderRequestDto;
 import com.vlados.webshop.shopservice.domain.dto.order.OrderResponseDto;
@@ -65,9 +66,8 @@ public class ShopController {
     public List<ItemResponseDto> getItems(@RequestParam(name = "categories", required = false) List<String> categories,
                                           @RequestParam(name = "isNew", required = false) Boolean isNew,
                                           @RequestParam(name = "minPrice", required = false) Double minPrice,
-                                          @RequestParam(name = "maxPrice", required = false) Double maxPrice,
-                                          @RequestParam(name = "sort", required = false) String field,
-                                          @RequestParam(name = "type", required = false) Byte type) {
+                                          @RequestParam(name = "maxPrice", required = false) Double maxPrice
+    ) {
         if (categories == null) {
             if (isNew == null || !isNew) {
                 if (minPrice == null || maxPrice == null) {
@@ -83,9 +83,6 @@ public class ShopController {
                 }
             }
         } else {
-            if (field != null) {
-                return type != null ? itemService.getAll(field, type) : itemService.getAll(field, 0);
-            }
             if (isNew == null || !isNew) {
                 if (minPrice == null || maxPrice == null) {
                     return itemService.getAll(categories);
@@ -112,10 +109,9 @@ public class ShopController {
         return itemService.getAsResponse(id);
     }
 
-    @GetMapping("/items/search")
-    public List<ItemResponseDto> getItemsForName(@RequestParam(name = "name") String name) {
-        return itemService.getForName(name);
-        //TODO: Make priority by letters position and case (add sorting ?)
+    @PostMapping("/items/search")
+    public List<ItemResponseDto> getItemsForName(@RequestBody ItemSearchDto search) {
+        return itemService.getForName(search);
     }
 
     @GetMapping("/categories")
@@ -124,8 +120,12 @@ public class ShopController {
     }
 
     @GetMapping("/categories/{id}")
-    public CategoryResponseDto getCategory(@PathVariable(name = "id") long id) {
-        return categoryService.get(id);
+    public CategoryResponseDto getCategory(
+            @PathVariable(name = "id") long id,
+            @RequestParam(name = "sort", required = false) String field,
+            @RequestParam(name = "type", required = false) Byte type
+    ) {
+        return categoryService.get(id, field, type);
     }
 
     @GetMapping("/inventory")

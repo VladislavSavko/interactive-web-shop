@@ -13,7 +13,8 @@ const SearchPage = () => {
     const [num, setNum] = useState(0);
 
     const url = window.location.href;
-    const value = url.substring(url.lastIndexOf('?name=') + 6);
+    const encodedValue = url.substring(url.lastIndexOf('?name=') + 6);
+    const value = decodeURIComponent(encodedValue);
 
     useEffect(() => {
         ApiClient.searchForItems(value).then(response => {
@@ -27,6 +28,32 @@ const SearchPage = () => {
             }
         });
     }, [value]);
+
+    const reloadItems = (value, sort) => {
+        const field = 'price';
+        let type;
+        switch (sort.value) {
+            case 3 : {
+                type = 0;
+                break;
+            }
+            case 4 : {
+                type = 1;
+                break;
+            }
+        }
+
+        ApiClient.searchForItems(value, field, type).then(response => {
+            if(response.ok) {
+                response.json().then(responseJson => {
+                    setItems(responseJson);
+                });
+            } else {
+                console.error('Failed to execute searching: ' + value);
+            }
+        });
+    }
+
     return <>
         <HomePageHeader/>
         <SearchComponent/>
@@ -39,7 +66,7 @@ const SearchPage = () => {
                     </h2>
                 </div>
                 <div className="sorting-tags" style={{marginLeft: '200px'}}>
-                    <SelectSorting/>
+                    <SelectSorting onChange={(sort) => reloadItems(value, sort)}/>
                     <span style={{marginRight: '200px', color: '#555555'}}>Количество товаров: {num}</span>
                 </div>
                 {items !== undefined && items.length > 0 && <CategoryItemsComponent items={items}/>}

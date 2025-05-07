@@ -378,7 +378,7 @@ class UserProfile extends React.Component {
                         </div>}
                 </div>
             </div>
-            <div className="container" style={{paddingLeft: '40px', paddingRight: '40px'}}>
+            <div id="cart" className="container" style={{paddingLeft: '40px', paddingRight: '40px'}}>
                 <div className="heading_container heading_center" style={{marginTop: '50px'}}>
                     <h2 style={{fontSize: '2.7rem'}}>
                         Корзина
