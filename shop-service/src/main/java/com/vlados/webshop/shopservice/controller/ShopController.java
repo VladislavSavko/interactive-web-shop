@@ -231,7 +231,6 @@ public class ShopController {
                 .body(
                         ResourceUtil.getMessage("response.category.deleted").formatted(id)
                 );
-        //TODO: Make a superadmin's hardDelete() method
     }
 
     @DeleteMapping("/categories")
@@ -242,7 +241,6 @@ public class ShopController {
                 .body(
                         ResourceUtil.getMessage("response.category_name.deleted").formatted(categoryName)
                 );
-        //TODO: Make a superadmin's hardDelete() method
     }
 
     @DeleteMapping("/inventory/{id}")
@@ -304,9 +302,10 @@ public class ShopController {
 
     @PutMapping("/categories/{id}")
     public ResponseEntity<String> updateCategory(
-            @RequestBody @Valid CategoryUpdateDto categoryUpdateDto,
+            @RequestParam(name = "name") String name,
+            @RequestParam(name = "image") MultipartFile image,
             @PathVariable(name = "id") long id) {
-        categoryService.update(id, categoryUpdateDto);
+        categoryService.update(id, name, image);
 
         return ResponseEntity.ok()
                 .body(
@@ -346,5 +345,11 @@ public class ShopController {
     public ResponseEntity<ExceptionResponse> handleNoSuchEmailException(NoSuchElementException nsue) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(new ExceptionResponse(nsue.getMessage(), LocalDateTime.now()));
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<ExceptionResponse> handleIllegalArgumentException(IllegalArgumentException iae) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(new ExceptionResponse(iae.getMessage(), LocalDateTime.now()));
     }
 }

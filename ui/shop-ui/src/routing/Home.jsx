@@ -13,6 +13,8 @@ import CategoryPage from "../pages/CategoryPage";
 import SubscriptionsPage from "../pages/SubscriptionsPage";
 import SearchPage from "../pages/SearchPage";
 import NewCategoryPage from "../pages/NewCategoryPage";
+import EditCategoryPage from "../pages/EditCategoryPage";
+import NewItemPage from "../pages/NewItemPage";
 
 const Home = () => {
     return <BrowserRouter>
@@ -22,8 +24,10 @@ const Home = () => {
             <Route element={<SignUpPage/>} path='/signUp'/>
             <Route element={<ProfilePage/>} path='/profile'/>
             <Route element={<ShopPage/>} path='/shop'/>
+            <Route element={<NewItemPage />} path='/addItem/*'/>
             <Route element={<ItemPage/>} path='/item/*'/>
             <Route element={<NewCategoryPage />} path='/newCategory'/>
+            <Route element={<EditCategoryPage />} path='/editCategory/*'/>
             <Route element={<CategoryPage/>} path='/category/*' />
             <Route element={<OrderPage/>} path='/checkout'/>
             <Route element={<UsersPage/>} path='/users'/>

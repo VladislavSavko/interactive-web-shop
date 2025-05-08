@@ -1,19 +1,37 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
+import NavigationStringCreator from "../components/navigation-util/NavigationStringCreator";
+import ApiClient from "../client/ApiClient";
 import HomePageHeader from "../components/structure/HomePageHeader";
 import SearchComponent from "../components/SearchComponent";
 import NavigationBar from "../components/bar/NavigationBar";
-import HomePageFooter from "../components/structure/HomePageFooter";
-import NavigationStringCreator from "../components/navigation-util/NavigationStringCreator";
 import Dropzone from "react-dropzone";
-import ApiClient from "../client/ApiClient";
+import HomePageFooter from "../components/structure/HomePageFooter";
 
-const NewCategoryPage = () => {
+const EditCategoryPage = () => {
     const [navigationString, setNavigationString] = useState(NavigationStringCreator.get(
-        ['Главная', '/', 'Новая категория', null]
+        ['Главная', '/', 'Редактирование категории', null]
     ));
     const [file, setFile] = useState(null)
     const [draggingActive, setDraggingActive] = useState(false);
     const [fileDropped, setFileDropped] = useState(false);
+    const [name, setName] = useState('');
+
+    const url = window.location.href;
+    const id = url.substring(url.lastIndexOf('/editCategory') + 14);
+
+    useEffect(() => {
+        ApiClient.getCategory(id, null, null).then(response => {
+            if (response.ok) {
+                response.json().then(responseJson => {
+                    setFile('data:image/png;base64,' + responseJson.image.data);
+                    setFileDropped(true);
+                    setName(responseJson.name);
+                });
+            } else {
+                console.error('Failed to execute searching: ' + id);
+            }
+        });
+    }, [id]);
 
     const sendData = () => {
         const newCategoryName = document.getElementById('name').value;
@@ -26,8 +44,8 @@ const NewCategoryPage = () => {
             errors[1] = 'Пожалуйста, выберите изображение!';
         }
 
-        if(!errors[0] && !errors[1]) {
-            ApiClient.addCategory(newCategoryName, file).then(response => {
+        if (!errors[0] && !errors[1]) {
+            ApiClient.editCategory(id, newCategoryName, file).then(response => {
                 if (response.ok) {
                     window.location.href = '/';
                 } else if (response.status === 400) {
@@ -46,7 +64,7 @@ const NewCategoryPage = () => {
         let response = "";
 
         errors.forEach(error => {
-            if(error) response += error + '\n'
+            if (error) response += error + '\n'
         });
 
         errorDiv.innerText = response;
@@ -118,13 +136,14 @@ const NewCategoryPage = () => {
                     Название:
                 </h4>
                 <input id="name" type="text" name="name" className="checkout-input"
-                       style={{marginBottom: '70px', width: '100%', marginLeft: '20px'}}/>
+                       style={{marginBottom: '70px', width: '100%', marginLeft: '20px'}} value={name}
+                       onInput={(event) => setName(event.target.value)}/>
             </div>
             <div id="error_div" className="error" style={{backgroundColor: 'transparent'}}></div>
             <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
                 <div className="cart-button" style={{width: '100%', marginTop: '50px', marginBottom: '70px'}}
                      onClick={sendData}>
-                    <span>Создать</span>
+                    <span>Сохранить</span>
                 </div>
             </div>
         </div>
@@ -134,4 +153,4 @@ const NewCategoryPage = () => {
 }
 
 
-export default NewCategoryPage;
+export default EditCategoryPage

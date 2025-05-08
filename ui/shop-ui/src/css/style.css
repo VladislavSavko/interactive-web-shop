@@ -1560,6 +1560,11 @@ a:focus {
     transition: border-color 0.3s ease;
 }
 
+.checkout-input:focus-visible {
+    outline: none;
+    border-color: #8ed9fa;
+}
+
 .item-search-clicked {
     outline: none;
     border-width: 0 0 1px !important;

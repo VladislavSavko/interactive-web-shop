@@ -45,4 +45,9 @@ public class CategoryDaoImpl implements CategoryDao {
     public boolean exists(long id) {
         return categoryRepository.existsById(id);
     }
+
+    @Override
+    public boolean exists(String name) {
+        return categoryRepository.existsByName(name);
+    }
 }

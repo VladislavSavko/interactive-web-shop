@@ -7,7 +7,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 public record ItemRequestDto(
-        @Size(min = 1, max = 100, message = "Name size must be between 1 and 100")
+        @Size(min = 1, max = 100, message = "Размер названия должен быть больше 0 и меньше 100!")
         String name,
         @NotBlank(message = "Category cannot be blank!")
         String categoryName,
@@ -16,7 +16,7 @@ public record ItemRequestDto(
         @HexColor
         String color,
         String description,
-        @Min(value = 1, message = "Price must be greater than 0")
+        @Min(value = 1, message = "Цена должна быть положительной!")
         @NotNull
         Double price,
         boolean isNew) {

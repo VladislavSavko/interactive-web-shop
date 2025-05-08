@@ -17,4 +17,6 @@ public interface CategoryDao {
     void delete(final long id);
 
     boolean exists(final long id);
+
+    boolean exists(final String name);
 }

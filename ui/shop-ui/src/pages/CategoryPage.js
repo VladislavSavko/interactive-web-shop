@@ -11,6 +11,7 @@ import NavigationStringCreator from "../components/navigation-util/NavigationStr
 const CategoryPage = () => {
     const [navigationString, setNavigationString] = useState(null);
     const [items, setItems] = useState([])
+    const [name, setName] = useState('')
 
     const url = window.location.href;
     const categoryId = url.substring(url.lastIndexOf('category/') + 9);
@@ -27,6 +28,7 @@ const CategoryPage = () => {
                     )
                     // setNavigationString('Главная / Сувенирная продукция / ' + responseJson.name);
                     setItems(responseJson.relatedItems);
+                    setName(responseJson.name);
                 });
             } else {
                 console.error('Failed to fetch category info');
@@ -67,6 +69,24 @@ const CategoryPage = () => {
         });
     }
 
+    const deleteCategory = () => {
+        ApiClient.deleteCategoryById(categoryId).then(response => {
+            if (response.ok) {
+                window.location.href = '/';
+            } else {
+                console.error('Failed to delete category');
+            }
+        });
+    }
+
+    const editCategory = () => {
+        window.location.href = '/editCategory/' + categoryId;
+    }
+
+    const adjustCategory = () => {
+        window.location.href = '/addItem/' + categoryId + '?category=' + name;
+    }
+
 
     return <>
         <HomePageHeader/>
@@ -79,9 +99,18 @@ const CategoryPage = () => {
                         {navigationString && navigationString[navigationString.length]}
                     </h2>
                 </div>
-                <div className="sorting-tags" style={{marginLeft: '200px'}}>
+                <div className="sorting-tags" style={{marginLeft: '200px', marginRight: '200px'}}>
                     <SelectSorting onChange={(sort) => reloadItems(categoryId, sort)}/>
                     <span style={{marginRight: '200px', color: '#555555'}}>Количество товаров: {num}</span>
+                    {window.sessionStorage.getItem('userRole') === 'ADMIN' &&
+                        <span className="hovered-text" style={{cursor: 'pointer'}} onClick={deleteCategory}>Удалить категорию</span>
+                    }
+                    {window.sessionStorage.getItem('userRole') === 'ADMIN' &&
+                        <span className="hovered-text" style={{cursor: 'pointer'}} onClick={editCategory}>Редактировать категорию</span>
+                    }
+                    {window.sessionStorage.getItem('userRole') === 'ADMIN' &&
+                        <span className="hovered-text" style={{cursor: 'pointer'}} onClick={adjustCategory}>Добавить товар</span>
+                    }
                 </div>
                 {items !== undefined && items.length > 0 && <CategoryItemsComponent items={items}/>}
             </div>

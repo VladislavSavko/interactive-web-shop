@@ -129,7 +129,7 @@ class ApiClient {
             method: "POST",
             body: JSON.stringify({
                 name: name,
-                categoryName: category.value,
+                categoryName: category,
                 quantity: quantity,
                 color: color,
                 description: desc,
@@ -245,22 +245,91 @@ class ApiClient {
         }
     }
 
-    static addCategory(name, desc): Promise<Response> {
+    static addCategory(name, file): Promise<Response> {
+        function base64ToBlob(base64, mimeType) {
+            const byteCharacters = atob(base64);
+            const byteArrays = [];
+
+            for (let offset = 0; offset < byteCharacters.length; offset += 512) {
+                const slice = byteCharacters.slice(offset, offset + 512);
+                const byteNumbers = new Array(slice.length);
+                for (let i = 0; i < slice.length; i++) {
+                    byteNumbers[i] = slice.charCodeAt(i);
+                }
+                const byteArray = new Uint8Array(byteNumbers);
+                byteArrays.push(byteArray);
+            }
+
+            return new Blob(byteArrays, {type: mimeType});
+        }
+
+        const src = file.match(/,(.*)/)[1];
+
+        const imageBlob = base64ToBlob(src, 'image/png');
+
+        const imageFile = new File([imageBlob], "image.png", {type: 'image/png'});
+
+        const formData = new FormData();
+        formData.append('image', imageFile);
+        formData.append('name', name);
+
         return fetch(this.SERVER_URL + this.SHOP_API + this.CATEGORIES_URL, {
             method: "POST",
-            body: JSON.stringify({
-                name: name,
-                description: desc
-            }),
             headers: {
-                "Content-type": "application/json; charset=UTF-8",
                 "Authorization": `Bearer ${TokenKeeper.getToken()}`
+            },
+            body: formData
+        })
+    }
+
+    static editCategory(id, name, file): Promise<Response> {
+        function base64ToBlob(base64, mimeType) {
+            const byteCharacters = atob(base64);
+            const byteArrays = [];
+
+            for (let offset = 0; offset < byteCharacters.length; offset += 512) {
+                const slice = byteCharacters.slice(offset, offset + 512);
+                const byteNumbers = new Array(slice.length);
+                for (let i = 0; i < slice.length; i++) {
+                    byteNumbers[i] = slice.charCodeAt(i);
+                }
+                const byteArray = new Uint8Array(byteNumbers);
+                byteArrays.push(byteArray);
             }
+
+            return new Blob(byteArrays, {type: mimeType});
+        }
+
+        const src = file.match(/,(.*)/)[1];
+
+        const imageBlob = base64ToBlob(src, 'image/png');
+
+        const imageFile = new File([imageBlob], "image.png", {type: 'image/png'});
+
+        const formData = new FormData();
+        formData.append('image', imageFile);
+        formData.append('name', name);
+
+        return fetch(this.SERVER_URL + this.SHOP_API + this.CATEGORIES_URL + '/' + id, {
+            method: "PUT",
+            headers: {
+                "Authorization": `Bearer ${TokenKeeper.getToken()}`
+            },
+            body: formData
         })
     }
 
     static deleteCategory(name): Promise<Response> {
         return fetch(this.SERVER_URL + this.SHOP_API + this.CATEGORIES_URL + '?name=' + name, {
+            method: "DELETE",
+            headers: {
+                "Authorization": `Bearer ${TokenKeeper.getToken()}`
+            }
+        });
+    }
+
+    static deleteCategoryById(id): Promise<Response> {
+        return fetch(this.SERVER_URL + this.SHOP_API + this.CATEGORIES_URL + '/' + id, {
             method: "DELETE",
             headers: {
                 "Authorization": `Bearer ${TokenKeeper.getToken()}`
