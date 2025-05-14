@@ -5,5 +5,5 @@ import com.vlados.webshop.shopservice.domain.dto.item.ItemResponseDto;
 
 import java.util.Date;
 
-public record ResponseOrderItemDto(long orderId, ItemResponseDto item, int quantity, ItemSize itemSize, Date createdAt, Date updatedAt) {
+public record ResponseOrderItemDto(long id, long orderId, ItemResponseDto item, int quantity, ItemSize itemSize, Date createdAt, Date updatedAt) {
 }

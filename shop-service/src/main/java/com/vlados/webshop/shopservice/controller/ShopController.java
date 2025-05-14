@@ -17,6 +17,7 @@ import com.vlados.webshop.shopservice.domain.dto.item.ItemUpdateDto;
 import com.vlados.webshop.shopservice.domain.dto.order.OrderRequestDto;
 import com.vlados.webshop.shopservice.domain.dto.order.OrderResponseDto;
 import com.vlados.webshop.shopservice.domain.dto.order.OrderStatusUpdateDto;
+import com.vlados.webshop.shopservice.domain.dto.order.OrderUpdateDto;
 import com.vlados.webshop.shopservice.domain.item.Category;
 import com.vlados.webshop.shopservice.domain.item.Image;
 import com.vlados.webshop.shopservice.domain.item.InventoryInfo;
@@ -200,7 +201,7 @@ public class ShopController {
     }
 
     @PostMapping("/orders/{userId}")
-    public OrderResponseDto makeOrderFromCart(@PathVariable(name = "userId") long userId, @RequestBody OrderRequestDto order) {
+    public OrderResponseDto makeOrderFromCart(@PathVariable(name = "userId") long userId, @RequestBody @Valid OrderRequestDto order) {
         return orderService.makeOrder(userId, order);
     }
 
@@ -338,6 +339,17 @@ public class ShopController {
         return ResponseEntity.ok()
                 .body(
                         ResourceUtil.getMessage("response.order.updated").formatted(id, orderStatusUpdateDto.newStatus())
+                );
+    }
+
+    @PutMapping("/orders/admin/edit/{id}")
+    public ResponseEntity<String> changeOrder(@PathVariable(name = "id") long id, @RequestBody OrderUpdateDto orderUpdateDto) {
+        orderService.update(id, orderUpdateDto);
+        orderService.updateTotal(id);
+
+        return ResponseEntity.ok()
+                .body(
+                        ResourceUtil.getMessage("response.order.updated").formatted(id)
                 );
     }
 

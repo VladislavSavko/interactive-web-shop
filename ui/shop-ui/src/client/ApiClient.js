@@ -148,7 +148,7 @@ class ApiClient {
             method: "PUT",
             body: JSON.stringify({
                 name: name,
-                categoryName: category.value,
+                categoryName: category,
                 quantity: quantity,
                 color: color,
                 description: desc,
@@ -449,6 +449,26 @@ class ApiClient {
             body: JSON.stringify({
                 type: type,
                 category: category
+            }),
+            headers: {
+                "Content-type": "application/json",
+                "Authorization": `Bearer ${TokenKeeper.getToken()}`
+            }
+        });
+    }
+
+    static updateOrder(id, company, city, street, house, flat, description, map): Promise<Response> {
+        console.log(map);
+        return fetch(this.SERVER_URL + this.SHOP_API + this.ORDERS_URL + '/admin/edit/' + id, {
+            method: "PUT",
+            body: JSON.stringify({
+                company: company,
+                city: city,
+                street: street,
+                house: house,
+                flat: flat,
+                description: description,
+                map: Object.fromEntries(map)
             }),
             headers: {
                 "Content-type": "application/json",

@@ -1,4 +1,5 @@
 import React from "react";
+import ApiClient from "../client/ApiClient";
 
 class CartItem extends React.Component {
     constructor(props) {
@@ -28,6 +29,21 @@ class CartItem extends React.Component {
         });
     }
 
+    deleteFromCart = (id) => {
+        ApiClient.deleteFromCart(id, window.sessionStorage.getItem('userId')).then(r => {
+            if (!r.ok) {
+                r.json().then(rJson => {
+                    console.error('Failed to delete data from cart: ' + rJson);
+                })
+            } else {
+                if (this.props.onChange) {
+                    this.props.onChange();
+                }
+                window.location.reload();
+            }
+        });
+    }
+
     render() {
         return <div
             style={{
@@ -37,7 +53,7 @@ class CartItem extends React.Component {
             <table>
                 <tr>
                     <td>
-                        <div className="icon icon3" style={{color: '#bbbbbb', paddingRight: '30px'}}></div>
+                        <div className="icon icon3" style={{color: '#bbbbbb', paddingRight: '30px'}} onClick={() => this.deleteFromCart(this.props.iid)}></div>
                     </td>
                     <td>
                         <img src={'data:image/png;base64,' + this.props.mainImage?.data} height="100" width="100"
@@ -53,7 +69,7 @@ class CartItem extends React.Component {
                         <span style={{
                             paddingLeft: '15px', paddingRight: '45px', fontSize: '22px',
                             color: 'rgb(136, 136, 136)'
-                        }}>{this.props.price} BYN</span>
+                        }}>{this.state.quantity < 21 ? this.props.price : this.state.quantity < 51 ? this.props.price - 2.21 : this.props.price - 4.42} BYN</span>
                     </td>
                     <td>
                         <div style={{
@@ -79,7 +95,11 @@ class CartItem extends React.Component {
                         <span style={{
                             paddingLeft: '45px', paddingRight: '15px', fontSize: '22px',
                             color: 'rgb(45, 45, 45)'
-                        }}>{this.state.price * this.state.quantity} BYN</span>
+                        }}>{
+                            this.state.quantity < 21 ? this.state.price * this.state.quantity :
+                                this.state.quantity < 51 ? ((this.state.price - 2.21) * this.state.quantity).toFixed(2) :
+                                    ((this.state.price - 4.42) * this.state.quantity).toFixed(2)
+                        } BYN</span>
                     </td>
                 </tr>
             </table>

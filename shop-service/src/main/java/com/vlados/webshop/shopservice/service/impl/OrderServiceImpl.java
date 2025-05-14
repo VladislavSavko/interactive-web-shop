@@ -7,7 +7,7 @@ import com.vlados.webshop.shopservice.domain.cart.Cart;
 import com.vlados.webshop.shopservice.domain.cart.CartItem;
 import com.vlados.webshop.shopservice.domain.dto.order.OrderRequestDto;
 import com.vlados.webshop.shopservice.domain.dto.order.OrderResponseDto;
-import com.vlados.webshop.shopservice.domain.item.Item;
+import com.vlados.webshop.shopservice.domain.dto.order.OrderUpdateDto;
 import com.vlados.webshop.shopservice.domain.order.Order;
 import com.vlados.webshop.shopservice.domain.order.OrderAddressInfo;
 import com.vlados.webshop.shopservice.domain.order.OrderItem;
@@ -85,11 +85,35 @@ public class OrderServiceImpl implements OrderService {
         orderDao.delete(id);
     }
 
+    @Override
+    @Transactional
+    public void update(long id, OrderUpdateDto orderUpdateDto) {
+        Order order = orderDao.getOne(id)
+                .orElseThrow(() -> new NoSuchElementException(
+                                ResourceUtil.getMessage("db.order.not_found").formatted(id)
+                        )
+                );
+
+        orderDao.update(order, orderUpdateDto);
+        orderItemDao.update(id, orderUpdateDto.map());
+    }
+
+    @Override
+    @Transactional
+    public void updateTotal(long id) {
+        Order order = orderDao.getOne(id).orElseThrow(() -> new NoSuchElementException(
+                        ResourceUtil.getMessage("db.order.not_found").formatted(id)
+                )
+        );
+
+        order.setTotal(calculateOrderTotalPrice(orderItemDao.get(id)));
+    }
+
     private OrderResponseDto makeOrder(Cart cart, long userId, OrderRequestDto dto) {
         Order order = orderDao.add(
                 new Order(
                         userId,
-                        calculateTotalPrice(cart),
+                        calculateTotalPrice(cart.getItems()),
                         OrderStatus.REQUESTED,
                         dto.companyName(),
                         new OrderAddressInfo(
@@ -115,10 +139,27 @@ public class OrderServiceImpl implements OrderService {
         return DtoMapper.ForOrder.toDto(order, orderItems);
     }
 
-    private Double calculateTotalPrice(Cart cart) {
-        return cart.getItems().stream()
-                .map(CartItem::getItem)
-                .mapToDouble(Item::getPrice)
+    private Double calculateTotalPrice(List<CartItem> cartItems) {
+        return cartItems.stream()
+                .mapToDouble(cartItem -> {
+                    int q = cartItem.getQuantity();
+                    double initPrice = cartItem.getItem().getPrice();
+                    initPrice = q < 21 ? initPrice : q < 51 ? initPrice - 2.21 : initPrice - 4.42;
+
+                    return cartItem.getQuantity() * initPrice;
+                })
+                .sum();
+    }
+
+    private Double calculateOrderTotalPrice(List<OrderItem> orderItems) {
+        return orderItems.stream()
+                .mapToDouble(cartItem -> {
+                    int q = cartItem.getQuantity();
+                    double initPrice = cartItem.getItem().getPrice();
+                    initPrice = q < 21 ? initPrice : q < 51 ? initPrice - 2.21 : initPrice - 4.42;
+
+                    return cartItem.getQuantity() * initPrice;
+                })
                 .sum();
     }
 

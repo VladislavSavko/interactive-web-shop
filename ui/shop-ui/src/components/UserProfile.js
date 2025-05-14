@@ -6,6 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import TokenKeeper from "./token/TokenKeeper";
 import CartItems from "./CartItems";
 import cart from "../images/cart.png";
+import OrdersComponent from "./OrdersComponent";
 
 class UserProfile extends React.Component {
     constructor(props) {
@@ -390,6 +391,7 @@ class UserProfile extends React.Component {
                     </div>
                 </div>
             </div>
+            {window.sessionStorage.getItem('userRole') === 'ADMIN' && <OrdersComponent />}
             <div className="cart-button" style={{marginBottom: '50px', marginLeft: '40px', marginRight: '40px'}}
             onClick={() => logout()}>
                 <span style={{marginLeft: '12px'}}>Выйти из аккаунта</span>

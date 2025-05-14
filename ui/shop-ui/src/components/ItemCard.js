@@ -140,7 +140,6 @@ class ItemCard extends React.Component {
                     </a>}
                     {!this.props.category && <div className="with-shadow">
                         <a href={this.itemHref(this.props.iid)}>
-                            {/*{this.withSize()}*/}
                             <div className="img-box">
                                 <img src={imgSrc} alt="" style={{width: '300px', height: '300px'}}/>
                             </div>

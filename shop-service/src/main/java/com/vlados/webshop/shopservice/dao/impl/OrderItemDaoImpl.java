@@ -6,6 +6,7 @@ import com.vlados.webshop.shopservice.repos.OrderItemRepository;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Map;
 
 @Component
 public class OrderItemDaoImpl implements OrderItemDao {
@@ -28,5 +29,19 @@ public class OrderItemDaoImpl implements OrderItemDao {
     @Override
     public void delete(long orderId) {
         orderItemRepository.deleteAllByOrderId(orderId);
+    }
+
+    @Override
+    public void update(long orderId, Map<Long, Integer> map) {
+        List<OrderItem> orderItems = orderItemRepository.findByOrderId(orderId);
+
+        for (OrderItem orderItem : orderItems) {
+            long orderItemId = orderItem.getId();
+            if (map.containsKey(orderItemId)) {
+                orderItem.setQuantity(map.get(orderItemId));
+            } else {
+                orderItemRepository.deleteById(orderItemId);
+            }
+        }
     }
 }

@@ -16,6 +16,7 @@ import com.vlados.webshop.shopservice.domain.item.Image;
 import com.vlados.webshop.shopservice.domain.item.InventoryInfo;
 import com.vlados.webshop.shopservice.domain.item.Item;
 import com.vlados.webshop.shopservice.domain.order.Order;
+import com.vlados.webshop.shopservice.domain.order.OrderAddressInfo;
 import com.vlados.webshop.shopservice.domain.order.OrderItem;
 import com.vlados.webshop.shopservice.util.comp.ImageCompressor;
 
@@ -110,19 +111,26 @@ public class DtoMapper {
 
     public static class ForOrder {
         public static OrderResponseDto toDto(Order order, List<OrderItem> items) {
+            OrderAddressInfo address = order.getAddress();
+
             return new OrderResponseDto(
                     order.getUserId(),
-                    order.getCreatedAt(),
-                    order.getUpdatedAt(),
                     order.getTotal(),
                     toDto(items),
-                    order.getStatus()
+                    order.getStatus(),
+                    order.getUserCompanyName(),
+                    order.getDescription(),
+                    address.getCity(),
+                    address.getStreet(),
+                    address.getFlatNumber(),
+                    address.getHouseNumber()
             );
         }
 
         public static List<ResponseOrderItemDto> toDto(List<OrderItem> items) {
             return items.stream()
                     .map(orderItem -> new ResponseOrderItemDto(
+                                    orderItem.getId(),
                                     orderItem.getOrder().getId(),
                                     ForItem.toDto(orderItem.getItem()),
                                     orderItem.getQuantity(),

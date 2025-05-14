@@ -242,3 +242,7 @@
 .dot.active {
     background-color: #717171;
 }
+
+.crossed {
+    border: solid 3px red;
+}

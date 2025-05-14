@@ -1,12 +1,6 @@
 import React from "react";
 import '../css/item.css'
 import ApiClient from "../client/ApiClient";
-import CartAddingModal from "./modals/CartAddingModal";
-import ImageAddingModal from "./modals/ImageAddingModal";
-import ImageDeletingModal from "./modals/ImageDeletingModal";
-import UpdateItemModal from "./modals/UpdateItemModal";
-
-import newMark from '../images/new_mark.png'
 import TokenKeeper from "./token/TokenKeeper";
 import cart from "../images/cart.png";
 import {Slide, toast, ToastContainer} from "react-toastify";
@@ -24,7 +18,7 @@ class ItemInfo extends React.Component {
             isNew: false,
             id: '',
             selected: '',
-            currentImageSrc: 'data:image/png;base64,' + props.item.images[0].data,
+            currentImageSrc: 'data:image/png;base64,' + props.item.images[0]?.data,
             color: '',
             item: props.item,
             multiplier: 1
@@ -176,45 +170,6 @@ class ItemInfo extends React.Component {
 
     render() {
         if (TokenKeeper.getToken() !== null && TokenKeeper.getToken() !== undefined) {
-            const images = this.state.binary.map(i => i.data);
-            const isNew = this.state.isNew ? <img
-                src={newMark}
-                style={{position: 'absolute', top: '3%', right: '34.5%', width: '65px'}} alt=""/> : <></>;
-            let upperButton = window.sessionStorage.getItem('userRole') === 'CLIENT'
-                ?
-                <CartAddingModal text="Add to cart" maxQuantity={this.state.quantity} mainImage={images[0]}
-                                 price={this.state.price} name={this.state.name} iid={this.state.id}
-                                 selectedSize={this.state.selected}
-                                 disabled={this.state.selected === '' || this.state.selected === undefined}/>
-                :
-                <ImageAddingModal text="Add images" itemId={this.state.id}/>
-            let middleButton = window.sessionStorage.getItem('userRole') === 'CLIENT'
-                ?
-                <></>
-                :
-                <ImageDeletingModal text="Delete images" images={images} itemId={this.state.id}/>
-            let updateButton = window.sessionStorage.getItem('userRole') === 'CLIENT' ? <></> : <UpdateItemModal
-                iid={this.state.id}
-                defName={this.state.name}
-                defQuantity={this.state.quantity}
-                defCategory={this.state.category}
-                defColor={this.state.color}
-                defDesc={this.state.description}
-                defPrice={this.state.price}
-                defNew={this.state.isNew}
-                onChange={() => this.updateItem()}
-                classForButton="btn-modal-2"
-                stylesForButton={{marginTop: '9px'}}
-            />
-            let deleteButton = window.sessionStorage.getItem('userRole') === 'CLIENT'
-                ?
-                <></>
-                :
-                <button onClick={() => this.deleteItem(this.state.id)} className='btn-modal-2'
-                        style={{marginTop: '9px'}}>
-                    Delete item
-                </button>
-
             return <section>
                 <ToastContainer
                     position="top-center"
@@ -298,14 +253,14 @@ class ItemInfo extends React.Component {
                                 <div style={{
                                     borderBottom: 'solid 0.5px gray', fontSize: '20px', color: 'rgb(119, 119, 119)',
                                     fontWeight: 'bold'
-                                }}>{this.state.item.price} BYN
+                                }}>{this.state.multiplier < 21 ? this.state.item.price : this.state.multiplier < 51 ? this.state.item.price - 2.21 : this.state.item.price - 4.42} BYN
                                     × {this.state.multiplier}</div>
                                 <div style={{
                                     textAlign: 'right', fontSize: '20px', color: 'rgb(119, 119, 119)',
                                     fontWeight: 'bold'
-                                }}>{this.state.multiplier < 21 ? this.state.item.price * this.state.multiplier :
-                                this.state.multiplier < 51 ? (this.state.item.price - 2.21) * this.state.multiplier :
-                                    (this.state.item.price - 4.42) * this.state.multiplier} BYN
+                                }}>{(this.state.multiplier < 21 ? this.state.item.price * this.state.multiplier :
+                                    this.state.multiplier < 51 ? (this.state.item.price - 2.21) * this.state.multiplier :
+                                        (this.state.item.price - 4.42) * this.state.multiplier).toFixed(2)} BYN
                                 </div>
                             </div>
                         </div>}

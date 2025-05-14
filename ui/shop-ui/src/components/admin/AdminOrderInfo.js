@@ -1,111 +1,28 @@
 import React from "react";
-import ApiClient from "../client/ApiClient";
-import '../css/order.css'
-import {Slide, toast} from "react-toastify";
+import ApiClient from "../../client/ApiClient";
 
-class OrderInfo extends React.Component {
-    constructor(props) {
-        super(props);
+class AdminOrderInfo extends React.Component {
+    constructor() {
+        super();
         this.state = {
-            orderId: '',
+            orderId: null,
             items: [],
             total: '',
-            created: '',
-            updated: '',
-            status: '',
-            userId: '',
-            userName: '',
-            address: null,
-            userInfo: null,
-            companyName: '',
-            sum: 0
-        }
-    }
-
-    countPercent = (status) => {
-        switch (status) {
-            case 'REQUESTED' :
-                return 25;
-            case 'CONFIRMED' :
-                return 50;
-            case 'SHIPPING' :
-                return 75;
-            case 'COMPLETED' :
-                return 100;
+            userId: null,
+            address: {},
+            company: null,
+            description: '',
+            userInfo: {},
+            disabled: true,
+            quantities: []
         }
     }
 
     componentDidMount() {
-        const userId = window.sessionStorage.getItem('userId');
-        this.getState(userId);
-    }
+        const url = window.location.href;
+        const orderId = url.substring(url.lastIndexOf('/') + 1);
 
-    getState = async (id) => {
-        const [r1, r2] = await Promise.all([
-            ApiClient.getUserData(id),
-            ApiClient.getUserCart(id)
-        ]);
 
-        this.getUserInfo(r1);
-        this.getItems(r2);
-    }
-
-    getUserInfo = (response) => {
-        response.json().then(responseJson => {
-            this.setState({
-                userInfo: responseJson
-            });
-            if (responseJson.houseNumber === 0) {
-                this.setState(
-                    prevState => ({userInfo: {...prevState.userInfo, houseNumber: ''}}))
-            }
-            if (responseJson.flatNumber === 0) {
-                this.setState(
-                    prevState => ({userInfo: {...prevState.userInfo, flatNumber: ''}}))
-            }
-            if (responseJson.city === '-' || responseJson.city === null) {
-                this.setState(
-                    prevState => ({userInfo: {...prevState.userInfo, city: ''}}))
-            }
-            if (responseJson.street === '-' || responseJson.street === null) {
-                this.setState(
-                    prevState => ({userInfo: {...prevState.userInfo, street: ''}}))
-            }
-        });
-    }
-
-    getItems = (response) => {
-        response.json().then(responseJson => {
-            this.setState({
-                items: responseJson.items,
-                sum: responseJson.items.reduce((accumulator, current) => {
-                    let price = current.item.price;
-                    if (current.quantity > 20 && current.quantity < 51) {
-                        price -= 2.21
-                    } else if (current.quantity > 51) {
-                        price -= 4.42
-                    }
-                    return accumulator + price * current.quantity;
-                }, 0)
-            });
-        });
-    }
-
-    preDeleteOrder = () => {
-        this.dialog.switchModalState();
-    }
-
-    deleteOrder = () => {
-        ApiClient.deleteOrder(this.state.orderId).then(response => {
-            if (response.ok) {
-                window.location.href = '/profile'
-            } else {
-                console.error('Failed to delete order');
-            }
-        });
-    }
-
-    getOrderInfo = (orderId) => {
         ApiClient.getOrderInfo(orderId).then(response => {
             if (response.ok) {
                 response.json().then(responseJson => {
@@ -113,29 +30,24 @@ class OrderInfo extends React.Component {
                         orderId: responseJson.relatedItems[0].orderId,
                         items: responseJson.relatedItems,
                         total: responseJson.total,
-                        created: responseJson.createdAt,
-                        updated: responseJson.updatedAt,
-                        status: responseJson.status,
-                        userId: responseJson.userId
+                        userId: responseJson.userId,
+                        company: responseJson.companyName,
+                        description: responseJson.description,
+                        address: {
+                            city: responseJson.city,
+                            street: responseJson.street,
+                            houseNumber: responseJson.houseNumber,
+                            flatNumber: responseJson.flatNumber,
+                        }
                     });
                     ApiClient.getUserData(responseJson.userId).then(r => {
                         if (r.ok) {
                             r.json().then(rJson => {
-                                if (window.sessionStorage.getItem('userRole') === 'ADMIN') {
-                                    this.setState({
-                                        userName: 'Order made by ' + rJson.name + ' (' + rJson.email + ')',
-                                    });
-                                } else {
-                                    this.setState({
-                                        userName: 'Thank You for Your order, ' + window.sessionStorage.getItem('username'),
-                                    });
-                                }
                                 this.setState({
-                                    address: {
-                                        city: rJson.city,
-                                        street: rJson.street,
-                                        houseNumber: rJson.houseNumber,
-                                        flatNumber: rJson.flatNumber,
+                                    userInfo: {
+                                        name: rJson.name,
+                                        email: rJson.email,
+                                        phone: rJson.phone
                                     }
                                 });
                             });
@@ -150,67 +62,100 @@ class OrderInfo extends React.Component {
         });
     }
 
-    changeOrderStatus = (status) => {
-        ApiClient.changeOrderStatus(this.state.orderId, status).then(r => {
-            if (r.ok) {
-                this.getOrderInfo(this.state.orderId);
+    toggleRemoving = (id) => {
+        const div = document.getElementById(`div_${id}`);
+        const span = div.children.item(0).children.item(0)
+        if(span) {
+            if(div.classList.contains('crossed')) {
+                span.innerText = '-';
+                div.classList.remove('crossed');
             } else {
-                console.error('Failed to change order status');
+                span.innerText = '+';
+                div.classList.add('crossed');
             }
+        }
+        this.updateTotal();
+    }
+
+    updateTotal = () => {
+        let total = 0;
+        this.state.items.map((item, index) => {
+            const div = document.getElementById(`div_${index}`);
+            if(!div.classList.contains('crossed')) {
+                total += item.item.price * document.getElementById(`quantity_${index}`).value;
+            }
+        });
+
+        this.setState({
+            total: total
         })
     }
 
-    checkout = () => {
-        const userId = window.sessionStorage.getItem('userId');
-        const orderInfo = {
-            company: this.state.companyName,
-            city: this.state.userInfo.city,
-            street: this.state.userInfo.street,
-            house: this.state.userInfo.houseNumber,
-            flat: this.state.userInfo.houseNumber,
-            description: document.getElementById('description').value
-        }
-        ApiClient.makeUserOrder(userId, orderInfo).then(r => {
-            if (r.ok) {
-                toast.info(`Order was created successfully!`, {
-                    position: "top-center",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "light",
-                    transition: Slide,
-                });
+    deleteOrder = () => {
+        ApiClient.deleteOrder(this.state.orderId).then(response => {
+            if (response.ok) {
                 window.location.href = '/profile'
-            } else if (r.status === 400) {
-                r.json().then(res => {
-                    this.showErrors(res.errors)
-                });
             } else {
-                console.error('Failed to make order');
+                console.error('Failed to delete order');
             }
         });
     }
 
-    showErrors = (errors) => {
-        const errorDiv = document.getElementById('error_div');
-        let response = "";
+    updateOrder = () => {
+        const company = this.state.company;
+        const city = this.state.address.city;
+        const street = this.state.address.street;
+        const house = this.state.address.houseNumber;
+        const flat = this.state.address.flatNumber;
+        const desc = this.state.description;
 
-        errors.forEach(error => response += error + '\n');
+        const map = new Map();
 
-        errorDiv.innerText = response;
-        errorDiv.style.display = 'block';
-        errorDiv.style.marginBottom = '20px';
+        const divs = document.querySelectorAll('div[id^="div_"]');
+        divs.forEach(div => {
+            if(!div.classList.contains('crossed')) {
+                const index = div.id.substring(4);
+                const key = this.state.items[index].id;
+                const value = (Number)(document.getElementById(`quantity_${index}`).value);
+
+                map.set(key, value);
+            }
+        })
+
+        ApiClient.updateOrder(this.state.orderId, company, city, street, house, flat, desc, map).then(r => {
+            if(r.ok) {
+                window.location.reload();
+            } else {
+                console.log('Ошибка редактирования заказа!')
+            }
+        });
+    }
+
+    checkValue = (itemId, price) => {
+        let input = document.getElementById('quantity_' + itemId);
+        if (input.value === '' || input.value === null || input.value === undefined) {
+            input.value = input.min;
+        } else {
+            let value = parseInt(input.value, 10);
+            if (value < input.min) {
+                input.value = input.min;
+            } else if (value > input.max) {
+                input.value = input.max;
+            } else {
+                input.value = value;
+            }
+        }
+
+        document.getElementById('span_' + itemId).innerText = `${price * input.value} BYN`;
+
+        this.updateTotal();
     }
 
     render() {
-        const date = new Date(this.state.created)
         return <div className="container" style={{paddingLeft: '40px', paddingRight: '40px'}}>
             <div className="heading_container heading_center" style={{marginTop: '50px'}}>
                 <h2 style={{fontSize: '2.7rem'}}>
-                    Оформление заказа
+                    Просмотр заказа
                 </h2>
             </div>
             <div className="container" style={{
@@ -225,6 +170,7 @@ class OrderInfo extends React.Component {
                         <p>Название компании</p>
                         <input id="name" name="name" type="text"
                                value={this.state.userInfo && this.state.userInfo.name} className="checkout-input"
+                               disabled={this.state.disabled}
                                onChange={(event) => this.setState(prevState => ({
                                    userInfo: {
                                        ...prevState.userInfo,
@@ -232,47 +178,48 @@ class OrderInfo extends React.Component {
                                    }
                                }))}/>
                         <input id="cname" name="cname" type="text"
-                               value={this.state.companyName} className="checkout-input"
-                               onChange={(event) => this.setState({companyName: event.target.value})}/>
+                               value={this.state.company} className="checkout-input" disabled={this.state.disabled}
+                               onChange={(event) => this.setState({company: event.target.value})}/>
                     </div>
                     <div style={{marginTop: '30px'}}>
-                        <div id="error_div" className="error" style={{backgroundColor: 'transparent'}}></div>
                         <h4>Адрес <span style={{color: 'red', fontSize: '16px'}}>*</span></h4>
                         <div className="quatro" style={{marginTop: '30px', rowGap: '40px'}}>
                             <input id="city" name="city" type="text"
-                                   value={this.state.userInfo && this.state.userInfo.city} className="checkout-input"
+                                   value={this.state.address && this.state.address.city} className="checkout-input"
+                                   disabled={this.state.disabled}
                                    onChange={(event) => this.setState(prevState => ({
-                                       userInfo: {
-                                           ...prevState.userInfo,
+                                       address: {
+                                           ...prevState.address,
                                            city: event.target.value
                                        }
                                    }))}
                                    placeholder="Город"/>
                             <input id="street" name="street" type="text"
-                                   value={this.state.userInfo && this.state.userInfo.street} className="checkout-input"
+                                   value={this.state.address && this.state.address.street} className="checkout-input"
+                                   disabled={this.state.disabled}
                                    onChange={(event) => this.setState(prevState => ({
-                                       userInfo: {
-                                           ...prevState.userInfo,
+                                       address: {
+                                           ...prevState.address,
                                            street: event.target.value
                                        }
                                    }))}
                                    placeholder="Название улицы"/>
                             <input id="house" name="house" type="text"
-                                   value={this.state.userInfo && this.state.userInfo.houseNumber}
-                                   className="checkout-input"
+                                   value={this.state.address && this.state.address.houseNumber}
+                                   className="checkout-input" disabled={this.state.disabled}
                                    onChange={(event) => this.setState(prevState => ({
-                                       userInfo: {
-                                           ...prevState.userInfo,
+                                       address: {
+                                           ...prevState.address,
                                            houseNumber: event.target.value
                                        }
                                    }))}
                                    placeholder="Номер дома (здания)"/>
                             <input id="flat" name="flat" type="text"
-                                   value={this.state.userInfo && this.state.userInfo.flatNumber}
-                                   className="checkout-input"
+                                   value={this.state.address && this.state.address.flatNumber}
+                                   className="checkout-input" disabled={this.state.disabled}
                                    onChange={(event) => this.setState(prevState => ({
-                                       userInfo: {
-                                           ...prevState.userInfo,
+                                       address: {
+                                           ...prevState.address,
                                            flatNumber: event.target.value
                                        }
                                    }))}
@@ -284,6 +231,7 @@ class OrderInfo extends React.Component {
                         <div className="dos" style={{marginTop: '30px'}}>
                             <input id="phone" name="phone" type="text"
                                    value={this.state.userInfo && this.state.userInfo.phone} className="checkout-input"
+                                   disabled={this.state.disabled}
                                    onChange={(event) => this.setState(prevState => ({
                                        userInfo: {
                                            ...prevState.userInfo,
@@ -293,6 +241,7 @@ class OrderInfo extends React.Component {
                                    placeholder="Номер телефона"/>
                             <input id="email" name="email" type="text"
                                    value={this.state.userInfo && this.state.userInfo.email} className="checkout-input"
+                                   disabled={this.state.disabled}
                                    onChange={(event) => this.setState(prevState => ({
                                        userInfo: {
                                            ...prevState.userInfo,
@@ -305,8 +254,8 @@ class OrderInfo extends React.Component {
                     <div style={{marginTop: '30px'}}>
                         <h4>Примечание к заказу</h4>
                         <textarea id="description" style={{
-                            width: '100%', resize: 'none', overflow: 'auto', outline: 'none'
-                        }}
+                            width: '100%', resize: 'none', overflow: 'auto'
+                        }} disabled={this.state.disabled} value={this.state.description} onChange={(event) => this.setState({description: event.target.value})}
                                   placeholder="Примечание к вашему заказу, например, особые пожелания отделу доставки."/>
                     </div>
                 </div>
@@ -318,15 +267,25 @@ class OrderInfo extends React.Component {
                             display: 'flex', flexDirection: 'column', width: '100%',
                             marginTop: '20px', borderBottom: 'solid 1px gray', paddingBottom: '20px'
                         }}>
-                            {this.state.items && this.state.items.map(item => {
-                                return <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                            {this.state.items && this.state.items.map((item, index) => {
+                                return <div id={'div_' + index} style={{display: 'flex', justifyContent: 'space-between'}}>
                                     <div style={{alignItems: 'center', display: 'flex'}}>
+                                        {!this.state.disabled && <span className="hovered-text"
+                                                                       style={{cursor: 'pointer', marginRight: '15px', userSelect: 'none'}}
+                                        onClick={() => this.toggleRemoving(index)}>-</span>}
                                         <span style={{maxWidth: '70%'}}>{item.item.name}</span>
-                                        <span style={{marginLeft: '20px', color: '#777777'}}>x {item.quantity}</span>
+                                        <span style={{marginLeft: '20px', color: '#777777'}}>x</span>
+                                        <input type="number" id={'quantity_' + index}
+                                               defaultValue={item.quantity}
+                                               max={100000} min="1"
+                                               onInput={() => this.checkValue(index, item.item.price)}
+                                               className="checkout-input" style={{
+                                            backgroundColor: 'transparent', border: 'none', marginLeft: '10px',
+                                            width: '20%'
+                                        }} disabled={this.state.disabled}/>
                                     </div>
-                                    <span
-                                        style={{color: '#777777'}}>{item.quantity < 21 ? item.item.price * item.quantity :
-                                        item.quantity < 51 ? (item.item.price - 2.21) * item.quantity : (item.item.price - 4.42) * item.quantity} BYN</span>
+                                    <span id={'span_' + index}
+                                          style={{color: '#777777'}}>{item.quantity * item.item.price} BYN</span>
                                 </div>
                             })}
                         </div>
@@ -335,7 +294,7 @@ class OrderInfo extends React.Component {
                             marginTop: '15px'
                         }}>
                             <span style={{maxWidth: '70%'}}>Подытог</span>
-                            <span id="sum" style={{color: '#222222'}}>{this.state.sum} BYN</span>
+                            <span id="sum" style={{color: '#222222'}}>{this.state.total} BYN</span>
                         </div>
                         <div style={{
                             display: 'flex', justifyContent: 'space-between', width: '100%',
@@ -349,8 +308,7 @@ class OrderInfo extends React.Component {
                             marginTop: '20px'
                         }}>
                             <span style={{maxWidth: '70%'}}>НДС (19%)</span>
-                            <span
-                                style={{color: '#222222'}}>{(this.state.sum && 0.19 * this.state.sum).toFixed(2)} BYN</span>
+                            <span style={{color: '#222222'}}>{this.state.total && (0.19 * this.state.total).toFixed(1)} BYN</span>
                         </div>
                         <div style={{
                             display: 'flex', justifyContent: 'space-between', width: '100%',
@@ -361,7 +319,7 @@ class OrderInfo extends React.Component {
                                 color: '#111111',
                                 fontWeight: 'bold',
                                 fontSize: '26px'
-                            }}>{(this.state.sum && 1.19 * this.state.sum).toFixed(2)} BYN</span>
+                            }}>{this.state.total && (1.19 * this.state.total).toFixed(2)} BYN</span>
                         </div>
                         <p style={{color: '#777777', marginTop: '50px'}}>
                             Ваши личные данные будут использоваться для обработки вашего заказа, поддержки вашего опыта
@@ -370,16 +328,26 @@ class OrderInfo extends React.Component {
                             <a href="https://mixtil.by/privacy-policy/" className="hovered-text">политика
                                 конфиденциальности</a>.
                         </p>
+                        {this.state.disabled &&
+                            <div className="cart-button" style={{marginBottom: '20px', marginTop: '20px'}}
+                                 onClick={() => this.setState({disabled: false})}>
+                                <span>Редактировать заказ</span>
+                            </div>}
+                        {!this.state.disabled &&
+                            <div className="cart-button" style={{marginBottom: '20px', marginTop: '20px'}}
+                                 onClick={this.updateOrder}>
+                                <span>Сохранить заказ</span>
+                            </div>}
                         <div className="cart-button" style={{marginBottom: '20px', marginTop: '20px'}}
-                             onClick={this.checkout}>
-                            <span>Подтвердить заказ</span>
+                             onClick={this.deleteOrder}>
+                            <span>Удалить заказ</span>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     }
-
 }
 
-export default OrderInfo
+
+export default AdminOrderInfo

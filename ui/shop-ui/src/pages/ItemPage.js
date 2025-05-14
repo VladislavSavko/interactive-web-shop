@@ -6,6 +6,7 @@ import NavigationBar from "../components/bar/NavigationBar";
 import HomePageFooter from "../components/structure/HomePageFooter";
 import ApiClient from "../client/ApiClient";
 import NavigationStringCreator from "../components/navigation-util/NavigationStringCreator";
+import AdminItemInfo from "../components/admin/AdminItemInfo";
 
 const ItemPage = () => {
     const [navigationString, setNavigationString] = useState(null);
@@ -38,7 +39,7 @@ const ItemPage = () => {
         <HomePageHeader/>
         <SearchComponent/>
         {navigationString && <NavigationBar string={navigationString}/>}
-        {item && <ItemInfo item={item}/>}
+        {item && (window.sessionStorage.getItem('userRole') === 'CLIENT' ? <ItemInfo item={item}/> : <AdminItemInfo item={item} />)}
         <HomePageFooter/>
     </>
 }

@@ -1,5 +1,4 @@
 import React from "react";
-import ShippingStatus from "./bar/ShippingStatus";
 
 class OrderCard extends React.Component {
     constructor(props) {
@@ -15,7 +14,7 @@ class OrderCard extends React.Component {
             <div className="col-sm-6 col-md-4 col-lg-3" onClick={() => {
                 window.location.href = this.orderHref(this.props.oid)}
             }>
-                <div className="box2" >
+                <div className="box2 with-shadow" >
                     <a href={this.orderHref(this.props.oid)}>
                         <div className="img-box" style={{marginTop: '20px'}}>
                             <img src={this.props.firstItemImage} alt="" style={{width: '200px'}}/>
@@ -24,11 +23,11 @@ class OrderCard extends React.Component {
                             <h5>
                                 {this.props.firstItemName}
                             </h5>
-                            <h6>
-                                Total: <span style={{color: 'rgb(218,175,179)'}}>${this.props.total}</span>
+                            <h6 style={{textAlign: 'center'}}>
+                                Сумма: <span style={{fontWeight: 'bold'}}>{this.props.total} BYN</span>
                             </h6>
                         </div>
-                        <ShippingStatus value={this.props.status} oid={this.props.oid}/>
+                        {/*<ShippingStatus value={this.props.status} oid={this.props.oid}/>*/}
                     </a>
                 </div>
             </div>

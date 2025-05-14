@@ -24,7 +24,7 @@ const ProfilePage = () => {
             <>
                 <HomePageHeader/>
                 <SearchComponent/>
-                {window.sessionStorage.getItem('userRole') === 'CLIENT' ? <UserProfile /> : <AdminProfile/>}
+                <UserProfile />
                 <HomePageFooter/>
             </>
         }

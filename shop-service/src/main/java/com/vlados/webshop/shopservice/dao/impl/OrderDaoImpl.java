@@ -1,6 +1,7 @@
 package com.vlados.webshop.shopservice.dao.impl;
 
 import com.vlados.webshop.shopservice.dao.OrderDao;
+import com.vlados.webshop.shopservice.domain.dto.order.OrderUpdateDto;
 import com.vlados.webshop.shopservice.domain.order.Order;
 import com.vlados.webshop.shopservice.domain.order.OrderAddressInfo;
 import com.vlados.webshop.shopservice.repos.OrderAddressRepository;
@@ -8,6 +9,7 @@ import com.vlados.webshop.shopservice.repos.OrderRepository;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Component
@@ -48,5 +50,18 @@ public class OrderDaoImpl implements OrderDao {
     @Override
     public void delete(long id) {
         orderRepository.deleteById(id);
+    }
+
+    @Override
+    public void update(Order order, OrderUpdateDto template) {
+        order.setUserCompanyName(template.company());
+        order.setDescription(template.description());
+        OrderAddressInfo address = order.getAddress();
+        if (address != null) {
+            address.setCity(template.city());
+            address.setStreet(template.street());
+            address.setFlatNumber(template.flat());
+            address.setHouseNumber(template.house());
+        }
     }
 }

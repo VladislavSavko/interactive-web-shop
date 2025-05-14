@@ -15,6 +15,7 @@ import SearchPage from "../pages/SearchPage";
 import NewCategoryPage from "../pages/NewCategoryPage";
 import EditCategoryPage from "../pages/EditCategoryPage";
 import NewItemPage from "../pages/NewItemPage";
+import AdminOrderPage from "../pages/AdminOrderPage";
 
 const Home = () => {
     return <BrowserRouter>
@@ -30,6 +31,7 @@ const Home = () => {
             <Route element={<EditCategoryPage />} path='/editCategory/*'/>
             <Route element={<CategoryPage/>} path='/category/*' />
             <Route element={<OrderPage/>} path='/checkout'/>
+            <Route element={<AdminOrderPage />} path='/orders/*'/>
             <Route element={<UsersPage/>} path='/users'/>
             <Route element={<SubscriptionsPage />} path='/subs'/>
             <Route element={<SearchPage />} path='/search'/>

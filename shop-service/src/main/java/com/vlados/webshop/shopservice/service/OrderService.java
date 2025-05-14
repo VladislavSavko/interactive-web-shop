@@ -2,6 +2,7 @@ package com.vlados.webshop.shopservice.service;
 
 import com.vlados.webshop.shopservice.domain.dto.order.OrderRequestDto;
 import com.vlados.webshop.shopservice.domain.dto.order.OrderResponseDto;
+import com.vlados.webshop.shopservice.domain.dto.order.OrderUpdateDto;
 
 import java.util.List;
 
@@ -17,4 +18,8 @@ public interface OrderService {
     void changeStatus(final long id, final String status);
 
     void deleteOrder(final long id);
+
+    void update(final long id, final OrderUpdateDto order);
+
+    void updateTotal(final long id);
 }

@@ -18,6 +18,5 @@ public record NewUserDto(
         String name,
         @Valid
         @NotBlank(message = "Телефон не может быть пустым!")
-        @Pattern(regexp = "^(\\+7|8|\\+375)(\\d{9})$", message = "Неправильный формат телефона! Прим. +375331234567")
         String phone) {
 }

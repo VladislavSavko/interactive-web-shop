@@ -88,7 +88,6 @@ public class UserDaoImpl implements UserDao {
         user.setName(dto.name());
         user.setPhone(dto.phone());
         user.setRole(dto.role());
-        user.setSubscription(dto.subscription());
     }
 
     @Override
