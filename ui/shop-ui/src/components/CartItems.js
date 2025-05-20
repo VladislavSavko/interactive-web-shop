@@ -30,7 +30,20 @@ class CartItems extends React.Component {
     }
 
     checkout = () => {
-        window.location.href = '/checkout';
+        const dtos = this.state.data.map(item => {
+            return {
+                itemId: item.item.id,
+                newQuantity: Number(document.getElementById(item.item.id).textContent),
+                newSize: 'L'
+            }
+        });
+        ApiClient.updateCart(window.sessionStorage.getItem('userId'), dtos).then(r => {
+            if (r.ok) {
+                window.location.href = '/checkout';
+            } else {
+                console.log('Ошибка при переходе к заказу!');
+            }
+        })
     }
 
     render() {

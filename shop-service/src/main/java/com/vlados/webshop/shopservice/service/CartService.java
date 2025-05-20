@@ -14,5 +14,5 @@ public interface CartService {
 
     void deleteCartItemFromCart(long userId, long itemId);
 
-    CartResponseDto updateCartItemsQuantities(long userId, List<UpdateCartItemDto> dtos);
+    Cart updateCartItemsQuantities(long userId, List<UpdateCartItemDto> dtos);
 }

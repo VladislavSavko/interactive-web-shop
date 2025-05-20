@@ -1,7 +1,6 @@
 import React, {useState} from "react";
-import SelectCategories from "./modals/inner/SelectCategories";
-import ApiClient from "../client/ApiClient";
 import {useLocation} from "react-router-dom";
+import SelectSubscriptions from "./SelectSubscriptions";
 
 const SubscriptionsComponent = () => {
     const [firstValue, setFirstValue] = useState("");
@@ -30,13 +29,9 @@ const SubscriptionsComponent = () => {
                 break;
             }
         }
-        ApiClient.setUserSubscription(type, window.sessionStorage.getItem('userId'), category).then(response => {
-            if (response.ok) {
-                window.location.href = '/profile';
-            } else {
-                console.log('Failed to set sub to user');
-            }
-        })
+        window.sessionStorage.setItem('type', type);
+        window.sessionStorage.setItem('category', category);
+        window.location.href = '/paymentInfo';
     }
 
 
@@ -46,7 +41,7 @@ const SubscriptionsComponent = () => {
     }}>
         <div className="info-summary" style={{backgroundColor: 'rgb(250, 250, 250)', border: target === '1' ? 'solid 2px gray' : 'none'}}>
             <div style={{paddingLeft: '20px', paddingRight: '20px', paddingTop: '40px', paddingBottom: '40px'}}>
-                <h1 style={{fontWeight: 'bold'}}>LIGHT</h1>
+                <h1 style={{fontWeight: 'bold'}}>Простая</h1>
                 <h3 style={{fontWeight: 'bold', borderBottom: 'solid 1px gray', paddingBottom: '30px'}}>ОДИН МЕСЯЦ</h3>
                 <div style={{
                     display: 'flex', justifyContent: 'space-between', width: '100%',
@@ -64,8 +59,8 @@ const SubscriptionsComponent = () => {
                     выбранной категории. Действует 1 месяц, детали можно узнать по телефону:
                     <a href="tel:+375291799596" className="hovered-text">+375291799596</a>.
                 </p>
-                <SelectCategories onChange={v => setFirstValue(v)}/>
-                {firstValue && <div className="cart-button" style={{marginTop: '60px'}}
+                <SelectSubscriptions onChange={v => setFirstValue(v)}/>
+                {firstValue && window.sessionStorage.getItem('userId') && <div className="cart-button" style={{marginTop: '60px'}}
                                     onClick={() => setSubToUser(1)}>
                     <span>Получить подписку на месяц</span>
                 </div>}
@@ -73,7 +68,7 @@ const SubscriptionsComponent = () => {
         </div>
         <div className="info-summary" style={{backgroundColor: 'rgb(250, 250, 250)', border: target === '2' ? 'solid 2px gray' : 'none'}}>
             <div style={{paddingLeft: '20px', paddingRight: '20px', paddingTop: '40px', paddingBottom: '40px'}}>
-                <h1 style={{fontWeight: 'bold'}}>MEDIUM</h1>
+                <h1 style={{fontWeight: 'bold'}}>Оптимальная</h1>
                 <h3 style={{fontWeight: 'bold', borderBottom: 'solid 1px gray', paddingBottom: '30px'}}>ТРИ МЕСЯЦА</h3>
                 <div style={{
                     display: 'flex', justifyContent: 'space-between', width: '100%',
@@ -92,8 +87,8 @@ const SubscriptionsComponent = () => {
                     выбранной категории. Действует 3 месяца, детали можно узнать по телефону:
                     <a href="tel:+375291799596" className="hovered-text">+375291799596</a>.
                 </p>
-                <SelectCategories onChange={v => setSecondValue(v)}/>
-                {secondValue && <div className="cart-button" style={{marginTop: '60px'}}
+                <SelectSubscriptions onChange={v => setSecondValue(v)}/>
+                {secondValue && window.sessionStorage.getItem('userId') && <div className="cart-button" style={{marginTop: '60px'}}
                                      onClick={() => setSubToUser(2)}>
                     <span>Получить подписку на 3 месяца</span>
                 </div>}
@@ -101,7 +96,7 @@ const SubscriptionsComponent = () => {
         </div>
         <div className="info-summary" style={{backgroundColor: 'rgb(250, 250, 250)', border: target === '3' ? 'solid 2px gray' : 'none'}}>
             <div style={{paddingLeft: '20px', paddingRight: '20px', paddingTop: '40px', paddingBottom: '40px'}}>
-                <h1 style={{fontWeight: 'bold'}}>SUPER</h1>
+                <h1 style={{fontWeight: 'bold'}}>Расширенная</h1>
                 <h3 style={{fontWeight: 'bold', borderBottom: 'solid 1px gray', paddingBottom: '30px'}}>ПЯТЬ
                     МЕСЯЦЕВ</h3>
                 <div style={{
@@ -122,8 +117,8 @@ const SubscriptionsComponent = () => {
                     выбранной категории. Действует 5 месяцев, детали можно узнать по телефону:
                     <a href="tel:+375291799596" className="hovered-text">+375291799596</a>.
                 </p>
-                <SelectCategories onChange={v => setThirdValue(v)}/>
-                {thirdValue && <div className="cart-button" style={{marginTop: '60px'}}
+                <SelectSubscriptions onChange={v => setThirdValue(v)}/>
+                {thirdValue && window.sessionStorage.getItem('userId') && <div className="cart-button" style={{marginTop: '60px'}}
                                     onClick={() => setSubToUser(3)}>
                     <span>Получить подписку на 5 месяцев</span>
                 </div>}

@@ -206,7 +206,6 @@ class OrderInfo extends React.Component {
     }
 
     render() {
-        const date = new Date(this.state.created)
         return <div className="container" style={{paddingLeft: '40px', paddingRight: '40px'}}>
             <div className="heading_container heading_center" style={{marginTop: '50px'}}>
                 <h2 style={{fontSize: '2.7rem'}}>

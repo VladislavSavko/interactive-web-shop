@@ -7,6 +7,7 @@ import TokenKeeper from "./token/TokenKeeper";
 import CartItems from "./CartItems";
 import cart from "../images/cart.png";
 import OrdersComponent from "./OrdersComponent";
+import UserOrders from "./UserOrders";
 
 class UserProfile extends React.Component {
     constructor(props) {
@@ -227,7 +228,7 @@ class UserProfile extends React.Component {
                     {this.state.subscriptionType && <h3 style={{paddingLeft: '20px'}}>
                         Подписка: <span>
                         <span className="hovered-text" onClick={this.redirectAndHighlightSub}
-                              style={{cursor: "pointer"}}>{this.state.subscriptionType}</span>
+                              style={{cursor: "pointer"}}>{this.state.subscriptionType}&nbsp;</span>
                         - {this.state.subscriptionCategory}
                     </span>
                     </h3>}
@@ -392,8 +393,21 @@ class UserProfile extends React.Component {
                 </div>
             </div>
             {window.sessionStorage.getItem('userRole') === 'ADMIN' && <OrdersComponent />}
+            {window.sessionStorage.getItem('userRole') === 'CLIENT' &&
+                <div id="orders" className="container" style={{paddingLeft: '40px', paddingRight: '40px'}}>
+                    <div className="heading_container heading_center" style={{marginTop: '50px'}}>
+                        <h2 style={{fontSize: '2.7rem'}}>
+                            История заказов
+                        </h2>
+                    </div>
+                    <div className="info-container">
+                        <div style={{width: '100%'}}>
+                            <UserOrders />
+                        </div>
+                    </div>
+                </div>}
             <div className="cart-button" style={{marginBottom: '50px', marginLeft: '40px', marginRight: '40px'}}
-            onClick={() => logout()}>
+                 onClick={() => logout()}>
                 <span style={{marginLeft: '12px'}}>Выйти из аккаунта</span>
             </div>
         </>

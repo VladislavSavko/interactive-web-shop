@@ -329,7 +329,7 @@ public class ShopController {
     @PutMapping("/cart/{id}")
     public CartResponseDto updateCartItemsQuantities(@PathVariable(name = "id") long userId,
                                                      @RequestBody List<UpdateCartItemDto> dtos) {
-        return cartService.updateCartItemsQuantities(userId, dtos);
+        return DtoMapper.ForCart.toDto(cartService.updateCartItemsQuantities(userId, dtos));
     }
 
     @PutMapping("/orders/admin/{id}")

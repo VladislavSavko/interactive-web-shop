@@ -73,7 +73,7 @@ public class CartServiceImpl implements CartService {
 
     @Override
     @Transactional
-    public CartResponseDto updateCartItemsQuantities(long userId, List<UpdateCartItemDto> dtos) {
+    public Cart updateCartItemsQuantities(long userId, List<UpdateCartItemDto> dtos) {
         Cart userCart = cartDao.getCart(userId);
         List<CartItem> cartItems = userCart.getItems();
 
@@ -87,10 +87,9 @@ public class CartServiceImpl implements CartService {
                             cartItem.setSize(ItemSize.valueOf(dto.newSize()));
                         }
                     });
-            //TODO: Make stock quantity check
         }
 
-        return DtoMapper.ForCart.toDto(userCart);
+        return userCart;
     }
 
     private boolean cartContainsItem(Cart userCart, Item itemToAdd) {

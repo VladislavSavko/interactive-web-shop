@@ -82,7 +82,7 @@ class CartItem extends React.Component {
                             }}
                                  onClick={this.decreaseQuantity}>-
                             </div>
-                            <span style={{fontSize: '24px'}}>{this.state.quantity}</span>
+                            <span id={this.props.iid} style={{fontSize: '24px'}}>{this.state.quantity}</span>
                             <div style={{
                                 color: '#bbbbbb', fontSize: '30px', paddingRight: '10px', cursor: 'pointer',
                                 userSelect: 'none'

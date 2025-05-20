@@ -407,6 +407,17 @@ class ApiClient {
         });
     }
 
+    static updateCart(userId, dtos): Promise<Response> {
+        return fetch(this.SERVER_URL + this.SHOP_API + this.CART_URL + '/' + userId, {
+            method: "PUT",
+            body: JSON.stringify(dtos),
+            headers: {
+                "Content-type": "application/json",
+                "Authorization": `Bearer ${TokenKeeper.getToken()}`
+            }
+        });
+    }
+
     static bindImage(image, itemId): Promise<Response> {
         function base64ToBlob(base64, mimeType) {
             const byteCharacters = atob(base64);

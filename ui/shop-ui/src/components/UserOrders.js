@@ -3,8 +3,8 @@ import ApiClient from "../client/ApiClient";
 import OrderCard from "./OrderCard";
 
 class UserOrders extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             orders: []
         }
@@ -37,12 +37,13 @@ class UserOrders extends React.Component {
                         firstItemImage={
                             order.relatedItems[0].item.images.length > 0
                                 ?
-                                'data:image/png;base64,' + order.relatedItems[0].item.images[0].data
+                                'data:image/png;base64,' + order.relatedItems[0].item.images[0]?.data
                                 :
                                 null}
                         total={order.total}
                         status={order.status}
-                        oid={order.relatedItems[0].orderId}/>
+                        oid={order.relatedItems[0].orderId}
+                    />
                 })}
             </div>}
         </div>

@@ -13,7 +13,7 @@ const HomePageHeader = () => {
                     <div className="header-divs-part-2" style={{textTransform: 'uppercase'}}>
                         <p>
                                 <span style={{color: '#ba4747'}}>
-                                    <strong>Работаем только с юридическими лицами и индивидуальными предпринимателями</strong>
+                                    <strong>Работаем с физическими, юридическими лицами и индивидуальными предпринимателями</strong>
                                 </span>
                         </p>
                         <p>

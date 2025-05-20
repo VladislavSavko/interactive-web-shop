@@ -51,6 +51,10 @@ class AdminItemInfo extends React.Component {
     }
 
     componentDidMount() {
+        if (window.sessionStorage.getItem('userId') === null || window.sessionStorage.getItem('userId') === undefined) {
+            window.location.href = '/signUp'
+            return;
+        }
         let ol = document.getElementById('images');
         ol.innerHTML = '';
         this.state.item.images.map(image => {
